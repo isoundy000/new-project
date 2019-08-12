@@ -1,11 +1,8 @@
 <template>
   <div class="hello">
-    <el-progress :percentage="50"></el-progress>
-    <el-progress :percentage="100" :format="format"></el-progress>
-    <el-progress :percentage="100" status="success"></el-progress>
-    <el-progress :percentage="100" status="warning"></el-progress>
-    <el-progress :percentage="50" status="exception"></el-progress>
+
     <h1>{{ msg }}</h1>
+    <p>dfsfsdfds</p>
     <h2>Essential Links</h2>
     <ul>
       <li>
@@ -95,12 +92,8 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
-  },
-  methods: {
-    format(percentage) {
-      return percentage === 100 ? '满' : `${percentage}%`;
-    }
   }
+
 }
 </script>
 
