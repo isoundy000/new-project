@@ -1,5 +1,5 @@
 <template>
-  <div class="Bheader">
+  <div class="surveyHeader">
     <div class="login_title">
       <img class="login_title_img" src="../../../static/image/superSignature/mumuunlogo.png" alt="">
       <div class="title">
@@ -7,15 +7,12 @@
            @mouseenter="enter(index)"
            @mouseleave="leave(index)">{{list.msg}}</p>
       </div>
-      <div v-if="isLogin" class="login_title_div">
-        <p @click="loginBtn">登录</p>
-        <p @click="registerBtn">注册</p>
-      </div>
-      <div v-else>
+
+      <div class="alreadyLoginP" >
         <div class="alreadyLogin">
 
-          <div @click="myappBtn" class="myappBtn" >
-            <p>我的应用</p>
+          <div @click="goHome" class="myappBtn" >
+            <p>返回首页</p>
           </div>
 
           <el-badge :value="3" class="item">
@@ -43,28 +40,20 @@
 
 <script>
   export default {
-    name: "Bheader",
+    name: "surveyHeader",
     data() {
       return {
         title: [
           {
-            msg: '首页',
-            isclass: false
-          },
-          {
-            msg: '超级签名',
+            msg: '概况',
             isclass: true
           },
           {
-            msg: '专属签名',
+            msg: '应用管理',
             isclass: false
           },
           {
-            msg: '企业签名',
-            isclass: false
-          },
-          {
-            msg: '购买服务',
+            msg: '账单管理',
             isclass: false
           },
           {
@@ -106,21 +95,21 @@
       },
       /*顶部标题移入效果*/
       enter(index) {
-        if (index != 1) {
-          this.title[1].isclass = false
+        if (index != 0) {
+          this.title[0].isclass = false
         }
         this.title[index].isclass = true
       },
       /*顶部标题移出效果*/
       leave(index) {
-        if (index != 1) {
-          this.title[1].isclass = true
+        if (index != 0) {
+          this.title[0].isclass = true
         }
         this.title[index].isclass = false
       },
-      myappBtn(){
+      goHome(){
         this.$router.push({
-          path: '/survey'
+          path: '/'
         })
       }
 
@@ -129,8 +118,13 @@
 </script>
 
 <style scoped>
-  .login_title {
+  .surveyHeader{
     width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .login_title {
+    width: 1200px;
     height: 80px;
     display: flex;
     /*justify-content: space-around;*/
@@ -140,11 +134,10 @@
   .login_title .login_title_img {
     width: 99px;
     height: 39px;
-    margin-left: 18.8vw;
   }
 
   .title {
-    width: 500px;
+    width: 400px;
     margin-left: 5vw;
     list-style: none;
     display: inline-flex;
@@ -209,13 +202,13 @@
   }
 
   .alreadyLogin {
-    width: 300px;
+    width: 400px;
     height: 30px;
     margin-top: -5px;
     margin-left: 20px;
     display: flex;
     align-items: center;
-
+position: relative;
   }
 
   .myappBtn {
@@ -241,14 +234,17 @@
   .accountNumber {
     color: #999999;
     font-size: 14px;
-    margin-left: 20px;
+    margin-left: 50px;
     cursor: pointer;
   }
-
+.alreadyLoginP{
+  margin-left: 190px;
+}
   .headUrl {
     width: 50px;
     height: 50px;
-    margin-left: 20px;
+    position: absolute;
+    right: 0;
     cursor: pointer;
   }
 
@@ -259,7 +255,7 @@
     /* vertical-align: middle; */
     /* display: inline-block; */
     display: flex;
-    margin-left: 20px;
+    margin-left: 35px;
     justify-content: center;
     align-items: center;
   }
@@ -269,3 +265,4 @@
   }
 
 </style>
+

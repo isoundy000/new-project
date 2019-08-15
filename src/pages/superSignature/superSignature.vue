@@ -7,7 +7,7 @@
     </div>
     <!--样例展示-->
     <div class="example">
-      <img src="../../../static/image/superSignature/yangliyanshibiaoti.png" alt="">
+      <img src="../../../static/image/superSignature/yangli@2x.png" alt="">
     </div>
     <!--video-->
     <div class="videoDiv">
@@ -20,7 +20,7 @@
     <!--我们的优势-->
     <div class="advantage">
       <div class="advantageImg">
-        <img src="../../../static/image/superSignature/womendeyoushi.png" alt="">
+        <img src="../../../static/image/superSignature/youshi@2x.png" alt="">
       </div>
       <div class="advantageBig">
         <div @mouseenter="advantageEnterOne()" @mouseleave="advantageLeaveOne()" class="advantageOne advantageBig_div"
@@ -84,7 +84,7 @@
     <!--超低价格-->
     <div class="lowprize">
       <div class="lowprizeImg">
-        <img src="../../../static/image/superSignature/chaodijiagebiaoqian.png" alt="">
+        <img src="../../../static/image/superSignature/zhaodijiage@2x.png" alt="">
       </div>
       <div class="lowprizeDiv">
         <div class="lowprizeDiv_one">
@@ -96,7 +96,7 @@
             <p>4、按设备数量收费，仅需<span>￥15.00</span>/每台</p>
           </div>
           <div>
-            <img src="../../../static/image/superSignature/jiagetu.png" alt="">
+            <img src="../../../static/image/superSignature/tu@2x.png" alt="">
           </div>
         </div>
       </div>
@@ -106,7 +106,7 @@
     <!--服务对比-->
     <div class="service">
       <div class="serviceImg">
-        <img src="../../../static/image/superSignature/fuwuduibibiaoti.png" alt="">
+        <img src="../../../static/image/superSignature/fuwu@2x.png" alt="">
       </div>
       <div class="serviceDiv">
         <div class="serviceDivOne" @mouseenter="serviceDivOne()"
@@ -252,7 +252,7 @@
         <img src="../../../static/image/superSignature/changjianwentibiaoti.png" alt="">
       </div>
       <div class="problemImg">
-        <img src="../../../static/image/superSignature/wentitupian.png" alt="">
+        <img src="../../../static/image/superSignature/wentitu@2x.png" alt="">
       </div>
     </div>
     <Bfooter></Bfooter>
@@ -510,7 +510,7 @@
   }
 
   .lowprizeImg img {
-    width: 241px;
+    width: 247px;
     height: 51px;
   }
 
