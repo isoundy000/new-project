@@ -1,30 +1,15 @@
 <template>
   <div class="login">
-    <div class="login_title">
-      <img src="../../../static/image/index/mumuunlogo.png" alt="">
-      <div class="title">
-        <p @click="titleName(index)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass}"
-           @mouseenter="enter(index)"
-           @mouseleave="leave(index)">{{list.msg}}</p>
-        <!--<p :class="{'isColor':isSup}">超级签名</p>-->
-        <!--<p :class="{'isColor':isOnl}">专属签名</p>-->
-        <!--<p :class="{'isColor':isCom}">企业签名</p>-->
-        <!--<p :class="{'isColor':isBuy}">购买服务</p>-->
-        <!--<p :class="{'isColor':isGit}">发布应用</p>-->
-      </div>
-      <div class="login_title_div">
-        <p>登录</p>
-        <p>注册</p>
-      </div>
-    </div>
 
+    <Bheader></Bheader>
     <div class="banner">
-      <img src="../../../static/image/index/bannner.png" alt="">
+      <img src="../../../static/image/superSignature/bannner.png" alt="">
     </div>
     <!--样例展示-->
     <div class="example">
-      <img src="../../../static/image/index/yangliyanshibiaoti.png" alt="">
+      <img src="../../../static/image/superSignature/yangliyanshibiaoti.png" alt="">
     </div>
+    <!--video-->
     <div class="videoDiv">
       <video width="960" height="400" class="video-js vjs-default-skin vjs-big-play-centered" controls
              style="object-fit:fill" poster="../../assets/logo.png">
@@ -35,31 +20,71 @@
     <!--我们的优势-->
     <div class="advantage">
       <div class="advantageImg">
-        <img src="../../../static/image/index/womendeyoushi.png" alt="">
+        <img src="../../../static/image/superSignature/womendeyoushi.png" alt="">
       </div>
       <div class="advantageBig">
-        <div class="advantageBig_div">
-          <img src="../../../static/image/index/fangbiankuaijie.png" alt="">
-          <p>自动化签名 方便快捷</p>
+        <div @mouseenter="advantageEnterOne()" @mouseleave="advantageLeaveOne()" class="advantageOne advantageBig_div"
+             style="background-image: url('../../../static/image/superSignature/bg.png')">
+          <div class="advantageOneBig" v-if="isAdvantageOne">
+            <img src="../../../static/image/superSignature/qianming@2x.png" alt="">
+            <p class="LaBel">自动化签名 方便快捷</p>
+          </div>
+          <div v-else class="advantageOneSmall">
+            <div>
+              <p>自动化签名、方便快捷</p>
+              <p>根据自身需要，选择服务类型，上传IPA包，快速分发,10分钟内完成所有流程，全程自动化，操作简单</p>
+            </div>
+          </div>
+
         </div>
-        <div class="advantageBig_div">
-          <img src="../../../static/image/index/gaobiediaoqian.png" alt="">
-          <p>特有机制 告别掉签</p>
+        <div @mouseenter="advantageEnterTwo()" @mouseleave="advantageLeaveTwo()" class="advantageTwo advantageBig_div"
+             style="background-image: url('../../../static/image/superSignature/bg.png')">
+          <div class="advantageTwoBig" v-if="isAdvantageTwo">
+            <img src="../../../static/image/superSignature/anquan@2x.png" alt="">
+            <p class="LaBel">特有机制 告别掉签</p>
+          </div>
+          <div v-else class="advantageTwoSmall">
+            <div>
+              <p>特有机制、告别掉签</p>
+              <p>蒲公英采取的iOS超级签名和企业签名机制不同，掉签概率远低于传统企业签名</p>
+            </div>
+          </div>
+
         </div>
-        <div class="advantageBig_div">
-          <img src="../../../static/image/index/fangbiankuaijie.png" alt="">
-          <p>无需越狱 安装即用</p>
+        <div @mouseenter="advantageEnterThree()" @mouseleave="advantageLeaveThree()"
+             class="advantageThree advantageBig_div"
+             style="background-image: url('../../../static/image/superSignature/bg.png')">
+          <div class="advantageTwoBig" v-if="isAdvantageThree">
+            <img src="../../../static/image/superSignature/anzhuang@2x.png" alt="">
+            <p class="LaBel">无需越狱 安装即用</p>
+          </div>
+          <div v-else class="advantageThreeSmall">
+            <div>
+              <p>无需越狱、安装即用</p>
+              <p>无需企业签名，无需越狱，无需苹果审核，无需上架App Store，下载后安装即用</p>
+            </div>
+          </div>
         </div>
-        <div class="advantageBig_div">
-          <img src="../../../static/image/index/xingjiabigao.png" alt="">
-          <p>按需购买 性价比高</p>
+        <div @mouseenter="advantageEnterFourth()" @mouseleave="advantageLeaveFourth()"
+             class="advantageFourth advantageBig_div"
+             style="background-image: url('../../../static/image/superSignature/bg.png')">
+          <div class="advantageFourthBig" v-if="isAdvantageFourth">
+            <img src="../../../static/image/superSignature/goumai@2x.png" alt="">
+            <p class="LaBel">按需购买 性价比高</p>
+          </div>
+          <div v-else class="advantageFourthSmall">
+            <div>
+              <p>自动化签名、快速高效</p>
+              <p>按需购买，未使用设备不过期同设备多次下载，或下载多款应用下载，只收费一次</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <!--超低价格-->
     <div class="lowprize">
       <div class="lowprizeImg">
-        <img src="../../../static/image/index/chaodijiagebiaoqian.png" alt="">
+        <img src="../../../static/image/superSignature/chaodijiagebiaoqian.png" alt="">
       </div>
       <div class="lowprizeDiv">
         <div class="lowprizeDiv_one">
@@ -71,7 +96,7 @@
             <p>4、按设备数量收费，仅需<span>￥15.00</span>/每台</p>
           </div>
           <div>
-            <img src="../../../static/image/index/jiagetu.png" alt="">
+            <img src="../../../static/image/superSignature/jiagetu.png" alt="">
           </div>
         </div>
       </div>
@@ -81,11 +106,11 @@
     <!--服务对比-->
     <div class="service">
       <div class="serviceImg">
-        <img src="../../../static/image/index/fuwuduibibiaoti.png" alt="">
+        <img src="../../../static/image/superSignature/fuwuduibibiaoti.png" alt="">
       </div>
       <div class="serviceDiv">
         <div class="serviceDivOne" @mouseenter="serviceDivOne()"
-             style="background-image: url('../../../static/image/index/lansejianbianditu.png')">
+             style="background-image: url('../../../static/image/superSignature/lansejianbianditu.png')">
           <p class="serviceDivOneTitle">IOS专属签名</p>
           <div class="hr"></div>
           <div class="flex_service">
@@ -169,119 +194,137 @@
     <!--操作流程简单解析-->
     <div class="operation">
       <div class="operationDiv">
-        <img src="../../../static/image/index/caozuoliuchengjianbiaoti.png" alt="">
+        <img src="../../../static/image/superSignature/caozuoliuchengjianbiaoti.png" alt="">
       </div>
       <div class="operationSmall">
         <div class="operationDL">
-          <img src="../../../static/image/index/dengluzhuce.png" alt="">
+
+          <img src="../../../static/image/superSignature/dengluzhuce.png" alt="">
+
           <p>登录/注册</p>
         </div>
         <div class="sanjiao">
-          <img src="../../../static/image/index/sanjiaoxing.png" alt="">
+          <img src="../../../static/image/superSignature/sanjiaoxing.png" alt="">
           <p></p>
         </div>
         <div class="operationCZ">
-          <img src="../../../static/image/index/chongzi.png" alt="">
+
+          <img src="../../../static/image/superSignature/chongzi.png" alt="">
+
           <p>充值</p>
         </div>
         <div class="sanjiao">
-          <img src="../../../static/image/index/sanjiaoxing.png" alt="">
+          <img src="../../../static/image/superSignature/sanjiaoxing.png" alt="">
           <p></p>
         </div>
         <div class="operationSC">
-          <img src="../../../static/image/index/shangchuanipa.png" alt="">
+
+          <img src="../../../static/image/superSignature/shangchuanipa.png" alt="">
+
           <p>上传IPA安装包</p>
         </div>
         <div class="sanjiao">
-          <img src="../../../static/image/index/sanjiaoxing.png" alt="">
+          <img src="../../../static/image/superSignature/sanjiaoxing.png" alt="">
           <p></p>
         </div>
         <div class="operationYY">
-          <img src="../../../static/image/index/success_ico.png" alt="">
+
+          <img src="../../../static/image/superSignature/success_ico.png" alt="">
+
           <p>应用签名 </p>
         </div>
         <div class="sanjiao">
-          <img src="../../../static/image/index/sanjiaoxing.png" alt="">
+          <img src="../../../static/image/superSignature/sanjiaoxing.png" alt="">
           <p></p>
         </div>
         <div class="operationEW">
-          <img src="../../../static/image/index/shenglianjie.png" alt="">
+
+          <img src="../../../static/image/superSignature/shenglianjie.png" alt="">
+
           <p>生成下载链接/二维码</p>
         </div>
 
       </div>
     </div>
+    <!--常见问题-->
+    <div class="problem">
+      <div class="problemDiv">
+        <img src="../../../static/image/superSignature/changjianwentibiaoti.png" alt="">
+      </div>
+      <div class="problemImg">
+        <img src="../../../static/image/superSignature/wentitupian.png" alt="">
+      </div>
+    </div>
+    <Bfooter></Bfooter>
   </div>
 </template>
 
 <script>
+  import Bfooter from '../component/footer'
+  import Bheader from '../component/header'
   export default {
     name: "index",
     data() {
       return {
-        title: [{
-          msg: '首页',
-          isclass: true
-        },
-          {
-            msg: '超级签名',
-            isclass: false
-          },
-          {
-            msg: '专属签名',
-            isclass: false
-          },
-          {
-            msg: '企业签名',
-            isclass: false
-          },
-          {
-            msg: '购买服务',
-            isclass: false
-          },
-          {
-            msg: '发布应用',
-            isclass: false
-          }
-        ]
+
+        isAdvantageOne: true,
+        isAdvantageTwo: true,
+        isAdvantageThree: true,
+        isAdvantageFourth: true
 
 
       }
     },
+    components: {
+      Bfooter,
+      Bheader
+    },
     methods: {
-      /*顶部标题点击事件*/
-      titleName(index) {
-        if (index == 0) {
-          alert("点击了首页")
-        } else if (index == 1) {
-          alert("点击了超级签名")
-        } else if (index == 2) {
-          alert("点击了专属签名")
-        } else if (index == 3) {
-          alert("点击了企业签名")
-        } else if (index == 4) {
-          alert("点击了购买服务")
-        } else if (index == 5) {
-          alert("点击了发布应用")
-        }
+
+      /*优势第一个div移入*/
+      advantageEnterOne() {
+        this.isAdvantageOne = false
+        $(".advantageOne").css({"background-image": 'url(../../../static/image/superSignature/qianming_s.png)'})
       },
-      /*顶部标题移入效果*/
-      enter(index) {
-        if (index != 0) {
-          this.title[0].isclass = false
-        }
-        this.title[index].isclass = true
+      /*优势第一个div移出*/
+      advantageLeaveOne() {
+        this.isAdvantageOne = true
+        $(".advantageOne").css({"background-image": 'url(../../../static/image/superSignature/bg.png)'})
       },
-      /*顶部标题移出效果*/
-      leave(index) {
-        if (index != 0) {
-          this.title[0].isclass = true
-        }
-        this.title[index].isclass = false
+      /*优势第二个div移入*/
+      advantageEnterTwo() {
+        this.isAdvantageTwo = false
+        $(".advantageTwo").css({"background-image": 'url(../../../static/image/superSignature/jizhi.png)'})
       },
+      /*优势第二个div移出*/
+      advantageLeaveTwo() {
+        this.isAdvantageTwo = true
+        $(".advantageTwo").css({"background-image": 'url(../../../static/image/superSignature/bg.png)'})
+      },
+      /*优势第三个div移入*/
+      advantageEnterThree() {
+        this.isAdvantageThree = false
+        $(".advantageThree").css({"background-image": 'url(../../../static/image/superSignature/anzhuang_s.png)'})
+      },
+      /*优势第三个div移出*/
+      advantageLeaveThree() {
+        this.isAdvantageThree = true
+        $(".advantageThree").css({"background-image": 'url(../../../static/image/superSignature/bg.png)'})
+      },
+      /*优势第四个div移入*/
+      advantageEnterFourth() {
+        this.isAdvantageFourth = false
+        $(".advantageFourth").css({"background-image": 'url(../../../static/image/superSignature/goumai_s.png)'})
+      },
+      /*优势第四个div移出*/
+      advantageLeaveFourth() {
+        this.isAdvantageFourth = true
+        $(".advantageFourth").css({"background-image": 'url(../../../static/image/superSignature/bg.png)'})
+      },
+
       /*服务对比第一个div移入效果*/
       serviceDivOne() {
-        // $(".serviceDivOne").css({"background-image": 'url(../../../static/image/index/lansejianbianditu.png)'})
+        // $(".serviceDivOne").css({"background-image": 'url(../../../static/image/superSignature/lansejianbianditu.png)'})
         // $(".serviceDivOneTitle").css({"color": 'white'})
         // $(".serviceDivTwoTitle").css({"color": 'black'})
         // $(".serviceDivOne .serviceSmall").css({"color": 'white'})
@@ -291,7 +334,7 @@
       serviceDivTwo() {
         // $(".serviceDivTwo").css({
         //   "color": 'white',
-        //   "background-image": 'url(../../../static/image/index/lansejianbianditu.png)'
+        //   "background-image": 'url(../../../static/image/superSignature/lansejianbianditu.png)'
         // })
         // $(".serviceDivOne").css({"color": 'black', "background-image": 'url()'})
         // $(".serviceDivOneTitle").css({"color": 'black'})
@@ -304,84 +347,13 @@
 </script>
 
 <style scoped>
-  .login_title {
-    width: 100%;
-    height: 80px;
-    display: flex;
-    /*justify-content: space-around;*/
-    align-items: center;
+  .login {
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*position: relative;*/
   }
 
-  .login_title img {
-    width: 99px;
-    height: 39px;
-    margin-left: 18.8vw;
-  }
 
-  .title {
-    width: 500px;
-    margin-left: 5vw;
-    list-style: none;
-    display: inline-flex;
-    justify-content: space-around;
-  }
-
-  .title p:nth-child(1) {
-
-    /*color: #06B2B6;*/
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-
-  }
-
-  .isColor {
-    color: #06B2B6;
-    border-bottom: 2px solid #06B2B6;
-  }
-
-  .title p {
-
-    cursor: pointer;
-    font-size: 14px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    /*border-bottom: 2px solid white;*/
-  }
-
-  .login_title_div {
-    display: flex;
-    font-size: 16px;
-    color: #323232;
-    margin-left: 6vw;
-  }
-
-  .login_title_div p:nth-child(1) {
-    width: 56px;
-    height: 30px;
-    background-color: #06B2B6;
-    font-size: 14px;
-    color: white;
-    line-height: 30px;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-
-  .login_title_div p:nth-child(2) {
-    margin-left: 20px;
-    width: 56px;
-    height: 30px;
-    background-color: white;
-    font-size: 14px;
-    color: #999999;
-    line-height: 30px;
-    text-align: center;
-    border: 1px solid grey;
-    border-radius: 5px;
-    cursor: pointer;
-  }
 
   .banner img {
     width: 100%;
@@ -404,11 +376,12 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    margin-top: 20px;
   }
 
   .advantage {
     width: 100%;
-    height: 570px;
+    height: 520px;
     margin-top: 50px;
     background-color: #F7F7F7;
   }
@@ -433,25 +406,95 @@
   }
 
   .advantageBig_div {
-    width: 270px;
-    height: 320px;
+    width: 230px;
+    height: 280px;
+    background-size: 230px 280px;
     display: flex;
     flex-flow: column;
     justify-content: center;
     align-items: center;
     margin: 20px;
     border-radius: 10px;
-    background-color: #EEEEEE;
+    background-repeat: no-repeat;
+    cursor: pointer;
+  }
+
+  .advantageOneBig {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .advantageTwoBig {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .advantageThreeBig {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .advantageFourthBig {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .advantageBig_div img {
-    width: 99px;
-    height: 99px;
+    width: 85px;
+    height: 85px;
   }
 
-  .advantageBig_div p {
+  .advantageBig_div .LaBel {
     margin-top: 45px;
   }
+
+  .advantageOneSmall, .advantageTwoSmall, .advantageThreeSmall, .advantageFourthSmall {
+    width: 75%;
+    color: white;
+
+  }
+
+  .advantageOneSmall p:nth-child(1), .advantageTwoSmall p:nth-child(1), .advantageThreeSmall p:nth-child(1), .advantageFourthSmall p:nth-child(1) {
+    text-align: center;
+    font-size: 15px;
+  }
+
+  .advantageOneSmall p:nth-child(2), .advantageTwoSmall p:nth-child(2), .advantageThreeSmall p:nth-child(2), .advantageFourthSmall p:nth-child(2) {
+    width: 100%;
+    font-size: 12px;
+    margin-top: 25px;
+    text-align: justify;
+    text-justify: inter-ideograph;
+
+  }
+
+  /*.advantageTwoSmall {*/
+  /*width: 75%;*/
+  /*color: white;*/
+
+  /*}*/
+
+  /*.advantageTwoSmall p:nth-child(1) {*/
+  /*text-align: center;*/
+  /*font-size: 15px;*/
+  /*}*/
+
+  /*.advantageTwoSmall p:nth-child(2) {*/
+  /*width: 100%;*/
+  /*font-size: 12px;*/
+  /*margin-top: 25px;*/
+  /*text-align: justify;*/
+  /*text-justify: inter-ideograph;*/
+
+  /*}*/
 
   .lowprize {
     width: 100%;
@@ -663,7 +706,7 @@
     width: 6px;
     height: 6px;
     border-radius: 10px;
-    background-color: white;
+    background-color: black;
   }
 
   .serviceDivTwo .serviceSmall {
@@ -682,7 +725,7 @@
     width: 6px;
     height: 6px;
     border-radius: 10px;
-    background-color: white;
+    background-color: black;
   }
 
   .serviceSmall p {
@@ -706,8 +749,9 @@
     width: 438px;
     height: 51px;
   }
-  .operationSmall{
-    width: 80%;
+
+  .operationSmall {
+    width: 60%;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -716,78 +760,153 @@
     font-size: 16px;
   }
 
-  .operationDL{
-    width: 180px;
-    height: 60px;
+  .operationDL {
+    width: 80px;
+    height: 100px;
     display: flex;
     flex-flow: column;
     justify-content: center;
     align-items: center;
-  }
-  .operationDL img{
-    width: 56px;
-    height: 50px;
+    position: relative;
+    top: 0;
   }
 
-  .operationCZ{
-    width: 180px;
-    height: 60px;
+  .operationDL img {
+    width: 56px;
+    height: 50px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -28px;
+  }
+
+  .operationCZ {
+    width: 80px;
+    height: 100px;
     display: flex;
     flex-flow: column;
     justify-content: center;
     align-items: center;
+    position: relative;
+    top: 0;
   }
-  .operationCZ img{
+
+  .operationCZ img {
     width: 56px;
     height: 42px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -28px;
   }
-  .operationSC{
-    width: 180px;
-    height: 60px;
+
+  .operationSC {
+    width: 110px;
+    height: 100px;
     display: flex;
     flex-flow: column;
     justify-content: center;
     align-items: center;
+    position: relative;
+    top: 0;
+
   }
-  .operationSC img{
+
+  .operationSC img {
     width: 56px;
     height: 42px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -28px;
   }
-  .operationYY{
-    width: 180px;
-    height: 60px;
+
+  .operationYY {
+    width: 90px;
+    height: 100px;
     display: flex;
     flex-flow: column;
     justify-content: center;
     align-items: center;
+    position: relative;
+    top: 0;
   }
-  .operationYY img{
+
+  .operationYY img {
     width: 56px;
     height: 56px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -28px;
   }
-  .operationEW{
-    width: 210px;
-    height: 60px;
+
+  .operationEW {
+    width: 150px;
+    height: 100px;
     display: flex;
     flex-flow: column;
     justify-content: center;
     align-items: center;
+    margin-left: -30px;
+    position: relative;
+    top: 0;
   }
-  .operationEW img{
+
+  .operationEW img {
     width: 56px;
     height: 55px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -28px;
   }
-  .operationSmall p{
-    margin-top: 30px;
+
+  .operationEW p, .operationDL p, .operationYY p, .operationSC p, .operationCZ p {
+    position: absolute;
+    bottom: 10px;
   }
-  .sanjiao{
-    width: 180px;
+
+  .sanjiao {
+
     height: 80px;
     text-align: center;
   }
-  .sanjiao img{
+
+  .sanjiao1 img {
     width: 18px;
     height: 24px;
 
   }
+
+  .problem {
+    width: 100%;
+    height: 1500px;
+    background-color: #F5F5F5;
+  }
+
+  .problemDiv {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 61px;
+  }
+
+  .problemDiv img {
+    width: 283px;
+    height: 53px;
+  }
+
+  .problemImg {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+  }
+
+  .problemImg img {
+    width: 67%;
+    height: 1220px;
+  }
+
 </style>

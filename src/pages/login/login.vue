@@ -1,13 +1,561 @@
 <template>
+  <div class="login">
+    <div class="login_title">
+      <img src="../../../static/image/superSignature/mumuunlogo.png" alt="">
 
+      <div class="login_title_div">
+        <router-link to="/" tag="p">首页 </router-link>
+        <p>关于我们</p>
+      </div>
+    </div>
+    <div class="banner" style="background-image: url('../../../static/image/login/dengluditu.png')">
+      <div class="loginDiv" style="background-image: url('../../../static/image/login/denglukuang.png')">
+        <div class="loginDiv_One">
+          <p @click="msgLogin" :class="{'isColor':isA}" class="msg_login">短信登录</p>
+          <div></div>
+          <p @click="accountLogin" :class="{'isColor':isB}" class="account_login">账号登录</p>
+        </div>
+        <div v-if="isState" class="msgDiv">
+          <div class="tishi" v-if="isTishi">
+            <div class="tishiDiv">
+              <img src="../../../static/image/login/tishi.png" alt="">
+              <p v-if="isVerification">用户名或验证码错误</p>
+              <p v-else>用户名或验证码不能为空</p>
+            </div>
+
+          </div>
+          <div class="login_Input">
+
+            <div class="user_div" :class="{'borderColor':phoneIcon}">
+              <img v-if="phoneIcon" src="../../../static/image/login/shouji_s.png" alt="">
+              <img v-else src="../../../static/image/login/shouji.png" alt="">
+              <input v-on:input="phoneInput" type="text"  placeholder="请输入手机号" v-model="phonenumber"
+                     onkeyup="this.value=this.value.replace(/\D/g,'')"
+                     onafterpaste="this.value=this.value.replace(/\D/g,'')">
+            </div>
+            <div class="password_div" :class="{'borderColor':yanzIcon}">
+              <img v-if="yanzIcon" src="../../../static/image/login/yanzheng_s.png" alt="">
+              <img v-else src="../../../static/image/login/yanzhengma.png" alt="">
+              <input v-on:input="yanzInput" type="password" placeholder="请输入短信验证码" v-model="verificationCode">
+              <div @click="send" class="send ">发送验证码</div>
+            </div>
+          </div>
+          <div class="login_state">
+            <div class="login_state_div">
+              <div class="login_state_small">
+                <img @click="checklist" v-if="isCheck" src="../../../static/image/login/gouxuan1.png" alt="">
+                <img v-else @click="noChecklist" src="../../../static/image/login/gouxuan2.png" alt="">
+                <p>记住登录状态</p>
+              </div>
+              <p class="forget" @click="forget">忘记密码？</p>
+            </div>
+          </div>
+          <div @click="login" class="loginBtn">
+            <div style="background-image: url('../../../static/image/login/dengluanniu.png')">
+              <p>登录</p>
+            </div>
+          </div>
+          <div class="login_footer">
+            <p>没有账号？<span @click="register">去注册</span></p>
+          </div>
+        </div>
+        <div v-else class="accountDiv">
+          <div class="tishi" v-if="isTishi1">
+            <div class="tishiDiv">
+              <img src="../../../static/image/login/tishi.png" alt="">
+              <p v-if="isVerification1">用户名或密码错误</p>
+              <p v-else>用户名或密码不能为空</p>
+            </div>
+
+          </div>
+          <div class="login_Input">
+            <div class="user_div" :class="{'borderColor':accountIcon}">
+              <img v-if="accountIcon" src="../../../static/image/login/shouji_s.png" alt="">
+              <img v-else src="../../../static/image/login/shouji.png" alt="">
+              <input v-on:input="accountInput" type="text" autocomplete="off" placeholder="请输入账户/手机/邮箱" v-model="account">
+            </div>
+            <div class="password_div" :class="{'borderColor':passwordIcon}">
+              <img v-if="passwordIcon" src="../../../static/image/register/mima_s.png" alt="">
+              <img v-else src="../../../static/image/register/mima_n.png" alt="">
+              <input v-on:input="passwordInput" type="password" placeholder="请输入密码" v-model="password">
+            </div>
+          </div>
+          <div class="login_state">
+            <div class="login_state_div">
+              <div class="login_state_small">
+                <img @click="checklist" v-if="isCheck" src="../../../static/image/login/gouxuan1.png" alt="">
+                <img v-else @click="noChecklist" src="../../../static/image/login/gouxuan2.png" alt="">
+                <p>记住登录状态</p>
+              </div>
+              <p class="forget" @click="forget">忘记密码？</p>
+            </div>
+          </div>
+          <div class="loginBtn" @click="accountLoginBtn">
+            <div style="background-image: url('../../../static/image/login/dengluanniu.png')">
+              <p>登录</p>
+            </div>
+          </div>
+          <div class="login_footer">
+            <p>没有账号？<span @click="register">去注册</span></p>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+    <Bfooter></Bfooter>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "login"
+  import Bfooter from '../component/footer'
+
+  export default {
+    name: "login",
+    data() {
+      return {
+        phonenumber: '',//电话
+        verificationCode: '',//验证码
+        account:'',//账户、手机、邮箱
+        password:'',//密码
+        phoneIcon:false,//绿色手机icon
+        yanzIcon:false,//绿色验证码icon
+        accountIcon:false,//绿色账号手机icon
+        passwordIcon:false,//绿色账号密码icon
+        isState: true,//显示短信登录还是账号登录界面，默认是短信登录
+        isCheck: true,//复选框的选择，默认是不选中
+        isTishi:false,//短信登录里面提示
+        isVerification:false,//短信登录里面显示账号为空还是错误，默认是显示为空
+        isTishi1:false,//账号登录里面提示
+        isVerification1:false,//账号登录里面显示账号为空还是错误，默认是显示为空
+        isA:true,//点击短信登录的字体颜色，默认是true，是绿色
+        isB:false,//点击账号登录的字体颜色，默认是false，是黑色
+      }
+    },
+    components: {
+      Bfooter
+    },
+    methods: {
+
+      /*短信登录title*/
+      msgLogin(){
+        /*清空输入框数据*/
+        this.phonenumber=''
+        this.verificationCode=''
+        this.account=''
+        this.password=''
+        /*验证码和手机border颜色和icon的颜色清空*/
+        this.yanzIcon=false
+        this.phoneIcon=false
+
+        this.isTishi=false
+        this.isTishi1=false
+        this.isState=true
+        this.isA=true
+        this.isB=false
+      },
+      /*账号登录title*/
+      accountLogin(){
+        /*清空输入框数据*/
+        this.phonenumber=''
+        this.verificationCode=''
+        this.account=''
+        this.password=''
+
+        /*验证码和手机border颜色和icon的颜色清空*/
+        this.accountIcon=false
+        this.passwordIcon=false
+
+        this.isTishi=false
+        this.isTishi1=false
+        this.isState=false
+        this.isB=true
+        this.isA=false
+      },
+      /*短信登录里面手机号输入框聚焦事件*/
+      phoneInput(){
+        if(this.phonenumber==''){
+          this.phoneIcon=false
+        }else{
+          this.phoneIcon=true
+        }
+      },
+      /*短信登录里面验证码输入框聚焦事件*/
+      yanzInput(){
+        if(this.verificationCode==''){
+          this.yanzIcon=false
+        }else{
+          this.yanzIcon=true
+        }
+      },
+      /*账号登录里面手机号输入框聚焦事件*/
+      accountInput(){
+        if(this.account==''){
+          this.accountIcon=false
+        }else{
+          this.accountIcon=true
+        }
+      },
+      /*账号登录里面密码输入框聚焦事件*/
+      passwordInput(){
+        if(this.password==''){
+          this.passwordIcon=false
+        }else{
+          this.passwordIcon=true
+        }
+      },
+      /*发送验证码倒计时*/
+      send(){
+        var timeClock;
+        var timer_num = 60;
+        timeClock = setInterval(function() {
+          timer_num--;
+          $('.send').html(timer_num+'秒');
+          if(timer_num == 0) {
+            clearInterval(timeClock);
+            $('.send').html('重新发送');
+          }
+        }, 1000)
+      },
+
+
+
+
+      /*由没选中变选中状态*/
+      checklist() {
+        this.isCheck = false
+        alert("勾选了")
+      },
+      /*由选中变没选中状态*/
+      noChecklist() {
+        this.isCheck = true
+        alert("取消勾选了")
+      },
+      /*短信登录按钮*/
+      login(){
+        /*账号或验证码为空*/
+        if(this.phonenumber=='' || this.verificationCode==''){
+            this.isTishi=true
+          this.isVerification=false
+        }else{
+          this.isTishi=false
+          this.isVerification=false
+        }
+        /*账号或验证码错误*/
+
+      },
+      /*账号登录按钮*/
+      accountLoginBtn(){
+        /*账号或密码为空*/
+        if(this.account=='' || this.password==''){
+          this.isTishi1=true
+          this.isVerification1=false
+        }else{
+          this.isTishi1=false
+          this.isVerification1=false
+        }
+        /*账号或密码错误*/
+      },
+      /*注册*/
+      register(){
+        this.$router.push({
+          path: '/register'
+        })
+      },
+      /*w忘记密码*/
+      forget(){
+        this.$router.push({
+          path: '/forget'
+        })
+      }
     }
+  }
 </script>
 
 <style scoped>
+  .login {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
 
+  .login_title {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+  }
+
+  .login_title img {
+    width: 99px;
+    height: 39px;
+    margin-left: 18.8vw;
+  }
+
+
+
+  .login_title_div {
+    display: flex;
+    font-size: 16px;
+    color: #999999;
+    margin-left: 45vw;
+  }
+
+  .login_title_div p:nth-child(1) {
+    width: 56px;
+    height: 30px;
+    /*background-color: #06B2B6;*/
+    font-size: 14px;
+    color: #999999;
+    line-height: 30px;
+    text-align: center;
+    /*border-radius: 5px;*/
+    cursor: pointer;
+  }
+
+  .login_title_div p:nth-child(2) {
+    margin-left: 20px;
+    width: 56px;
+    height: 30px;
+    /*background-color: white;*/
+    font-size: 14px;
+    color: #999999;
+    line-height: 30px;
+    text-align: center;
+    /*border-radius: 5px;*/
+    cursor: pointer;
+  }
+
+  .banner {
+    width: 100%;
+    height: 75%;
+
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+  }
+
+  .loginDiv {
+    width: 22%;
+    height: 77%;
+    margin-left: 55vw;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+
+  .loginDiv_One {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 17px;
+
+    border-bottom: 1px solid #DCDCDC;
+  }
+.msgDiv,.accountDiv{
+  position: relative;
+}
+  .msg_login {
+    /*color: #06B2B6;*/
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .account_login {
+    color: #333333;
+    font-weight: bold;
+    cursor: pointer;
+  }
+.tishi{
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  /* margin-top: 20px; */
+  top: -40px;
+  position: absolute;
+}
+.tishiDiv{
+  width: 90%;
+  display: flex;
+  align-items: center;
+}
+.tishiDiv img{
+  width: 24px;
+  height: 24px;
+}
+.tishiDiv p{
+  font-size: 1.1vw;
+  color: #FF0000;
+  margin-left: 10px;
+}
+  .loginDiv_One div {
+    height: 15px;
+    border: 1px solid #DCDCDC;
+  }
+
+  .login_Input {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+    margin-top:60px;
+  }
+
+  .user_div {
+    width: 90%;
+    height: 2.5vw;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    border: 1px solid #DCDCDC;
+    border-radius: 8px;
+  }
+
+  .user_div img {
+    width: 15px;
+    height: 23px;
+    margin-left: 20px;
+  }
+
+  .user_div input {
+    width: 100%;
+    height: 2.5vw;
+    border: 0;
+    font-size: 1vw;
+    padding-left: 20px;
+    border-radius: 8px;
+    outline: none;
+  }
+
+  .password_div {
+    width: 90%;
+    height: 2.5vw;
+    display: flex;
+    align-items: center;
+    margin: 30px auto 0 auto;
+    border: 1px solid #DCDCDC;
+    border-radius: 8px;
+  }
+
+  .password_div img {
+    width: 18px;
+    height: 22px;
+    margin-left: 20px;
+  }
+
+  .password_div input {
+    width: 90%;
+    height: 2.5vw;
+    border: 0;
+    font-size: 1vw;
+    padding-left: 20px;
+    border-radius: 8px;
+    outline: none;
+  }
+
+  input::-webkit-input-placeholder {
+    color: #999999;
+    font-size: 1vw;
+  }
+
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+  }
+
+  .send {
+    width: 200px;
+    height: 26px;
+    line-height: 26px;
+    text-align: center;
+    color: #333333;
+    font-size: 1vw;
+    margin-left: 20px;
+    cursor: pointer;
+    font-family: "MicrosoftYaHei";
+
+    border-left: 1px solid #E5E5E5;
+  }
+
+  .login_state {
+    width: 100%;
+    margin-top: 26px;
+    font-size: 1vw;
+  }
+
+  .login_state_div {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .login_state_small p {
+    margin-left: 0.8vw;
+    color: #666666;
+    font-family: 'MicrosoftYaHei';
+  }
+
+  .login_state_div img {
+    width: 19px;
+    height: 19px;
+    margin-left: 0.5vw;
+  }
+
+  .login_state_small {
+    display: flex;
+  }
+
+  .forget {
+    color: #278DFE;
+    cursor: pointer;
+  }
+
+  .loginBtn {
+    width: 100%;
+    height: 4vw;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+
+  .loginBtn div {
+    width: 90%;
+    height: 4vw;
+    background-size: 100% 4vw;
+    background-repeat: no-repeat;
+    text-align: center;
+    line-height: 4vw;
+    color: white;
+    font-size: 1.1vw;
+  }
+
+  .login_footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 0.8vw;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+
+  .login_footer span {
+    color: #06B2B6;
+  }
+  .isColor {
+    color: #06B2B6;
+
+  }
+  .borderColor{
+    border: 1px solid #06B2B6;
+  }
 </style>
