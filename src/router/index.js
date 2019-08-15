@@ -5,6 +5,8 @@ import superSignature from '@/pages/superSignature/superSignature'
 import login from '@/pages/login/login'//登录路由
 import register from '@/pages/register/register'//注册路由
 import forget from '@/pages/forget/forget'//忘记密码路由
+import survey from '@/pages/survey/survey'//忘记密码路由
+
 Vue.use(Router)
 
 export default new Router({
@@ -28,6 +30,11 @@ export default new Router({
       path: '/forget',
       name: 'forget',
       component: forget
+    },
+    {
+      path: '/survey',
+      name: 'survey',
+      component: survey
     }
   ]
 })
