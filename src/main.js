@@ -8,6 +8,10 @@ import 'element-ui/lib/theme-chalk/index.css'
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 import $ from 'jquery'
+// 引入echarts
+import echarts from 'echarts'
+
+Vue.prototype.$echarts = echarts
 Vue.use(ElementUI)
 Vue.use(iView);
 Vue.config.productionTip = false

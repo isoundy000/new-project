@@ -273,10 +273,14 @@
 </script>
 
 <style scoped>
+  *{
+
+  }
   .login {
     width: 100%;
     height: 100%;
     position: relative;
+    box-sizing: 0 !important;
   }
 
   .login_title {
@@ -418,6 +422,8 @@
     margin: 0 auto;
     border: 1px solid #DCDCDC;
     border-radius: 8px;
+    box-sizing: content-box;
+
   }
 
   .user_div img {
@@ -444,6 +450,7 @@
     margin: 30px auto 0 auto;
     border: 1px solid #DCDCDC;
     border-radius: 8px;
+    box-sizing: content-box;
   }
 
   .password_div img {

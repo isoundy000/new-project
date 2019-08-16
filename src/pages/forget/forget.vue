@@ -254,6 +254,7 @@
     margin: 15px auto 0 auto;
     border: 1px solid #DCDCDC;
     border-radius: 8px;
+    box-sizing: content-box;
   }
 
   .phone_div img {
@@ -279,6 +280,7 @@
     margin: 15px auto 0 auto;
     border: 1px solid #DCDCDC;
     border-radius: 8px;
+    box-sizing: content-box;
   }
   .verification_div img {
     width: 18px;
@@ -303,6 +305,7 @@
     margin: 15px auto 0 auto;
     border: 1px solid #DCDCDC;
     border-radius: 8px;
+    box-sizing: content-box;
   }
   .set_div img {
     width: 19px;
@@ -327,6 +330,7 @@
     margin: 15px auto 0 auto;
     border: 1px solid #DCDCDC;
     border-radius: 8px;
+    box-sizing: content-box;
   }
   .password_div img {
     width: 19px;

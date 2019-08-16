@@ -124,7 +124,7 @@
     justify-content: center;
   }
   .login_title {
-    width: 1200px;
+    width:78%;
     height: 80px;
     display: flex;
     /*justify-content: space-around;*/
