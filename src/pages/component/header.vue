@@ -120,7 +120,7 @@
       },
       myappBtn(){
         this.$router.push({
-          path: '/survey'
+          path: '/myApp'
         })
       }
 

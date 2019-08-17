@@ -67,17 +67,20 @@
     methods: {
       /*顶部标题点击事件*/
       titleName(index) {
+        this.title[index].isclass = true
         if (index == 0) {
-          alert("点击了首页")
+          alert("点击了概况")
+
+
         } else if (index == 1) {
-          alert("点击了超级签名")
+          alert("点击了应用管理")
+
+          this.$router.push({
+            path:'/appManagement'
+          })
         } else if (index == 2) {
-          alert("点击了专属签名")
+          alert("点击了账单管理")
         } else if (index == 3) {
-          alert("点击了企业签名")
-        } else if (index == 4) {
-          alert("点击了购买服务")
-        } else if (index == 5) {
           alert("点击了发布应用")
         }
       },
@@ -95,17 +98,20 @@
       },
       /*顶部标题移入效果*/
       enter(index) {
-        if (index != 0) {
+        if(index != 0){
           this.title[0].isclass = false
         }
         this.title[index].isclass = true
+
+
       },
       /*顶部标题移出效果*/
       leave(index) {
-        if (index != 0) {
+        if(index!=0){
           this.title[0].isclass = true
         }
         this.title[index].isclass = false
+
       },
       goHome(){
         this.$router.push({

@@ -1,145 +1,158 @@
 <template>
-  <div class="survey">
-    <surveyHeader></surveyHeader>
-    <div class="firstDiv">
-      <div class="firstDiv_small">
-        <img src="../../../static/image/survey/shouye@2x.png" alt="">
-        <p>您当前位置：</p>
-        <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item><a href="/">我的应用</a></el-breadcrumb-item>
-          <el-breadcrumb-item>概括</el-breadcrumb-item>
-        </el-breadcrumb>
-      </div>
-    </div>
-    <div class="secondDiv">
-      <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
-        <img class="jineIcon" src="../../../static/image/survey/jine@2x.png" alt="">
-        <div class="secondDivText">
-          <p>总消费金额</p>
-          <p>4,235</p>
+    <div>
+      <div class="firstDiv">
+        <div class="firstDiv_small">
+          <img src="../../../static/image/survey/shouye@2x.png" alt="">
+          <p>您当前位置：</p>
+          <el-breadcrumb separator="/">
+            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item><a href="/">我的应用</a></el-breadcrumb-item>
+            <el-breadcrumb-item>概括</el-breadcrumb-item>
+          </el-breadcrumb>
         </div>
       </div>
-      <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
-        <img class="liulanIcon" src="../../../static/image/survey/liulan@2x.png" alt="">
-        <div class="secondDivText">
-          <p>页面总浏览量</p>
-          <p>4,235</p>
+      <div class="secondDiv">
+        <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
+          <img class="jineIcon" src="../../../static/image/survey/jine@2x.png" alt="">
+          <div class="secondDivText">
+            <p>总消费金额</p>
+            <p>4,235</p>
+          </div>
         </div>
-      </div>
-      <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
-        <img class="xiazaiIcon" src="../../../static/image/survey/xiazai@2x.png" alt="">
-        <div class="secondDivText">
-          <p>总下载量</p>
-          <p><span>4,235</span><span>4,235</span></p>
+        <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
+          <img class="liulanIcon" src="../../../static/image/survey/liulan@2x.png" alt="">
+          <div class="secondDivText">
+            <p>页面总浏览量</p>
+            <p>4,235</p>
+          </div>
         </div>
-      </div>
-      <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
-        <img class="shebeiIcon" src="../../../static/image/survey/shebei@2x.png" alt="">
-        <div class="secondDivText">
-          <p>页面总浏览量</p>
-          <p>4,235</p>
+        <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
+          <img class="xiazaiIcon" src="../../../static/image/survey/xiazai@2x.png" alt="">
+          <div class="secondDivText">
+            <p>总下载量</p>
+            <p><span>4,235</span><span>4,235</span></p>
+          </div>
         </div>
-      </div>
+        <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
+          <img class="shebeiIcon" src="../../../static/image/survey/shebei@2x.png" alt="">
+          <div class="secondDivText">
+            <p>页面总浏览量</p>
+            <p>4,235</p>
+          </div>
+        </div>
 
-    </div>
-    <div class="thirdDiv">
-      <div class="recently7" style="background-image: url('../../../static/image/survey/anniu_s@2x.png')">
-        <p>最近7天</p>
       </div>
-      <div class="recently1" style="background-image: url('../../../static/image/survey/anniu_n@2x.png')">
-        <p>最近1月</p>
-      </div>
-      <div class="recently3" style="background-image: url('../../../static/image/survey/anniu_n@2x.png')">
-        <p>最近3月</p>
-      </div>
-      <DatePicker size="large" @on-change="firstTime(value=$event)" v-model="value" format="yyyy-MM-dd" :clearable=false
-                  type="daterange" split-panels placeholder="请选择时间段" style="width: 280px;height: 40px"></DatePicker>
-      <div class="export" style="background-image: url('../../../static/image/survey/daoduanniu@2x.png')">
-        <img src="../../../static/image/survey/daochuicon@2x.png" alt="">
-        <p>导出数据</p>
-      </div>
-
-    </div>
-    <div class="fourthDiv">
-      <div class="fourthDivOne">
-        <p>应用对比</p>
-      </div>
-      <div id="columnDiagram"></div>
-    </div>
-    <div class="fifthDiv">
-      <div class="fifthDivOne">
-        <p>应用详情</p>
-        <el-select class="chooseApp" @change="chooseApp()" v-model="appValue" placeholder="选择应用">
-          <el-option
-            v-for="item in chooseAppOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-      </div>
-      <div id="polygonalChart"></div>
-    </div>
-    <div class="sixthDiv">
-      <div class="sixthDivOne">
-        <p>区域新用户下载量</p>
-        <el-select class="downSum" @change="downSum()" v-model="downSumValue" placeholder="新用户下载量">
-          <el-option
-            v-for="item in downSumOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-        <el-select class="allApp" @change="allApp()" v-model="allAppValue" placeholder="所有应用">
-          <el-option
-            v-for="item in allAppOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-        <DatePicker class="sec" size="large" @on-change="secondTime(value=$event)" v-model="value" format="yyyy-MM-dd" :clearable=false
+      <div class="thirdDiv">
+        <div class="recently7" style="background-image: url('../../../static/image/survey/anniu_s@2x.png')">
+          <p>最近7天</p>
+        </div>
+        <div class="recently1" style="background-image: url('../../../static/image/survey/anniu_n@2x.png')">
+          <p>最近1月</p>
+        </div>
+        <div class="recently3" style="background-image: url('../../../static/image/survey/anniu_n@2x.png')">
+          <p>最近3月</p>
+        </div>
+        <DatePicker size="large" @on-change="firstTime(value=$event)" v-model="value" format="yyyy-MM-dd" :clearable=false
                     type="daterange" split-panels placeholder="请选择时间段" style="width: 280px;height: 40px"></DatePicker>
+        <div class="export" style="background-image: url('../../../static/image/survey/daoduanniu@2x.png')">
+          <img src="../../../static/image/survey/daochuicon@2x.png" alt="">
+          <p>导出数据</p>
+        </div>
+
       </div>
-      <div id="mapChart"></div>
+      <div class="fourthDiv">
+        <div class="fourthDivOne">
+          <p>应用对比</p>
+        </div>
+        <div id="columnDiagram"></div>
+      </div>
+      <div class="fifthDiv">
+        <div class="fifthDivOne">
+          <p>应用详情</p>
+          <el-select class="chooseApp" @change="chooseApp()" v-model="appValue" placeholder="选择应用">
+            <el-option
+              v-for="item in chooseAppOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </div>
+        <div id="polygonalChart"></div>
+      </div>
+      <div class="sixthDiv">
+        <div class="sixthDivOne">
+          <p>区域新用户下载量</p>
+          <el-select class="downSum" @change="downSum()" v-model="downSumValue" placeholder="新用户下载量">
+            <el-option
+              v-for="item in downSumOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+          <el-select class="allApp" @change="allApp()" v-model="allAppValue" placeholder="所有应用">
+            <el-option
+              v-for="item in allAppOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+          <DatePicker class="sec" size="large" @on-change="secondTime(value1=$event)" v-model="value1" format="yyyy-MM-dd" :clearable=false
+                      type="daterange" split-panels placeholder="请选择时间段" style="width: 280px;height: 40px"></DatePicker>
+        </div>
+        <div class="sixthDivOneSmal">
+          <div id="mapChart"></div>
+          <div class="ranking">
+            <p class="top10">区域新用户下载 TOP10</p>
+            <div class="ranking_div">
+              <div class="region">
+                <p>区域名称</p>
+              </div>
+              <div class="newUser">
+                <p>新用户下载量</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
-  </div>
 </template>
 
 <script>
-  import surveyHeader from '../component/surveyHeader'
   import chinaJson from 'echarts/map/json/china.json';//此处引入中国地图json
   export default {
     name: "survey",
     data() {
       return {
-        value: '',
+        value: '',//第一个日历选中的值
+        value1:'',//第二个日历选中的值
         chooseAppOptions: [
           {
-          value: '应用一',
-        }, {
-          value: '应用二',
-        }, {
-          value: '应用三',
-        }, {
-          value: '应用四',
-        }, {
-          value: '应用五',
-        }],
+            value: '应用一',
+          }, {
+            value: '应用二',
+          }, {
+            value: '应用三',
+          }, {
+            value: '应用四',
+          }, {
+            value: '应用五',
+          }],//应用详情里面的下拉菜单
         downSumOptions:[
           {
-          value: '2200',
-        }, {
-          value: '100',
-        }, {
-          value: '50',
-        }, {
-          value: '11',
-        }, {
-          value: '230',
-        }],
+            value: '2200',
+          }, {
+            value: '100',
+          }, {
+            value: '50',
+          }, {
+            value: '11',
+          }, {
+            value: '230',
+          }],//区域新用户下载量里面的新用户下载量下拉菜单
         allAppOptions:[
           {
             value: '应用一',
@@ -151,21 +164,20 @@
             value: '应用四',
           }, {
             value: '应用五',
-          }],
-        appValue: '',
-        downSumValue:'',
-        allAppValue:''
+          }],//区域新用户下载量里面的所有应用的下拉菜单
+        appValue: '',//应用详情里面的下拉菜单选中的值
+        downSumValue:'',//区域新用户下载量里面的新用户下载量下拉菜单选中的值
+        allAppValue:''//区域新用户下载量里面的所有应用的下拉菜单选中的值
       }
     },
-    components: {
-      surveyHeader
-    },
+
     mounted() {
       this.drawColumn()
       this.drawPolygonal()
       this.drawMap()
     },
     methods: {
+      /*柱形图*/
       drawColumn() {
         // 基于准备好的dom，初始化echarts实例
         let myChart = this.$echarts.init(document.getElementById('columnDiagram'))
@@ -262,6 +274,7 @@
           ]
         });
       },
+      /*折线图*/
       drawPolygonal() {
         let myChart = this.$echarts.init(document.getElementById('polygonalChart'))
         myChart.setOption({
@@ -359,6 +372,7 @@
           ]
         })
       },
+      /*地图*/
       drawMap(){
         this.$echarts.registerMap('china', chinaJson);
         let myChart = this.$echarts.init(document.getElementById('mapChart'))
@@ -443,25 +457,29 @@
           ]
         })
       },
+      /*第一个日历选中*/
       firstTime(a) {
         console.log(a)
       },
+      /*第二个日历选中*/
       secondTime(b){
         console.log(b)
       },
+      /*应用详情里面的下拉菜单*/
       chooseApp(){
         console.log(this.appValue)
       },
+      /*新用户下载量*/
       downSum(){
         console.log(this.downSumValue)
       },
+      /*所有应用*/
       allApp(){
         console.log(this.allAppValue)
       }
     }
   }
 </script>
-
 
 <style scoped>
   .firstDiv {
@@ -613,12 +631,12 @@
     height: 500px;
     margin: 30px auto 0 auto;
   }
-#mapChart{
-  width: 500px;
-  height: 500px;
-  margin-left: 40px;
-  /*margin: 30px auto 0 auto;*/
-}
+  #mapChart{
+    width: 500px;
+    height: 500px;
+    margin-left: 40px;
+    /*margin: 30px auto 0 auto;*/
+  }
   .fourthDiv,.fifthDiv,.sixthDiv {
     width: 78%;
     height: 600px;
@@ -675,6 +693,44 @@
   }
   .sec{
     height: 40px;
+  }
+  .sixthDivOneSmal{
+    display: flex;
+  }
+  .ranking{
+    width: 600px;
+  }
+  .top10{
+    text-align: center;
+    color: #999999;
+    margin-top: 70px;
+    font-size: 20px;
+  }
+  .ranking_div{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  .region{
+    width: 250px;
+    height: 325px;
+    text-align: center;
+    font-size: 16px;
+    color: #333333;
+    font-weight: bold;
+    font-family: "Microsoft YaHei UI";
+    border-right: 1px solid #E5E5E5;
+  }
+  .newUser{
+    width: 250px;
+    height: 325px;
+
+    text-align: center;
+    font-size: 16px;
+    color: #333333;
+    font-weight: bold;
+    font-family: "Microsoft YaHei UI";
+    border-left: 1px solid #E5E5E5;
   }
 </style>
 <style>
