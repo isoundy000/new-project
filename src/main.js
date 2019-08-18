@@ -10,7 +10,10 @@ import 'iview/dist/styles/iview.css';
 import $ from 'jquery'
 // 引入echarts
 import echarts from 'echarts'
-
+// 引入axios
+import axios from 'axios'
+// 挂载到vue原型链上
+Vue.prototype.axios = axios
 Vue.prototype.$echarts = echarts
 Vue.use(ElementUI)
 Vue.use(iView);
