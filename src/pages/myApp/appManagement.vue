@@ -1,7 +1,7 @@
 <template>
   <div class="appManagement">
 
-
+<!--下载链接弹出层-->
     <div @click="mask" class="mask" v-if="isMask">
       <div class="maskDiv" @click.stop="ss">
         <div class="downUrl">
@@ -151,7 +151,7 @@
     name: "appManagement",
     data() {
       return {
-        value: 'https://example.com',
+        value: 'https://www.baidu.com',
         size: 100,
         input: '',
         downSumValue: '',
@@ -247,10 +247,10 @@
       allApp(index, nameValue) {
         if (nameValue == '下载链接') {
           this.isMask = true
-
-
         } else if (nameValue == '查看详情') {
-          alert("选择了查看详情")
+          this.$router.push({
+            path:'/appManagementDetail'
+          })
         } else if (nameValue == '下架') {
           alert("选择了下架")
         } else if (nameValue == '删除') {
@@ -437,6 +437,12 @@
     color: #999999;
     margin-top: 18px;
   }
+  .el-select-dropdown__item{
+    color:#14BEC8 ;
+  }
+  .el-select-dropdown__item.selected{
+    color:#14BEC8 ;
+  }
 </style>
 <style>
   .el-table td, .el-table th.is-leaf {
@@ -452,10 +458,5 @@
     -webkit-transition: background-color .25s ease;
     transition: background-color .25s ease;
   }
-  .el-select-dropdown__item{
-    color:#14BEC8 ;
-  }
-  .el-select-dropdown__item.selected{
-    color:#14BEC8 ;
-  }
+
 </style>

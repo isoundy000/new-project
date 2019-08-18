@@ -4,10 +4,7 @@
       <div class="login_title">
         <img class="login_title_img" src="../../../static/image/superSignature/mumuunlogo.png" alt="">
         <div class="title">
-          <p class="titleOne" @click="survey" :class="{'isColor':isSurvey}">概况</p>
-          <p class="titleTwo" @click="appManagement" :class="{'isColor':isappManagement}">应用管理</p>
-          <p class="titleThree" @click="billManagement" :class="{'isColor':isbillManagement}">账单管理</p>
-          <p class="titleFourth" @click="publishApp" :class="{'isColor':ispublishApp}">发布应用</p>
+          <p @click="appClick(index,list.isclass)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass} ">{{list.msg}}</p>
         </div>
 
         <div class="alreadyLoginP" >
@@ -49,10 +46,25 @@
     name: "myApp",
     data() {
       return {
-        isSurvey:true,
-        isappManagement:false,
-        isbillManagement:false,
-        ispublishApp:false,
+        title: [
+          {
+            msg: '概况',
+            isclass: true
+          },
+          {
+            msg: '应用管理',
+            isclass: false
+          },
+          {
+            msg: '账单管理',
+            isclass: false
+          },
+          {
+            msg: '发布应用',
+            isclass: false
+          }
+        ],
+
         isLogin: false
       }
     },
@@ -62,59 +74,30 @@
       this.$router.push('/survey')
     },
     methods: {
-      survey(){
-        this.isSurvey=true
-        this.isappManagement=false
-        this.isbillManagement=false
-        this.ispublishApp=false
-        this.$router.push({
-          path:'/survey'
-        })
-      },
-      appManagement(){
-        this.isSurvey=false
-        this.isappManagement=true
-        this.isbillManagement=false
-        this.ispublishApp=false
-        this.$router.push({
-                  path:'/appManagement'
-                })
-      },
-      billManagement(){
-        this.isSurvey=false
-        this.isappManagement=false
-        this.isbillManagement=true
-        this.ispublishApp=false
-      },
-      publishApp(){
-        this.isSurvey=false
-        this.isappManagement=false
-        this.isbillManagement=false
-        this.ispublishApp=true
+      appClick(index){
+        for(var i=0;i<this.title.length;i++){
+          this.title[i].isclass=false
+        }
+        this.title[index].isclass=true
+        if(index==0){
+          this.$router.push({
+            path:'/survey'
+          })
+        }else if(index==1){
+          this.$router.push({
+            path:'/appManagement'
+          })
+        }else if(index==2){
+          this.$router.push({
+            path:'/billManagement'
+          })
+        }else if(index==3){
+          this.$router.push({
+            path:'/publishingApplications'
+          })
+        }
       },
 
-      /*顶部标题点击事件*/
-      // titleName(index) {
-      //   this.title[index].isclass = true
-      //   if (index == 0) {
-      //     alert("点击了概况")
-      //
-      //
-      //   } else if (index == 1) {
-      //     alert("点击了应用管理")
-      //     this.title[1].isclass = true
-      //     this.title[2].isclass = true
-      //     this.title[3].isclass = true
-      //     this.title[4].isclass = true
-      //     this.$router.push({
-      //       path:'/appManagement'
-      //     })
-      //   } else if (index == 2) {
-      //     alert("点击了账单管理")
-      //   } else if (index == 3) {
-      //     alert("点击了发布应用")
-      //   }
-      // },
       /*登录点击事件*/
       loginBtn() {
         this.$router.push({
@@ -129,20 +112,17 @@
       },
       // /*顶部标题移入效果*/
       // enter(index) {
-      //   if(index != 0){
-      //     this.title[0].isclass = false
+      //   for(var i=0;i<this.title.length;i++){
+      //     this.title[i].isclass=false
       //   }
-      //   this.title[index].isclass = true
-      //
-      //
+      //   this.title[index].isclass=true
       // },
       // /*顶部标题移出效果*/
-      // leave(index) {
-      //   if(index!=0){
-      //     this.title[0].isclass = true
+      // leave() {
+      //   for(var i=0;i<this.title.length;i++){
+      //     this.title[i].isclass=false
       //   }
-      //   this.title[index].isclass = false
-      //
+      //   this.title[0].isclass=true
       // },
       goHome(){
         this.$router.push({
