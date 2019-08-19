@@ -68,7 +68,7 @@
             this.$router.push({
               path:'/downLoadRecord'
             })
-          }else if(index==2){
+          }else if(index==3){
             this.$router.push({
               path:'/consumptionRecord'
             })
@@ -114,7 +114,7 @@
 }
   .secondDiv{
     width: 78%;
-    height: 600px;
+    height: auto;
     border: 1px solid #E5E5E5;
     margin:48px auto 0 auto ;
   }

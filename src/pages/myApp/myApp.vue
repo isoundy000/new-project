@@ -130,6 +130,23 @@
         })
       }
 
+    },
+    watch:{
+      '$route'(to, from) {
+        if(to.name=='appManagement'){
+          for(var i=0;i<this.title.length;i++){
+            this.title[i].isclass=false
+          }
+          this.title[1].isclass=true
+        }else if(to.name=='survey'){
+          for(var i=0;i<this.title.length;i++){
+            this.title[i].isclass=false
+          }
+          this.title[0].isclass=true
+        }
+        console.log(to)
+        console.log(from)
+      }
     }
   }
 </script>
