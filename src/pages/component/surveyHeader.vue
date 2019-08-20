@@ -18,15 +18,16 @@
           <el-badge :value="3" class="item">
             <img class="tixingBtn" src="../../../static/image/superSignature/tixing@2x.png" alt="">
           </el-badge>
-          <el-dropdown placement=top>
+
+          <el-dropdown  placement=top>
             <span class="el-dropdown-link">
               <p class="accountNumber">18482101665</p>
             </span>
             <el-dropdown-menu placement=top  class="xiala" slot="dropdown">
-              <el-dropdown-item>实名认证</el-dropdown-item>
-              <el-dropdown-item>我的余额</el-dropdown-item>
-              <el-dropdown-item>修改密码</el-dropdown-item>
-              <el-dropdown-item>退出</el-dropdown-item>
+              <el-dropdown-item >实名认证</el-dropdown-item>
+              <el-dropdown-item >我的余额</el-dropdown-item>
+              <el-dropdown-item >修改密码</el-dropdown-item>
+              <el-dropdown-item >退出</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
 
@@ -117,7 +118,11 @@
         this.$router.push({
           path: '/'
         })
+      },
+      sss() {
+        alert("02323")
       }
+
 
     }
   }

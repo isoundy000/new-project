@@ -7,10 +7,12 @@
            @mouseenter="enter(index)"
            @mouseleave="leave(index)">{{list.msg}}</p>
       </div>
+
       <div v-if="isLogin" class="login_title_div">
         <p @click="loginBtn">登录</p>
         <p @click="registerBtn">注册</p>
       </div>
+
       <div v-else>
         <div class="alreadyLogin">
 
@@ -26,7 +28,7 @@
               <p class="accountNumber">18482101665</p>
             </span>
             <el-dropdown-menu placement=top  class="xiala" slot="dropdown">
-              <el-dropdown-item>实名认证</el-dropdown-item>
+              <el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>
               <el-dropdown-item>我的余额</el-dropdown-item>
               <el-dropdown-item>修改密码</el-dropdown-item>
               <el-dropdown-item>退出</el-dropdown-item>
@@ -72,8 +74,17 @@
             isclass: false
           }
         ],
-        isLogin: false
+        isLogin:true
+
       }
+    },
+    mounted(){
+      // if(this.$store.state.isLogin==0){
+      //   this.isLogin=true
+      // }else{
+      //   this.isLogin=false
+      // }
+      // alert(this.$store.state.isLogin)
     },
     methods: {
       /*顶部标题点击事件*/
@@ -106,21 +117,27 @@
       },
       /*顶部标题移入效果*/
       enter(index) {
-        if (index != 1) {
-          this.title[1].isclass = false
+        for(var i=0;i<this.title.length;i++){
+          this.title[i].isclass=false
         }
-        this.title[index].isclass = true
+        this.title[index].isclass=true
       },
       /*顶部标题移出效果*/
-      leave(index) {
-        if (index != 1) {
-          this.title[1].isclass = true
+      leave() {
+        for(var i=0;i<this.title.length;i++){
+          this.title[i].isclass=false
         }
-        this.title[index].isclass = false
+        this.title[1].isclass=true
       },
       myappBtn(){
         this.$router.push({
           path: '/myApp'
+        })
+      },
+      realName(){
+        alert("0.0.")
+        this.$router.push({
+          path:'/realName'
         })
       }
 
