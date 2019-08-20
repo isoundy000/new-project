@@ -1,5 +1,6 @@
 <template>
   <div class="login">
+
     <div class="Bheader">
       <div class="login_title">
         <img class="login_title_img" src="../../../static/image/superSignature/mumuunlogo.png" alt="">
@@ -9,322 +10,343 @@
              @mouseleave="leave(index)">{{list.msg}}</p>
         </div>
 
-        <div  class="login_title_div">
-          <p @click="loginBtn">登录</p>
-          <p @click="registerBtn">注册</p>
-        </div>
 
+
+
+          <div class="alreadyLogin">
+
+            <div @click="myappBtn" class="myappBtn" >
+              <p>我的应用</p>
+            </div>
+
+            <el-badge :value="3" class="item">
+              <img class="tixingBtn" src="../../../static/image/superSignature/tixing@2x.png" alt="">
+            </el-badge>
+            <el-dropdown placement=top>
+            <span class="el-dropdown-link">
+              <p class="accountNumber">18482101665</p>
+            </span>
+              <el-dropdown-menu placement=top  class="xiala" slot="dropdown">
+                <el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>
+                <el-dropdown-item>我的余额</el-dropdown-item>
+                <el-dropdown-item>修改密码</el-dropdown-item>
+                <el-dropdown-item>退出</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+
+            <img class="headUrl" src="../../../static/image/superSignature/touxiang@2x.png" alt="">
+
+          </div>
 
       </div>
     </div>
-
-    <div class="banner">
-      <img src="../../../static/image/superSignature/bannner.png" alt="">
-    </div>
-    <!--样例展示-->
-    <div class="example">
-      <img src="../../../static/image/superSignature/yangli@2x.png" alt="">
-    </div>
-    <!--video-->
-    <div class="videoDiv">
-      <video width="960" height="400" class="video-js vjs-default-skin vjs-big-play-centered" controls
-             style="object-fit:fill" poster="../../assets/logo.png">
+      <div class="banner">
+        <img src="../../../static/image/superSignature/bannner.png" alt="">
+        </div>
+        <!--样例展示-->
+        <div class="example">
+        <img src="../../../static/image/superSignature/yangli@2x.png" alt="">
+        </div>
+        <!--video-->
+        <div class="videoDiv">
+        <video width="960" height="400" class="video-js vjs-default-skin vjs-big-play-centered" controls
+      style="object-fit:fill" poster="../../assets/logo.png">
         <source src="../../assets/coverr-clear-water-1559888911402.mp4" type="video/mp4">
         您的浏览器不支持 video 标签。
-      </video>
-    </div>
-    <!--我们的优势-->
-    <div class="advantage">
-      <div class="advantageImg">
+    </video>
+      </div>
+      <!--我们的优势-->
+      <div class="advantage">
+        <div class="advantageImg">
         <img src="../../../static/image/superSignature/youshi@2x.png" alt="">
-      </div>
-      <div class="advantageBig">
+        </div>
+        <div class="advantageBig">
         <div @mouseenter="advantageEnterOne()" @mouseleave="advantageLeaveOne()" class="advantageOne advantageBig_div"
-             style="background-image: url('../../../static/image/superSignature/bg.png')">
-          <div class="advantageOneBig" v-if="isAdvantageOne">
-            <img src="../../../static/image/superSignature/qianming@2x.png" alt="">
-            <p class="LaBel">自动化签名 方便快捷</p>
-          </div>
-          <div v-else class="advantageOneSmall">
-            <div>
-              <p>自动化签名、方便快捷</p>
-              <p>根据自身需要，选择服务类型，上传IPA包，快速分发,10分钟内完成所有流程，全程自动化，操作简单</p>
-            </div>
-          </div>
-
-        </div>
-        <div @mouseenter="advantageEnterTwo()" @mouseleave="advantageLeaveTwo()" class="advantageTwo advantageBig_div"
-             style="background-image: url('../../../static/image/superSignature/bg.png')">
-          <div class="advantageTwoBig" v-if="isAdvantageTwo">
-            <img src="../../../static/image/superSignature/anquan@2x.png" alt="">
-            <p class="LaBel">特有机制 告别掉签</p>
-          </div>
-          <div v-else class="advantageTwoSmall">
-            <div>
-              <p>特有机制、告别掉签</p>
-              <p>蒲公英采取的iOS超级签名和企业签名机制不同，掉签概率远低于传统企业签名</p>
-            </div>
-          </div>
-
-        </div>
-        <div @mouseenter="advantageEnterThree()" @mouseleave="advantageLeaveThree()"
-             class="advantageThree advantageBig_div"
-             style="background-image: url('../../../static/image/superSignature/bg.png')">
-          <div class="advantageTwoBig" v-if="isAdvantageThree">
-            <img src="../../../static/image/superSignature/anzhuang@2x.png" alt="">
-            <p class="LaBel">无需越狱 安装即用</p>
-          </div>
-          <div v-else class="advantageThreeSmall">
-            <div>
-              <p>无需越狱、安装即用</p>
-              <p>无需企业签名，无需越狱，无需苹果审核，无需上架App Store，下载后安装即用</p>
-            </div>
-          </div>
-        </div>
-        <div @mouseenter="advantageEnterFourth()" @mouseleave="advantageLeaveFourth()"
-             class="advantageFourth advantageBig_div"
-             style="background-image: url('../../../static/image/superSignature/bg.png')">
-          <div class="advantageFourthBig" v-if="isAdvantageFourth">
-            <img src="../../../static/image/superSignature/goumai@2x.png" alt="">
-            <p class="LaBel">按需购买 性价比高</p>
-          </div>
-          <div v-else class="advantageFourthSmall">
-            <div>
-              <p>自动化签名、快速高效</p>
-              <p>按需购买，未使用设备不过期同设备多次下载，或下载多款应用下载，只收费一次</p>
-            </div>
-          </div>
-        </div>
+      style="background-image: url('../../../static/image/superSignature/bg.png')">
+        <div class="advantageOneBig" v-if="isAdvantageOne">
+        <img src="../../../static/image/superSignature/qianming@2x.png" alt="">
+        <p class="LaBel">自动化签名 方便快捷</p>
       </div>
-    </div>
-    <!--超低价格-->
-    <div class="lowprize">
-      <div class="lowprizeImg">
+      <div v-else class="advantageOneSmall">
+        <div>
+        <p>自动化签名、方便快捷</p>
+      <p>根据自身需要，选择服务类型，上传IPA包，快速分发,10分钟内完成所有流程，全程自动化，操作简单</p>
+      </div>
+      </div>
+
+      </div>
+      <div @mouseenter="advantageEnterTwo()" @mouseleave="advantageLeaveTwo()" class="advantageTwo advantageBig_div"
+      style="background-image: url('../../../static/image/superSignature/bg.png')">
+        <div class="advantageTwoBig" v-if="isAdvantageTwo">
+        <img src="../../../static/image/superSignature/anquan@2x.png" alt="">
+        <p class="LaBel">特有机制 告别掉签</p>
+      </div>
+      <div v-else class="advantageTwoSmall">
+        <div>
+        <p>特有机制、告别掉签</p>
+      <p>蒲公英采取的iOS超级签名和企业签名机制不同，掉签概率远低于传统企业签名</p>
+      </div>
+      </div>
+
+      </div>
+      <div @mouseenter="advantageEnterThree()" @mouseleave="advantageLeaveThree()"
+    class="advantageThree advantageBig_div"
+      style="background-image: url('../../../static/image/superSignature/bg.png')">
+        <div class="advantageTwoBig" v-if="isAdvantageThree">
+        <img src="../../../static/image/superSignature/anzhuang@2x.png" alt="">
+        <p class="LaBel">无需越狱 安装即用</p>
+      </div>
+      <div v-else class="advantageThreeSmall">
+        <div>
+        <p>无需越狱、安装即用</p>
+      <p>无需企业签名，无需越狱，无需苹果审核，无需上架App Store，下载后安装即用</p>
+      </div>
+      </div>
+      </div>
+      <div @mouseenter="advantageEnterFourth()" @mouseleave="advantageLeaveFourth()"
+    class="advantageFourth advantageBig_div"
+      style="background-image: url('../../../static/image/superSignature/bg.png')">
+        <div class="advantageFourthBig" v-if="isAdvantageFourth">
+        <img src="../../../static/image/superSignature/goumai@2x.png" alt="">
+        <p class="LaBel">按需购买 性价比高</p>
+      </div>
+      <div v-else class="advantageFourthSmall">
+        <div>
+        <p>自动化签名、快速高效</p>
+      <p>按需购买，未使用设备不过期同设备多次下载，或下载多款应用下载，只收费一次</p>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      <!--超低价格-->
+      <div class="lowprize">
+        <div class="lowprizeImg">
         <img src="../../../static/image/superSignature/zhaodijiage@2x.png" alt="">
-      </div>
-      <div class="lowprizeDiv">
+        </div>
+        <div class="lowprizeDiv">
         <div class="lowprizeDiv_one">
-          <div>
-            <p>同样的iOS签名、超低的价格 </p>
-            <p>1、因机制与企业签名不同，告别掉签</p>
-            <p>2、告别掉签风险，只需支付一次获客成本即可</p>
-            <p>3、同一台设备下载安装该应用不限制下载次数</p>
-            <p>4、按设备数量收费，仅需<span>￥15.00</span>/每台</p>
-          </div>
-          <div>
-            <img src="../../../static/image/superSignature/tu@2x.png" alt="">
-          </div>
-        </div>
+        <div>
+        <p>同样的iOS签名、超低的价格 </p>
+      <p>1、因机制与企业签名不同，告别掉签</p>
+      <p>2、告别掉签风险，只需支付一次获客成本即可</p>
+      <p>3、同一台设备下载安装该应用不限制下载次数</p>
+      <p>4、按设备数量收费，仅需<span>￥15.00</span>/每台</p>
       </div>
+      <div>
+      <img src="../../../static/image/superSignature/tu@2x.png" alt="">
+        </div>
+        </div>
+        </div>
 
 
-    </div>
-    <!--服务对比-->
-    <div class="service">
-      <div class="serviceImg">
+        </div>
+        <!--服务对比-->
+        <div class="service">
+        <div class="serviceImg">
         <img src="../../../static/image/superSignature/fuwu@2x.png" alt="">
-      </div>
-      <div class="serviceDiv">
+        </div>
+        <div class="serviceDiv">
         <div class="serviceDivOne" @mouseenter="serviceDivOne()"
-             style="background-image: url('../../../static/image/superSignature/lansejianbianditu.png')">
-          <p class="serviceDivOneTitle">IOS专属签名</p>
-          <div class="hr"></div>
-          <div class="flex_service">
-            <div class="serviceSmall">
-              <div></div>
-              <p>因机制与企业签名不同，告别掉签</p>
-            </div>
-            <div class="serviceSmall">
-              <div></div>
-              <p>告别掉签风险,只需支付一次即可</p>
-            </div>
-            <div class="serviceSmall">
-              <div></div>
-              <p>同一台设备下载安装该应用不限制下载次数</p>
-            </div>
-            <div class="serviceSmall">
-              <div></div>
-              <p>按设备数量收费</p>
-            </div>
-            <div class="serviceSmall">
-              <div></div>
-              <p>每台设备<span>￥15.00</span>/每台</p>
-            </div>
-          </div>
-        </div>
-        <div class="serviceDivTwo" @mouseenter="serviceDivTwo()">
-          <p class="serviceDivTwoTitle">IOS专属签名</p>
-          <div class="hr1"></div>
-          <div class="flex_service">
-            <div class="serviceSmall">
-              <div></div>
-              <p>因机制与企业签名不同，告别掉签</p>
-            </div>
-            <div class="serviceSmall">
-              <div></div>
-              <p>告别掉签风险,只需支付一次即可</p>
-            </div>
-            <div class="serviceSmall">
-              <div></div>
-              <p>同一台设备下载安装该应用不限制下载次数</p>
-            </div>
-            <div class="serviceSmall">
-              <div></div>
-              <p>按设备数量收费</p>
-            </div>
-            <div class="serviceSmall">
-              <div></div>
-              <p>每台设备<span>￥15.00</span>/每台</p>
-            </div>
-          </div>
-        </div>
-        <div class="serviceDivThree">
-          <p class="serviceDivTwoTitle">IOS专属签名</p>
-          <div class="hr1"></div>
-          <div class="flex_service">
-            <div class="serviceSmall">
-              <div></div>
-              <p>因机制与企业签名不同，告别掉签</p>
-            </div>
-            <div class="serviceSmall">
-              <div></div>
-              <p>告别掉签风险,只需支付一次即可</p>
-            </div>
-            <div class="serviceSmall">
-              <div></div>
-              <p>同一台设备下载安装该应用不限制下载次数</p>
-            </div>
-            <div class="serviceSmall">
-              <div></div>
-              <p>按设备数量收费</p>
-            </div>
-            <div class="serviceSmall">
-              <div></div>
-              <p>每台设备<span>￥15.00</span>/每台</p>
-            </div>
-          </div>
-        </div>
+      style="background-image: url('../../../static/image/superSignature/lansejianbianditu.png')">
+        <p class="serviceDivOneTitle">IOS专属签名</p>
+        <div class="hr"></div>
+        <div class="flex_service">
+        <div class="serviceSmall">
+        <div></div>
+        <p>因机制与企业签名不同，告别掉签</p>
       </div>
-    </div>
+      <div class="serviceSmall">
+        <div></div>
+        <p>告别掉签风险,只需支付一次即可</p>
+      </div>
+      <div class="serviceSmall">
+        <div></div>
+        <p>同一台设备下载安装该应用不限制下载次数</p>
+        </div>
+        <div class="serviceSmall">
+        <div></div>
+        <p>按设备数量收费</p>
+        </div>
+        <div class="serviceSmall">
+        <div></div>
+        <p>每台设备<span>￥15.00</span>/每台</p>
+      </div>
+      </div>
+      </div>
+      <div class="serviceDivTwo" @mouseenter="serviceDivTwo()">
+        <p class="serviceDivTwoTitle">IOS专属签名</p>
+        <div class="hr1"></div>
+        <div class="flex_service">
+        <div class="serviceSmall">
+        <div></div>
+        <p>因机制与企业签名不同，告别掉签</p>
+      </div>
+      <div class="serviceSmall">
+        <div></div>
+        <p>告别掉签风险,只需支付一次即可</p>
+      </div>
+      <div class="serviceSmall">
+        <div></div>
+        <p>同一台设备下载安装该应用不限制下载次数</p>
+        </div>
+        <div class="serviceSmall">
+        <div></div>
+        <p>按设备数量收费</p>
+        </div>
+        <div class="serviceSmall">
+        <div></div>
+        <p>每台设备<span>￥15.00</span>/每台</p>
+      </div>
+      </div>
+      </div>
+      <div class="serviceDivThree">
+        <p class="serviceDivTwoTitle">IOS专属签名</p>
+        <div class="hr1"></div>
+        <div class="flex_service">
+        <div class="serviceSmall">
+        <div></div>
+        <p>因机制与企业签名不同，告别掉签</p>
+      </div>
+      <div class="serviceSmall">
+        <div></div>
+        <p>告别掉签风险,只需支付一次即可</p>
+      </div>
+      <div class="serviceSmall">
+        <div></div>
+        <p>同一台设备下载安装该应用不限制下载次数</p>
+        </div>
+        <div class="serviceSmall">
+        <div></div>
+        <p>按设备数量收费</p>
+        </div>
+        <div class="serviceSmall">
+        <div></div>
+        <p>每台设备<span>￥15.00</span>/每台</p>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
 
-    <!--操作流程简单解析-->
-    <div class="operation">
-      <div class="operationDiv">
+      <!--操作流程简单解析-->
+      <div class="operation">
+        <div class="operationDiv">
         <img src="../../../static/image/superSignature/caozuoliuchengjianbiaoti.png" alt="">
-      </div>
-      <div class="operationSmall">
+        </div>
+        <div class="operationSmall">
         <div class="operationDL">
 
-          <img src="../../../static/image/superSignature/dengluzhuce.png" alt="">
+        <img src="../../../static/image/superSignature/dengluzhuce.png" alt="">
 
-          <p>登录/注册</p>
+        <p>登录/注册</p>
         </div>
         <div class="sanjiao">
-          <img src="../../../static/image/superSignature/sanjiaoxing.png" alt="">
-          <p></p>
+        <img src="../../../static/image/superSignature/sanjiaoxing.png" alt="">
+        <p></p>
         </div>
         <div class="operationCZ">
 
-          <img src="../../../static/image/superSignature/chongzi.png" alt="">
+        <img src="../../../static/image/superSignature/chongzi.png" alt="">
 
-          <p>充值</p>
+        <p>充值</p>
         </div>
         <div class="sanjiao">
-          <img src="../../../static/image/superSignature/sanjiaoxing.png" alt="">
-          <p></p>
+        <img src="../../../static/image/superSignature/sanjiaoxing.png" alt="">
+        <p></p>
         </div>
         <div class="operationSC">
 
-          <img src="../../../static/image/superSignature/shangchuanipa.png" alt="">
+        <img src="../../../static/image/superSignature/shangchuanipa.png" alt="">
 
-          <p>上传IPA安装包</p>
+        <p>上传IPA安装包</p>
         </div>
         <div class="sanjiao">
-          <img src="../../../static/image/superSignature/sanjiaoxing.png" alt="">
-          <p></p>
+        <img src="../../../static/image/superSignature/sanjiaoxing.png" alt="">
+        <p></p>
         </div>
         <div class="operationYY">
 
-          <img src="../../../static/image/superSignature/success_ico.png" alt="">
+        <img src="../../../static/image/superSignature/success_ico.png" alt="">
 
-          <p>应用签名 </p>
+        <p>应用签名 </p>
         </div>
         <div class="sanjiao">
-          <img src="../../../static/image/superSignature/sanjiaoxing.png" alt="">
-          <p></p>
+        <img src="../../../static/image/superSignature/sanjiaoxing.png" alt="">
+        <p></p>
         </div>
         <div class="operationEW">
 
-          <img src="../../../static/image/superSignature/shenglianjie.png" alt="">
+        <img src="../../../static/image/superSignature/shenglianjie.png" alt="">
 
-          <p>生成下载链接/二维码</p>
+        <p>生成下载链接/二维码</p>
         </div>
 
-      </div>
-    </div>
-    <!--常见问题-->
-    <div class="problem">
-      <div class="problemDiv">
+        </div>
+        </div>
+        <!--常见问题-->
+        <div class="problem">
+        <div class="problemDiv">
         <img src="../../../static/image/superSignature/changjianwentibiaoti.png" alt="">
-      </div>
-      <div class="problemImg">
+        </div>
+        <div class="problemImg">
         <img src="../../../static/image/superSignature/wentitu@2x.png" alt="">
-      </div>
-    </div>
-    <Bfooter></Bfooter>
-  </div>
-</template>
+        </div>
+        </div>
+        <Bfooter></Bfooter>
+        </div>
+        </template>
 
-<script>
-  import Bfooter from '../component/footer'
-  import Bheader from '../component/header'
-  export default {
-    name: "index",
-    data() {
-      return {
-        title: [
-          {
-            msg: '首页',
-            isclass: false
-          },
-          {
-            msg: '超级签名',
-            isclass: true
-          },
-          {
-            msg: '专属签名',
-            isclass: false
-          },
-          {
-            msg: '企业签名',
-            isclass: false
-          },
-          {
-            msg: '购买服务',
-            isclass: false
-          },
-          {
-            msg: '发布应用',
-            isclass: false
+        <script>
+      import Bfooter from '../component/footer'
+      import Bheader from '../component/header'
+      export default {
+        name: "index",
+        data() {
+          return {
+            title: [
+              {
+                msg: '首页',
+                isclass: false
+              },
+              {
+                msg: '超级签名',
+                isclass: true
+              },
+              {
+                msg: '专属签名',
+                isclass: false
+              },
+              {
+                msg: '企业签名',
+                isclass: false
+              },
+              {
+                msg: '购买服务',
+                isclass: false
+              },
+              {
+                msg: '发布应用',
+                isclass: false
+              }
+            ],
+            isAdvantageOne: true,
+            isAdvantageTwo: true,
+            isAdvantageThree: true,
+            isAdvantageFourth: true,
+            // grayname:''
+
           }
-        ],
-        isAdvantageOne: true,
-        isAdvantageTwo: true,
-        isAdvantageThree: true,
-        isAdvantageFourth: true,
-        // grayname:''
-
-      }
-    },
-    components: {
-      Bfooter,
-      Bheader
-    },
-    mounted(){
-      // alert(this.$route.query.zhi)
-      // if(this.$route.query.zhi==undefined){
-      //   this.grayname=true
-      // }else{
+        },
+        components: {
+          Bfooter,
+          Bheader
+        },
+        mounted(){
+          // alert(this.$route.query.zhi)
+          // if(this.$route.query.zhi==undefined){
+          //   this.grayname=true
+          // }else{
     },
     methods: {
 
