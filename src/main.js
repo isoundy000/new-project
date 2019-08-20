@@ -13,16 +13,39 @@ import echarts from 'echarts'
 // 引入axios
 import axios from 'axios'
 // 挂载到vue原型链上
-Vue.prototype.axios = axios
+
+
+import Vuex from 'vuex'
+import store from './store';
+// Vue.prototype.axios = axios
+Vue.prototype.$http = axios
+
 Vue.prototype.$echarts = echarts
 Vue.use(ElementUI)
 Vue.use(iView);
 Vue.config.productionTip = false
 
+// 导航守卫
+// 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
+router.beforeEach((to, from, next) => {
+  if (to.path === '/') {
+    next();
+  } else {
+    let token = localStorage.getItem('Authorization');
+    alert(token)
+    if (token === 'null' || token === '') {
+      next('/');
+    } else {
+      next();
+    }
+  }
+});
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
