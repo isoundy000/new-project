@@ -57,7 +57,7 @@
         <img src="../../../static/image/survey/shouye@2x.png" alt="">
         <p>您当前位置：</p>
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/superSignatureAread' }">首页</el-breadcrumb-item>
           <el-breadcrumb-item :to="{ path: '/survey' }">我的应用</el-breadcrumb-item>
           <el-breadcrumb-item>账单管理</el-breadcrumb-item>
         </el-breadcrumb>

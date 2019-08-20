@@ -230,7 +230,7 @@
       ss() {
 
       },
-
+    /*保存二维码图片并下载到本地*/
       savePic() {
         //找到canvas标签
         let myCanvas = document.getElementById('picture').getElementsByTagName('canvas');
@@ -243,7 +243,7 @@
         //点击
         a.click()
       },
-
+      /*下拉菜单*/
       allApp(index, nameValue) {
         if (nameValue == '下载链接') {
           this.isMask = true
@@ -328,6 +328,7 @@
     color: white;
     margin-left: 304px;
     font-size: 16px;
+    cursor: pointer;
   }
 
   .thirdDiv {

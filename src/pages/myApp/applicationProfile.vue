@@ -113,11 +113,13 @@
     width: 230px;
     display: flex;
     align-items: center;
-    justify-content: space-around;
   }
   .firstDivOne img{
     width: 80px;
     height: 80px;
+  }
+  .firstDivOne p{
+    margin-left: 10px;
   }
   .firstDivTwo{
     display: flex;
@@ -168,6 +170,7 @@
     line-height: 40px;
     background-size: 180px 40px;
     background-repeat: no-repeat;
+    cursor: pointer;
   }
   .nineDiv div:nth-child(1){
     color: white;

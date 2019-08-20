@@ -5,8 +5,8 @@
           <img src="../../../static/image/survey/shouye@2x.png" alt="">
           <p>您当前位置：</p>
           <el-breadcrumb separator="/">
-            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item><a href="/">我的应用</a></el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: '/superSignatureAread' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: '/survey' }">我的应用</el-breadcrumb-item>
             <el-breadcrumb-item>概括</el-breadcrumb-item>
           </el-breadcrumb>
         </div>
@@ -579,6 +579,7 @@
     text-align: center;
     margin-left: 17px;
     font-size: 16px;
+    cursor: pointer;
   }
 
   .recently1 {
@@ -591,6 +592,7 @@
     text-align: center;
     margin-left: 19px;
     font-size: 16px;
+    cursor: pointer;
   }
 
   .recently3 {
@@ -603,6 +605,7 @@
     text-align: center;
     margin-left: 18px;
     font-size: 16px;
+    cursor: pointer;
   }
 
   .export {

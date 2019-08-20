@@ -13,6 +13,8 @@
             <el-table-column
               prop="appName"
               label="应用名称"
+              width="160"
+
             >
             </el-table-column>
             <el-table-column
@@ -162,6 +164,7 @@
     border-radius: 4px;
     position: absolute;
     right: 0;
+    cursor: pointer;
   }
   .thirdDiv {
     width:100%;
