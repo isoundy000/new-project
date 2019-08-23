@@ -4,14 +4,18 @@
       <img src="../../../static/image/superSignature/mumuunlogo.png" alt="">
 
       <div class="login_title_div">
-        <router-link to="/" tag="p">首页 </router-link>
+        <router-link to="/" tag="p">首页</router-link>
         <p>关于我们</p>
       </div>
     </div>
     <div class="banner" style="background-image: url('../../../static/image/login/dengluditu.png')">
       <div class="loginDiv" style="background-image: url('../../../static/image/login/denglukuang.png')">
-
-        <div  class="msgDiv">
+        <div v-show="xianshi"
+             style="width:20%;display:flex;align-items:center;position: absolute;padding-left: 20px;font-size: 1.1vw;color: red;margin-top: 0.5vw">
+          <img src="../../../static/image/login/tishi.png" alt="">
+          <p class="tishiXinxi" style="padding-left: 10px"></p>
+        </div>
+        <div class="msgDiv">
           <div class="login_Input">
             <div class="user_div" :class="{'borderColor':userNameIcon}">
               <div class="img_div">
@@ -34,8 +38,10 @@
                 <img v-if="verificationNumberIcon" src="../../../static/image/login/yanzheng_s.png" alt="">
                 <img v-else src="../../../static/image/login/yanzhengma.png" alt="">
               </div>
-              <input v-on:input="verificationNumberInput" type="text" placeholder="请输入短信验证码" v-model="verificationNumber">
+              <input v-on:input="verificationNumberInput" type="text" placeholder="请输入短信验证码"
+                     v-model="verificationNumber">
               <div @click="send" class="send ">发送验证码</div>
+              <div class="daojishi3" style="display: none"></div>
             </div>
             <div class="set_div" :class="{'borderColor':setPasswordIcon}">
               <div class="img_div">
@@ -68,7 +74,6 @@
         </div>
 
 
-
       </div>
     </div>
     <Bfooter></Bfooter>
@@ -77,6 +82,8 @@
 
 <script>
   import Bfooter from '../component/footer'
+  import axios from 'axios'
+  import qs from 'qs'
 
   export default {
     name: "register",
@@ -84,17 +91,18 @@
       return {
         userName: '',//用户名称
         phoneNumber: '',//手机号码
-        verificationNumber:'',//验证码
-        setPassword:'',//密码
-        userNameIcon:false,
-        phoneNumberIcon:false,
-        verificationNumberIcon:false,
-        setPasswordIcon:false,
+        verificationNumber: '',//验证码
+        setPassword: '',//密码
+        userNameIcon: false,
+        phoneNumberIcon: false,
+        verificationNumberIcon: false,
+        setPasswordIcon: false,
 
         isState: true,
         isCheck: true,
-        isA:true,
-        isB:false,
+        isA: true,
+        isB: false,
+        xianshi: false
       }
     },
     components: {
@@ -102,49 +110,72 @@
     },
     methods: {
       /*用户输入框聚焦事件*/
-      userNameInput(){
-        if(this.userName==''){
-          this.userNameIcon=false
-        }else{
-          this.userNameIcon=true
+      userNameInput() {
+        this.xianshi = false
+        if (this.userName == '') {
+          this.userNameIcon = false
+        } else {
+          this.userNameIcon = true
         }
       },
       /*手机号码输入框聚焦事件*/
-      phoneNumberInput(){
-        if(this.phoneNumber==''){
-          this.phoneNumberIcon=false
-        }else{
-          this.phoneNumberIcon=true
+      phoneNumberInput() {
+        this.xianshi = false
+        if (this.phoneNumber == '') {
+          this.phoneNumberIcon = false
+        } else {
+          this.phoneNumberIcon = true
         }
       },
       /*验证码输入框聚焦事件*/
-      verificationNumberInput(){
-        if(this.verificationNumber==''){
-          this.verificationNumberIcon=false
-        }else{
-          this.verificationNumberIcon=true
+      verificationNumberInput() {
+        this.xianshi = false
+        if (this.verificationNumber == '') {
+          this.verificationNumberIcon = false
+        } else {
+          this.verificationNumberIcon = true
         }
       },
       /*密码输入框聚焦事件*/
-      setPasswordInput(){
-        if(this.setPassword==''){
-          this.setPasswordIcon=false
-        }else{
-          this.setPasswordIcon=true
+      setPasswordInput() {
+        this.xianshi = false
+        if (this.setPassword == '') {
+          this.setPasswordIcon = false
+        } else {
+          this.setPasswordIcon = true
         }
       },
       /*发送验证码倒计时*/
-      send(){
-        var timeClock;
+      send() {
+        var timeClock3;
         var timer_num = 60;
-        timeClock = setInterval(function() {
+        timeClock3 = setInterval(function () {
           timer_num--;
-          $('.send').html(timer_num+'秒');
-          if(timer_num == 0) {
-            clearInterval(timeClock);
+          $(".send").hide()
+          $(".daojishi3").show()
+          $('.daojishi3').html(timer_num + '秒');
+          if (timer_num == 0) {
+            clearInterval(timeClock3);
+            $(".send").show()
+            $(".daojishi3").hide()
             $('.send').html('重新发送');
           }
         }, 1000)
+        let data = {
+          mobile: this.phoneNumber,
+          event: 'register'
+        }
+
+        axios.post('https://ios.yoyoacg.com/api/sms/send', qs.stringify(data)).then(res => {
+          console.log(res)
+          if (res.data.msg == '已被注册') {
+            clearInterval(timeClock3);
+            this.xianshi = true
+            $(".tishiXinxi").html('手机号码已经被注册')
+          }
+        }, err => {
+          console.log(err)
+        })
       },
       checklist() {
         this.isCheck = false
@@ -154,10 +185,48 @@
         this.isCheck = true
         alert("取消勾选了")
       },
-      registerBtn(){
-        alert("注册")
+      registerBtn() {
+        let f = {
+          username: this.userName,
+          mobile: this.phoneNumber,
+          captcha: this.verificationNumber,
+          password: this.setPassword
+        }
+        let config = {
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        };
+        axios.post('https://ios.yoyoacg.com/api/User/register', qs.stringify(f), config).then(res => {
+          if (res.data.msg == '用户名不能为空') {
+            this.xianshi = true
+            $(".tishiXinxi").html('用户名不能为空')
+          } else if (res.data.msg == '用户名必须4-20个字符') {
+            this.xianshi = true
+            $(".tishiXinxi").html('用户名必须4-20个字符')
+          } else if (res.data.msg == '手机号码不能为空') {
+            this.xianshi = true
+            $(".tishiXinxi").html('手机号码不能为空')
+          } else if (res.data.msg == '验证码不能为空') {
+            this.xianshi = true
+            $(".tishiXinxi").html('验证码不能为空')
+          } else if (res.data.msg == '手机格式不正确') {
+            this.xianshi = true
+            $(".tishiXinxi").html(' 手机格式不正确')
+          } else if (res.data.msg == '密码不能为空') {
+            this.xianshi = true
+            $(".tishiXinxi").html('密码不能为空')
+          } else if (res.data.msg == '密码必须6-20个字符') {
+            this.xianshi = true
+            $(".tishiXinxi").html('密码必须6-20个字符')
+          }
+          console.log(res.data)
+          this.$router.push({
+            path: '/login'
+          })
+        }, err => {
+          console.log(err)
+        })
       },
-      login(){
+      login() {
         this.$router.push({
           path: '/login'
         })
@@ -185,8 +254,6 @@
     height: 39px;
     margin-left: 18.8vw;
   }
-
-
 
   .login_title_div {
     display: flex;
@@ -238,10 +305,6 @@
     background-repeat: no-repeat;
   }
 
-
-
-
-
   .loginDiv_One div {
     height: 15px;
     border: 1px solid #DCDCDC;
@@ -262,10 +325,12 @@
     align-items: center;
     margin: 0 auto;
     border: 1px solid #DCDCDC;
-    border-radius: 8px;box-sizing: content-box;
+    border-radius: 8px;
+    box-sizing: content-box;
 
   }
-  .img_div{
+
+  .img_div {
     width: 30px;
     height: 23px;
     display: flex;
@@ -314,16 +379,19 @@
     border-radius: 8px;
     outline: none;
   }
-  .verification_div{
+
+  .verification_div {
     width: 90%;
     height: 2.5vw;
     display: flex;
     align-items: center;
     margin: 15px auto 0 auto;
     border: 1px solid #DCDCDC;
-    border-radius: 8px;box-sizing: content-box;
+    border-radius: 8px;
+    box-sizing: content-box;
 
   }
+
   .verification_div img {
     width: 18px;
     height: 22px;
@@ -338,7 +406,8 @@
     border-radius: 8px;
     outline: none;
   }
-  .set_div{
+
+  .set_div {
     width: 90%;
     height: 2.5vw;
     display: flex;
@@ -348,6 +417,7 @@
     border-radius: 8px;
     box-sizing: content-box;
   }
+
   .set_div img {
     width: 19px;
     height: 22px;
@@ -362,6 +432,7 @@
     border-radius: 8px;
     outline: none;
   }
+
   input::-webkit-input-placeholder {
     color: #999999;
     font-size: 1vw;
@@ -371,7 +442,7 @@
     -webkit-box-shadow: 0 0 0px 1000px white inset;
   }
 
-  .send {
+  .send, .daojishi3 {
     width: 100px;
     height: 26px;
     line-height: 26px;
@@ -450,11 +521,13 @@
   .login_footer span {
     color: #06B2B6;
   }
+
   .isColor {
     color: #06B2B6;
 
   }
-  .borderColor{
+
+  .borderColor {
     border: 1px solid #06B2B6;
   }
 </style>
