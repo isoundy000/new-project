@@ -10,7 +10,11 @@
     </div>
     <div class="banner" style="background-image: url('../../../static/image/login/dengluditu.png')">
       <div class="loginDiv" style="background-image: url('../../../static/image/login/denglukuang.png')">
-
+        <div v-show="xianshi"
+             style="width:20%;display:flex;align-items:center;position: absolute;padding-left: 20px;font-size: 1.1vw;color: red;margin-top: 0.5vw">
+          <img src="../../../static/image/login/tishi.png" alt="">
+          <p class="tishiXinxi" style="padding-left: 10px"></p>
+        </div>
         <div  class="msgDiv">
           <div class="login_Input">
             <div class="phone_div" :class="{'borderColor':phoneNumberIcon}">
@@ -25,6 +29,8 @@
               <img v-else src="../../../static/image/login/yanzhengma.png" alt="">
               <input v-on:input="verificationNumberInput" type="text" placeholder="请输入短信验证码" v-model="verificationNumber">
               <div @click="send" class="send ">发送验证码</div>
+              <div class="daojishi2" style="display: none"></div>
+
             </div>
             <div class="set_div" :class="{'borderColor':setPasswordIcon}">
               <img v-if="setPasswordIcon" src="../../../static/image/register/mima_s.png" alt="">
@@ -36,7 +42,7 @@
             <div class="password_div" :class="{'borderColor':passwordIcon}">
               <img v-if="passwordIcon" src="../../../static/image/register/mima_s.png" alt="">
               <img v-else src="../../../static/image/register/mima_n.png" alt="">
-              <input v-on:input="passwordInput" type="text" placeholder="请再次输入登录密码" v-model="password"
+              <input v-on:input="passwordInput" type="password" placeholder="请再次输入登录密码" v-model="password"
                      onkeyup="this.value=this.value.replace(/\D/g,'')"
                      onafterpaste="this.value=this.value.replace(/\D/g,'')">
             </div>
@@ -52,7 +58,7 @@
             </div>
           </div>
           <div class="loginBtn">
-            <div style="background-image: url('../../../static/image/login/dengluanniu.png')">
+            <div @click="modify" style="background-image: url('../../../static/image/login/dengluanniu.png')">
               <p>确认修改</p>
             </div>
           </div>
@@ -68,7 +74,8 @@
 
 <script>
   import Bfooter from '../component/footer'
-
+  import  axios from 'axios'
+  import qs from 'qs'
   export default {
     name: "forget",
     data() {
@@ -85,6 +92,7 @@
         isCheck: true,
         isA:true,
         isB:false,
+        xianshi:false
       }
     },
     components: {
@@ -93,6 +101,7 @@
     methods: {
       /*手机号码输入框聚焦事件*/
       phoneNumberInput(){
+        this.xianshi=false
         if(this.phoneNumber==''){
           this.phoneNumberIcon=false
         }else{
@@ -101,6 +110,7 @@
       },
       /*验证码输入框聚焦事件*/
       verificationNumberInput(){
+        this.xianshi=false
         if(this.verificationNumber==''){
           this.verificationNumberIcon=false
         }else{
@@ -109,6 +119,7 @@
       },
       /*密码输入框聚焦事件*/
       setPasswordInput(){
+        this.xianshi=false
         if(this.setPassword==''){
           this.setPasswordIcon=false
         }else{
@@ -117,6 +128,7 @@
       },
       /*确认密码输入框聚焦事件*/
       passwordInput(){
+        this.xianshi=false
         if(this.password==''){
           this.passwordIcon=false
         }else{
@@ -125,16 +137,32 @@
       },
       /*发送验证码倒计时*/
       send(){
-        var timeClock;
+        var timeClock2;
         var timer_num = 60;
-        timeClock = setInterval(function() {
+        timeClock2 = setInterval(function() {
           timer_num--;
-          $('.send').html(timer_num+'秒');
+          $(".send").hide()
+          $(".daojishi2").show()
+          $('.daojishi2').html(timer_num+'秒');
           if(timer_num == 0) {
-            clearInterval(timeClock);
+            clearInterval(timeClock2);
+            $(".send").show()
+            $(".daojishi2").hide()
             $('.send').html('重新发送');
           }
         }, 1000)
+        let f={
+          mobile:this.phoneNumber,
+          event:'resetpwd'
+        }
+        let config = {
+          headers:{'Content-Type':'application/x-www-form-urlencoded'}
+        };
+        axios.post('https://ios.yoyoacg.com/api/sms/send',qs.stringify(f),config).then(res => {
+          console.log(res.data)
+        }, err => {
+          console.log(err)
+        })
       },
       checklist() {
         this.isCheck = false
@@ -144,10 +172,62 @@
         this.isCheck = true
         alert("取消勾选了")
       },
-      login(){
-        this.$router.push({
-          path: '/login'
+      modify(){
+        let f={
+          mobile:this.phoneNumber,
+          captcha:this.verificationNumber,
+          password:this.setPassword,
+          repassword:this.password
+        }
+        let config = {
+          headers:{'Content-Type':'application/x-www-form-urlencoded'}
+        };
+        axios.post('https://ios.yoyoacg.com/api/User/resetpwd',qs.stringify(f),config).then(res => {
+          if(res.data.msg=='用户名不能为空'){
+            this.xianshi=true
+            $(".tishiXinxi").html('用户名不能为空')
+          }else if(res.data.msg=='用户名必须4-20个字符'){
+            this.xianshi=true
+            $(".tishiXinxi").html('用户名必须4-20个字符')
+          }else if(res.data.msg=='手机号码不能为空'){
+            this.xianshi=true
+            $(".tishiXinxi").html('手机号码不能为空')
+          }else if(res.data.msg=='验证码不能为空'){
+            this.xianshi=true
+            $(".tishiXinxi").html('验证码不能为空')
+          }else if(res.data.msg=='手机格式不正确'){
+            this.xianshi=true
+            $(".tishiXinxi").html(' 手机格式不正确')
+          }else if(res.data.msg=='密码不能为空'){
+            this.xianshi=true
+            $(".tishiXinxi").html('密码不能为空')
+          }else if(res.data.msg=='密码必须6-20个字符'){
+            this.xianshi=true
+            $(".tishiXinxi").html('密码必须6-20个字符')
+          }else if(res.data.msg=='确认密码不能为空'){
+            this.xianshi=true
+            $(".tishiXinxi").html('确认密码不能为空')
+          }else if(res.data.msg=='两次密码不一致'){
+            this.xianshi=true
+            $(".tishiXinxi").html('两次密码不一致')
+          }else if(res.data.msg=='User not found'){
+            this.xianshi=true
+            $(".tishiXinxi").html('没有找到该用户信息')
+          }
+          if(res.data.code==200){
+            this.$router.push({
+              path: '/login'
+            })
+          }
+
+
+          console.log(res.data)
+
+        }, err => {
+          console.log(err)
         })
+
+
       }
     }
   }
@@ -356,7 +436,7 @@
     -webkit-box-shadow: 0 0 0px 1000px white inset;
   }
 
-  .send {
+  .send,.daojishi2 {
     width: 200px;
     height: 26px;
     line-height: 26px;
