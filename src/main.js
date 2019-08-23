@@ -28,14 +28,20 @@ Vue.config.productionTip = false
 // 导航守卫
 // 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
 router.beforeEach((to, from, next) => {
+
+
+
   if (to.path === '/') {
     next();
   } else {
     let token = localStorage.getItem('Authorization');
-    alert(token)
-    if (token === 'null' || token === '') {
+    if (token === 'null'||token === '' ) {
       next('/');
+      // alert('2222'+token)
+      // alert('2222'+typeof(token))
     } else {
+      // alert('3333'+token)
+      // alert("3333"+typeof(token))
       next();
     }
   }
