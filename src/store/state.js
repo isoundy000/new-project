@@ -3,6 +3,7 @@
 * */
 
 export default{
- isLogin:0, //没登录
+  balance:"",
+  userName:'',
   Authorization: localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : ''
 }

@@ -1,9 +1,26 @@
 export default {
   changeLogin (state, user) {
     state.Authorization = user.Authorization;
-    alert(user.Authorization+'000000000')
+    alert(user.Authorization)
     localStorage.setItem('Authorization', user.Authorization);
+  },
+  set_money(state,balance){
+    state.balance=balance
+    localStorage.setItem('balance', balance);
+  },
+  set_userName(state,userName){
+    state.userName=userName
+    localStorage.setItem('userName', userName);
+  },
+  del_token(state) {
+    state.Authorization = null
+    state.userName=''
+    state.balance=''
+    localStorage.removeItem('Authorization')
+    localStorage.removeItem('balance')
+    localStorage.removeItem('userName')
   }
+
   // changeLogin(state,data){
   //   state.isLogin = data;
   // },
