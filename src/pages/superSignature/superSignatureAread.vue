@@ -24,13 +24,13 @@
             </el-badge>
             <el-dropdown placement=top>
             <span class="el-dropdown-link">
-              <p class="accountNumber">18482101665</p>
+              <p class="accountNumber">{{userName}}</p>
             </span>
               <el-dropdown-menu placement=top  class="xiala" slot="dropdown">
                 <el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>
-                <el-dropdown-item>我的余额</el-dropdown-item>
+                <el-dropdown-item>我的余额:￥{{money}}</el-dropdown-item>
                 <el-dropdown-item>修改密码</el-dropdown-item>
-                <el-dropdown-item>退出</el-dropdown-item>
+                <el-dropdown-item @click.native="signOut">退出</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
 
@@ -334,7 +334,8 @@
             isAdvantageTwo: true,
             isAdvantageThree: true,
             isAdvantageFourth: true,
-            // grayname:''
+            money:'',
+            userName:''
 
           }
         },
@@ -343,6 +344,9 @@
           Bheader
         },
         mounted(){
+          console.log(this.money)
+          this.money=localStorage.getItem('balance');
+          this.userName=localStorage.getItem('userName');
           // alert(this.$route.query.zhi)
           // if(this.$route.query.zhi==undefined){
           //   this.grayname=true
@@ -458,10 +462,19 @@
           path: '/myApp'
         })
       },
+      /*实名认证*/
       realName(){
         alert("0.0.")
         this.$router.push({
           path:'/realName'
+        })
+      },
+      /*退出*/
+      signOut(){
+        var token=localStorage.getItem('Authorization');
+        this.$store.commit('del_token',token)
+        this.$router.push({
+          path:'/'
         })
       }
     }
@@ -1165,7 +1178,7 @@
     align-items: center;
   }
   .xiala{
-    width: 150px;
+    width: 180px;
     margin-left: 30px;
   }
 </style>
