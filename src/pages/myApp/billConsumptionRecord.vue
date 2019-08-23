@@ -77,16 +77,22 @@
 
       </div>
       <div class="thirdDiv">
-        <Page :page-size="4" :current="3" :total="3" show-total/>
+        <p>共<span style="color: red">{{pageNumber}}</span> 页/ <span style="color: red">{{total}}</span>条记录</p>
+        <Page @on-change="indexChange" @on-page-size-change="pageChange" :page-size="6" :current="current" :total=total />
       </div>
     </div>
 </template>
 
 <script>
+  import axios from 'axios'
+  import qs from 'qs'
     export default {
         name: "billConsumptionRecord",
       data(){
           return{
+            total:0,
+            pageNumber:'',
+            current:1,
             input:'',
             appName:'',
             value:'',
@@ -101,61 +107,58 @@
                 value: '应用四',
               }],
             tableData: [
-              {
-                appName: '201709166393',
-                versionNumber: '应用A',
-                address: '2016-10-01  18:51:15',
-                serviceType: '2016-10-01  18:51:15',
-                servicePrize: '超级签名',
-                signNumber: '88888',
-                installNumber: '￥200.00',
 
-                state: '分发中',
-
-              },
-              {
-                appName: '201709166393',
-                versionNumber: '应用A',
-                address: '2016-10-01  18:51:15',
-                serviceType: '2016-10-01  18:51:15',
-                servicePrize: '超级签名',
-                signNumber: '88888',
-                installNumber: '￥200.00',
-
-                state: '分发中',
-              },
-              {
-                appName: '201709166393',
-                versionNumber: '应用A',
-                address: '2016-10-01  18:51:15',
-                serviceType: '2016-10-01  18:51:15',
-                servicePrize: '超级签名',
-                signNumber: '88888',
-                installNumber: '￥200.00',
-
-                state: '分发中',
-              },
-              {
-                appName: '201709166393',
-                versionNumber: '应用A',
-                address: '2016-10-01  18:51:15',
-                serviceType: '2016-10-01  18:51:15',
-                servicePrize: '超级签名',
-                signNumber: '88888',
-                installNumber: '￥200.00',
-
-                state: '分发中',
-              }
             ]
           }
       },
       methods:{
+        /*上下页翻页*/
+        indexChange(i){
+          console.log(i)
+          let data={
+            keywords:this.input,
+            page:i,
+            page_size:6,
+          }
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.post('https://ios.yoyoacg.com/api/app/appPayRecord',qs.stringify(data),config).then(res => {
+            console.log(res.data)
+            console.log(res.data.data.list)
+            this.total=res.data.data.total
+            this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+            this.tableData=res.data.data.list
+          }, err => {
+            console.log(err)
+          })
+        },
+        pageChange(s){
+          console.log(s)
+        },
         allApp(){
           console.log(this.appName)
         },
         firstTime(a){
           console.log(a)
         }
+
+      },
+      mounted(){
+        let data={
+          page_size:6
+        }
+        let config = {
+          headers:{'token':localStorage.getItem('Authorization')}
+        };
+        axios.post('https://ios.yoyoacg.com/api/app/appPayRecord',qs.stringify(data),config).then(res => {
+          console.log(res.data.data.list)
+          // this.tableData=res.data.data.list
+          // this.total=res.data.data.total
+          // this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+        }, err => {
+          console.log(err)
+        })
       }
     }
 </script>
@@ -181,7 +184,7 @@
     margin-top: 25px;
   }
   .thirdDiv {
-    width: 78%;
+    width: 100%;
     /*height: 300px;*/
     margin: 50px auto 0 auto;
     display: flex;

@@ -19,13 +19,13 @@
             </el-badge>
             <el-dropdown placement=top>
             <span class="el-dropdown-link">
-              <p class="accountNumber">18482101665</p>
+              <p class="accountNumber">{{userName}}</p>
             </span>
               <el-dropdown-menu placement=top  class="xiala" slot="dropdown">
                 <el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>
-                <el-dropdown-item>我的余额</el-dropdown-item>
+                <el-dropdown-item>我的余额:￥{{money}}</el-dropdown-item>
                 <el-dropdown-item>修改密码</el-dropdown-item>
-                <el-dropdown-item>退出</el-dropdown-item>
+                <el-dropdown-item @click.native="signOut">退出</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
 
@@ -64,13 +64,14 @@
             isclass: false
           }
         ],
-
-        isLogin: false
+        money:'',
+        userName:''
       }
     },
 
     mounted() {
-
+      this.money=localStorage.getItem('balance');
+      this.userName=localStorage.getItem('userName');
       this.$router.push('/survey')
     },
     methods: {
@@ -132,6 +133,14 @@
       realName(){
         this.$router.push({
           path:'/realName'
+        })
+      },
+      /*退出*/
+      signOut(){
+        var token=localStorage.getItem('Authorization');
+        this.$store.commit('del_token',token)
+        this.$router.push({
+          path:'/'
         })
       }
 
@@ -313,7 +322,7 @@
     align-items: center;
   }
   .xiala{
-    width: 150px;
+    width: 180px;
     margin-left: 30px;
   }
 

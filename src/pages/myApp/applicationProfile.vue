@@ -3,47 +3,47 @@
   <div class="applicationProfileDiv">
     <div class="firstDiv">
       <div class="firstDivOne">
-        <img src="../../../static/image/survey/app.png" alt="">
+        <img :src="list.icon" alt="">
         <div>
-          <p>全民大冒险 <span>已上架</span></p>
-          <p>版本：v1.2.0</p>
+          <p>{{list.name}} <span style="font-weight: bold">{{state}}</span></p>
+          <p>{{list.version_code}}</p>
         </div>
       </div>
       <div class="firstDivTwo">
           <p>下载地址</p>
-          <div>BallEndlessJump.ipa</div>
+          <div>https://ios.yoyoacg.com{{list.path}}</div>
       </div>
     </div>
     <div class="secondDiv">
       <p class="firstP">包名</p>
-      <p class="secondP">BallEndlessJump.ipa</p>
+      <p class="secondP baoming">{{list.package_name}}</p>
     </div>
     <div class="thirdDiv">
       <p class="firstP">是否启用</p>
-      <p class="secondP">是</p>
+      <p class="secondP">{{enable}}</p>
     </div>
     <div class="fourDiv">
       <p class="firstP">评分人数</p>
-      <p class="secondP">30</p>
+      <p class="secondP">{{list.score_num}}</p>
     </div>
     <div class="fiveDiv">
-      <p class="firstP">产品类型</p>
-      <p class="secondP">游戏类</p>
+      <p class="firstP">应用类型</p>
+      <p class="secondP">{{list.type}}</p>
     </div>
     <div class="sixDiv">
       <p class="firstP">应用截图</p>
       <div class="sixDivImg" v-for="(list,index) in imgList">
-        <img class="secondP"  :src="list.img" alt="">
+        <img class="secondP"  :src='list' alt="">
       </div>
 
     </div>
     <div class="sevenDiv">
       <p class="firstP">应用介绍</p>
-      <p class="secondP">这个游戏很好玩，全民大冒险是一个好用的APP</p>
+      <p class="secondP desc">{{list.desc}}</p>
     </div>
     <div class="eightDiv">
       <p class="firstP">功能介绍</p>
-      <p class="secondP">这个游戏很好玩，全民大冒险是一个好用的APP</p>
+      <p class="secondP introductiontext">{{list.introduction}}</p>
     </div>
     <div class="nineDiv">
       <div style="background-image: url('../../../static/image/survey/anniu_xuanzhong.png')">编辑</div>
@@ -54,25 +54,46 @@
 </template>
 
 <script>
+  import  axios from 'axios'
+  import qs from 'qs'
     export default {
         name: "applicationProfile",
       data(){
           return{
+            list:'',
+            state:"",
+            enable:'',
+            icon:'',
             imgList:[
-              {
-                img:'../../../static/image/survey/tu1.png'
-              },
-              {
-                img:'../../../static/image/survey/tu2.png'
-              },
-              {
-                img:'../../../static/image/survey/tu1.png'
-              },
-              {
-                img:'../../../static/image/survey/tu2.png'
-              }
+
             ]
           }
+      },
+
+      mounted(){
+        let data={
+            id:this.$route.query.id
+          }
+        let config = {
+          headers:{'token':localStorage.getItem('Authorization')}
+        };
+        axios.post('https://ios.yoyoacg.com/api/app/appDes',qs.stringify(data),config).then(res => {
+          console.log(res.data.data)
+          this.list=res.data.data
+          this.list.icon='https://ios.yoyoacg.com'+this.list.icon
+          for(var i=0;i<this.list.imgs.length;i++){
+              this.imgList.push('https://ios.yoyoacg.com'+this.list.imgs[i])
+            }
+          if(this.list.status==0){
+                  this.state='已下架'
+                  this.enable='否'
+            }else{
+              this.state='已上架'
+              this.enable='是'
+            }
+        }, err => {
+          console.log(err)
+        })
       }
     }
 </script>
@@ -110,13 +131,14 @@
    margin-left: 30px;
   }
   .firstDivOne{
-    width: 230px;
+    width: 350px;
     display: flex;
     align-items: center;
   }
   .firstDivOne img{
     width: 80px;
     height: 80px;
+    border-radius: 6px;
   }
   .firstDivOne p{
     margin-left: 10px;
@@ -124,15 +146,16 @@
   .firstDivTwo{
     display: flex;
     align-items: center;
-    margin-left: 120px;
+    margin-left: 60px;
   }
   .firstDivTwo div{
-    width:300px;
+    width: 600px;
     height: 45px;
     line-height: 45px;
-    padding-left: 20px;
+    padding-left: 10px;
     border: 1px solid #B5B5B5;
     margin-left: 20px;
+    overflow: hidden;
   }
   .sixDivImg{
     width: 105px;
@@ -179,5 +202,19 @@
   .nineDiv div:nth-child(2){
     color: #06B2B6;
     margin-left: 40px;
+  }
+  .introductiontext,.desc{
+    width: 900px;
+    height: auto;
+    word-wrap:break-word;
+    word-break:break-all;
+    overflow: hidden;
+  }
+  .baoming{
+    width: 900px;
+    height: auto;
+    word-wrap:break-word;
+    word-break:break-all;
+    overflow: hidden;
   }
 </style>

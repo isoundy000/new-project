@@ -23,31 +23,32 @@
         <el-table
           :data="tableData"
           stripe
+          align="center"
           :header-cell-style="{background:'#e0f2fd'}"
         >
           <el-table-column
-            prop="appName"
+            prop="order_sn"
             label="订单编号"
           >
           </el-table-column>
           <el-table-column
-            prop="versionNumber"
+            prop="ctime_text"
             label="下单时间"
           >
           </el-table-column>
           <el-table-column
-            prop="address"
+            prop="pay_time_text"
             label="支付时间"
             width="170"
           >
           </el-table-column>
           <el-table-column
-            prop="serviceType"
+            prop="pay_name"
             label="支付方式"
             width="170">
           </el-table-column>
           <el-table-column
-            prop="servicePrize"
+            prop="account"
             label="充值金额"
           >
           </el-table-column>
@@ -56,13 +57,13 @@
 
 
           <el-table-column
-            prop="state"
+            prop="pay_status"
             label="订单状态"
           >
             <template slot-scope="scope">
-              <span v-if="scope.row.state=== '充值成功'" style="color: #43A047">{{scope.row.state}}</span>
-              <span v-else-if="scope.row.state=== '已失效'" style="color: #999999">{{scope.row.state}}</span>
-              <span v-else-if="scope.row.state=== '未付款'" style="color: #FF0000">{{scope.row.state}}</span>
+              <span v-if="scope.row.pay_status=== 1" style="color: #43A047">已支付</span>
+              <span v-else-if="scope.row.pay_status=== 0" style="color: #999999">未支付</span>
+              <span v-else-if="scope.row.pay_status=== 2" style="color: #FF0000">已关闭</span>
             </template>
           </el-table-column>
 
@@ -70,19 +71,27 @@
 
       </div>
       <div class="thirdDiv">
-        <Page :page-size="4" :current="3" :total="3" show-total/>
+        <p>共<span style="color: red">{{pageNumber}}</span> 页/ <span style="color: red">{{total}}</span>条记录</p>
+        <Page @on-change="indexChange" @on-page-size-change="pageChange" :page-size="6" :current="current" :total=total />
       </div>
     </div>
 </template>
 
 <script>
+  import  axios from 'axios'
+  import qs from 'qs'
     export default {
         name: "billInvest",
       data(){
         return{
+          total:0,
+          pageNumber:'',
+          current:1,
           input:'',
           appName:'',
           value:'',
+          starTime:'',
+          endTime:'',
           downSumOptions: [
             {
               value: '充值成功',
@@ -92,38 +101,7 @@
               value: '未付款',
             }],
           tableData: [
-            {
-              appName: '201709166393',
-              versionNumber: '2016-10-01 18:51:16',
-              address: '2016-10-01  18:52:15',
-              serviceType: '支付宝',
-              servicePrize: '￥200.00',
-              state: '充值成功',
-            },
-            {
-              appName: '201709166393',
-              versionNumber: '2016-10-01 18:51:16',
-              address: '2016-10-01  18:52:15',
-              serviceType: '支付宝',
-              servicePrize: '￥200.00',
-              state: '已失效',
-            },
-            {
-              appName: '201709166393',
-              versionNumber: '2016-10-01 18:51:16',
-              address: '2016-10-01  18:52:15',
-              serviceType: '支付宝',
-              servicePrize: '￥200.00',
-              state: '未付款',
-            },
-            {
-              appName: '201709166393',
-              versionNumber: '2016-10-01 18:51:16',
-              address: '2016-10-01  18:52:15',
-              serviceType: '支付宝',
-              servicePrize: '￥200.00',
-              state: '充值成功',
-            }
+
           ]
         }
       },
@@ -133,8 +111,60 @@
         },
         firstTime(a){
           console.log(a)
+          this.starTime=a[0]
+          this.endTime=a[1]
+          console.log(this.starTime)
+          console.log(this.endTime)
+        },
+        /*上下页翻页*/
+        indexChange(i){
+          console.log(i)
+          let data={
+            keywords:this.input,
+            status:this.appName,
+            start:this.starTime,
+            end:this.endTime,
+            page:i,
+            page_size:6,
+          }
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.post('https://ios.yoyoacg.com/api/order/orderList',qs.stringify(data),config).then(res => {
+            console.log(res.data)
+            console.log(res.data.data.list)
+            this.total=res.data.data.total
+            this.pageNumber=parseInt(Math.ceil(Number(this.total)/6))
+            this.tableData=res.data.data.list
+          }, err => {
+            console.log(err)
+          })
+        },
+        pageChange(s){
+          console.log(s)
         }
+      },
+      mounted(){
+        let data={
+          keywords	:this.input,
+          status:this.appName,
+          start:this.starTime,
+          end:this.endTime,
+          page_size:6
+        }
+        let config = {
+          headers:{'token':localStorage.getItem('Authorization')}
+        };
+        axios.post('https://ios.yoyoacg.com/api/order/orderList',qs.stringify(data),config).then(res => {
+          console.log(res.data.data.list)
+          this.tableData=res.data.data.list
+          this.total=res.data.data.total
+          this.pageNumber=parseInt(Math.ceil(Number(this.total)/6))
+        }, err => {
+          console.log(err)
+        })
       }
+
     }
 </script>
 
@@ -159,7 +189,7 @@
     margin-top: 25px;
   }
   .thirdDiv {
-    width: 78%;
+    width: 100%;
     /*height: 300px;*/
     margin: 50px auto 0 auto;
     display: flex;

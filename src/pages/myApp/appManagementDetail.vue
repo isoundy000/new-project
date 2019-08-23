@@ -15,7 +15,11 @@
     <div class="header_title">
       <p @click="appClick(index,list.isclass)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass} ">{{list.msg}}</p>
     </div>
-    <router-view></router-view>
+    <keep-alive>
+      <router-view v-if="$route.meta.keepAlive"></router-view>
+      </keep-alive>
+    <router-view v-if="!$route.meta.keepAlive"></router-view>
+
   </div>
 
 </div>
@@ -58,26 +62,44 @@
           this.title[index].isclass=true
           if(index==0){
             this.$router.push({
-              path:'/appManagementDetail'
+              path:'/appManagementDetail',
+              query:{
+                id:this.$route.query.id
+              }
             })
           }else if(index==1){
             this.$router.push({
-              path:'/versionRecord'
+              path:'/versionRecord',
+              query:{
+                id:this.$route.query.id
+              }
             })
           }else if(index==2){
             this.$router.push({
-              path:'/downLoadRecord'
+              path:'/downLoadRecord',
+              query:{
+                id:this.$route.query.id
+              }
             })
           }else if(index==3){
             this.$router.push({
-              path:'/consumptionRecord'
+              path:'/consumptionRecord',
+              query:{
+                id:this.$route.query.id
+              }
             })
           }else if(index==4){
             this.$router.push({
-              path:'/statistics'
+              path:'/statistics',
+              query:{
+                id:this.$route.query.id
+              }
             })
           }
         },
+      },
+      mounted(){
+          alert(this.$route.query.id)
       }
     }
 </script>

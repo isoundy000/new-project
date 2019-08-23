@@ -11,62 +11,62 @@
             :header-cell-style="{background:'#e0f2fd'}"
           >
             <el-table-column
-              prop="appName"
+              prop="name"
               label="应用名称"
               width="160"
 
             >
             </el-table-column>
             <el-table-column
-              prop="versionNumber"
+              prop="system_version"
               label="版本号"
             >
             </el-table-column>
             <el-table-column
-              prop="address"
+              prop="path"
               label="安装地址"
               width="160"
             >
             </el-table-column>
             <el-table-column
-              prop="serviceType"
+              prop=""
               label="服务类型"
               width="160"
               >
             </el-table-column>
             <el-table-column
-              prop="servicePrize"
+              prop=""
               label="服务单价"
             >
             </el-table-column>
             <el-table-column
-              prop="signNumber"
+              prop=""
               label="签名次数">
             </el-table-column>
             <el-table-column
-              prop="installNumber"
+              prop=""
               label="安装量"
             >
             </el-table-column>
             <el-table-column
-              prop="installNumber"
+              prop=""
               label="下载量"
             >
             </el-table-column>
             <el-table-column
-              prop="installNumber"
+              prop="create_time"
               label="更新时间"
             >
             </el-table-column>
 
             <el-table-column
-              prop="state"
+              prop=""
               label="状态"
             >
               <template slot-scope="scope">
-                <span v-if="scope.row.state=== '分发中'" style="color: #43A047">{{scope.row.state}}</span>
-                <span v-else-if="scope.row.state=== '已下架'" style="color: #999999">{{scope.row.state}}</span>
-                <span v-else-if="scope.row.state=== '已删除'" style="color: #FF0000">{{scope.row.state}}</span>
+                <span v-if="scope.row.name=== '分发中'" style="color: #43A047">{{scope.row.name}}</span>
+                <span v-else-if="scope.row.name=== '已下架'" style="color: #999999">{{scope.row.name}}</span>
+                <span v-else-if="scope.row.name=== '已删除'" style="color: #FF0000">{{scope.row.name}}</span>
               </template>
             </el-table-column>
 
@@ -74,65 +74,73 @@
 
         </div>
         <div class="thirdDiv">
-          <Page :page-size="4" :current="3" :total="3" show-total/>
+          <p>共<span style="color: red">{{pageNumber}}</span> 页/ <span style="color: red">{{total}}</span>条记录</p>
+          <Page @on-change="indexChange" @on-page-size-change="pageChange" :page-size="4" :current="current" :total=total />
         </div>
       </div>
     </div>
 </template>
 
 <script>
+  import  axios from 'axios'
+  import qs from 'qs'
     export default {
         name: "versionRecord",
       data(){
           return{
+            total:0,
+            pageNumber:'',
+            current:1,
             tableData: [
-              {
-                appName: '201709166393',
-                versionNumber: '应用A',
-                address: '2016-10-01  18:51:15',
-                serviceType: '2016-10-01  18:51:15',
-                servicePrize: '超级签名',
-                signNumber: '88888',
-                installNumber: '￥200.00',
 
-                state: '分发中',
-
-              },
-              {
-                appName: '201709166393',
-                versionNumber: '应用A',
-                address: '2016-10-01  18:51:15',
-                serviceType: '2016-10-01  18:51:15',
-                servicePrize: '超级签名',
-                signNumber: '88888',
-                installNumber: '￥200.00',
-
-                state: '分发中',
-              },
-              {
-                appName: '201709166393',
-                versionNumber: '应用A',
-                address: '2016-10-01  18:51:15',
-                serviceType: '2016-10-01  18:51:15',
-                servicePrize: '超级签名',
-                signNumber: '88888',
-                installNumber: '￥200.00',
-
-                state: '分发中',
-              },
-              {
-                appName: '201709166393',
-                versionNumber: '应用A',
-                address: '2016-10-01  18:51:15',
-                serviceType: '2016-10-01  18:51:15',
-                servicePrize: '超级签名',
-                signNumber: '88888',
-                installNumber: '￥200.00',
-
-                state: '分发中',
-              }
             ]
           }
+      },
+      methods:{
+        /*上下页翻页*/
+        indexChange(i){
+          console.log(i)
+          let data={
+            keywords:this.input,
+            page:i,
+            page_size:4,
+          }
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.post('https://ios.yoyoacg.com/api/app/appUpdateLog',qs.stringify(data),config).then(res => {
+            console.log(res.data)
+            console.log(res.data.data.list)
+            this.total=res.data.data.total
+            this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+            this.tableData=res.data.data.list
+          }, err => {
+            console.log(err)
+          })
+        },
+        pageChange(s){
+          console.log(s)
+        }
+      },
+      mounted(){
+        alert('详情页333面'+this.$route.query.id)
+        // alert('详情页222面'+this.$route.query.id)
+       // alert('版本记录'+this.$route.query.id)
+        //
+        let data={
+            id:this.$route.query.id
+        }
+        let config = {
+          headers:{'token':localStorage.getItem('Authorization')}
+        };
+        axios.post('https://ios.yoyoacg.com/api/app/appUpdateLog',qs.stringify(data),config).then(res => {
+          console.log(res.data.data.list)
+          this.tableData=res.data.data.list
+          this.total=res.data.data.total
+          this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+        }, err => {
+          console.log(err)
+        })
       }
     }
 </script>

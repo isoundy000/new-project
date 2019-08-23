@@ -11,7 +11,7 @@
         </el-breadcrumb>
       </div>
     </div>
-    <div class="secondDiv">
+    <div class="secondDiv" v-loading="loading">
       <div class="secondDivSmall">
         <el-steps :active="active" finish-status="success" align-center>
           <el-step title="超级签名"></el-step>
@@ -27,7 +27,7 @@
         </div>
         <div class="text">
           <p>点击按钮选择应用的安装包，或拖拽文件到此区域</p>
-          <p>(支持ipa文件，支持中断后续传)</p>
+          <p>(支持ipa文件，最大200M)</p>
         </div>
 
       </div>
@@ -36,8 +36,10 @@
           <el-upload
             class="upload-demo"
             :on-success="success"
+            :headers="headers"
             drag
-            action="https://jsonplaceholder.typicode.com/posts/"
+            accept=".ipa"
+            action="https://ios.yoyoacg.com/api/common/upload"
             multiple>
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -49,13 +51,18 @@
         <div class="supplementOne">
           <p class="textOne">应用icon</p>
           <div class="supplementOneImg">
-            <img src="../../../static/image/survey/app.png" alt="">
+            <img :src="icon" alt="">
             <div >
-              <p>全民大冒险</p>
-              <p>版本：v1.2.0</p>
+              <p>{{display_name}}</p>
+              <p>{{version_code}}</p>
             </div>
           </div>
 
+        </div>
+
+        <div class="supplementThird">
+          <p>包名</p>
+          <el-input :disabled="true" class="thirdInput" v-model="thirdInput" placeholder="请输入内容"></el-input>
         </div>
         <div class="supplementTwo">
           <p>是否启用</p>
@@ -63,12 +70,25 @@
             v-model="switchValue"
             active-color="#06B2B6"
             inactive-color="#999999"
-            @change="ss">
+            @change="swich">
           </el-switch>
         </div>
-        <div class="supplementThird">
-          <p>包名</p>
-          <el-input :disabled="disInput" class="thirdInput" v-model="thirdInput" placeholder="请输入内容"></el-input>
+        <div class="supplementTwo">
+          <p>更新功能</p>
+          <el-switch
+            v-model="switchValue1"
+            active-color="#06B2B6"
+            inactive-color="#999999"
+            @change="swich1">
+          </el-switch>
+        </div>
+        <div class="supplementTen">
+          <p>下载码</p>
+          <el-input :disabled="disInput" class="thirdInput" v-model="TenInput" placeholder="请输入内容"></el-input>
+        </div>
+        <div class="supplementTen">
+          <p>安卓下载地址</p>
+          <el-input :disabled="disInput" class="thirdInput" v-model="EvenInput" placeholder="请输入内容"></el-input>
         </div>
         <div class="supplementFourth">
           <p>评分人数</p>
@@ -84,8 +104,10 @@
             <el-upload
               class="ss"
               :limit='limitCount'
+              :on-success="success2"
               :class="{hide:hideUpload}"
-              action="https://jsonplaceholder.typicode.com/posts/"
+              :headers="headers"
+              action="https://ios.yoyoacg.com/api/common/upload"
               list-type="picture-card"
               :on-preview="handlePictureCardPreview"
               :on-remove="handleRemove"
@@ -130,28 +152,51 @@
 </template>
 
 <script>
+  import  axios from 'axios'
+  import qs from 'qs'
   export default {
     name: "publishingApplications",
     data() {
       return {
+        loading:false,
         textarea:'',
         textarea1:'',
         limitCount:2,
-        disInput:true,
+        disInput:false,
         hideUpload: false,
         dialogImageUrl: '',
         dialogVisible: false,
         thirdInput:'',
         fourthInput:'',
         fivethInput:'',
-        switchValue: false,
+        switchValue: true,
+        switchValue1: true,
         current: 0,
         active: 2,
         isSuper: false,
         isUpload: false,
         isSupplement: true,
-        isDistribute: false
+        isDistribute: false,
+        TenInput:'',
+        EvenInput:'',
+        headers:{
+          "token":localStorage.getItem('Authorization') // 直接从本地获取token就行
+
+        },
+        display_name:'',//应用名称
+        path:'',//源文件路径
+        icon:'',//应用icon
+        ipa_data_bak:'',//原始包信息 json加密
+        version_code:'',//版本号
+        package_name:'',//包名
+        bundle_name:'',//bundle名
+        state:1,//状态 1 正常 0关闭
+        filesize:'',//大小
+        img:[]
       }
+    },
+    computed: {
+
     },
     methods: {
       upload(){
@@ -159,19 +204,41 @@
         this.isSuper = false
         this.isUpload = true
       },
+      /*上传图片触发的方法*/
       deleteL(response, file, fileList){
-        console.log(response)
-        console.log(file)
-        console.log(fileList)
         this.hideUpload = file.length >= this.limitCount;
       },
       next() {
         if (this.active++ > 2) this.active = 0;
       },
+      /*上传图片成功*/
+      success2(response, file){
+        var img=file.response.data.url
+        this.img.push(img)
+      },
       success(response, file, fileList) {
-        console.log(response)
         console.log(file)
-        console.log(fileList)
+
+        this.display_name=file.response.data.app.display_name
+        this.path=file.response.data.url
+        this.icon='https://ios.yoyoacg.com'+file.response.data.app.icon
+        this.ipa_data_bak=file.response.data.app.ipa_data_bak
+        this.package_name=file.response.data.app.package_name
+        this.version_code=file.response.data.app.version_code
+        this.bundle_name=file.response.data.app.bundle_name
+        this.filesize=file.response.data.app.filesize
+        this.thirdInput=this.package_name
+        // console.log(this.bundle_name)
+        // console.log(this.path)
+        // console.log(this.icon)
+        // console.log(this.ipa_data_bak)
+        // console.log(this.package_name)
+        // console.log(this.version_code)
+        // console.log(this.bundle_name)
+        // console.log(this.status)
+        // console.log(this.filesize)
+
+
         this.active = 2
         this.isSuper = false
         this.isUpload = false
@@ -184,18 +251,69 @@
 
       },
       handlePictureCardPreview(file) {
+        console.log(file)
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
       },
-      ss(){
-        this.disInput=!this.disInput
+      /*开关*/
+      swich(){
+        if(this.switchValue==false){
+          //this.state=0
+          this.disInput=true
+        }else{
+         // this.state=1
+          this.disInput=false
+        }
       },
+      /*开关*/
+      swich1(){
+        // if(this.switchValue1==false){
+        //   this.state=0
+        //   this.disInput=true
+        // }else{
+        //   this.state=1
+        //   this.disInput=false
+        // }
+      },
+      /*提交事件*/
       submission(){
-        this.active = 3
+        // this.active = 3
+         this.loading=true
 
-        this.$router.push({
-          path:'/appManagement'
+        let f={
+          display_name:this.display_name,
+          path:this.path,
+          icon:this.icon,
+          type:1,
+          ipa_data_bak:this.ipa_data_bak,
+          package_name:this.package_name,
+          version_code:this.version_code,
+          bundle_name:this.bundle_name,
+          filesize:this.filesize,
+          desc:this.textarea,
+          score_num:this.fourthInput,
+          introduction:this.textarea1,
+          img:this.img,
+          status:this.state,
+          download_code:this.TenInput,
+          apk_url:this.EvenInput
+        }
+        let config = {
+          headers:{'token':localStorage.getItem('Authorization')}
+        };
+        axios.post('https://ios.yoyoacg.com/api/app/add',qs.stringify(f),config).then(res => {
+          console.log(res.data)
+          this.loading=false
+
+          this.$router.push({
+            path:'/appManagement'
+          })
+
+
+        }, err => {
+          console.log(err)
         })
+
       }
     },
     mounted(){
@@ -296,7 +414,7 @@
   width: 40%;
   display: flex;
   flex-flow: column;
-  justify-content: c;
+  justify-content: center;
   margin: 50px auto 0 auto;
 }
   .supplementOne{
@@ -309,7 +427,7 @@
     font-size: 16px;
     color: #333333;
   }
- .supplementTwo p:nth-child(1),.supplementThird p:nth-child(1),.supplementFourth p:nth-child(1),.supplementFiveth p:nth-child(1),.supplementsixth p:nth-child(1),.supplementSeventh p:nth-child(1),.supplementEightth p:nth-child(1){
+ .supplementTwo p:nth-child(1),.supplementTen p:nth-child(1),.supplementThird p:nth-child(1),.supplementFourth p:nth-child(1),.supplementFiveth p:nth-child(1),.supplementsixth p:nth-child(1),.supplementSeventh p:nth-child(1),.supplementEightth p:nth-child(1){
     width: 70px;
     text-align: right;
     font-size: 16px;
@@ -324,6 +442,7 @@
   .supplementOneImg img{
     width: 80px;
     height: 80px;
+    border-radius: 8px;
   }
   .supplementOneImg p{
     margin-left: 15px;
@@ -334,7 +453,7 @@
     align-items: center;
   }
 
-  .supplementThird,.supplementFourth,.supplementFiveth,.supplementsixth,.supplementSeventh,.supplementEightth{
+  .supplementTen,.supplementThird,.supplementFourth,.supplementFiveth,.supplementsixth,.supplementSeventh,.supplementEightth{
     display: flex;
     align-items: center;
     margin-top: 15px;

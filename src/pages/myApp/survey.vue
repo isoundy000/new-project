@@ -16,28 +16,44 @@
           <img class="jineIcon" src="../../../static/image/survey/jine@2x.png" alt="">
           <div class="secondDivText">
             <p>总消费金额</p>
-            <p>4,235</p>
+            <div class="newAdd">
+              <p>{{list.mtotal}}</p>
+              <img src="../../../static/image/survey/jiantou.png" alt="">
+              <p class="newAddP">{{list.mtoday}}</p>
+            </div>
           </div>
         </div>
         <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
           <img class="liulanIcon" src="../../../static/image/survey/liulan@2x.png" alt="">
           <div class="secondDivText">
             <p>页面总浏览量</p>
-            <p>4,235</p>
+            <div class="newAdd">
+              <p>{{list.vtotal}}</p>
+              <img src="../../../static/image/survey/jiantou.png" alt="">
+              <p class="newAddP">{{list.vtoday}}</p>
+            </div>
           </div>
         </div>
         <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
           <img class="xiazaiIcon" src="../../../static/image/survey/xiazai@2x.png" alt="">
           <div class="secondDivText">
             <p>总下载量</p>
-            <p><span>4,235</span><span>4,235</span></p>
+            <div class="newAdd">
+              <p>{{list.dtotal}}</p>
+              <img src="../../../static/image/survey/jiantou.png" alt="">
+              <p class="newAddP">{{list.dtoday}}</p>
+            </div>
           </div>
         </div>
         <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
           <img class="shebeiIcon" src="../../../static/image/survey/shebei@2x.png" alt="">
           <div class="secondDivText">
             <p>页面总浏览量</p>
-            <p>4,235</p>
+            <div class="newAdd">
+              <p>{{list.utotal}}</p>
+              <img src="../../../static/image/survey/jiantou.png" alt="">
+              <p class="newAddP">{{list.utoday}}</p>
+            </div>
           </div>
         </div>
 
@@ -122,11 +138,14 @@
 </template>
 
 <script>
+  import  axios from 'axios'
+  import qs from 'qs'
   import chinaJson from 'echarts/map/json/china.json';//此处引入中国地图json
   export default {
     name: "survey",
     data() {
       return {
+        list:'',
         value: '',//第一个日历选中的值
         value1:'',//第二个日历选中的值
         chooseAppOptions: [
@@ -175,6 +194,18 @@
       this.drawColumn()
       this.drawPolygonal()
       this.drawMap()
+      let data = {
+        id: ''
+      }
+      let config = {
+        headers: {'token': localStorage.getItem('Authorization')}
+      };
+      axios.post('https://ios.yoyoacg.com/api/app/appStatistics',data, config).then(res => {
+        console.log(res.data.data)
+        this.list = res.data.data
+      }, err => {
+        console.log(err)
+      })
     },
     methods: {
       /*柱形图*/
@@ -734,6 +765,23 @@
     font-weight: bold;
     font-family: "Microsoft YaHei UI";
     border-left: 1px solid #E5E5E5;
+  }
+  .newAdd {
+    height: 50px;
+    line-height: 50px;
+    display: flex;
+    align-items: center;
+  }
+
+  .newAdd img {
+    width: 11px;
+    height: 14px;
+    vertical-align: middle;
+    margin-left: 20px;
+  }
+
+  .newAddP {
+    margin-left: 5px;
   }
 </style>
 <style>

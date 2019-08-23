@@ -18,8 +18,9 @@
           <div class="appManagementSmallTwo">
             <p>链接地址</p>
             <div class="lianjie">
-              <div class="lianjieOne">http//:baidu.com</div>
-              <div class="lianjieTwo">复制链接</div>
+              <div class="lianjieOne" id="text">{{urlAddress}}</div>
+              <textarea id="input">这是幕后黑手</textarea>
+              <div @click="copy" class="lianjieTwo">复制链接</div>
             </div>
 
               <p class="appManagementSmallTwoText">
@@ -48,12 +49,13 @@
         class="seachInput"
         placeholder="根据应用名称搜索"
         prefix-icon="el-icon-search"
-        v-model="input">
+        v-model="input"
+      @change="seachInput">
       </el-input>
-      <div class="export" style="background-image: url('../../../static/image/appManagement/anniu@2x (1).png')">
-        <img src="../../../static/image/survey/daochuicon@2x.png" alt="">
-        <p>上次/更新应用</p>
-      </div>
+      <!--<div class="export" style="background-image: url('../../../static/image/appManagement/anniu@2x (1).png')">-->
+        <!--<img src="../../../static/image/survey/daochuicon@2x.png" alt="">-->
+        <!--<p>上次/更新应用</p>-->
+      <!--</div>-->
     </div>
     <div class="thirdDiv">
       <el-table
@@ -62,55 +64,55 @@
         :header-cell-style="{background:'#e0f2fd'}"
       >
         <el-table-column
-          prop="appName"
+          prop="name"
           label="应用名称"
           width="120">
         </el-table-column>
         <el-table-column
-          prop="versionNumber"
+          prop="version_code"
           label="版本号"
           width="80">
         </el-table-column>
         <el-table-column
-          prop="address"
+          prop="url"
           label="安装地址"
           width="200">
         </el-table-column>
         <el-table-column
-          prop="serviceType"
+          prop=""
           label="服务类型">
         </el-table-column>
         <el-table-column
-          prop="servicePrize"
+          prop="rate"
           label="服务单价"
           width="90">
         </el-table-column>
         <el-table-column
-          prop="signNumber"
+          prop=""
           label="签名次数">
         </el-table-column>
         <el-table-column
-          prop="installNumber"
+          prop="download_num"
           label="安装量"
           width="90">
         </el-table-column>
         <el-table-column
-          prop="downNumber"
+          prop="download_num"
           label="下载量">
         </el-table-column>
         <el-table-column
-          prop="updateTime"
+          prop="create_time"
           label="更新时间"
           width="160">
         </el-table-column>
         <el-table-column
-          prop="state"
+          prop="status"
           label="状态"
           width="70">
           <template slot-scope="scope">
-            <span v-if="scope.row.state=== '分发中'" style="color: #43A047">{{scope.row.state}}</span>
-            <span v-else-if="scope.row.state=== '已下架'" style="color: #999999">{{scope.row.state}}</span>
-            <span v-else-if="scope.row.state=== '已删除'" style="color: #FF0000">{{scope.row.state}}</span>
+            <span v-if="scope.row.status=== 1" style="color: #43A047">分发中</span>
+            <span v-else-if="scope.row.status=== 0" style="color: #999999">已下架</span>
+            <span v-else-if="scope.row.status=== '已删除'" style="color: #FF0000">{{scope.row.state}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -118,7 +120,7 @@
           label="操作"
           width="130">
           <template slot-scope="scope">
-            <el-select class="downSum" @change="allApp(scope.$index,tableData[scope.$index].operation)"
+            <el-select class="downSum" @change="allApp(scope.$index,tableData[scope.$index].operation,tableData[scope.$index].id,tableData,tableData[scope.$index].url)"
                        v-model="tableData[scope.$index].operation" placeholder="请选择">
               <el-option
                 v-for="item in downSumOptions"
@@ -133,7 +135,8 @@
 
     </div>
     <div class="fourthDiv">
-      <Page :page-size="4" :current="3" :total="3" show-total/>
+      <p>共<span style="color: red">{{pageNumber}}</span> 页/ <span style="color: red">{{total}}</span>条记录</p>
+      <Page @on-change="indexChange" @on-page-size-change="pageChange" :page-size="4" :current="current" :total=total />
     </div>
 
 
@@ -143,7 +146,8 @@
 <script>
 
   import QrcodeVue from 'qrcode.vue';
-  import axios from 'axios'
+  import  axios from 'axios'
+  import qs from 'qs'
   import {BASE_URL} from "../../api";
   import surveyHeader from '../component/surveyHeader'
 
@@ -151,7 +155,7 @@
     name: "appManagement",
     data() {
       return {
-        value: 'https://www.baidu.com',
+        value: '',
         size: 100,
         input: '',
         downSumValue: '',
@@ -162,64 +166,19 @@
           }, {
             value: '查看详情',
           }, {
+            value: '更新应用',
+          },{
+            value: '上架',
+          },{
             value: '下架',
           }, {
             value: '删除',
           }],
-        tableData: [
-          {
-            appName: '棋牌游戏',
-            versionNumber: 'V1.2.0',
-            address: 'https://project/iosApp/down',
-            serviceType: '超级签名',
-            servicePrize: '15.00元/台',
-            signNumber: '50次',
-            installNumber: '15，200',
-            downNumber: '53，620',
-            updateTime: '2016-10-01 18:51:15',
-            state: '分发中',
-            operation: ""
-          },
-          {
-            appName: '棋牌游戏',
-            versionNumber: 'V1.2.0',
-            address: 'https://project/iosApp/down',
-            serviceType: '超级签名',
-            servicePrize: '15.00元/台',
-            signNumber: '50次',
-            installNumber: '15，200',
-            downNumber: '53，620',
-            updateTime: '2016-10-01 18:51:15',
-            state: '已下架',
-            operation: ""
-          },
-          {
-            appName: '棋牌游戏',
-            versionNumber: 'V1.2.0',
-            address: 'https://project/iosApp/down',
-            serviceType: '超级签名',
-            servicePrize: '15.00元/台',
-            signNumber: '50次',
-            installNumber: '15，200',
-            downNumber: '53，620',
-            updateTime: '2016-10-01 18:51:15',
-            state: '已删除',
-            operation: ""
-          },
-          {
-            appName: '棋牌游戏',
-            versionNumber: 'V1.2.0',
-            address: 'https://project/iosApp/down',
-            serviceType: '超级签名',
-            servicePrize: '15.00元/台',
-            signNumber: '50次',
-            installNumber: '15，200',
-            downNumber: '53，620',
-            updateTime: '2016-10-01 18:51:15',
-            state: '分发中',
-            operation: ""
-          }
-        ]
+        tableData: [],
+        total:0,
+        pageNumber:'',
+        current:1,
+        urlAddress:''
       }
     },
     components: {
@@ -227,6 +186,60 @@
       QrcodeVue
     },
     methods: {
+      seachInput(){
+        let data={
+          keywords:this.input,
+          page:this.current,
+          page_size:4,
+        }
+        let config = {
+          headers:{'token':localStorage.getItem('Authorization')}
+        };
+        axios.post('https://ios.yoyoacg.com/api/app/appList',qs.stringify(data),config).then(res => {
+          // console.log(res.data)
+          // console.log(res.data.data.list)
+          this.total=res.data.data.total
+          this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+          this.tableData=res.data.data.list
+        }, err => {
+          console.log(err)
+        })
+      },
+      /*上下页翻页*/
+      indexChange(i){
+        console.log(i)
+        let data={
+          keywords:this.input,
+          page:i,
+          page_size:4,
+        }
+        let config = {
+          headers:{'token':localStorage.getItem('Authorization')}
+        };
+        axios.post('https://ios.yoyoacg.com/api/app/appList',qs.stringify(data),config).then(res => {
+          console.log(res.data)
+          console.log(res.data.data.list)
+          this.total=res.data.data.total
+          this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+          this.tableData=res.data.data.list
+        }, err => {
+          console.log(err)
+        })
+      },
+      pageChange(s){
+        console.log(s)
+      },
+      copy(){
+        var text = document.getElementById("text").innerText;
+        var input = document.getElementById("input");
+        input.value = text; // 修改文本框的内容
+        input.select(); // 选中文本
+        document.execCommand("copy"); // 执行浏览器复制命令
+        this.$message({
+          message: '复制成功',
+          type: 'success'
+        });
+      },
       ss() {
 
       },
@@ -244,20 +257,134 @@
         a.click()
       },
       /*下拉菜单*/
-      allApp(index, nameValue) {
+      allApp(index, nameValue,id,rows,url) {
+       // alert(id)
         if (nameValue == '下载链接') {
           this.isMask = true
-        } else if (nameValue == '查看详情') {
+          this.value=url
+          //alert(url)
+          this.urlAddress=url
+        }else if(nameValue == '更新应用'){
           this.$router.push({
-            path:'/appManagementDetail'
+            path:'/updateApplication',
+            query:{
+              id:id
+            }
+          })
+
+
+
+
+        } else if (nameValue == '查看详情') {
+          // let data={
+          //   id:id
+          // }
+          this.$router.push({
+            path:'/appManagementDetail',
+            query:{
+              id:id
+            }
+
+          })
+
+
+        }else if (nameValue == '上架') {
+          alert("选择了上架")
+          let data={
+            id:id,
+            type:2
+          }
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.post('https://ios.yoyoacg.com/api/app/appHandle',qs.stringify(data),config).then(res => {
+            let data={
+              keywords:this.input,
+              page:this.current,
+              page_size:4,
+            }
+            let config = {
+              headers:{'token':localStorage.getItem('Authorization')}
+            };
+            axios.post('https://ios.yoyoacg.com/api/app/appList',qs.stringify(data),config).then(res => {
+              console.log(res.data.data)
+              this.total=res.data.data.total
+              this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+              this.tableData=res.data.data.list
+            }, err => {
+              console.log(err)
+            })
+          }, err => {
+            console.log(err)
           })
         } else if (nameValue == '下架') {
           alert("选择了下架")
+          let data={
+            id:id,
+            type:3
+          }
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.post('https://ios.yoyoacg.com/api/app/appHandle',qs.stringify(data),config).then(res => {
+            let data={
+              keywords:this.input,
+              page:this.current,
+              page_size:4,
+            }
+            let config = {
+              headers:{'token':localStorage.getItem('Authorization')}
+            };
+            axios.post('https://ios.yoyoacg.com/api/app/appList',qs.stringify(data),config).then(res => {
+             console.log(res.data.data)
+              this.total=res.data.data.total
+              this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+              this.tableData=res.data.data.list
+            }, err => {
+              console.log(err)
+            })
+          }, err => {
+            console.log(err)
+          })
         } else if (nameValue == '删除') {
-          alert("选择了删除")
+          this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            let data={
+              id:id,
+              type:1
+            }
+            let config = {
+              headers:{'token':localStorage.getItem('Authorization')}
+            };
+            axios.post('https://ios.yoyoacg.com/api/app/appHandle',qs.stringify(data),config).then(res => {
+              let data={
+                keywords:this.input,
+                page:this.current,
+                page_size:4,
+              }
+              let config = {
+                headers:{'token':localStorage.getItem('Authorization')}
+              };
+              axios.post('https://ios.yoyoacg.com/api/app/appList',qs.stringify(data),config).then(res => {
+                this.total=res.data.data.total
+                this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+                this.tableData=res.data.data.list
+              }, err => {
+                console.log(err)
+              })
+            }, err => {
+              console.log(err)
+            })
+          }).catch(() => {
+
+          });
+
         }
-        console.log(index)
-        console.log(nameValue)
+        // alert(index)
+        // console.log(nameValue)
       },
       mask() {
         this.isMask = false
@@ -266,9 +393,23 @@
 
     },
     mounted() {
-      // this.$nextTick(function () {
-      //   this.bindQRCode();
-      // })
+      let data={
+        keywords:this.input,
+        page:this.current,
+        page_size:4,
+      }
+      let config = {
+        headers:{'token':localStorage.getItem('Authorization')}
+      };
+      axios.post('https://ios.yoyoacg.com/api/app/appList',qs.stringify(data),config).then(res => {
+        console.log(res.data)
+        console.log(res.data.data.list)
+        this.total=res.data.data.total
+        this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+        this.tableData=res.data.data.list
+      }, err => {
+        console.log(err)
+      })
 
     }
   }
@@ -420,7 +561,7 @@
     height: 35px;
     line-height: 35px;
     font-size: 14px;
-    padding-left: 10px;
+    overflow: hidden;
     border: 1px solid #DCDCDC;
   }
 
@@ -431,6 +572,7 @@
     text-align: center;
     color: white;
     background-color: #28A4F7;
+    cursor: pointer;
   }
   .appManagementSmallTwoText{
     width: 269px;
@@ -443,6 +585,13 @@
   }
   .el-select-dropdown__item.selected{
     color:#14BEC8 ;
+  }
+  #input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: -10;
   }
 </style>
 <style>
