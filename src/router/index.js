@@ -22,6 +22,7 @@ import publishingApplications from '@/pages/myApp/publishingApplications'//我�
 import realName from '@/pages/myApp/realName'//我的应用--实名认证
 import personal from '@/pages/myApp/personal'//我的应用--实名认证--个人认证
 import enterprise from '@/pages/myApp/enterprise'//我的应用--实名认证--企业认证
+import updateApplication from '@/pages/myApp/updateApplication'//我的应用--更新应用
 
 
 
@@ -77,29 +78,39 @@ export default new Router({
             {
               path: '/',
               name: 'applicationProfile',
-              component: applicationProfile
+              component: applicationProfile,
+              meta:{keepAlive:true}
             },
             {
               path: '/versionRecord',
               name: 'versionRecord',
-              component: versionRecord
+              component: versionRecord,
+              meta:{keepAlive:true}
             },
             {
               path: '/downLoadRecord',
               name: 'downLoadRecord',
-              component: downLoadRecord
+              component: downLoadRecord,
+              meta:{keepAlive:true}
             },
             {
               path: '/consumptionRecord',
               name: 'consumptionRecord',
-              component: consumptionRecord
+              component: consumptionRecord,
+              meta:{keepAlive:true}
             },
             {
               path: '/statistics',
               name: 'statistics',
-              component: statistics
+              component: statistics,
+              meta:{keepAlive:true}
             }
           ]
+        },
+        {
+          path: '/updateApplication',
+          name: 'updateApplication',
+          component: updateApplication,
         },
         {
           path: '/billManagement',
@@ -108,7 +119,7 @@ export default new Router({
           children:[
             {
               path: '/',
-              name: 'billConsumptionRecord',
+              name: 'billManagement',
               component: billConsumptionRecord,
             },
             {
