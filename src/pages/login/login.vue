@@ -19,8 +19,8 @@
           <div class="tishi" v-if="isTishi">
             <div class="tishiDiv">
               <img src="../../../static/image/login/tishi.png" alt="">
-              <p v-if="isVerification">用户名或验证码错误</p>
-              <p v-else>用户名或验证码不能为空</p>
+              <p class="textTishi">用户名或验证码错误</p>
+              <!--<p >用户名或验证码不能为空</p>-->
             </div>
 
           </div>
@@ -38,14 +38,15 @@
               <img v-else src="../../../static/image/login/yanzhengma.png" alt="">
               <input v-on:input="yanzInput" type="password" placeholder="请输入短信验证码" v-model="verificationCode">
               <div @click="send" class="send ">发送验证码</div>
+              <div class="daojishi1" style="display: none"></div>
             </div>
           </div>
           <div class="login_state">
             <div class="login_state_div">
               <div class="login_state_small">
-                <img @click="checklist" v-if="isCheck" src="../../../static/image/login/gouxuan1.png" alt="">
-                <img v-else @click="noChecklist" src="../../../static/image/login/gouxuan2.png" alt="">
-                <p>记住登录状态</p>
+                <!--<img @click="checklist" v-if="isCheck" src="../../../static/image/login/gouxuan1.png" alt="">-->
+                <!--<img v-else @click="noChecklist" src="../../../static/image/login/gouxuan2.png" alt="">-->
+                <!--<p>记住登录状态</p>-->
               </div>
               <p class="forget" @click="forget">忘记密码？</p>
             </div>
@@ -63,8 +64,7 @@
           <div class="tishi" v-if="isTishi1">
             <div class="tishiDiv">
               <img src="../../../static/image/login/tishi.png" alt="">
-              <p v-if="isVerification1">用户名或密码错误</p>
-              <p v-else>用户名或密码不能为空</p>
+              <p class="textTishi1" style="color: red">{{tishi1}}</p>
             </div>
 
           </div>
@@ -108,8 +108,11 @@
 </template>
 
 <script>
+  import  axios from 'axios'
+  import qs from 'qs'
+  import { mapMutations } from 'vuex';
   import Bfooter from '../component/footer'
-
+  // import {send} from "../../api";
   export default {
     name: "login",
     data() {
@@ -125,18 +128,18 @@
         isState: true,//显示短信登录还是账号登录界面，默认是短信登录
         isCheck: true,//复选框的选择，默认是不选中
         isTishi:false,//短信登录里面提示
-        isVerification:false,//短信登录里面显示账号为空还是错误，默认是显示为空
         isTishi1:false,//账号登录里面提示
-        isVerification1:false,//账号登录里面显示账号为空还是错误，默认是显示为空
+        tishi1:'',
         isA:true,//点击短信登录的字体颜色，默认是true，是绿色
         isB:false,//点击账号登录的字体颜色，默认是false，是黑色
+        userToken:''
       }
     },
     components: {
       Bfooter
     },
     methods: {
-
+      ...mapMutations(['changeLogin']),
       /*短信登录title*/
       msgLogin(){
         /*清空输入框数据*/
@@ -174,6 +177,7 @@
       },
       /*短信登录里面手机号输入框聚焦事件*/
       phoneInput(){
+        this.isTishi=false
         if(this.phonenumber==''){
           this.phoneIcon=false
         }else{
@@ -182,6 +186,7 @@
       },
       /*短信登录里面验证码输入框聚焦事件*/
       yanzInput(){
+        this.isTishi=false
         if(this.verificationCode==''){
           this.yanzIcon=false
         }else{
@@ -190,6 +195,7 @@
       },
       /*账号登录里面手机号输入框聚焦事件*/
       accountInput(){
+        this.isTishi1=false
         if(this.account==''){
           this.accountIcon=false
         }else{
@@ -198,6 +204,7 @@
       },
       /*账号登录里面密码输入框聚焦事件*/
       passwordInput(){
+        this.isTishi1=false
         if(this.password==''){
           this.passwordIcon=false
         }else{
@@ -205,17 +212,33 @@
         }
       },
       /*发送验证码倒计时*/
-      send(){
-        var timeClock;
+       send(){
+        var timeClock1;
         var timer_num = 60;
-        timeClock = setInterval(function() {
+        timeClock1 = setInterval(function() {
           timer_num--;
-          $('.send').html(timer_num+'秒');
+          $(".send").hide()
+          $(".daojishi1").show()
+          $('.daojishi1').html(timer_num+'秒');
           if(timer_num == 0) {
-            clearInterval(timeClock);
+            clearInterval(timeClock1);
+            $(".send").show()
+            $(".daojishi1").hide()
             $('.send').html('重新发送');
           }
         }, 1000)
+         let f={
+           mobile:Number(this.phonenumber),
+           event:'mobilelogin'
+         }
+         let config = {
+           headers:{'Content-Type':'application/x-www-form-urlencoded'}
+         };
+          axios.post('https://ios.yoyoacg.com/api/sms/send',qs.stringify(f),config).then(res => {
+            console.log(res.data)
+          }, err => {
+            console.log(err)
+          })
       },
 
 
@@ -224,22 +247,56 @@
       /*由没选中变选中状态*/
       checklist() {
         this.isCheck = false
+        localStorage.setItem('isCheck',JSON.stringify(this.isCheck))
         alert("勾选了")
       },
       /*由选中变没选中状态*/
       noChecklist() {
         this.isCheck = true
+        localStorage.setItem('isCheck',JSON.stringify(this.isCheck))
         alert("取消勾选了")
       },
       /*短信登录按钮*/
       login(){
         /*账号或验证码为空*/
+        let _this = this;
         if(this.phonenumber=='' || this.verificationCode==''){
             this.isTishi=true
-          this.isVerification=false
+           $(".textTishi").html('用户名或验证码不能为空')
         }else{
           this.isTishi=false
-          this.isVerification=false
+          let f={
+            mobile:this.phonenumber,
+            captcha:this.verificationCode
+          }
+          let config = {
+            headers:{'Content-Type':'application/x-www-form-urlencoded'}
+          };
+          axios.post('https://ios.yoyoacg.com/api/user/mobilelogin',qs.stringify(f),config).then(res => {
+            console.log(res.data)
+            console.log(res.data.data.userinfo.token)
+            _this.userToken =  res.data.data.userinfo.token;
+            var balance= res.data.data.userinfo.money
+            var username= res.data.data.userinfo.username
+            if(res.data.code==0){
+              this.isTishi=true
+              $(".textTishi").html('验证码不正确')
+            }else{
+              alert("成功了")
+              this.$router.push({
+                path:'/superSignatureAread'
+              })
+              _this.changeLogin({ Authorization: _this.userToken });
+              this.$store.commit('set_money',balance)
+              this.$store.commit('set_userName',username)
+
+            }
+
+          }, err => {
+            console.log(err)
+          })
+
+
         }
         /*账号或验证码错误*/
 
@@ -247,13 +304,41 @@
       /*账号登录按钮*/
       accountLoginBtn(){
         /*账号或密码为空*/
-        if(this.account=='' || this.password==''){
-          this.isTishi1=true
-          this.isVerification1=false
-        }else{
-          this.isTishi1=false
-          this.isVerification1=false
+        let data={
+          account:this.account,
+          password:this.password
         }
+        axios.post('https://ios.yoyoacg.com/api/user/login',qs.stringify(data)).then(res => {
+          console.log(res.data)
+          if(res.data.code==0){
+            this.isTishi1=true
+            if(res.data.msg=='账户不正确'){
+              this.tishi1='账户不正确'
+            }else if(res.data.msg=='参数不正确'){
+              this.tishi1='账号密码不能为空'
+            }else if(res.data.msg=='密码不正确'){
+              this.tishi1='密码不正确'
+            }
+          }else{
+            this.userToken =  res.data.data.token;
+            var balance= res.data.data.money
+            var username= res.data.data.username
+            this.$router.push({
+              path:'/superSignatureAread'
+            })
+            this.changeLogin({ Authorization: this.userToken });
+            this.$store.commit('set_money',balance)
+            this.$store.commit('set_userName',username)
+            alert('成功了')
+          }
+
+
+
+
+
+        }, err => {
+          console.log(err)
+        })
         /*账号或密码错误*/
       },
       /*注册*/
@@ -268,6 +353,22 @@
           path: '/forget'
         })
       }
+    },
+    mounted(){
+    //  alert( this.phonenumber)
+      let checkState= JSON.parse(localStorage.getItem('isCheck'))
+     // alert(checkState)
+      if(checkState==false){
+        this.isCheck=false
+        this.phoneIcon=true
+        this.yanzIcon=true
+        this.phonenumber=this.phonenumber
+        this.verificationCode=this.verificationCode
+      }else{
+        this.phonenumber=''
+        this.verificationCode=''
+      }
+
     }
   }
 </script>
@@ -478,7 +579,7 @@
     -webkit-box-shadow: 0 0 0px 1000px white inset;
   }
 
-  .send {
+  .send,.daojishi1 {
     width: 200px;
     height: 26px;
     line-height: 26px;
