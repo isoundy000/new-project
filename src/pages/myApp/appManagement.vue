@@ -76,7 +76,12 @@
         <el-table-column
           prop="url"
           label="安装地址"
-          width="200">
+          width="200"
+         >
+          <template scope="scope">
+            <p style="color: #14BEC8;cursor: pointer" @click="handleEdit(tableData[scope.$index].url)">{{scope.row.url}}</p>
+            <!--<el-button size="small" >编辑          </el-button>-->
+          </template>
         </el-table-column>
         <el-table-column
           prop=""
@@ -186,6 +191,11 @@
       QrcodeVue
     },
     methods: {
+      handleEdit(url){
+        this.isMask = true
+        this.value=url
+        this.urlAddress=url
+      },
       seachInput(){
         let data={
           keywords:this.input,
@@ -195,7 +205,7 @@
         let config = {
           headers:{'token':localStorage.getItem('Authorization')}
         };
-        axios.post('https://ios.yoyoacg.com/api/app/appList',qs.stringify(data),config).then(res => {
+        axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
           // console.log(res.data)
           // console.log(res.data.data.list)
           this.total=res.data.data.total
@@ -216,7 +226,7 @@
         let config = {
           headers:{'token':localStorage.getItem('Authorization')}
         };
-        axios.post('https://ios.yoyoacg.com/api/app/appList',qs.stringify(data),config).then(res => {
+        axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
           console.log(res.data)
           console.log(res.data.data.list)
           this.total=res.data.data.total
@@ -289,7 +299,7 @@
 
 
         }else if (nameValue == '上架') {
-          alert("选择了上架")
+       //   alert("选择了上架")
           let data={
             id:id,
             type:2
@@ -297,7 +307,7 @@
           let config = {
             headers:{'token':localStorage.getItem('Authorization')}
           };
-          axios.post('https://ios.yoyoacg.com/api/app/appHandle',qs.stringify(data),config).then(res => {
+          axios.post(BASE_URL+'/api/app/appHandle',qs.stringify(data),config).then(res => {
             let data={
               keywords:this.input,
               page:this.current,
@@ -306,7 +316,7 @@
             let config = {
               headers:{'token':localStorage.getItem('Authorization')}
             };
-            axios.post('https://ios.yoyoacg.com/api/app/appList',qs.stringify(data),config).then(res => {
+            axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
               console.log(res.data.data)
               this.total=res.data.data.total
               this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
@@ -318,7 +328,7 @@
             console.log(err)
           })
         } else if (nameValue == '下架') {
-          alert("选择了下架")
+       //   alert("选择了下架")
           let data={
             id:id,
             type:3
@@ -326,7 +336,7 @@
           let config = {
             headers:{'token':localStorage.getItem('Authorization')}
           };
-          axios.post('https://ios.yoyoacg.com/api/app/appHandle',qs.stringify(data),config).then(res => {
+          axios.post(BASE_URL+'/api/app/appHandle',qs.stringify(data),config).then(res => {
             let data={
               keywords:this.input,
               page:this.current,
@@ -335,7 +345,7 @@
             let config = {
               headers:{'token':localStorage.getItem('Authorization')}
             };
-            axios.post('https://ios.yoyoacg.com/api/app/appList',qs.stringify(data),config).then(res => {
+            axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
              console.log(res.data.data)
               this.total=res.data.data.total
               this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
@@ -359,7 +369,7 @@
             let config = {
               headers:{'token':localStorage.getItem('Authorization')}
             };
-            axios.post('https://ios.yoyoacg.com/api/app/appHandle',qs.stringify(data),config).then(res => {
+            axios.post(BASE_URL+'/api/app/appHandle',qs.stringify(data),config).then(res => {
               let data={
                 keywords:this.input,
                 page:this.current,
@@ -368,7 +378,7 @@
               let config = {
                 headers:{'token':localStorage.getItem('Authorization')}
               };
-              axios.post('https://ios.yoyoacg.com/api/app/appList',qs.stringify(data),config).then(res => {
+              axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
                 this.total=res.data.data.total
                 this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
                 this.tableData=res.data.data.list
@@ -401,7 +411,7 @@
       let config = {
         headers:{'token':localStorage.getItem('Authorization')}
       };
-      axios.post('https://ios.yoyoacg.com/api/app/appList',qs.stringify(data),config).then(res => {
+      axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
         console.log(res.data)
         console.log(res.data.data.list)
         this.total=res.data.data.total
@@ -608,5 +618,11 @@
     -webkit-transition: background-color .25s ease;
     transition: background-color .25s ease;
   }
-
+.el-table_2_column_14  {
+  color: blue;
+  cursor: pointer;
+}
+  th{
+    color: #909399 !important;
+  }
 </style>

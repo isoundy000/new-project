@@ -80,7 +80,7 @@
             </el-option>
           </el-select>
         </div>
-        <div  v-loading="loading" id="polygonalChart"></div>
+        <div   id="polygonalChart"></div>
       </div>
 
     </div>
@@ -91,7 +91,7 @@
 <script>
   import axios from 'axios'
   import qs from 'qs'
-
+  import {BASE_URL} from "../../api";
   export default {
     name: "statistics",
     data() {
@@ -255,7 +255,7 @@
       let config = {
         headers: {'token': localStorage.getItem('Authorization')}
       };
-      axios.post('https://ios.yoyoacg.com/api/app/appStatistics', qs.stringify(data), config).then(res => {
+      axios.post(BASE_URL+'/api/app/appStatistics', qs.stringify(data), config).then(res => {
         console.log(res.data.data)
         that.list = res.data.data
       }, err => {
@@ -305,11 +305,16 @@
         let config = {
           headers: {'token': localStorage.getItem('Authorization')}
         };
-        this.loading=true
-        axios.post('https://ios.yoyoacg.com/api/app/appInfo', qs.stringify(data), config).then(res => {
+        const loading = this.$loading({
+          lock: true,
+          text: '拼命加载中',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
+        axios.post(BASE_URL+'/api/app/appInfo', qs.stringify(data), config).then(res => {
           console.log(res.data.data)
           this.fengz(this.starTime,this.endTime,res.data.data.money,res.data.data.views,res.data.data.download,res.data.data.equipment,res.data.data.new)
-          this.loading=false
+          loading.close();
         }, err => {
           console.log(err)
         })
@@ -382,8 +387,13 @@
         let config = {
           headers: {'token': localStorage.getItem('Authorization')}
         };
-        this.loading=true
-        axios.post('https://ios.yoyoacg.com/api/app/appInfo', qs.stringify(data), config).then(res => {
+        const loading = this.$loading({
+          lock: true,
+          text: '拼命加载中',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
+        axios.post(BASE_URL+'/api/app/appInfo', qs.stringify(data), config).then(res => {
             console.log(res.data.data)
 
             let myChart = this.$echarts.init(document.getElementById('polygonalChart'))
@@ -479,18 +489,18 @@
                 }
               ]
             })
-            this.loading=false
+          loading.close();
         }, err => {
           console.log(err)
         })
       },
       /*折线图*/
-      drawPolygonal() {
-
-
-        console.log(JSON.stringify(this.money))
-
-      },
+      // drawPolygonal() {
+      //
+      //
+      //   console.log(JSON.stringify(this.money))
+      //
+      // },
       /*应用详情里面的下拉菜单*/
       chooseApp() {
         console.log(this.appValue)

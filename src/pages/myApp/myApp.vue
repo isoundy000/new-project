@@ -14,9 +14,9 @@
               <p>返回首页</p>
             </div>
 
-            <el-badge :value="3" class="item">
-              <img class="tixingBtn" src="../../../static/image/superSignature/tixing@2x.png" alt="">
-            </el-badge>
+            <!--<el-badge :value="3" class="item">-->
+              <!--<img class="tixingBtn" src="../../../static/image/superSignature/tixing@2x.png" alt="">-->
+            <!--</el-badge>-->
             <el-dropdown placement=top>
             <span class="el-dropdown-link">
               <p class="accountNumber">{{userName}}</p>

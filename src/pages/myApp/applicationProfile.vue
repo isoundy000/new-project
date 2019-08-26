@@ -11,7 +11,7 @@
       </div>
       <div class="firstDivTwo">
           <p>下载地址</p>
-          <div>https://ios.yoyoacg.com{{list.path}}</div>
+          <div>{{this.base_url}}{{list.path}}</div>
       </div>
     </div>
     <div class="secondDiv">
@@ -54,6 +54,7 @@
 </template>
 
 <script>
+  import {BASE_URL} from "../../api";
   import  axios from 'axios'
   import qs from 'qs'
     export default {
@@ -66,23 +67,25 @@
             icon:'',
             imgList:[
 
-            ]
+            ],
+            base_url:''
           }
       },
 
       mounted(){
+          this.base_url=BASE_URL
         let data={
             id:this.$route.query.id
           }
         let config = {
           headers:{'token':localStorage.getItem('Authorization')}
         };
-        axios.post('https://ios.yoyoacg.com/api/app/appDes',qs.stringify(data),config).then(res => {
+        axios.post(BASE_URL+'/api/app/appDes',qs.stringify(data),config).then(res => {
           console.log(res.data.data)
           this.list=res.data.data
-          this.list.icon='https://ios.yoyoacg.com'+this.list.icon
+          this.list.icon=BASE_URL+this.list.icon
           for(var i=0;i<this.list.imgs.length;i++){
-              this.imgList.push('https://ios.yoyoacg.com'+this.list.imgs[i])
+              this.imgList.push(BASE_UR+this.list.imgs[i])
             }
           if(this.list.status==0){
                   this.state='已下架'

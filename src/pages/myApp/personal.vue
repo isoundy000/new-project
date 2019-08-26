@@ -105,6 +105,7 @@
 </template>
 
 <script>
+  import {BASE_URL} from "../../api";
     export default {
         name: "personal",
       data(){

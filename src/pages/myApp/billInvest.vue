@@ -61,9 +61,9 @@
             label="订单状态"
           >
             <template slot-scope="scope">
-              <span v-if="scope.row.pay_status=== 1" style="color: #43A047">已支付</span>
+              <span v-if="scope.row.pay_status=== 1" style="color: #43A047">充值成功</span>
               <span v-else-if="scope.row.pay_status=== 0" style="color: #999999">未支付</span>
-              <span v-else-if="scope.row.pay_status=== 2" style="color: #FF0000">已关闭</span>
+              <span v-else-if="scope.row.pay_status=== 2" style="color: #FF0000">已失效</span>
             </template>
           </el-table-column>
 
@@ -79,11 +79,13 @@
 
 <script>
   import  axios from 'axios'
+  import {BASE_URL} from "../../api";
   import qs from 'qs'
     export default {
         name: "billInvest",
       data(){
         return{
+          state:'',
           total:0,
           pageNumber:'',
           current:1,
@@ -98,7 +100,7 @@
             }, {
               value: '已失效',
             }, {
-              value: '未付款',
+              value: '未支付',
             }],
           tableData: [
 
@@ -106,15 +108,44 @@
         }
       },
       methods:{
+        order:function(){
+          if(this.appName=='未支付'){
+            this.state=0
+          }else if(this.appName=='充值成功'){
+            this.state=1
+          }else if(this.appName=='已失效'){
+            this.state=2
+          }else if(this.appName==''){
+            this.state=''
+          }
+          let data={
+            keywords	:this.input,
+            status:this.state,
+            start:this.starTime,
+            end:this.endTime,
+            page_size:6
+          }
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.post(BASE_URL+'/api/order/orderList',qs.stringify(data),config).then(res => {
+            console.log(res.data.data.list)
+            this.tableData=res.data.data.list
+            this.total=res.data.data.total
+            this.pageNumber=parseInt(Math.ceil(Number(this.total)/6))
+          }, err => {
+            console.log(err)
+          })
+        },
         allApp(){
+          this.order()
           console.log(this.appName)
         },
         firstTime(a){
           console.log(a)
           this.starTime=a[0]
           this.endTime=a[1]
-          console.log(this.starTime)
-          console.log(this.endTime)
+          this.order()
         },
         /*上下页翻页*/
         indexChange(i){
@@ -130,7 +161,7 @@
           let config = {
             headers:{'token':localStorage.getItem('Authorization')}
           };
-          axios.post('https://ios.yoyoacg.com/api/order/orderList',qs.stringify(data),config).then(res => {
+          axios.post(BASE_URL+'/api/order/orderList',qs.stringify(data),config).then(res => {
             console.log(res.data)
             console.log(res.data.data.list)
             this.total=res.data.data.total
@@ -145,24 +176,7 @@
         }
       },
       mounted(){
-        let data={
-          keywords	:this.input,
-          status:this.appName,
-          start:this.starTime,
-          end:this.endTime,
-          page_size:6
-        }
-        let config = {
-          headers:{'token':localStorage.getItem('Authorization')}
-        };
-        axios.post('https://ios.yoyoacg.com/api/order/orderList',qs.stringify(data),config).then(res => {
-          console.log(res.data.data.list)
-          this.tableData=res.data.data.list
-          this.total=res.data.data.total
-          this.pageNumber=parseInt(Math.ceil(Number(this.total)/6))
-        }, err => {
-          console.log(err)
-        })
+       this.order()
       }
 
     }

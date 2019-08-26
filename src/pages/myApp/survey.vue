@@ -59,13 +59,13 @@
 
       </div>
       <div class="thirdDiv">
-        <div class="recently7" style="background-image: url('../../../static/image/survey/anniu_s@2x.png')">
+        <div class="recently7" @click="recently7"  style="background-image: url('../../../static/image/survey/anniu_s@2x.png')">
           <p>最近7天</p>
         </div>
-        <div class="recently1" style="background-image: url('../../../static/image/survey/anniu_n@2x.png')">
+        <div class="recently1" @click="recently1"   style="background-image: url('../../../static/image/survey/anniu_n@2x.png')">
           <p>最近1月</p>
         </div>
-        <div class="recently3" style="background-image: url('../../../static/image/survey/anniu_n@2x.png')">
+        <div class="recently3" @click="recently3"  style="background-image: url('../../../static/image/survey/anniu_n@2x.png')">
           <p>最近3月</p>
         </div>
         <DatePicker size="large" @on-change="firstTime(value=$event)" v-model="value" format="yyyy-MM-dd" :clearable=false
@@ -76,12 +76,12 @@
         </div>
 
       </div>
-      <div class="fourthDiv">
-        <div class="fourthDivOne">
-          <p>应用对比</p>
-        </div>
-        <div id="columnDiagram"></div>
-      </div>
+      <!--<div class="fourthDiv">-->
+        <!--<div class="fourthDivOne">-->
+          <!--<p>应用对比</p>-->
+        <!--</div>-->
+        <!--<div id="columnDiagram"></div>-->
+      <!--</div>-->
       <div class="fifthDiv">
         <div class="fifthDivOne">
           <p>应用详情</p>
@@ -138,6 +138,7 @@
 </template>
 
 <script>
+  import {BASE_URL} from "../../api";
   import  axios from 'axios'
   import qs from 'qs'
   import chinaJson from 'echarts/map/json/china.json';//此处引入中国地图json
@@ -145,6 +146,7 @@
     name: "survey",
     data() {
       return {
+        ditu:'',
         list:'',
         value: '',//第一个日历选中的值
         value1:'',//第二个日历选中的值
@@ -186,127 +188,42 @@
           }],//区域新用户下载量里面的所有应用的下拉菜单
         appValue: '',//应用详情里面的下拉菜单选中的值
         downSumValue:'',//区域新用户下载量里面的新用户下载量下拉菜单选中的值
-        allAppValue:''//区域新用户下载量里面的所有应用的下拉菜单选中的值
+        allAppValue:'',//区域新用户下载量里面的所有应用的下拉菜单选中的值
+        id:'',
+        dituList:''
       }
     },
 
     mounted() {
-      this.drawColumn()
-      this.drawPolygonal()
-      this.drawMap()
-      let data = {
-        id: ''
-      }
-      let config = {
-        headers: {'token': localStorage.getItem('Authorization')}
-      };
-      axios.post('https://ios.yoyoacg.com/api/app/appStatistics',data, config).then(res => {
-        console.log(res.data.data)
-        this.list = res.data.data
-      }, err => {
-        console.log(err)
-      })
-    },
-    methods: {
-      /*柱形图*/
-      drawColumn() {
-        // 基于准备好的dom，初始化echarts实例
-        let myChart = this.$echarts.init(document.getElementById('columnDiagram'))
-        // 绘制图表
-        myChart.setOption({
-          legend: {
-            itemWidth: 17,  // 设置宽度
-            itemHeight: 17, // 设置高度
+      var that=this
+      // this.drawColumn()
 
-            data:[
-              {
-                name: '总消费金额',
-                icon: 'image://../../../static/image/survey/xiaofei@2x.png'
-              },
-              {
-                name: '页面总浏览量',
-                icon: 'image://../../../static/image/survey/zhongliulan@2x.png'//格式为'image://+icon文件地址'，其中image::后的//不能省略
-              },
-              {
-                name: '总下载量',
-                icon: 'image://../../../static/image/survey/yingyong_xiazai@2x.png'
-              },
-              {
-                name: '下载设备总数',
-                icon: 'image://../../../static/image/survey/xiazhaishebei@2x.png'
-              },
-              {
-                name: '新增用户',
-                icon: 'image://../../../static/image/survey/yonghu_yuan@2x.png'
-              }
-            ]
-          },
-          tooltip: {},
-          dataset: {
-            source: [
-              ['product', '总消费金额', '页面总浏览量', '总下载量', '下载设备总数', '新增用户'],
-              ['应用一', 20, 30, 40, 50, 60],
-              ['应用二', 83.1, 73.4, 55.1, 43.3, 85.8],
-              ['应用三', 86.4, 65.2, 82.5, 43.3, 85.8],
-              ['应用四', 72.4, 53.9, 39.1, 43.3, 85.8]
-            ]
-          },
-          xAxis: {type: 'category'},
-          yAxis: {},
-          // Declare several bar series, each will be mapped
-          // to a column of dataset.source by default.
-          series: [
-            {
 
-              type: 'bar',
-              itemStyle: {
-                normal: {
-                  color: '#FF816C'
-                }
-              },
-              barWidth: 19,//柱图宽度
-            },
-            {
-              type: 'bar',
-              itemStyle: {
-                normal: {
-                  color: '#5FAFFF'
-                }
-              },
-              barWidth: 19,//柱图宽度
-            },
-            {
-              type: 'bar',
-              itemStyle: {
-                normal: {
-                  color: '#B35AFF'
-                }
-              },
-              barWidth: 19,//柱图宽度
-            },
-            {
-              type: 'bar',
-              itemStyle: {
-                normal: {
-                  color: '#35CBC2'
-                }
-              },
-              barWidth: 19,//柱图宽度
-            },
-            {
-              type: 'bar',
-              itemStyle: {
-                normal: {
-                  color: '#FF9D55'
-                }
-              },
-              barWidth: 19,//柱图宽度
-            }
-          ]
-        });
-      },
-      /*折线图*/
-      drawPolygonal() {
+      var that = this
+      that.fengz=function (starTime,endTime,money,views,download,equipment,news) {
+        Date.prototype.format = function () {
+          var s = '';
+          // s+=this.getFullYear()+'-';          // 获取年份。
+          s += (this.getMonth() + 1) + "-";         // 获取月份。
+          s += this.getDate();                 // 获取日。
+          return (s);                          // 返回日期。
+        };
+        function aa(begin, end) {
+          var dateAllArr = new Array();
+          var ab = begin.split("-");
+          var ae = end.split("-");
+          var db = new Date();
+          db.setUTCFullYear(ab[0], ab[1] - 1, ab[2]);
+          var de = new Date();
+          de.setUTCFullYear(ae[0], ae[1] - 1, ae[2]);
+          var unixDb = db.getTime();
+          var unixDe = de.getTime();
+          for (var k = unixDb; k <= unixDe;) {
+            dateAllArr.push((new Date(parseInt(k))).format().toString());
+            k = k + 24 * 60 * 60 * 1000;
+          }
+          return dateAllArr;
+        }
         let myChart = this.$echarts.init(document.getElementById('polygonalChart'))
         myChart.setOption({
           tooltip: {
@@ -337,8 +254,6 @@
                 icon: 'image://../../../static/image/survey/yingyong_xinzeng@2x (1).png'
               }
             ]
-
-
           },
           grid: {
             left: '3%',
@@ -354,7 +269,7 @@
           xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+            data: aa(starTime, endTime)
           },
           yAxis: {
             type: 'value'
@@ -366,7 +281,7 @@
               stack: '总量',
               color: '#4877FB',
               symbolSize: 11,
-              data: [120, 132, 101, 134, 90, 230, 210]
+              data: money
             },
             {
               name: '页面总浏览量',
@@ -374,7 +289,7 @@
               stack: '总量',
               color: '#00C4C9',
               symbolSize: 11,
-              data: [220, 182, 191, 234, 290, 330, 310]
+              data: views
             },
             {
               name: '总下载量',
@@ -382,7 +297,7 @@
               stack: '总量',
               color: '#FF8E32',
               symbolSize: 11,
-              data: [150, 232, 201, 154, 190, 330, 410]
+              data: download
             },
             {
               name: '下载设备总数',
@@ -390,7 +305,7 @@
               stack: '总量',
               color: '#A635FF',
               symbolSize: 11,
-              data: [320, 332, 301, 334, 390, 330, 320]
+              data: equipment
             },
             {
               name: '新增人数',
@@ -398,19 +313,307 @@
               stack: '总量',
               color: '#ff4eae',
               symbolSize: 11,
-              data: [820, 932, 901, 934, 1290, 1330, 1320]
+              data: news
             }
           ]
         })
+      }
+      /*最上面的值*/
+      let data = {
+        id: ''
+      }
+      let config = {
+        headers: {'token': localStorage.getItem('Authorization')}
+      };
+      axios.post(BASE_URL+'/api/app/appStatistics',data, config).then(res => {
+        console.log(res.data.data)
+        this.list = res.data.data
+      }, err => {
+        console.log(err)
+      })
+      /*第一个应用折线图*/
+      let data1={
+        keywords:'',
+        page:1,
+        page_size:10
+      }
+      let config1 = {
+        headers: {'token': localStorage.getItem('Authorization')}
+      };
+      axios.post(BASE_URL+'/api/app/appList',data1, config1).then(res => {
+        console.log(res.data.data.list[0].id)
+        this.id=res.data.data.list[0].id
+        this.newF(6)
+      }, err => {
+        console.log(err)
+      })
+      /*地图进页面数据*/
+
+      let data3={
+        id:'',
+        start:'',
+        end:''
+      }
+      let config3 = {
+        headers: {'token': localStorage.getItem('Authorization')}
+      };
+      axios.post(BASE_URL+'/api/app/downloadArea',data3, config3).then(res => {
+        console.log(res.data.data)
+        this.dituList=res.data.data
+        // this.dituList=[
+        //     {name: "四川",
+        //       value: 300},
+        //     {name: "四川",
+        //       value: 300},
+        //     {name:"四川",
+        //       value: 300},{name: "四川",
+        //       value: 300},
+        //     {name: "四川",
+        //       value: 300},
+        //     {name: "四川",
+        //       value: 200},
+        //     {name: Array(0),
+        //       value: 200}
+        //   ]
+        this.$nextTick(function() {
+          this.drawMap(this.dituList)
+        })
+      }, err => {
+        console.log(err)
+      })
+
+
+      /*第一个应用柱形图*/
+      // let data2={
+      //   start:'2019-8-26',
+      //   end:'2019-8-30'
+      // }
+      // let config2 = {
+      //   headers: {'token': localStorage.getItem('Authorization')}
+      // };
+      // axios.post('https://ios.yoyoacg.com/api/app/appContrast',data2, config2).then(res => {
+      //   console.log(res.data.data)
+      // }, err => {
+      //   console.log(err)
+      // })
+
+    },
+    methods: {
+      newF:function(count){
+        var that = this
+        // 拼接时间
+        const time1 = new Date()
+        const time2 = new Date()
+        if (count === 1) {
+          time1.setTime(time1.getTime() - (24 * 60 * 60 * 1000))
+        } else {
+          if (count >= 0) {
+            time1.setTime(time1.getTime())
+          } else {
+            if (count === -2) {
+              time1.setTime(time1.getTime() + (24 * 60 * 60 * 1000) * 2)
+            } else {
+              time1.setTime(time1.getTime() + (24 * 60 * 60 * 1000))
+            }
+          }
+        }
+
+        const Y1 = time1.getFullYear()
+        const M1 = ((time1.getMonth() + 1) > 9 ? (time1.getMonth() + 1) : '0' + (time1.getMonth() + 1))
+        const D1 = (time1.getDate() > 9 ? time1.getDate() : '0' + time1.getDate())
+        this.endTime = Y1 + '-' + M1 + '-' + D1  // 当前时间
+
+        time2.setTime(time2.getTime() - (24 * 60 * 60 * 1000 * count))
+        const Y2 = time2.getFullYear()
+        const M2 = ((time2.getMonth() + 1) > 9 ? (time2.getMonth() + 1) : '0' + (time2.getMonth() + 1))
+        const D2 = (time2.getDate() > 9 ? time2.getDate() : '0' + time2.getDate())
+        this.starTime = Y2 + '-' + M2 + '-' + D2  // 之前的7天或者30天
+        let data = {
+          id: this.id,
+          start: that.starTime,
+          end: that.endTime
+        }
+        let config = {
+          headers: {'token': localStorage.getItem('Authorization')}
+        };
+        // const loading = this.$loading({
+        //   lock: true,
+        //   text: '拼命加载中',
+        //   spinner: 'el-icon-loading',
+        //   background: 'rgba(0, 0, 0, 0.7)'
+        // });
+        axios.post(BASE_URL+'/api/app/appInfo', qs.stringify(data), config).then(res => {
+          console.log(res.data.data)
+          this.fengz(this.starTime,this.endTime,res.data.data.money,res.data.data.views,res.data.data.download,res.data.data.equipment,res.data.data.new)
+          //loading.close();
+        }, err => {
+          console.log(err)
+        })
       },
+      recently7() {
+        //this.$options.methods.newF(6);
+        this.$nextTick(function() {
+          this.newF(6)
+        })
+
+
+        $(".recently1").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#06B2B6'})
+        $(".recently7").css({"background-image":'url(../../../static/image/survey/anniu_s@2x.png)',"color":'white'})
+        $(".recently3").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#06B2B6'})
+
+
+      },
+      recently1(){
+        this.$nextTick(function() {
+          this.newF(29)
+        })
+        //this.$options.methods.newF(29);
+        $(".recently7").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#06B2B6'})
+        $(".recently1").css({"background-image":'url(../../../static/image/survey/anniu_s@2x.png)',"color":'white'})
+        $(".recently3").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#06B2B6'})
+
+      },
+      recently3(){
+        this.$nextTick(function() {
+          this.newF(89)
+        })
+        $(".recently1").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#06B2B6'})
+        $(".recently3").css({"background-image":'url(../../../static/image/survey/anniu_s@2x.png)',"color":'white'})
+        $(".recently7").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#06B2B6'})
+
+      },
+      /*柱形图*/
+      // drawColumn() {
+      //   // 基于准备好的dom，初始化echarts实例
+      //   let myChart = this.$echarts.init(document.getElementById('columnDiagram'))
+      //   // 绘制图表
+      //   myChart.setOption({
+      //     legend: {
+      //       itemWidth: 17,  // 设置宽度
+      //       itemHeight: 17, // 设置高度
+      //
+      //       data:[
+      //         {
+      //           name: '总消费金额',
+      //           icon: 'image://../../../static/image/survey/xiaofei@2x.png'
+      //         },
+      //         {
+      //           name: '页面总浏览量',
+      //           icon: 'image://../../../static/image/survey/zhongliulan@2x.png'//格式为'image://+icon文件地址'，其中image::后的//不能省略
+      //         },
+      //         {
+      //           name: '总下载量',
+      //           icon: 'image://../../../static/image/survey/yingyong_xiazai@2x.png'
+      //         },
+      //         {
+      //           name: '下载设备总数',
+      //           icon: 'image://../../../static/image/survey/xiazhaishebei@2x.png'
+      //         },
+      //         {
+      //           name: '新增用户',
+      //           icon: 'image://../../../static/image/survey/yonghu_yuan@2x.png'
+      //         }
+      //       ]
+      //     },
+      //     tooltip: {},
+      //     dataset: {
+      //       source: [
+      //         ['product', '总消费金额', '页面总浏览量', '总下载量', '下载设备总数', '新增用户'],
+      //         ['应用一', 20, 30, 40, 50, 60],
+      //         ['应用二', 83.1, 73.4, 55.1, 43.3, 85.8],
+      //         ['应用三', 86.4, 65.2, 82.5, 43.3, 85.8],
+      //         ['应用四', 72.4, 53.9, 39.1, 43.3, 85.8],
+      //         ['应用五', 72.4, 53.9, 39.1, 43.3, 85.8],
+      //         ['应用六', 72.4, 53.9, 39.1, 43.3, 85.8],
+      //         ['应用七', 72.4, 53.9, 39.1, 43.3, 85.8],
+      //         ['应用八', 72.4, 53.9, 39.1, 43.3, 85.8],
+      //         ['应用九', 72.4, 53.9, 39.1, 43.3, 85.8],
+      //         ['应用十', 72.4, 53.9, 39.1, 43.3, 85.8],
+      //         ['应用十一', 72.4, 53.9, 39.1, 43.3, 85.8],
+      //         ['应用十二', 72.4, 53.9, 39.1, 43.3, 85.8],
+      //         ['应用十三', 72.4, 53.9, 39.1, 43.3, 85.8]
+      //       ]
+      //     },
+      //     dataZoom: {
+      //       show: true,
+      //       realtime: true,
+      //       y: 36,
+      //       height: 20,
+      //       start: 30, //数据窗口范围的起始百分比,表示30%
+      //       　　end: 70, //数据窗口范围的结束百分比,表示70%
+      //     　　startValue:10, //数据窗口范围的起始数值
+      //      　　endValue:100, //数据窗口范围的结束数值。
+      //     },
+      //     xAxis: {
+      //       type: 'category',
+      //
+      //       axisLabel: {
+      //         show: true,
+      //         interval: 0//,    // {number}
+      //         //rotate: 45,
+      //         // margin: 8
+      //
+      //       }
+      //     },
+      //     yAxis: {},
+      //     // Declare several bar series, each will be mapped
+      //     // to a column of dataset.source by default.
+      //     series: [
+      //       {
+      //
+      //         type: 'bar',
+      //         itemStyle: {
+      //           normal: {
+      //             color: '#FF816C'
+      //           }
+      //         },
+      //         barWidth: 19,//柱图宽度
+      //       },
+      //       {
+      //         type: 'bar',
+      //         itemStyle: {
+      //           normal: {
+      //             color: '#5FAFFF'
+      //           }
+      //         },
+      //         barWidth: 19,//柱图宽度
+      //       },
+      //       {
+      //         type: 'bar',
+      //         itemStyle: {
+      //           normal: {
+      //             color: '#B35AFF'
+      //           }
+      //         },
+      //         barWidth: 19,//柱图宽度
+      //       },
+      //       {
+      //         type: 'bar',
+      //         itemStyle: {
+      //           normal: {
+      //             color: '#35CBC2'
+      //           }
+      //         },
+      //         barWidth: 19,//柱图宽度
+      //       },
+      //       {
+      //         type: 'bar',
+      //         itemStyle: {
+      //           normal: {
+      //             color: '#FF9D55'
+      //           }
+      //         },
+      //         barWidth: 19,//柱图宽度
+      //       }
+      //     ]
+      //   });
+      // },
+      /*折线图*/
+
       /*地图*/
-      drawMap(){
+      drawMap(aa){
         this.$echarts.registerMap('china', chinaJson);
         let myChart = this.$echarts.init(document.getElementById('mapChart'))
-
-
-
-
         myChart.setOption({
           tooltip: {}, // 鼠标移到图里面的浮动提示框
           visualMap: {
@@ -465,32 +668,153 @@
               name: '新用户下载量', // 浮动框的标题
               type: 'map',
               geoIndex: 0,
-              data: [{
-                "name": "北京",
-                "value": 599
-              }, {
-                "name": "上海",
-                "value": 142
-              }, {
-                "name": "黑龙江",
-                "value": 44
-              }, {
-                "name": "深圳",
-                "value": 92
-              }, {
-                "name": "湖北",
-                "value": 810
-              }, {
-                "name": "四川",
-                "value": 453
-              }]
+              data: aa
             }
           ]
         })
       },
       /*第一个日历选中*/
       firstTime(a) {
-        console.log(a)
+        var that=this
+        console.log(this.value[0])
+        console.log(this.value[1])
+        Date.prototype.format = function () {
+          var s = '';
+          // s+=this.getFullYear()+'-';          // 获取年份。
+          s += (this.getMonth() + 1) + "-";         // 获取月份。
+          s += this.getDate();                 // 获取日。
+          return (s);                          // 返回日期。
+        };
+        function aa(begin, end) {
+          var dateAllArr = new Array();
+          var ab = begin.split("-");
+          var ae = end.split("-");
+          var db = new Date();
+          db.setUTCFullYear(ab[0], ab[1] - 1, ab[2]);
+          var de = new Date();
+          de.setUTCFullYear(ae[0], ae[1] - 1, ae[2]);
+          var unixDb = db.getTime();
+          var unixDe = de.getTime();
+          for (var k = unixDb; k <= unixDe;) {
+            dateAllArr.push((new Date(parseInt(k))).format().toString());
+            k = k + 24 * 60 * 60 * 1000;
+          }
+          return dateAllArr;
+        }
+        let data = {
+          id: that.id,
+          start: that.starTime,
+          end: that.endTime
+        }
+        let config = {
+          headers: {'token': localStorage.getItem('Authorization')}
+        };
+        const loading = this.$loading({
+          lock: true,
+          text: '拼命加载中',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
+        axios.post(BASE_URL+'/api/app/appInfo', qs.stringify(data), config).then(res => {
+          console.log(res.data.data)
+
+          let myChart = this.$echarts.init(document.getElementById('polygonalChart'))
+          myChart.setOption({
+            tooltip: {
+              trigger: 'axis'
+            },
+            legend: {
+              itemWidth: 17,  // 设置宽度
+              itemHeight: 17, // 设置高度
+              data: [
+                {
+                  name: '总消费金额',
+                  icon: 'image://../../../static/image/survey/yingyong_jie@2x.png'
+                },
+                {
+                  name: '页面总浏览量',
+                  icon: 'image://../../../static/image/survey/yingyong_liulan@2x.png'//格式为'image://+icon文件地址'，其中image::后的//不能省略
+                },
+                {
+                  name: '总下载量',
+                  icon: 'image://../../../static/image/survey/yingyong_xiazhai@2x.png'
+                },
+                {
+                  name: '下载设备总数',
+                  icon: 'image://../../../static/image/survey/yingyong_xiazai@2x.png'
+                },
+                {
+                  name: '新增人数',
+                  icon: 'image://../../../static/image/survey/yingyong_xinzeng@2x (1).png'
+                }
+              ]
+            },
+            grid: {
+              left: '3%',
+              right: '4%',
+              bottom: '3%',
+              containLabel: true
+            },
+            toolbox: {
+              // feature: {
+              //   saveAsImage: {}
+              // }
+            },
+            xAxis: {
+              type: 'category',
+              boundaryGap: false,
+              data: aa(this.value[0], this.value[1])
+            },
+            yAxis: {
+              type: 'value'
+            },
+            series: [
+              {
+                name: '总消费金额',
+                type: 'line',
+                stack: '总量',
+                color: '#4877FB',
+                symbolSize: 11,
+                data: res.data.data.money
+              },
+              {
+                name: '页面总浏览量',
+                type: 'line',
+                stack: '总量',
+                color: '#00C4C9',
+                symbolSize: 11,
+                data: res.data.data.views
+              },
+              {
+                name: '总下载量',
+                type: 'line',
+                stack: '总量',
+                color: '#FF8E32',
+                symbolSize: 11,
+                data: res.data.data.download
+              },
+              {
+                name: '下载设备总数',
+                type: 'line',
+                stack: '总量',
+                color: '#A635FF',
+                symbolSize: 11,
+                data: res.data.data.equipment
+              },
+              {
+                name: '新增人数',
+                type: 'line',
+                stack: '总量',
+                color: '#ff4eae',
+                symbolSize: 11,
+                data: res.data.data.new
+              }
+            ]
+          })
+          loading.close();
+        }, err => {
+          console.log(err)
+        })
       },
       /*第二个日历选中*/
       secondTime(b){

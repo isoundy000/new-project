@@ -11,7 +11,7 @@
         </el-breadcrumb>
       </div>
     </div>
-    <div class="secondDiv" v-loading="loading">
+    <div class="secondDiv" >
       <div class="secondDivSmall">
         <el-steps :active="active" finish-status="success" align-center>
           <el-step title="超级签名"></el-step>
@@ -21,6 +21,14 @@
         </el-steps>
       </div>
       <div v-if="isSuper" class="super">
+        <div class="tip">
+          <p>上传ipa提示:</p>
+          <p><span></span>ipa包里必须要有embedded.mobieprovision,确保权限完整.</p>
+          <p><span></span>ipa包里确保info.plist里的icon、bundleid等信息完整。</p>
+          <p><span></span>ipa包最好要没有被其他签名机构重签过,不然可能导致应用闪退或无法安装。</p>
+          <p><span></span>ipa包可以添加其他第三个推送，重签后不影响推送功能。</p>
+        </div>
+
         <div @click="upload" class="uploadBtn">
           <img src="../../../static/image/survey/shangchuanicon.png" alt="">
           <p>立即上传</p>
@@ -49,17 +57,24 @@
       </div>
       <div v-else-if="isSupplement" class="supplement">
         <div class="supplementOne">
-          <p class="textOne">应用icon</p>
+
           <div class="supplementOneImg">
             <img :src="icon" alt="">
-            <div >
-              <p>{{display_name}}</p>
-              <p>{{version_code}}</p>
-            </div>
+            <!--<div >-->
+              <!--<p>{{display_name}}</p>-->
+              <!--<p>{{version_code}}</p>-->
+            <!--</div>-->
           </div>
 
         </div>
-
+        <div class="supplementThird1">
+          <p>应用名</p>
+          <el-input :disabled="false" class="thirdInput" v-model="thirdInput1" placeholder="请输入内容"></el-input>
+        </div>
+        <div class="supplementThird2">
+          <p>版本号</p>
+          <el-input :disabled="false" class="thirdInput" v-model="thirdInput2" placeholder="请输入内容"></el-input>
+        </div>
         <div class="supplementThird">
           <p>包名</p>
           <el-input :disabled="true" class="thirdInput" v-model="thirdInput" placeholder="请输入内容"></el-input>
@@ -93,10 +108,6 @@
         <div class="supplementFourth">
           <p>评分人数</p>
           <el-input :disabled="disInput" class="thirdInput" v-model="fourthInput" placeholder="请输入内容"></el-input>
-        </div>
-        <div class="supplementFiveth">
-          <p>产品类型</p>
-          <el-input :disabled="disInput" class="thirdInput" v-model="fivethInput" placeholder="请输入内容"></el-input>
         </div>
         <div class="supplementsixth">
           <p>应用截图</p>
@@ -153,12 +164,14 @@
 
 <script>
   import  axios from 'axios'
+  import {BASE_URL} from "../../api";
   import qs from 'qs'
   export default {
     name: "publishingApplications",
     data() {
       return {
-        loading:false,
+        thirdInput1:'',
+        thirdInput2:'',
         textarea:'',
         textarea1:'',
         limitCount:2,
@@ -192,7 +205,8 @@
         bundle_name:'',//bundle名
         state:1,//状态 1 正常 0关闭
         filesize:'',//大小
-        img:[]
+        img:[],
+        icon1:''
       }
     },
     computed: {
@@ -221,13 +235,16 @@
 
         this.display_name=file.response.data.app.display_name
         this.path=file.response.data.url
-        this.icon='https://ios.yoyoacg.com'+file.response.data.app.icon
+        this.icon=BASE_URL+file.response.data.app.icon
         this.ipa_data_bak=file.response.data.app.ipa_data_bak
         this.package_name=file.response.data.app.package_name
         this.version_code=file.response.data.app.version_code
         this.bundle_name=file.response.data.app.bundle_name
         this.filesize=file.response.data.app.filesize
         this.thirdInput=this.package_name
+        this.thirdInput1=this.display_name
+        this.thirdInput2=this.version_code
+        this.icon1=file.response.data.app.icon
         // console.log(this.bundle_name)
         // console.log(this.path)
         // console.log(this.icon)
@@ -267,27 +284,26 @@
       },
       /*开关*/
       swich1(){
-        // if(this.switchValue1==false){
-        //   this.state=0
-        //   this.disInput=true
-        // }else{
-        //   this.state=1
-        //   this.disInput=false
-        // }
+
       },
       /*提交事件*/
       submission(){
         // this.active = 3
-         this.loading=true
+        const loading = this.$loading({
+          lock: true,
+          text: '拼命签名中',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
 
         let f={
-          display_name:this.display_name,
+          display_name:this.thirdInput1,
           path:this.path,
-          icon:this.icon,
+          icon:this.icon1,
           type:1,
           ipa_data_bak:this.ipa_data_bak,
           package_name:this.package_name,
-          version_code:this.version_code,
+          version_code:this.thirdInput2,
           bundle_name:this.bundle_name,
           filesize:this.filesize,
           desc:this.textarea,
@@ -301,9 +317,9 @@
         let config = {
           headers:{'token':localStorage.getItem('Authorization')}
         };
-        axios.post('https://ios.yoyoacg.com/api/app/add',qs.stringify(f),config).then(res => {
+        axios.post(BASE_URL+'/api/app/add',qs.stringify(f),config).then(res => {
           console.log(res.data)
-          this.loading=false
+          loading.close();
 
           this.$router.push({
             path:'/appManagement'
@@ -368,7 +384,7 @@
   }
   .super {
     width: 100%;
-    height: 300px;
+    height: 450px;
     display: flex;
     flex-flow: column;
 
@@ -384,7 +400,7 @@
     display: flex;
     font-size: 18px;
     color: white;
-    margin: 100px auto 0 auto;
+    margin: 10px auto 0 auto;
     cursor: pointer;
   }
 
@@ -420,6 +436,7 @@
   .supplementOne{
     display: flex;
     align-items: baseline;
+    justify-content: center;
   }
   .textOne{
     width: 70px;
@@ -427,7 +444,7 @@
     font-size: 16px;
     color: #333333;
   }
- .supplementTwo p:nth-child(1),.supplementTen p:nth-child(1),.supplementThird p:nth-child(1),.supplementFourth p:nth-child(1),.supplementFiveth p:nth-child(1),.supplementsixth p:nth-child(1),.supplementSeventh p:nth-child(1),.supplementEightth p:nth-child(1){
+ .supplementTwo p:nth-child(1),.supplementTen p:nth-child(1),.supplementThird p:nth-child(1),.supplementThird1 p:nth-child(1),.supplementThird2 p:nth-child(1),.supplementFourth p:nth-child(1),.supplementFiveth p:nth-child(1),.supplementsixth p:nth-child(1),.supplementSeventh p:nth-child(1),.supplementEightth p:nth-child(1){
     width: 70px;
     text-align: right;
     font-size: 16px;
@@ -437,7 +454,6 @@
   .supplementOneImg{
     display: flex;
     align-items: center;
-    margin-left: 30px;
   }
   .supplementOneImg img{
     width: 80px;
@@ -453,7 +469,7 @@
     align-items: center;
   }
 
-  .supplementTen,.supplementThird,.supplementFourth,.supplementFiveth,.supplementsixth,.supplementSeventh,.supplementEightth{
+  .supplementTen,.supplementThird,.supplementThird1,.supplementThird2,.supplementFourth,.supplementFiveth,.supplementsixth,.supplementSeventh,.supplementEightth{
     display: flex;
     align-items: center;
     margin-top: 15px;
@@ -481,7 +497,25 @@
     margin: 20px auto 80px auto;
     cursor: pointer;
   }
-
+.tip{
+  width: 670px;
+  height: 200px;
+  font-size: 15px;
+  margin: 70px auto 0 auto;
+}
+.tip p{
+  display: flex;
+  margin-top: 10px;
+  align-items: center;
+}
+  .tip span{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background-color:#14BEC8 ;
+  }
 </style>
 <style>
   .el-upload-list--picture-card{

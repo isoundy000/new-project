@@ -48,7 +48,11 @@
         </div>
       </div>
     </div>
-
+    <div class="mask weihu" @click="weihu" style="display: none">
+      <div class="maskdiv">
+       <p>支付通道维护中</p>
+      </div>
+    </div>
 
 
 
@@ -78,6 +82,7 @@
 </template>
 
 <script>
+  import {BASE_URL} from "../../api";
   import  axios from 'axios'
   import qs from 'qs'
   import QrcodeVue from 'qrcode.vue';
@@ -140,7 +145,11 @@
         }
       },
       recharge() {
-        this.isMaskRecharge = true
+        $(".weihu").show()
+       // this.isMaskRecharge = true
+      },
+      weihu(){
+        $(".weihu").hide()
       },
       close() {
         this.isMaskRecharge = false
@@ -412,5 +421,15 @@ margin-top: 30px;
     width: 140px;
     height: 25px;
     margin-top: 10px;
+  }
+  .maskdiv{
+    width: 300px;
+    height: 200px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
   }
 </style>

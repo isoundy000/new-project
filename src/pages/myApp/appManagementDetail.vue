@@ -26,6 +26,7 @@
 </template>
 
 <script>
+  import {BASE_URL} from "../../api";
     export default {
         name: "appManagementDetail",
       data(){
@@ -99,7 +100,7 @@
         },
       },
       mounted(){
-          alert(this.$route.query.id)
+         // alert(this.$route.query.id)
       }
     }
 </script>

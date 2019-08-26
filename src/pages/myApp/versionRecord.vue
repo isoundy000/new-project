@@ -82,6 +82,7 @@
 </template>
 
 <script>
+  import {BASE_URL} from "../../api";
   import  axios from 'axios'
   import qs from 'qs'
     export default {
@@ -108,7 +109,7 @@
           let config = {
             headers:{'token':localStorage.getItem('Authorization')}
           };
-          axios.post('https://ios.yoyoacg.com/api/app/appUpdateLog',qs.stringify(data),config).then(res => {
+          axios.post(BASE_URL+'/api/app/appUpdateLog',qs.stringify(data),config).then(res => {
             console.log(res.data)
             console.log(res.data.data.list)
             this.total=res.data.data.total
@@ -123,7 +124,7 @@
         }
       },
       mounted(){
-        alert('详情页333面'+this.$route.query.id)
+       // alert('详情页333面'+this.$route.query.id)
         // alert('详情页222面'+this.$route.query.id)
        // alert('版本记录'+this.$route.query.id)
         //
@@ -133,7 +134,7 @@
         let config = {
           headers:{'token':localStorage.getItem('Authorization')}
         };
-        axios.post('https://ios.yoyoacg.com/api/app/appUpdateLog',qs.stringify(data),config).then(res => {
+        axios.post(BASE_URL+'/api/app/appUpdateLog',qs.stringify(data),config).then(res => {
           console.log(res.data.data.list)
           this.tableData=res.data.data.list
           this.total=res.data.data.total
