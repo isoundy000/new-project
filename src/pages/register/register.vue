@@ -17,13 +17,6 @@
         </div>
         <div class="msgDiv">
           <div class="login_Input">
-            <div class="user_div" :class="{'borderColor':userNameIcon}">
-              <div class="img_div">
-                <img v-if="userNameIcon" src="../../../static/image/register/yonghu_s.png" alt="">
-                <img v-else src="../../../static/image/register/yonghu_n.png" alt="">
-              </div>
-              <input v-on:input="userNameInput" type="text" autocomplete="off" placeholder="请输入用户名称" v-model="userName">
-            </div>
             <div class="phone_div" :class="{'borderColor':phoneNumberIcon}">
               <div class="img_div">
                 <img v-if="phoneNumberIcon" src="../../../static/image/login/shouji_s.png" alt="">
@@ -81,6 +74,7 @@
 </template>
 
 <script>
+  import {BASE_URL} from "../../api";
   import Bfooter from '../component/footer'
   import axios from 'axios'
   import qs from 'qs'
@@ -110,14 +104,14 @@
     },
     methods: {
       /*用户输入框聚焦事件*/
-      userNameInput() {
-        this.xianshi = false
-        if (this.userName == '') {
-          this.userNameIcon = false
-        } else {
-          this.userNameIcon = true
-        }
-      },
+      // userNameInput() {
+      //   this.xianshi = false
+      //   if (this.userName == '') {
+      //     this.userNameIcon = false
+      //   } else {
+      //     this.userNameIcon = true
+      //   }
+      // },
       /*手机号码输入框聚焦事件*/
       phoneNumberInput() {
         this.xianshi = false
@@ -166,7 +160,7 @@
           event: 'register'
         }
 
-        axios.post('https://ios.yoyoacg.com/api/sms/send', qs.stringify(data)).then(res => {
+        axios.post(BASE_URL+'/api/sms/send', qs.stringify(data)).then(res => {
           console.log(res)
           if (res.data.msg == '已被注册') {
             clearInterval(timeClock3);
@@ -195,7 +189,7 @@
         let config = {
           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         };
-        axios.post('https://ios.yoyoacg.com/api/User/register', qs.stringify(f), config).then(res => {
+        axios.post(BASE_URL+'/api/User/register', qs.stringify(f), config).then(res => {
           if (res.data.msg == '用户名不能为空') {
             this.xianshi = true
             $(".tishiXinxi").html('用户名不能为空')
