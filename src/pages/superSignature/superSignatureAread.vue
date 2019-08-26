@@ -19,9 +19,9 @@
               <p>我的应用</p>
             </div>
 
-            <el-badge :value="3" class="item">
-              <img class="tixingBtn" src="../../../static/image/superSignature/tixing@2x.png" alt="">
-            </el-badge>
+            <!--<el-badge :value="3" class="item">-->
+              <!--<img class="tixingBtn" src="../../../static/image/superSignature/tixing@2x.png" alt="">-->
+            <!--</el-badge>-->
             <el-dropdown placement=top>
             <span class="el-dropdown-link">
               <p class="accountNumber">{{userName}}</p>
@@ -48,13 +48,16 @@
         <img src="../../../static/image/superSignature/yangli@2x.png" alt="">
         </div>
         <!--video-->
-        <div class="videoDiv">
-        <video width="960" height="400" class="video-js vjs-default-skin vjs-big-play-centered" controls
-      style="object-fit:fill" poster="../../assets/logo.png">
-        <source src="../../assets/coverr-clear-water-1559888911402.mp4" type="video/mp4">
+    <div id="video" class="videoDiv" style="background-image: url(../../../static/image/superSignature/videoBg.png);">
+      <img @click="play" class="play" src="../../../static/image/superSignature/Play_anniu@2x.png" alt="" />
+    </div>
+    <div class="mask" @click="mask" style="display: none">
+      <video autoplay="autoplay"  class="video-js vjs-default-skin vjs-big-play-centered" controls
+             style="object-fit:fill" >
+        <source src="../../assets/coverr-clear-water-1559888911402.mp4" type="video/mp4" />
         您的浏览器不支持 video 标签。
-    </video>
-      </div>
+      </video>
+    </div>
       <!--我们的优势-->
       <div class="advantage">
         <div class="advantageImg">
@@ -305,10 +308,10 @@
         data() {
           return {
             title: [
-              {
-                msg: '首页',
-                isclass: false
-              },
+              // {
+              //   msg: '首页',
+              //   isclass: false
+              // },
               {
                 msg: '超级签名',
                 isclass: true
@@ -353,7 +356,12 @@
           // }else{
     },
     methods: {
-
+      play(){
+        $(".mask").show()
+      },
+      mask(){
+        $(".mask").hide()
+      },
       /*优势第一个div移入*/
       advantageEnterOne() {
         this.isAdvantageOne = false
@@ -417,18 +425,18 @@
       },
       /*顶部标题点击事件*/
       titleName(index) {
-        if (index == 0) {
-          alert("点击了首页")
-        } else if (index == 1) {
+       if (index == 0) {
           alert("点击了超级签名")
-        } else if (index == 2) {
+        } else if (index == 1) {
           alert("点击了专属签名")
-        } else if (index == 3) {
+        } else if (index == 2) {
           alert("点击了企业签名")
-        } else if (index == 4) {
+        } else if (index == 3) {
           alert("点击了购买服务")
-        } else if (index == 5) {
-          alert("点击了发布应用")
+        } else if (index == 4) {
+         this.$router.push({
+           name:'publishingApplications'
+         })
         }
       },
       /*登录点击事件*/
@@ -455,7 +463,7 @@
         for(var i=0;i<this.title.length;i++){
           this.title[i].isclass=false
         }
-        this.title[1].isclass=true
+        this.title[0].isclass=true
       },
       myappBtn(){
         this.$router.push({
@@ -1180,5 +1188,35 @@
   .xiala{
     width: 180px;
     margin-left: 30px;
+  }
+  .mask{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    background: rgba(2, 2, 2, 0.4);
+    z-index: 1000000;
+    top: 0;
+  }
+  .mask video{
+    width: 375px;
+    height: 600px;
+  }
+  .videoDiv {
+    width:70%;
+    height: 350px;
+    background-size: 100% 350px;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+  }
+  .videoDiv img{
+    width: 115px;
+    height: 115px;
   }
 </style>
