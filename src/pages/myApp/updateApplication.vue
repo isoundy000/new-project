@@ -284,7 +284,7 @@
         axios.post(BASE_URL+'/api/app/appDes',qs.stringify(data),config).then(res => {
           console.log(res.data.data)
           this.list=res.data.data
-          this.icon=this.list.icon
+          this.icon=BASE_URL+this.list.icon
           this.fourthInput=res.data.data.score_num
           this.fivethInput=res.data.data.type
           this.textarea=res.data.data.desc
