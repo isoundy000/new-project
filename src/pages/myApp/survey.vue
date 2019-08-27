@@ -48,7 +48,7 @@
         <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
           <img class="shebeiIcon" src="../../../static/image/survey/shebei@2x.png" alt="">
           <div class="secondDivText">
-            <p>页面总浏览量</p>
+            <p>下载设备总数</p>
             <div class="newAdd">
               <p>{{list.utotal}}</p>
               <img src="../../../static/image/survey/jiantou.png" alt="">
@@ -272,7 +272,9 @@
             data: aa(starTime, endTime)
           },
           yAxis: {
-            type: 'value'
+            type: 'value',
+            min: 0,
+            max: 900,
           },
           series: [
             {
@@ -360,21 +362,21 @@
       axios.post(BASE_URL+'/api/app/downloadArea',data3, config3).then(res => {
         console.log(res.data.data)
         this.dituList=res.data.data
-        // this.dituList=[
-        //     {name: "四川",
-        //       value: 300},
-        //     {name: "四川",
-        //       value: 300},
-        //     {name:"四川",
-        //       value: 300},{name: "四川",
-        //       value: 300},
-        //     {name: "四川",
-        //       value: 300},
-        //     {name: "四川",
-        //       value: 200},
-        //     {name: Array(0),
-        //       value: 200}
-        //   ]
+        this.dituList=[
+            {name: "四川",
+              value: 300},
+            {name: "四川",
+              value: 300},
+            {name:"四川",
+              value: 300},{name: "四川",
+              value: 300},
+            {name: "四川",
+              value: 300},
+            {name: "四川",
+              value: 200},
+            {name: Array(0),
+              value: 200}
+          ]
         this.$nextTick(function() {
           this.drawMap(this.dituList)
         })
@@ -921,7 +923,7 @@
     display: flex;
     align-items: center;
     border: 1px solid #E5E5E5;
-
+position: relative;
   }
 
   .recently7 {
@@ -972,8 +974,9 @@
     justify-content: space-evenly;
     align-items: center;
     color: white;
-    margin-left: 304px;
     font-size: 16px;
+    position: absolute;
+    right: 30px;
   }
 
 
@@ -1015,6 +1018,7 @@
     padding-left: 17px;
     border-radius: 4px 4px 0px 0px;
     border: 1px solid #E5E5E5;
+    position: relative;
   }
   .sixthDivOne{
     width: 100%;
@@ -1036,8 +1040,9 @@
 
   .chooseApp {
     display: inline-block;
-    position: relative;
-    margin-left: 820px;
+    position: absolute;
+    right: 30px;
+
   }
   .downSum{
     display: inline-block;
@@ -1054,6 +1059,7 @@
   }
   .sixthDivOneSmal{
     display: flex;
+    justify-content: space-between;
   }
   .ranking{
     width: 600px;

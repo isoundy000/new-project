@@ -78,28 +78,22 @@
           label="安装地址"
           width="200"
          >
-          <template scope="scope">
-            <p style="color: #14BEC8;cursor: pointer" @click="handleEdit(tableData[scope.$index].url)">{{scope.row.url}}</p>
+          <template slot-scope="scope">
+            <p style="color: #14BEC8;cursor: pointer" @click="handleEdit(tableData[scope.$index].url)">点击下载</p>
             <!--<el-button size="small" >编辑          </el-button>-->
           </template>
         </el-table-column>
-        <el-table-column
-          prop=""
-          label="服务类型">
-        </el-table-column>
+
         <el-table-column
           prop="rate"
           label="服务单价"
-          width="90">
+          >
         </el-table-column>
-        <el-table-column
-          prop=""
-          label="签名次数">
-        </el-table-column>
+
         <el-table-column
           prop="download_num"
           label="安装量"
-          width="90">
+          >
         </el-table-column>
         <el-table-column
           prop="download_num"
@@ -125,7 +119,7 @@
           label="操作"
           width="130">
           <template slot-scope="scope">
-            <el-select class="downSum" @change="allApp(scope.$index,tableData[scope.$index].operation,tableData[scope.$index].id,tableData,tableData[scope.$index].url)"
+            <el-select  class="downSum" @change="allApp(scope.$index,tableData[scope.$index].operation,tableData[scope.$index].id,tableData,tableData[scope.$index].url)"
                        v-model="tableData[scope.$index].operation" placeholder="请选择">
               <el-option
                 v-for="item in downSumOptions"
@@ -268,7 +262,6 @@
       },
       /*下拉菜单*/
       allApp(index, nameValue,id,rows,url) {
-       // alert(id)
         if (nameValue == '下载链接') {
           this.isMask = true
           this.value=url
@@ -393,8 +386,8 @@
           });
 
         }
-        // alert(index)
-        // console.log(nameValue)
+
+        this.tableData[index].operation=''
       },
       mask() {
         this.isMask = false

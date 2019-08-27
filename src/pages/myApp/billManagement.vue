@@ -68,7 +68,7 @@
       </div>
     </div>
     <div class="secondDiv">
-      <p>账号余额：<span>0.00</span>元</p>
+      <p>账号余额：<span>{{newmoney}}</span>元</p>
       <div @click="recharge">充值</div>
     </div>
     <div class="thirdDiv">
@@ -90,6 +90,7 @@
     name: "billManagement",
     data() {
       return {
+        newmoney:'',
         isFalg:false,
         weixinvalue: 'https://www.baidu.com',
         zhifubaovalue: 'https://www.baidu.com',
@@ -189,6 +190,9 @@
           this.chongValue=this.input
         }
       }
+    },
+    mounted(){
+      this.newmoney=localStorage.getItem('balance');
     }
 
   }

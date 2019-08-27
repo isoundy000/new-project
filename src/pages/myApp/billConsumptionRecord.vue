@@ -147,13 +147,15 @@
       },
       mounted(){
         let data={
+          id:'',
+          page:'',
           page_size:6
         }
         let config = {
           headers:{'token':localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL+'/api/app/appPayRecord',qs.stringify(data),config).then(res => {
-          console.log(res.data.data.list)
+          console.log(res.data.data)
           // this.tableData=res.data.data.list
           // this.total=res.data.data.total
           // this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))

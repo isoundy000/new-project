@@ -8,7 +8,7 @@
           :header-cell-style="{background:'#e0f2fd'}"
         >
           <el-table-column
-            prop="appName"
+            prop="id"
             label="订单编号"
           >
           </el-table-column>

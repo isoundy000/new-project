@@ -167,7 +167,7 @@
   .text{
     width: 90px;
     text-align: right;
-    border: 1px solid red;
+    /*border: 1px solid red;*/
   }
   .secondDiv{
     width: 60%;
@@ -180,7 +180,7 @@
     align-items: center;
     font-size: 16px;
     color: #333333;
-    border: 1px solid red;
+    /*border: 1px solid red;*/
     margin-top: 19px;
   }
   .ss{

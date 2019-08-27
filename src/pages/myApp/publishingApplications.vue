@@ -295,7 +295,6 @@
           spinner: 'el-icon-loading',
           background: 'rgba(0, 0, 0, 0.7)'
         });
-
         let f={
           display_name:this.thirdInput1,
           path:this.path,

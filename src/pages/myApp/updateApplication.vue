@@ -13,11 +13,24 @@
       </div>
       <div  class="supplement">
         <div class="supplementOne">
-          <p class="textOne">应用icon</p>
           <div class="supplementOneImg">
-            <img :src="list.icon" alt="">
+            <img :src='icon' alt="">
           </div>
-
+        </div>
+        <div class="supplementThird13">
+          <el-upload
+            :on-success="success"
+            class="upload-demo"
+            accept=".ipa"
+            action="https://ios.yoyoacg.com/api/common/upload"
+            :on-change="handleChange"
+            >
+            <div @click="upload" class="uploadBtn">
+              <img src="../../../static/image/survey/shangchuanicon.png" alt="">
+              <p>立即上传</p>
+            </div>
+            <div slot="tip" class="el-upload__tip">只能上传ipa文件</div>
+          </el-upload>
         </div>
         <div class="supplementThird1">
           <p>应用名</p>
@@ -62,21 +75,16 @@
           <el-input :disabled="disInput" class="thirdInput" v-model="fourthInput" placeholder="请输入内容"></el-input>
         </div>
 
-        <div class="supplementsixth">
+        <div class="supplementsixth oo">
           <p>应用截图</p>
-          <div class="sixDivImg" v-for="(list,index) in imgList">
-          <img class="secondP"  :src='list' alt="">
-        </div>
-
-          <div class="thirdInput">
-
-
+          <div class="thirdInput imgl">
             <el-upload
               class="ss"
               :limit='limitCount'
               :on-success="success2"
               :class="{hide:hideUpload}"
               :headers="headers"
+              :file-list="imgList"
               action="https://ios.yoyoacg.com/api/common/upload"
               list-type="picture-card"
               :on-preview="handlePictureCardPreview"
@@ -127,6 +135,7 @@
         name: "updateApplication",
       data(){
           return{
+            ss:'',
             thirdInput1:'',
             thirdInput2:'',
             textarea:'',
@@ -164,11 +173,15 @@
             filesize:'',//大小
             img:[],
             list:'',
-            imgList:[]
+            imgList:[],
+            newState:0
 
           }
       },
       methods:{
+        handleChange(file, fileList) {
+          this.fileList = fileList.slice(-3);
+        },
         upload(){
           this.active = 1
           this.isSuper = false
@@ -193,6 +206,21 @@
           this.dialogImageUrl = file.url;
           this.dialogVisible = true;
         },
+        success(response, file, fileList) {
+          console.log(file)
+          this.display_name=file.response.data.app.display_name
+          this.path=file.response.data.url
+          this.icon=BASE_URL+file.response.data.app.icon
+          this.ipa_data_bak=file.response.data.app.ipa_data_bak
+          this.package_name=file.response.data.app.package_name
+          this.version_code=file.response.data.app.version_code
+          this.bundle_name=file.response.data.app.bundle_name
+          this.filesize=file.response.data.app.filesize
+          this.thirdInput=this.package_name
+          this.thirdInput1=this.display_name
+          this.thirdInput2=this.version_code
+          this.icon1=file.response.data.app.icon
+        },
         /*开关*/
         swich(){
           if(this.switchValue==false){
@@ -205,33 +233,47 @@
         },
         /*开关*/
         swich1(){
-
+          if(this.switchValue1==false){
+            this.newState=0
+          }else{
+            this.newState=1
+          }
         },
         submission(){
           let data={
             id:this.$route.query.id,
-            desc:this.textarea,
-            introduction:this.introduction,
-            path:this.path,
-            status:1,
-            score_num:this.fourthInput
+            desc:this.textarea, //描述
+            introduction:this.introduction, //功能简介
+            path:this.path, //应用地址
+            status:1,//是否启用;1-启用;0-禁用
+            score_num:this.fourthInput, //评分人数
+            is_force:this.newState, //1要 0不要
+            apk_url:this.EvenInput, //安卓下载地址
+            download_code:this.TenInput,//下载码
+            version_code:this.thirdInput2,//版本号
+            display_name:this.thirdInput1,//应用名
+            img:this.img,//图片
+            icon:this.icon1,
+            ipa_data_bak:this.ipa_data_bak,
+            package_name:this.package_name,
+            filesize:this.filesize,
+            bundle_name:this.bundle_name,
           }
           let config = {
             headers:{'token':localStorage.getItem('Authorization')}
           };
           axios.post(BASE_URL+'/api/app/update',qs.stringify(data),config).then(res => {
             console.log(res.data.data)
-            this.fourthInput=res.data.data.score_num
-            this.fivethInput=res.data.data.type
-            this.textarea=res.data.data.desc
-            this.textarea1=res.data.data.introduction
-            this.path=res.data.data.path
+            this.$router.push({
+              path:'/appManagement'
+            })
           }, err => {
             console.log(err)
           })
         }
       },
       mounted(){
+          this.ss=BASE_URL
          // alert(this.$route.query.id)
         let data={
           id:this.$route.query.id
@@ -242,7 +284,7 @@
         axios.post(BASE_URL+'/api/app/appDes',qs.stringify(data),config).then(res => {
           console.log(res.data.data)
           this.list=res.data.data
-          this.list.icon=BASE_URL+this.list.icon
+          this.icon=this.list.icon
           this.fourthInput=res.data.data.score_num
           this.fivethInput=res.data.data.type
           this.textarea=res.data.data.desc
@@ -250,8 +292,13 @@
           this.thirdInput1=res.data.data.name
           this.thirdInput2=res.data.data.version_code
           for(var i=0;i<this.list.imgs.length;i++){
-            this.imgList.push(BASE_URL+this.list.imgs[i])
+            var newobj={}
+            newobj.name=i+''
+            newobj.url=BASE_URL+this.list.imgs[i]
+            this.imgList.push(newobj)
           }
+          console.log( this.imgList)
+
         }, err => {
           console.log(err)
         })
@@ -309,7 +356,6 @@
   .supplementOneImg{
     display: flex;
     align-items: center;
-    margin-left: 30px;
   }
   .supplementOneImg img{
     width: 80px;
@@ -320,6 +366,7 @@
     margin-left: 15px;
   }
   .supplementTwo{
+    width: 400px;
     display: flex;
     margin-top: 20px;
     align-items: center;
@@ -358,6 +405,7 @@
     width: 80%;
     display: flex;
     flex-flow: column;
+    align-items: center;
     justify-content: center;
     margin: 50px auto 0 auto;
   }
@@ -382,7 +430,6 @@
   .supplementOneImg{
     display: flex;
     align-items: center;
-    margin-left: 30px;
   }
   .supplementOneImg img{
     width: 80px;
@@ -408,13 +455,16 @@
     width: 310px;
     margin-left: 20px;
   }
+  .imgl{
+    width: 600px;
+  }
   .baoming{
-    width: 900px;
+    width: 305px;
     height: auto;
     word-wrap:break-word;
     word-break:break-all;
     overflow: hidden;
-    margin-left: 30px;
+    margin-left: 25px;
   }
   .sixDivImg{
     width: 148px;
@@ -440,6 +490,34 @@
     vertical-align: middle;
 
   }
+  .oo{
+    margin-left: 285px;
+  }
+  .supplementThird13{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  .uploadBtn {
+    width: 190px;
+    height: 50px;
+    background-color: #14BEC8;
+    border-radius: 6px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    font-size: 18px;
+    color: white;
+    margin: 10px auto 0 auto;
+    cursor: pointer;
+  }
+
+  .uploadBtn img {
+    width: 16px;
+    height: 20px;
+    margin-right: 10px;
+  }
 </style>
 <style>
   .el-upload-list--picture-card{
@@ -454,5 +532,19 @@
   }
   .el-switch__core{
     width: 60px !important;
+  }
+  .el-button--primary{
+    color: #FFF;
+    background-color: #14BEC8;
+    border-color: #14BEC8;
+  }
+  .el-button{
+    width: 100px;
+  }
+  .upload-demo{
+    text-align: center;
+  }
+  .el-upload__tip{
+    font-size: 15px;
   }
 </style>
