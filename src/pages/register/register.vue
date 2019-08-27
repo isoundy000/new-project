@@ -181,7 +181,6 @@
       },
       registerBtn() {
         let f = {
-          username: this.userName,
           mobile: this.phoneNumber,
           captcha: this.verificationNumber,
           password: this.setPassword
@@ -190,10 +189,7 @@
           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         };
         axios.post(BASE_URL+'/api/User/register', qs.stringify(f), config).then(res => {
-          if (res.data.msg == '用户名不能为空') {
-            this.xianshi = true
-            $(".tishiXinxi").html('用户名不能为空')
-          } else if (res.data.msg == '用户名必须4-20个字符') {
+         if (res.data.msg == '用户名必须4-20个字符') {
             this.xianshi = true
             $(".tishiXinxi").html('用户名必须4-20个字符')
           } else if (res.data.msg == '手机号码不能为空') {
@@ -211,11 +207,13 @@
           } else if (res.data.msg == '密码必须6-20个字符') {
             this.xianshi = true
             $(".tishiXinxi").html('密码必须6-20个字符')
-          }
+          }else if(res.data.code==200){
+           this.$router.push({
+             path: '/login'
+           })
+         }
           console.log(res.data)
-          this.$router.push({
-            path: '/login'
-          })
+
         }, err => {
           console.log(err)
         })
