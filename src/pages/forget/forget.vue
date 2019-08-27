@@ -73,6 +73,7 @@
 </template>
 
 <script>
+  import {BASE_URL} from "../../api";
   import Bfooter from '../component/footer'
   import  axios from 'axios'
   import qs from 'qs'
@@ -158,7 +159,7 @@
         let config = {
           headers:{'Content-Type':'application/x-www-form-urlencoded'}
         };
-        axios.post('https://ios.yoyoacg.com/api/sms/send',qs.stringify(f),config).then(res => {
+        axios.post(BASE_URL+'/api/sms/send',qs.stringify(f),config).then(res => {
           console.log(res.data)
         }, err => {
           console.log(err)
@@ -182,7 +183,7 @@
         let config = {
           headers:{'Content-Type':'application/x-www-form-urlencoded'}
         };
-        axios.post('https://ios.yoyoacg.com/api/User/resetpwd',qs.stringify(f),config).then(res => {
+        axios.post(BASE_URL+'/api/User/resetpwd',qs.stringify(f),config).then(res => {
           if(res.data.msg=='用户名不能为空'){
             this.xianshi=true
             $(".tishiXinxi").html('用户名不能为空')
