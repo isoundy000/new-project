@@ -40,9 +40,9 @@
 
       </div>
     </div>
-      <div class="banner">
-        <img src="../../../static/image/superSignature/bannner.png" alt="">
-        </div>
+    <div class="banner" style="background-image: url('../../../static/image/superSignature/bannner.png')">
+      <div class="rightnow">立即签名</div>
+    </div>
         <!--样例展示-->
         <div class="example">
         <img src="../../../static/image/superSignature/yangli@2x.png" alt="">
@@ -347,7 +347,7 @@
           Bheader
         },
         mounted(){
-          console.log(this.money)
+          //console.log(this.money)
           this.money=localStorage.getItem('balance');
           this.userName=localStorage.getItem('userName');
           // alert(this.$route.query.zhi)
@@ -498,8 +498,12 @@
 
 
 
-  .banner img {
+  .banner {
     width: 100%;
+    height: 450px;
+    background-size: 100% 450px;
+    background-repeat: no-repeat;
+    position: relative;
     /*height: 368px;*/
   }
 
@@ -544,22 +548,23 @@
   .advantageBig {
     width: 100%;
     display: flex;
-    margin-top: 50px;
+    margin-top: 30px;
     justify-content: center;
   }
 
   .advantageBig_div {
-    width: 230px;
-    height: 280px;
-    background-size: 230px 280px;
+    width: 300px;
+    height: 320px;
+    background-size: 300px 320px;
     display: flex;
     flex-flow: column;
     justify-content: center;
     align-items: center;
-    margin: 20px;
+    margin: 20px 5px 0 5px;
     border-radius: 10px;
     background-repeat: no-repeat;
     cursor: pointer;
+    font-size: 16px;
   }
 
   .advantageOneBig {
@@ -667,7 +672,8 @@
   .lowprizeDiv_one {
     width: 1200px;
     height: 460px;
-    background-color: #E8FCFC;
+    background-color: rgba(232,252,252,0.4);
+    /*background-color: #E8FCFC;*/
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1213,10 +1219,24 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 20px auto;
+    margin: 61px auto;
   }
   .videoDiv img{
     width: 115px;
     height: 115px;
+  }
+  .rightnow{
+    width: 180px;
+    height: 50px;
+    background-color: white;
+    font-size: 18px;
+    color: #06B2B6;
+    text-align: center;
+    line-height: 50px;
+    border-radius: 10px;
+    /* margin-left: 100px; */
+    position: absolute;
+    top: 70%;
+    left: 18%;
   }
 </style>
