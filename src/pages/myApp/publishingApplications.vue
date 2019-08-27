@@ -105,6 +105,10 @@
           <p>安卓下载地址</p>
           <el-input :disabled="disInput" class="thirdInput" v-model="EvenInput" placeholder="请输入内容"></el-input>
         </div>
+        <div class="supplementTen">
+          <p>最大下载次数</p>
+          <el-input :disabled="disInput" class="thirdInput" v-model="twiInput" placeholder="请输入内容"></el-input>
+        </div>
         <div class="supplementFourth">
           <p>评分人数</p>
           <el-input :disabled="disInput" class="thirdInput" v-model="fourthInput" placeholder="请输入内容"></el-input>
@@ -170,6 +174,7 @@
     name: "publishingApplications",
     data() {
       return {
+        twiInput:'',
         thirdInput1:'',
         thirdInput2:'',
         textarea:'',
