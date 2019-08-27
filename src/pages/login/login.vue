@@ -11,9 +11,9 @@
     <div class="banner" style="background-image: url('../../../static/image/login/dengluditu.png')">
       <div class="loginDiv" style="background-image: url('../../../static/image/login/denglukuang.png')">
         <div class="loginDiv_One">
-          <p @click="msgLogin" :class="{'isColor':isA}" class="msg_login">短信登录</p>
+          <p @click="accountLogin"  :class="{'isColor':isA}" class="msg_login">账号登录</p>
           <div></div>
-          <p @click="accountLogin" :class="{'isColor':isB}" class="account_login">账号登录</p>
+          <p @click="msgLogin"  :class="{'isColor':isB}" class="account_login">短信登录</p>
         </div>
         <div v-if="isState" class="msgDiv">
           <div class="tishi" v-if="isTishi">
@@ -108,6 +108,7 @@
 </template>
 
 <script>
+  import {BASE_URL} from "../../api";
   import  axios from 'axios'
   import qs from 'qs'
   import { mapMutations } from 'vuex';
@@ -125,7 +126,7 @@
         yanzIcon:false,//绿色验证码icon
         accountIcon:false,//绿色账号手机icon
         passwordIcon:false,//绿色账号密码icon
-        isState: true,//显示短信登录还是账号登录界面，默认是短信登录
+        isState: false,//显示短信登录还是账号登录界面，默认是短信登录
         isCheck: true,//复选框的选择，默认是不选中
         isTishi:false,//短信登录里面提示
         isTishi1:false,//账号登录里面提示
@@ -154,8 +155,8 @@
         this.isTishi=false
         this.isTishi1=false
         this.isState=true
-        this.isA=true
-        this.isB=false
+        this.isA=false
+        this.isB=true
       },
       /*账号登录title*/
       accountLogin(){
@@ -172,8 +173,8 @@
         this.isTishi=false
         this.isTishi1=false
         this.isState=false
-        this.isB=true
-        this.isA=false
+        this.isB=false
+        this.isA=true
       },
       /*短信登录里面手机号输入框聚焦事件*/
       phoneInput(){
@@ -234,7 +235,7 @@
          let config = {
            headers:{'Content-Type':'application/x-www-form-urlencoded'}
          };
-          axios.post('https://ios.yoyoacg.com/api/sms/send',qs.stringify(f),config).then(res => {
+          axios.post(BASE_URL+'/api/sms/send',qs.stringify(f),config).then(res => {
             console.log(res.data)
           }, err => {
             console.log(err)
@@ -272,23 +273,29 @@
           let config = {
             headers:{'Content-Type':'application/x-www-form-urlencoded'}
           };
-          axios.post('https://ios.yoyoacg.com/api/user/mobilelogin',qs.stringify(f),config).then(res => {
+          axios.post(BASE_URL+'/api/user/mobilelogin',qs.stringify(f),config).then(res => {
             console.log(res.data)
             console.log(res.data.data.userinfo.token)
             _this.userToken =  res.data.data.userinfo.token;
             var balance= res.data.data.userinfo.money
-            var username= res.data.data.userinfo.username
+            var username= res.data.data.userinfo.mobile
             if(res.data.code==0){
               this.isTishi=true
               $(".textTishi").html('验证码不正确')
             }else{
-              alert("成功了")
-              this.$router.push({
-                path:'/superSignatureAread'
-              })
-              _this.changeLogin({ Authorization: _this.userToken });
-              this.$store.commit('set_money',balance)
-              this.$store.commit('set_userName',username)
+              this.$Modal.success({
+                title: '成功',
+                content: '登录成功',
+                onOk: () => {
+                  _this.changeLogin({ Authorization: _this.userToken });
+                  this.$store.commit('set_money',balance)
+                  this.$store.commit('set_userName',username)
+                  this.$router.push({
+                    path:'/superSignatureAread'
+                  })
+                }
+              });
+
 
             }
 
@@ -308,7 +315,8 @@
           account:this.account,
           password:this.password
         }
-        axios.post('https://ios.yoyoacg.com/api/user/login',qs.stringify(data)).then(res => {
+        axios.post(BASE_URL+'/api/user/login',qs.stringify(data))
+          .then(res => {
           console.log(res.data)
           if(res.data.code==0){
             this.isTishi1=true
@@ -322,23 +330,26 @@
           }else{
             this.userToken =  res.data.data.token;
             var balance= res.data.data.money
-            var username= res.data.data.username
-            this.$router.push({
-              path:'/superSignatureAread'
-            })
-            this.changeLogin({ Authorization: this.userToken });
-            this.$store.commit('set_money',balance)
-            this.$store.commit('set_userName',username)
-            alert('成功了')
+            var username= res.data.data.mobile
+            this.$Modal.success({
+              title: '成功',
+              content: '登录成功',
+              onOk: () => {
+
+                this.changeLogin({ Authorization: this.userToken });
+                this.$store.commit('set_count',100)
+                this.$store.commit('set_money',balance)
+                this.$store.commit('set_userName',username)
+                this.$router.push({
+                  path:'/superSignatureAread'
+                })
+              }
+            });
           }
-
-
-
-
-
-        }, err => {
-          console.log(err)
         })
+          .catch(err=>{
+            console.log(err);
+          })
         /*账号或密码错误*/
       },
       /*注册*/
@@ -537,7 +548,7 @@
     width: 100%;
     height: 2.5vw;
     border: 0;
-    font-size: 1vw;
+    font-size: 15px;
     padding-left: 20px;
     border-radius: 8px;
     outline: none;
@@ -561,10 +572,10 @@
   }
 
   .password_div input {
-    width: 90%;
+    width: 92%;
     height: 2.5vw;
     border: 0;
-    font-size: 1vw;
+    font-size: 15px;
     padding-left: 20px;
     border-radius: 8px;
     outline: none;
@@ -638,13 +649,13 @@
 
   .loginBtn div {
     width: 90%;
-    height: 4vw;
-    background-size: 100% 4vw;
+    height: 50px;
+    background-size: 100% 50px;
     background-repeat: no-repeat;
     text-align: center;
-    line-height: 4vw;
+    line-height: 50px;
     color: white;
-    font-size: 1.1vw;
+    font-size: 15px;
   }
 
   .login_footer {
@@ -665,5 +676,18 @@
   }
   .borderColor{
     border: 1px solid #06B2B6;
+  }
+
+</style>
+<style>
+  .vertical-center-modal{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+  }
+  .vertical-center-modal .ivu-modal{
+    top: 0;
   }
 </style>
