@@ -32,7 +32,7 @@
     <div class="mask" @click="mask" style="display: none">
       <video autoplay="autoplay"  class="video-js vjs-default-skin vjs-big-play-centered" controls
              style="object-fit:fill" >
-        <source src="../../assets/coverr-clear-water-1559888911402.mp4" type="video/mp4" />
+        <source :src="asas"  />
         您的浏览器不支持 video 标签。
       </video>
     </div>
@@ -157,57 +157,32 @@
           </div>
         </div>
         <div class="serviceDivTwo" @mouseenter="serviceDivTwo()">
-          <p class="serviceDivTwoTitle">IOS专属签名</p>
+          <p class="serviceDivTwoTitle">企业签</p>
           <div class="hr1"></div>
           <div class="flex_service">
             <div class="serviceSmall">
               <div></div>
-              <p>因机制与企业签名不同，告别掉签</p>
+              <p>稳定性差</p>
             </div>
             <div class="serviceSmall">
               <div></div>
-              <p>告别掉签风险,只需支付一次即可</p>
+              <p>无法推送</p>
             </div>
             <div class="serviceSmall">
               <div></div>
-              <p>同一台设备下载安装该应用不限制下载次数</p>
+              <p>不可设置</p>
             </div>
             <div class="serviceSmall">
               <div></div>
-              <p>按设备数量收费</p>
+              <p>需打开页面重新下载</p>
             </div>
             <div class="serviceSmall">
               <div></div>
-              <p>每台设备<span>￥15.00</span>/每台</p>
+              <p>包月收费</p>
             </div>
           </div>
         </div>
-        <div class="serviceDivThree">
-          <p class="serviceDivTwoTitle">IOS专属签名</p>
-          <div class="hr1"></div>
-          <div class="flex_service">
-            <div class="serviceSmall">
-              <div></div>
-              <p>因机制与企业签名不同，告别掉签</p>
-            </div>
-            <div class="serviceSmall">
-              <div></div>
-              <p>告别掉签风险,只需支付一次即可</p>
-            </div>
-            <div class="serviceSmall">
-              <div></div>
-              <p>同一台设备下载安装该应用不限制下载次数</p>
-            </div>
-            <div class="serviceSmall">
-              <div></div>
-              <p>按设备数量收费</p>
-            </div>
-            <div class="serviceSmall">
-              <div></div>
-              <p>每台设备<span>￥15.00</span>/每台</p>
-            </div>
-          </div>
-        </div>
+
       </div>
     </div>
 
@@ -286,6 +261,7 @@
     name: "index",
     data() {
       return {
+        asas:'',
         title: [
           // {
           //   msg: '首页',
@@ -325,7 +301,7 @@
       Bheader
     },
     mounted(){
-
+this.asas='../../../static/image/superSignature/Footboys.mp4'
     },
     methods: {
       play(){
@@ -462,7 +438,7 @@
   .banner {
     width: 100%;
     height: 450px;
-    background-size: 100% 450px;
+    background-size: cover;
     background-repeat: no-repeat;
     position: relative;
     /*height: 368px;*/

@@ -29,7 +29,7 @@
               <el-dropdown-menu placement=top  class="xiala" slot="dropdown">
                 <el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>
                 <el-dropdown-item>我的余额:￥{{money}}</el-dropdown-item>
-                <el-dropdown-item>修改密码</el-dropdown-item>
+                <el-dropdown-item @click.native="modify">修改密码</el-dropdown-item>
                 <el-dropdown-item @click.native="signOut">退出</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
@@ -152,7 +152,7 @@
         <div class="serviceDiv">
         <div class="serviceDivOne" @mouseenter="serviceDivOne()"
       style="background-image: url('../../../static/image/superSignature/lansejianbianditu.png')">
-        <p class="serviceDivOneTitle">IOS专属签名</p>
+        <p class="serviceDivOneTitle">iOS超级签名</p>
         <div class="hr"></div>
         <div class="flex_service">
         <div class="serviceSmall">
@@ -178,57 +178,32 @@
       </div>
       </div>
       <div class="serviceDivTwo" @mouseenter="serviceDivTwo()">
-        <p class="serviceDivTwoTitle">IOS专属签名</p>
+        <p class="serviceDivTwoTitle">企业签</p>
         <div class="hr1"></div>
         <div class="flex_service">
         <div class="serviceSmall">
         <div></div>
-        <p>因机制与企业签名不同，告别掉签</p>
+        <p>稳定性差</p>
       </div>
       <div class="serviceSmall">
         <div></div>
-        <p>告别掉签风险,只需支付一次即可</p>
+        <p>无法推送</p>
       </div>
       <div class="serviceSmall">
         <div></div>
-        <p>同一台设备下载安装该应用不限制下载次数</p>
+        <p>不可设置</p>
         </div>
         <div class="serviceSmall">
         <div></div>
-        <p>按设备数量收费</p>
+        <p>需打开页面重新下载</p>
         </div>
         <div class="serviceSmall">
         <div></div>
-        <p>每台设备<span>￥15.00</span>/每台</p>
+        <p>包月收费</p>
       </div>
       </div>
       </div>
-      <div class="serviceDivThree">
-        <p class="serviceDivTwoTitle">IOS专属签名</p>
-        <div class="hr1"></div>
-        <div class="flex_service">
-        <div class="serviceSmall">
-        <div></div>
-        <p>因机制与企业签名不同，告别掉签</p>
-      </div>
-      <div class="serviceSmall">
-        <div></div>
-        <p>告别掉签风险,只需支付一次即可</p>
-      </div>
-      <div class="serviceSmall">
-        <div></div>
-        <p>同一台设备下载安装该应用不限制下载次数</p>
-        </div>
-        <div class="serviceSmall">
-        <div></div>
-        <p>按设备数量收费</p>
-        </div>
-        <div class="serviceSmall">
-        <div></div>
-        <p>每台设备<span>￥15.00</span>/每台</p>
-      </div>
-      </div>
-      </div>
+
       </div>
       </div>
 
@@ -301,6 +276,9 @@
         </template>
 
         <script>
+      import {BASE_URL} from "../../api";
+      import  axios from 'axios'
+      import qs from 'qs'
       import Bfooter from '../component/footer'
       import Bheader from '../component/header'
       export default {
@@ -347,13 +325,18 @@
           Bheader
         },
         mounted(){
-          //console.log(this.money)
-          this.money=localStorage.getItem('balance');
-          this.userName=localStorage.getItem('userName');
-          // alert(this.$route.query.zhi)
-          // if(this.$route.query.zhi==undefined){
-          //   this.grayname=true
-          // }else{
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.get(BASE_URL+'/api/user/index',config).then(res => {
+            this.money=res.data.data.money
+            this.userName=res.data.data.mobile
+             console.log(res.data.data)
+            localStorage.setItem('balance', res.data.data.money);
+            localStorage.setItem('userName', res.data.data.mobile);
+          }, err => {
+            console.log(err)
+          })
     },
     methods: {
       play(){
@@ -477,6 +460,12 @@
           path:'/realName'
         })
       },
+      /*修改密码*/
+      modify(){
+        this.$router.push({
+          path:'/forget'
+        })
+      },
       /*退出*/
       signOut(){
         var token=localStorage.getItem('Authorization');
@@ -501,7 +490,7 @@
   .banner {
     width: 100%;
     height: 450px;
-    background-size: 100% 450px;
+    background-size: cover;
     background-repeat: no-repeat;
     position: relative;
     /*height: 368px;*/
@@ -754,7 +743,7 @@
     text-align: center;
     background-size: 350px 450px;
     border: 1px solid #EAEAEA;
-    margin: 20px;
+    margin: 40px;
     border-radius: 20px;
     background-color: white;
     cursor: pointer;
@@ -766,7 +755,7 @@
     text-align: center;
     background-size: 350px 450px;
     border: 1px solid #EAEAEA;
-    margin: 20px;
+    margin: 40px;
     border-radius: 20px;
     background-color: white;
     cursor: pointer;
