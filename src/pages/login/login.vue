@@ -36,9 +36,9 @@
             <div class="password_div" :class="{'borderColor':yanzIcon}">
               <img v-if="yanzIcon" src="../../../static/image/login/yanzheng_s.png" alt="">
               <img v-else src="../../../static/image/login/yanzhengma.png" alt="">
-              <input v-on:input="yanzInput" type="password" placeholder="请输入短信验证码" v-model="verificationCode">
-              <div @click="send" class="send ">发送验证码</div>
-              <div class="daojishi1" style="display: none"></div>
+              <input v-on:input="yanzInput" type="text" placeholder="请输入短信验证码" v-model="verificationCode">
+              <div v-if="daojiFlag" @click="send" class="send">{{yanMsg}}</div>
+              <div v-else class="daojishi1">{{countDown}}</div>
             </div>
           </div>
           <div class="login_state">
@@ -78,6 +78,10 @@
               <img v-if="passwordIcon" src="../../../static/image/register/mima_s.png" alt="">
               <img v-else src="../../../static/image/register/mima_n.png" alt="">
               <input v-on:input="passwordInput" type="password" placeholder="请输入密码" v-model="password">
+            </div>
+            <div class="math_div" :class="{'borderColor':mathInputIcon}">
+              <input v-on:input="mathInput" type="text" placeholder="请输入验证码" v-model="mathvalue">
+              <img @click="mathImg" :src="src" alt="">
             </div>
           </div>
           <div class="login_state">
@@ -126,6 +130,7 @@
         yanzIcon:false,//绿色验证码icon
         accountIcon:false,//绿色账号手机icon
         passwordIcon:false,//绿色账号密码icon
+        mathInputIcon:false,
         isState: false,//显示短信登录还是账号登录界面，默认是短信登录
         isCheck: true,//复选框的选择，默认是不选中
         isTishi:false,//短信登录里面提示
@@ -133,7 +138,14 @@
         tishi1:'',
         isA:true,//点击短信登录的字体颜色，默认是true，是绿色
         isB:false,//点击账号登录的字体颜色，默认是false，是黑色
-        userToken:''
+        userToken:'',
+        funTime:'',
+        mathvalue:'',
+        src:'',
+        daojiFlag:true,
+        yanMsg:"发送验证码",
+        countDown:'',//倒计时时间
+        codeId:''//后台传的base码id
       }
     },
     components: {
@@ -212,20 +224,28 @@
           this.passwordIcon=true
         }
       },
+      /*数字验证码输入框事件*/
+      mathInput(){
+        this.isTishi1=false
+        if(this.mathvalue==''){
+          this.mathInputIcon=false
+        }else{
+          this.mathInputIcon=true
+        }
+      },
       /*发送验证码倒计时*/
        send(){
+        var that=this
         var timeClock1;
         var timer_num = 60;
         timeClock1 = setInterval(function() {
           timer_num--;
-          $(".send").hide()
-          $(".daojishi1").show()
-          $('.daojishi1').html(timer_num+'秒');
+          that.daojiFlag=false
+          that.countDown=timer_num+'秒'
           if(timer_num == 0) {
             clearInterval(timeClock1);
-            $(".send").show()
-            $(".daojishi1").hide()
-            $('.send').html('重新发送');
+            that.daojiFlag=true
+            that.yanMsg='重新发送'
           }
         }, 1000)
          let f={
@@ -242,20 +262,33 @@
           })
       },
 
-
-
+      /*数字验证码*/
+      mathImg(){
+        axios.get(BASE_URL+'/api/index/verify').then(res => {
+          console.log(res.data.data.id)
+          this.src = 'data:image/png;base64,'+res.data.data.data
+          this.codeId=res.data.data.id
+          // alert(this.src)
+        }, err => {
+          console.log(err)
+        })
+      },
 
       /*由没选中变选中状态*/
       checklist() {
         this.isCheck = false
+        localStorage.setItem('account',JSON.stringify(this.account))
+        localStorage.setItem('password',JSON.stringify(this.password))
         localStorage.setItem('isCheck',JSON.stringify(this.isCheck))
-        alert("勾选了")
+       // alert("勾选了")
       },
       /*由选中变没选中状态*/
       noChecklist() {
         this.isCheck = true
         localStorage.setItem('isCheck',JSON.stringify(this.isCheck))
-        alert("取消勾选了")
+        localStorage.setItem('account',JSON.stringify(''))
+        localStorage.setItem('password',JSON.stringify(''))
+       // alert("取消勾选了")
       },
       /*短信登录按钮*/
       login(){
@@ -313,18 +346,22 @@
         /*账号或密码为空*/
         let data={
           account:this.account,
-          password:this.password
+          password:this.password,
+          captcha:this.mathvalue,
+          code:this.codeId
         }
         axios.post(BASE_URL+'/api/user/login',qs.stringify(data))
           .then(res => {
           console.log(res.data)
           if(res.data.code==0){
-            this.isTishi1=true
             if(res.data.msg=='账户不正确'){
+              this.isTishi1=true
               this.tishi1='账户不正确'
-            }else if(res.data.msg=='参数不正确'){
-              this.tishi1='账号密码不能为空'
+            }else if(res.data.msg=='验证码错误'){
+              this.isTishi1=true
+              this.tishi1='验证码不正确'
             }else if(res.data.msg=='密码不正确'){
+              this.isTishi1=true
               this.tishi1='密码不正确'
             }
           }else{
@@ -335,7 +372,6 @@
               title: '成功',
               content: '登录成功',
               onOk: () => {
-
                 this.changeLogin({ Authorization: this.userToken });
                 this.$store.commit('set_count',100)
                 this.$store.commit('set_money',balance)
@@ -366,15 +402,26 @@
       }
     },
     mounted(){
-    //  alert( this.phonenumber)
+      /*获取验证码图片*/
+      axios.get(BASE_URL+'/api/index/verify').then(res => {
+        // console.log(res.data.data.id)
+        this.src = 'data:image/png;base64,'+res.data.data.data
+        this.codeId=res.data.data.id
+      }, err => {
+        console.log(err)
+      })
+
       let checkState= JSON.parse(localStorage.getItem('isCheck'))
+      let account= JSON.parse(localStorage.getItem('account'))
+      let password= JSON.parse(localStorage.getItem('password'))
+
      // alert(checkState)
       if(checkState==false){
         this.isCheck=false
-        this.phoneIcon=true
-        this.yanzIcon=true
-        this.phonenumber=this.phonenumber
-        this.verificationCode=this.verificationCode
+        this.accountIcon=true
+        this.passwordIcon=true
+        this.account=account
+        this.password=password
       }else{
         this.phonenumber=''
         this.verificationCode=''
@@ -523,7 +570,7 @@
     display: flex;
     justify-content: center;
     flex-flow: column;
-    margin-top:60px;
+    margin-top:40px;
   }
 
   .user_div {
@@ -559,7 +606,7 @@
     height: 2.5vw;
     display: flex;
     align-items: center;
-    margin: 30px auto 0 auto;
+    margin: 15px auto 0 auto;
     border: 1px solid #DCDCDC;
     border-radius: 8px;
     box-sizing: content-box;
@@ -580,7 +627,30 @@
     border-radius: 8px;
     outline: none;
   }
-
+.math_div{
+  width: 90%;
+  height: 2.5vw;
+  display: flex;
+  align-items: center;
+  margin: 15px auto 0 auto;
+  border: 1px solid #DCDCDC;
+  border-radius: 8px;
+  box-sizing: content-box;
+}
+  .math_div input {
+    width: 60%;
+    height: 2.5vw;
+    border: 0;
+    font-size: 15px;
+    padding-left: 20px;
+    border-radius: 8px;
+    outline: none;
+  }
+  .math_div img{
+    width: 110px;
+    height: 2.5vw;
+    margin-left: 10px;
+  }
   input::-webkit-input-placeholder {
     color: #999999;
     font-size: 1vw;
@@ -663,7 +733,7 @@
     display: flex;
     justify-content: center;
     font-size: 0.8vw;
-    margin-top: 20px;
+    margin-top: 8px;
     cursor: pointer;
   }
 
