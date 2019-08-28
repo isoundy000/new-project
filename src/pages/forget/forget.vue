@@ -28,8 +28,8 @@
               <img v-if="verificationNumberIcon" src="../../../static/image/login/yanzheng_s.png" alt="">
               <img v-else src="../../../static/image/login/yanzhengma.png" alt="">
               <input v-on:input="verificationNumberInput" type="text" placeholder="请输入短信验证码" v-model="verificationNumber">
-              <div @click="send" class="send ">发送验证码</div>
-              <div class="daojishi2" style="display: none"></div>
+              <div v-if="daojiFlag3" @click="send" class="send ">{{yanMsg}}</div>
+              <div v-else class="daojishi2" >{{countDown}}</div>
 
             </div>
             <div class="set_div" :class="{'borderColor':setPasswordIcon}">
@@ -93,7 +93,10 @@
         isCheck: true,
         isA:true,
         isB:false,
-        xianshi:false
+        xianshi:false,
+        daojiFlag3:true,
+        yanMsg:"发送验证码",
+        countDown:''
       }
     },
     components: {
@@ -140,16 +143,15 @@
       send(){
         var timeClock2;
         var timer_num = 60;
+        var that=this
         timeClock2 = setInterval(function() {
           timer_num--;
-          $(".send").hide()
-          $(".daojishi2").show()
-          $('.daojishi2').html(timer_num+'秒');
+          that.daojiFlag3=false
+          that.countDown=timer_num+'秒'
           if(timer_num == 0) {
             clearInterval(timeClock2);
-            $(".send").show()
-            $(".daojishi2").hide()
-            $('.send').html('重新发送');
+            that.daojiFlag3=true
+            that.yanMsg='重新发送'
           }
         }, 1000)
         let f={
@@ -161,17 +163,20 @@
         };
         axios.post(BASE_URL+'/api/sms/send',qs.stringify(f),config).then(res => {
           console.log(res.data)
+          if(timer_num == 0){
+            clearInterval(timeClock2);
+          }
         }, err => {
           console.log(err)
         })
       },
       checklist() {
         this.isCheck = false
-        alert("勾选了")
+        //alert("勾选了")
       },
       noChecklist() {
         this.isCheck = true
-        alert("取消勾选了")
+       // alert("取消勾选了")
       },
       modify(){
         let f={
@@ -216,9 +221,15 @@
             $(".tishiXinxi").html('没有找到该用户信息')
           }
           if(res.data.code==200){
-            this.$router.push({
-              path: '/login'
-            })
+            this.$Modal.success({
+              title: '成功',
+              content: '修改成功',
+              onOk: () => {
+                this.$router.push({
+                  path: '/login'
+                })
+              }
+            });
           }
 
 
