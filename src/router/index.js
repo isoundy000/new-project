@@ -28,17 +28,24 @@ import updateApplication from '@/pages/myApp/updateApplication'//我的应用--�
 
 Vue.use(Router)
 
-export default new Router({
+
+const router = new Router({
   routes: [
     {
       path: '/',
       name: 'superSignature',
-      component: superSignature
+      component: superSignature,  //没登录进来的页面
+      meta: {
+        requireAuth: false
+      }
     },
     {
       path: '/superSignatureAread',
       name: 'superSignatureAread',
-      component: superSignatureAread
+      component: superSignatureAread, //登录成功后看到的页面
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/login',
@@ -59,6 +66,9 @@ export default new Router({
       path: '/myApp',
       name: 'myApp',
       component: myApp,
+      meta: {
+        requireAuth: true
+      },
       children:[
         {
           path: '/survey',
@@ -74,6 +84,9 @@ export default new Router({
           path: '/appManagementDetail',
           name: 'appManagementDetail',
           component: appManagementDetail,
+          meta: {
+            requireAuth: true
+          },
           children:[
             {
               path: '/',
@@ -111,11 +124,17 @@ export default new Router({
           path: '/updateApplication',
           name: 'updateApplication',
           component: updateApplication,
+          meta: {
+            requireAuth: true
+          }
         },
         {
           path: '/billManagement',
           name: 'billManagement',
           component: billManagement,
+          meta: {
+            requireAuth: true
+          },
           children:[
             {
               path: '/',
@@ -132,22 +151,34 @@ export default new Router({
         {
           path: '/publishingApplications',
           name: 'publishingApplications',
-          component: publishingApplications
+          component: publishingApplications,
+          meta: {
+            requireAuth: true
+          }
         },
         {
           path: '/realName',
           name: 'realName',
-          component: realName
+          component: realName,
+          meta: {
+            requireAuth: true
+          }
         },
         {
           path: '/personal',
           name: 'personal',
-          component: personal
+          component: personal,
+          meta: {
+            requireAuth: true
+          }
         },
         {
           path: '/enterprise',
           name: 'enterprise',
-          component: enterprise
+          component: enterprise,
+          meta: {
+            requireAuth: true
+          }
         }
 
 
@@ -162,6 +193,9 @@ export default new Router({
 
   ]
 })
+
+
+export default router
 
 
 
