@@ -24,7 +24,7 @@
               <el-dropdown-menu placement=top  class="xiala" slot="dropdown">
                 <el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>
                 <el-dropdown-item>我的余额:￥{{money}}</el-dropdown-item>
-                <el-dropdown-item>修改密码</el-dropdown-item>
+                <el-dropdown-item @click.native="modify">修改密码</el-dropdown-item>
                 <el-dropdown-item @click.native="signOut">退出</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
@@ -42,6 +42,9 @@
 
 <script>
   import surveyHeader from '../component/surveyHeader'
+  import {BASE_URL} from "../../api";
+  import  axios from 'axios'
+  import qs from 'qs'
   export default {
     name: "myApp",
     data() {
@@ -70,10 +73,32 @@
     },
 
     mounted() {
-      this.money=localStorage.getItem('balance');
-      this.userName=localStorage.getItem('userName');
+
+      let config = {
+        headers:{'token':localStorage.getItem('Authorization')}
+      };
+      axios.get(BASE_URL+'/api/user/index',config).then(res => {
+        this.money=res.data.data.money
+        this.userName=res.data.data.mobile
+        console.log(res.data.data)
+        localStorage.setItem('balance', res.data.data.money);
+        localStorage.setItem('userName', res.data.data.mobile);
+      }, err => {
+        console.log(err)
+      })
       this.$router.push('/survey')
     },
+    // computed: {
+    //   money () {
+    //     alert("2")
+    //     return localStorage.getItem('balance')
+    //   }
+    // },
+    // beforeRouteUpdate() {
+    //   this.money=localStorage.getItem('balance');
+    //   this.userName=localStorage.getItem('userName');
+    // },
+
     methods: {
       appClick(index){
         for(var i=0;i<this.title.length;i++){
@@ -133,6 +158,12 @@
       realName(){
         this.$router.push({
           path:'/realName'
+        })
+      },
+      /*修改密码*/
+      modify(){
+        this.$router.push({
+          path:'/forget'
         })
       },
       /*退出*/

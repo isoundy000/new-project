@@ -88,7 +88,7 @@
           <el-select class="chooseApp" @change="chooseApp()" v-model="appValue" placeholder="选择应用">
             <el-option
               v-for="item in chooseAppOptions"
-              :key="item.value"
+              :key="item.id"
               :label="item.label"
               :value="item.value">
             </el-option>
@@ -125,9 +125,11 @@
             <div class="ranking_div">
               <div class="region">
                 <p>区域名称</p>
+                <p style="margin-top: 10px" v-for="(list,index) in areaName" :key="index">{{list.name}}</p>
               </div>
               <div class="newUser">
                 <p>新用户下载量</p>
+                <p style="margin-top: 10px" v-for="(list,index) in areaName" :key="index">{{list.value}}</p>
               </div>
             </div>
           </div>
@@ -138,6 +140,7 @@
 </template>
 
 <script>
+  import "echarts/map/js/china.js";
   import {BASE_URL} from "../../api";
   import  axios from 'axios'
   import qs from 'qs'
@@ -151,53 +154,62 @@
         value: '',//第一个日历选中的值
         value1:'',//第二个日历选中的值
         chooseAppOptions: [
-          {
-            value: '应用一',
-          }, {
-            value: '应用二',
-          }, {
-            value: '应用三',
-          }, {
-            value: '应用四',
-          }, {
-            value: '应用五',
-          }],//应用详情里面的下拉菜单
+
+          ],//应用详情里面的下拉菜单
         downSumOptions:[
-          {
-            value: '2200',
-          }, {
-            value: '100',
-          }, {
-            value: '50',
-          }, {
-            value: '11',
-          }, {
-            value: '230',
-          }],//区域新用户下载量里面的新用户下载量下拉菜单
+          // {
+          //   value: '2200',
+          // }, {
+          //   value: '100',
+          // }, {
+          //   value: '50',
+          // }, {
+          //   value: '11',
+          // }, {
+          //   value: '230',
+          // }
+          ],//区域新用户下载量里面的新用户下载量下拉菜单
         allAppOptions:[
-          {
-            value: '应用一',
-          }, {
-            value: '应用二',
-          }, {
-            value: '应用三',
-          }, {
-            value: '应用四',
-          }, {
-            value: '应用五',
-          }],//区域新用户下载量里面的所有应用的下拉菜单
+          // {
+          //   value: '应用一',
+          // }, {
+          //   value: '应用二',
+          // }, {
+          //   value: '应用三',
+          // }, {
+          //   value: '应用四',
+          // }, {
+          //   value: '应用五',
+          // }
+          ],//区域新用户下载量里面的所有应用的下拉菜单
         appValue: '',//应用详情里面的下拉菜单选中的值
         downSumValue:'',//区域新用户下载量里面的新用户下载量下拉菜单选中的值
         allAppValue:'',//区域新用户下载量里面的所有应用的下拉菜单选中的值
         id:'',
-        dituList:''
+        dituList:'',
+        areaName:[]
       }
     },
 
     mounted() {
+      // alert("1")
       var that=this
       // this.drawColumn()
-
+    /*地图区域名称*/
+      let data8={
+        id:'',
+        start:'',
+        end:''
+      }
+      let config8 = {
+        headers: {'token': localStorage.getItem('Authorization')}
+      };
+      axios.post(BASE_URL+'/api/app/downloadArea',data8,config8).then(res => {
+        console.log(res.data.data)
+        this.areaName=res.data.data
+      }, err => {
+        console.log(err)
+      })
 
       var that = this
       that.fengz=function (starTime,endTime,money,views,download,equipment,news) {
@@ -273,14 +285,12 @@
           },
           yAxis: {
             type: 'value',
-            min: 0,
-            max: 900,
+
           },
           series: [
             {
               name: '总消费金额',
               type: 'line',
-              stack: '总量',
               color: '#4877FB',
               symbolSize: 11,
               data: money
@@ -288,7 +298,6 @@
             {
               name: '页面总浏览量',
               type: 'line',
-              stack: '总量',
               color: '#00C4C9',
               symbolSize: 11,
               data: views
@@ -296,7 +305,6 @@
             {
               name: '总下载量',
               type: 'line',
-              stack: '总量',
               color: '#FF8E32',
               symbolSize: 11,
               data: download
@@ -304,7 +312,6 @@
             {
               name: '下载设备总数',
               type: 'line',
-              stack: '总量',
               color: '#A635FF',
               symbolSize: 11,
               data: equipment
@@ -312,7 +319,6 @@
             {
               name: '新增人数',
               type: 'line',
-              stack: '总量',
               color: '#ff4eae',
               symbolSize: 11,
               data: news
@@ -343,6 +349,12 @@
         headers: {'token': localStorage.getItem('Authorization')}
       };
       axios.post(BASE_URL+'/api/app/appList',data1, config1).then(res => {
+        for(var i=0;i<res.data.data.list.length;i++){
+          var newobj={}
+          newobj.value=res.data.data.list[i].name
+          newobj.id=res.data.data.list[i].id
+          this.chooseAppOptions.push(newobj)
+        }
         console.log(res.data.data.list[0].id)
         this.id=res.data.data.list[0].id
         this.newF(6)
@@ -362,21 +374,6 @@
       axios.post(BASE_URL+'/api/app/downloadArea',data3, config3).then(res => {
         console.log(res.data.data)
         this.dituList=res.data.data
-        this.dituList=[
-            {name: "四川",
-              value: 300},
-            {name: "四川",
-              value: 300},
-            {name:"四川",
-              value: 300},{name: "四川",
-              value: 300},
-            {name: "四川",
-              value: 300},
-            {name: "四川",
-              value: 200},
-            {name: Array(0),
-              value: 200}
-          ]
         this.$nextTick(function() {
           this.drawMap(this.dituList)
         })
@@ -401,7 +398,7 @@
 
     },
     methods: {
-      newF:function(count){
+      newF:function(count,id){
         var that = this
         // 拼接时间
         const time1 = new Date()
@@ -438,16 +435,17 @@
         let config = {
           headers: {'token': localStorage.getItem('Authorization')}
         };
-        // const loading = this.$loading({
-        //   lock: true,
-        //   text: '拼命加载中',
-        //   spinner: 'el-icon-loading',
-        //   background: 'rgba(0, 0, 0, 0.7)'
-        // });
+        const loading = this.$loading({
+          lock: true,
+          text: '拼命加载中',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
         axios.post(BASE_URL+'/api/app/appInfo', qs.stringify(data), config).then(res => {
           console.log(res.data.data)
+
           this.fengz(this.starTime,this.endTime,res.data.data.money,res.data.data.views,res.data.data.download,res.data.data.equipment,res.data.data.new)
-          //loading.close();
+          loading.close();
         }, err => {
           console.log(err)
         })
@@ -614,10 +612,29 @@
 
       /*地图*/
       drawMap(aa){
+        console.log(this.dituList)
         this.$echarts.registerMap('china', chinaJson);
         let myChart = this.$echarts.init(document.getElementById('mapChart'))
         myChart.setOption({
-          tooltip: {}, // 鼠标移到图里面的浮动提示框
+          tooltip: {
+            trigger: 'item',
+            formatter: '{b}<br/>{c} 次'
+          },
+          toolbox: {
+            show: true,
+            orient: 'vertical',
+            left: 'right',
+            top: 'center'
+
+          },
+          dataRange: {
+            show: true,
+            min: 0,
+            max: 3000,
+            realtime: true,
+            calculable: true,
+            color: ['#33B6A4','#B0FDFF']
+          },
           visualMap: {
             min: 800,
             max: 50000,
@@ -628,49 +645,64 @@
               color: ['lightskyblue','yellow', 'orangered']
             }
           },
-          dataRange: {
-            show: true,
-            min: 0,
-            max: 1000,
-            realtime: true,
-            calculable: true,
-            color: ['#06B2B6','#eeeeee']
-          },
-
-          geo: { // 这个是重点配置区
-            map: 'china', // 表示中国地图
-            roam: false,
-            label: {
-              normal: {
-                show: false, // 是否显示对应地名
-                textStyle: {
-                  color: 'rgba(0,0,0,0.4)'
-                }
-              }
-            },
-            itemStyle: {
-              normal: {
-                areaColor:"#eeeeee",
-
-                borderColor: 'rgba(0, 0, 0, 0.2)'
-              },
-              emphasis: {
-                areaColor: null,
-                borderColor: '#fff',
-                areaColor:"#06B2B6",
-
-              }
-            }
-          },
-          series: [{
-            type: 'scatter',
-            coordinateSystem: 'geo' // 对应上方配置
-          },
+          // itemStyle: {
+          //   normal: {
+          //     areaColor:"#e54735",
+          //   },
+          //   emphasis: {
+          //     color: '#06B2B6',
+          //     areaColor:"#06B2B6",
+          //   }
+          // },
+          series: [
             {
-              name: '新用户下载量', // 浮动框的标题
               type: 'map',
-              geoIndex: 0,
-              data: aa
+              mapType: 'china', // 自定义扩展图表类型
+              itemStyle:{
+                normal:{label:{show:false},  color: '#E5E5E5',
+                  areaColor:"#E5E5E5", borderColor: "#fff" },
+                emphasis:{label:{show:true},  color: '#06B2B6',
+                  areaColor:"#06B2B6",}
+              },
+              data:this.dituList,
+              // 自定义名称映射
+              nameMap: {
+                '四川': '四川省',
+                '北京':'北京市',
+                '上海':'上海市',
+                '河北':'河北省',
+                '山西':'山西省',
+                '内蒙古':'内蒙古自治区',
+                '辽宁':'辽宁省',
+                '吉林':'吉林省',
+                '黑龙江':'黑龙江省',
+                '江苏':'江苏省',
+                '浙江':'浙江省',
+                '安徽':'安徽省',
+                '福建':'福建省',
+                '江西':'江西省',
+                '山东':'山东省',
+                '河南':'河南省',
+                '湖北':'湖北省',
+                '湖南':'湖南省',
+                '广东':'广东省',
+                '广西':'广西壮族自治区',
+                '海南':'海南省',
+                '贵州':'贵州省',
+                '云南':'云南省',
+                '西藏':'西藏自治区',
+                '陕西':'陕西省',
+                '甘肃':'甘肃省',
+                '青海':'青海省',
+                '宁夏':'宁夏回族自治区',
+                '新疆':'新疆维吾尔自治区',
+                '北京':'北京市',
+                '天津':'天津市',
+                '重庆':'重庆市',
+                '香港':'香港特别行政区',
+                '澳门':'澳门特别行政区',
+                '台湾':'台湾省'
+              }
             }
           ]
         })
@@ -774,7 +806,6 @@
               {
                 name: '总消费金额',
                 type: 'line',
-                stack: '总量',
                 color: '#4877FB',
                 symbolSize: 11,
                 data: res.data.data.money
@@ -782,7 +813,6 @@
               {
                 name: '页面总浏览量',
                 type: 'line',
-                stack: '总量',
                 color: '#00C4C9',
                 symbolSize: 11,
                 data: res.data.data.views
@@ -790,7 +820,6 @@
               {
                 name: '总下载量',
                 type: 'line',
-                stack: '总量',
                 color: '#FF8E32',
                 symbolSize: 11,
                 data: res.data.data.download
@@ -798,7 +827,6 @@
               {
                 name: '下载设备总数',
                 type: 'line',
-                stack: '总量',
                 color: '#A635FF',
                 symbolSize: 11,
                 data: res.data.data.equipment
@@ -806,7 +834,6 @@
               {
                 name: '新增人数',
                 type: 'line',
-                stack: '总量',
                 color: '#ff4eae',
                 symbolSize: 11,
                 data: res.data.data.new
@@ -820,11 +847,160 @@
       },
       /*第二个日历选中*/
       secondTime(b){
-        console.log(b)
+        console.log(b[0])
+        console.log(b[1])
+        let data3={
+          id:'',
+          start:b[0],
+          end:b[1]
+        }
+        let config3 = {
+          headers: {'token': localStorage.getItem('Authorization')}
+        };
+        axios.post(BASE_URL+'/api/app/downloadArea',data3, config3).then(res => {
+          console.log(res.data.data)
+          this.dituList=res.data.data
+          this.areaName=res.data.data
+          this.$nextTick(function() {
+            this.drawMap(this.dituList)
+          })
+        }, err => {
+          console.log(err)
+        })
       },
       /*应用详情里面的下拉菜单*/
       chooseApp(){
-        console.log(this.appValue)
+        var that=this
+        let obj = {};
+        obj = this.chooseAppOptions.find((item)=>{//这里的userList就是上面遍历的数据源
+          return item.value === this.appValue;//筛选出匹配数据
+        });
+        this.id=obj.id
+        function aa(begin, end) {
+          var dateAllArr = new Array();
+          var ab = begin.split("-");
+          var ae = end.split("-");
+          var db = new Date();
+          db.setUTCFullYear(ab[0], ab[1] - 1, ab[2]);
+          var de = new Date();
+          de.setUTCFullYear(ae[0], ae[1] - 1, ae[2]);
+          var unixDb = db.getTime();
+          var unixDe = de.getTime();
+          for (var k = unixDb; k <= unixDe;) {
+            dateAllArr.push((new Date(parseInt(k))).format().toString());
+            k = k + 24 * 60 * 60 * 1000;
+          }
+          return dateAllArr;
+        }
+        let data = {
+          id: that.id,
+          start: that.starTime,
+          end: that.endTime
+        }
+        let config = {
+          headers: {'token': localStorage.getItem('Authorization')}
+        };
+        const loading = this.$loading({
+          lock: true,
+          text: '拼命加载中',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
+        axios.post(BASE_URL+'/api/app/appInfo', qs.stringify(data), config).then(res => {
+          console.log(res.data.data)
+
+          let myChart = this.$echarts.init(document.getElementById('polygonalChart'))
+          myChart.setOption({
+            tooltip: {
+              trigger: 'axis'
+            },
+            legend: {
+              itemWidth: 17,  // 设置宽度
+              itemHeight: 17, // 设置高度
+              data: [
+                {
+                  name: '总消费金额',
+                  icon: 'image://../../../static/image/survey/yingyong_jie@2x.png'
+                },
+                {
+                  name: '页面总浏览量',
+                  icon: 'image://../../../static/image/survey/yingyong_liulan@2x.png'//格式为'image://+icon文件地址'，其中image::后的//不能省略
+                },
+                {
+                  name: '总下载量',
+                  icon: 'image://../../../static/image/survey/yingyong_xiazhai@2x.png'
+                },
+                {
+                  name: '下载设备总数',
+                  icon: 'image://../../../static/image/survey/yingyong_xiazai@2x.png'
+                },
+                {
+                  name: '新增人数',
+                  icon: 'image://../../../static/image/survey/yingyong_xinzeng@2x (1).png'
+                }
+              ]
+            },
+            grid: {
+              left: '3%',
+              right: '4%',
+              bottom: '3%',
+              containLabel: true
+            },
+            toolbox: {
+              // feature: {
+              //   saveAsImage: {}
+              // }
+            },
+            xAxis: {
+              type: 'category',
+              boundaryGap: false,
+              data: aa(that.starTime, that.endTime)
+            },
+            yAxis: {
+              type: 'value'
+            },
+            series: [
+              {
+                name: '总消费金额',
+                type: 'line',
+                color: '#4877FB',
+                symbolSize: 11,
+                data: res.data.data.money
+              },
+              {
+                name: '页面总浏览量',
+                type: 'line',
+                color: '#00C4C9',
+                symbolSize: 11,
+                data: res.data.data.views
+              },
+              {
+                name: '总下载量',
+                type: 'line',
+                color: '#FF8E32',
+                symbolSize: 11,
+                data: res.data.data.download
+              },
+              {
+                name: '下载设备总数',
+                type: 'line',
+                color: '#A635FF',
+                symbolSize: 11,
+                data: res.data.data.equipment
+              },
+              {
+                name: '新增人数',
+                type: 'line',
+                color: '#ff4eae',
+                symbolSize: 11,
+                data: res.data.data.new
+              }
+            ]
+          })
+          loading.close();
+        }, err => {
+          console.log(err)
+        })
       },
       /*新用户下载量*/
       downSum(){

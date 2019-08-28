@@ -208,7 +208,6 @@
             {
               name: '总消费金额',
               type: 'line',
-              stack: '总量',
               color: '#4877FB',
               symbolSize: 11,
               data: money
@@ -216,7 +215,6 @@
             {
               name: '页面总浏览量',
               type: 'line',
-              stack: '总量',
               color: '#00C4C9',
               symbolSize: 11,
               data: views
@@ -224,7 +222,6 @@
             {
               name: '总下载量',
               type: 'line',
-              stack: '总量',
               color: '#FF8E32',
               symbolSize: 11,
               data: download
@@ -232,7 +229,6 @@
             {
               name: '下载设备总数',
               type: 'line',
-              stack: '总量',
               color: '#A635FF',
               symbolSize: 11,
               data: equipment
@@ -240,7 +236,6 @@
             {
               name: '新增人数',
               type: 'line',
-              stack: '总量',
               color: '#ff4eae',
               symbolSize: 11,
               data: news

@@ -106,8 +106,12 @@
           <el-input :disabled="disInput" class="thirdInput" v-model="EvenInput" placeholder="请输入内容"></el-input>
         </div>
         <div class="supplementTen">
-          <p>最大下载次数</p>
+          <p>限制下载次数</p>
           <el-input :disabled="disInput" class="thirdInput" v-model="twiInput" placeholder="请输入内容"></el-input>
+        </div>
+        <div class="supplementFourth">
+          <p>备注</p>
+          <el-input :disabled="disInput" class="thirdInput" v-model="beiInput" placeholder="请输入内容"></el-input>
         </div>
         <div class="supplementFourth">
           <p>评分人数</p>
@@ -174,6 +178,7 @@
     name: "publishingApplications",
     data() {
       return {
+        beiInput:'',
         twiInput:'',
         thirdInput1:'',
         thirdInput2:'',
@@ -219,9 +224,23 @@
     },
     methods: {
       upload(){
-        this.active = 1
-        this.isSuper = false
-        this.isUpload = true
+        var money=localStorage.getItem('balance');
+        alert(money)
+        if(money==0.00){
+          alert("没有余额")
+          this.$confirm('你的用户余额不足不能上传', '提示', {
+            confirmButtonText: '确定',
+            type: 'warning'
+          }).then(() => {
+
+          }).catch(() => {
+
+          });
+        }else{
+          this.active = 1
+          this.isSuper = false
+          this.isUpload = true
+        }
       },
       /*上传图片触发的方法*/
       deleteL(response, file, fileList){
@@ -250,22 +269,10 @@
         this.thirdInput1=this.display_name
         this.thirdInput2=this.version_code
         this.icon1=file.response.data.app.icon
-        // console.log(this.bundle_name)
-        // console.log(this.path)
-        // console.log(this.icon)
-        // console.log(this.ipa_data_bak)
-        // console.log(this.package_name)
-        // console.log(this.version_code)
-        // console.log(this.bundle_name)
-        // console.log(this.status)
-        // console.log(this.filesize)
-
-
         this.active = 2
         this.isSuper = false
         this.isUpload = false
         this.isSupplement=true
-
       },
       handleRemove(file, fileList) {
         console.log(file, fileList);
@@ -316,7 +323,9 @@
           img:this.img,
           status:this.state,
           download_code:this.TenInput,
-          apk_url:this.EvenInput
+          apk_url:this.EvenInput,
+          download_limit:this.twiInput,
+          remark:this.beiInput
         }
         let config = {
           headers:{'token':localStorage.getItem('Authorization')}
@@ -337,6 +346,7 @@
       }
     },
     mounted(){
+      // alert("4")
       this.active=0
       this.isSuper=true
     }

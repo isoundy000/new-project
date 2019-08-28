@@ -192,6 +192,7 @@
       }
     },
     mounted(){
+      // alert("3")
       this.newmoney=localStorage.getItem('balance');
     }
 

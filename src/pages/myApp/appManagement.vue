@@ -105,6 +105,11 @@
           width="160">
         </el-table-column>
         <el-table-column
+          prop="remark"
+          label="备注"
+          width="160">
+        </el-table-column>
+        <el-table-column
           prop="status"
           label="状态"
           width="70">
@@ -396,6 +401,7 @@
 
     },
     mounted() {
+      // alert("2")
       let data={
         keywords:this.input,
         page:this.current,
@@ -611,10 +617,10 @@
     -webkit-transition: background-color .25s ease;
     transition: background-color .25s ease;
   }
-.el-table_2_column_14  {
-  color: blue;
-  cursor: pointer;
-}
+/*.el-table_2_column_14  {*/
+  /*color: blue;*/
+  /*cursor: pointer;*/
+/*}*/
   th{
     color: #909399 !important;
   }

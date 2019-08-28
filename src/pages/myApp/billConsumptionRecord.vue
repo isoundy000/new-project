@@ -5,7 +5,8 @@
           class="seachInput"
           placeholder="根据应用名称搜索"
           prefix-icon="el-icon-search"
-          v-model="input">
+          v-model="input"
+          @change="seachInput">
         </el-input>
         <el-select class="downSum" @change="allApp()"
                    v-model="appName" placeholder="服务状态">
@@ -23,40 +24,35 @@
         <el-table
           :data="tableData"
           stripe
+          align="center"
           :header-cell-style="{background:'#e0f2fd'}"
         >
           <el-table-column
-            prop="appName"
+            prop="id"
             label="订单编号"
             >
           </el-table-column>
           <el-table-column
-            prop="versionNumber"
+            prop="name"
             label="应用名称"
            >
           </el-table-column>
           <el-table-column
-            prop="address"
+            prop="start_time"
             label="开始时间"
-            width="150"
            >
           </el-table-column>
           <el-table-column
-            prop="serviceType"
+            prop="end_time"
             label="结束时间"
-            width="150">
-          </el-table-column>
-          <el-table-column
-            prop="servicePrize"
-            label="服务名称"
             >
           </el-table-column>
           <el-table-column
-            prop="signNumber"
+            prop="download_num"
             label="设备安装数量">
           </el-table-column>
           <el-table-column
-            prop="installNumber"
+            prop="money"
             label="消费金额"
             >
           </el-table-column>
@@ -67,9 +63,8 @@
             label="服务状态"
            >
             <template slot-scope="scope">
-              <span v-if="scope.row.state=== '分发中'" style="color: #43A047">{{scope.row.state}}</span>
-              <span v-else-if="scope.row.state=== '已下架'" style="color: #999999">{{scope.row.state}}</span>
-              <span v-else-if="scope.row.state=== '已删除'" style="color: #FF0000">{{scope.row.state}}</span>
+              <span v-if="scope.row.status=== 1" style="color: #43A047">进行中</span>
+              <span v-else-if="scope.row.status===0" style="color: #999999">已完成</span>
             </template>
           </el-table-column>
 
@@ -99,13 +94,9 @@
             value:'',
             downSumOptions: [
               {
-                value: '应用一',
+                value: '进行中',
               }, {
-                value: '应用二',
-              }, {
-                value: '应用三',
-              }, {
-                value: '应用四',
+                value: '已完成',
               }],
             tableData: [
 
@@ -138,10 +129,61 @@
           console.log(s)
         },
         allApp(){
-          console.log(this.appName)
+          var state;
+          if(this.appName=='进行中'){
+            state=1
+          }else if(this.appName=='已完成'){
+            state=0
+          }
+          let data={
+            status:state,
+            page_size:6
+          }
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.post(BASE_URL+'/api/app/appPayRecord',qs.stringify(data),config).then(res => {
+            console.log(res.data.data)
+            this.tableData=res.data.data.list
+            this.total=res.data.data.total
+            this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+          }, err => {
+            console.log(err)
+          })
         },
-        firstTime(a){
-          console.log(a)
+        firstTime(value){
+          let data={
+            start:value[0],
+            end:value[1]
+          }
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.post(BASE_URL+'/api/app/appPayRecord',qs.stringify(data),config).then(res => {
+            console.log(res.data.data)
+            this.tableData=res.data.data.list
+            this.total=res.data.data.total
+            this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+          }, err => {
+            console.log(err)
+          })
+        },
+        seachInput(){
+          let data={
+            name:this.input,
+            page_size:6
+          }
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.post(BASE_URL+'/api/app/appPayRecord',qs.stringify(data),config).then(res => {
+            console.log(res.data.data)
+            this.tableData=res.data.data.list
+            this.total=res.data.data.total
+            this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+          }, err => {
+            console.log(err)
+          })
         }
 
       },
@@ -156,9 +198,10 @@
         };
         axios.post(BASE_URL+'/api/app/appPayRecord',qs.stringify(data),config).then(res => {
           console.log(res.data.data)
-          // this.tableData=res.data.data.list
-          // this.total=res.data.data.total
-          // this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+          this.tableData=res.data.data.list
+          this.total=res.data.data.total
+          this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+
         }, err => {
           console.log(err)
         })

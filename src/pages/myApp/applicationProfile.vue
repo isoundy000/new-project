@@ -26,9 +26,21 @@
       <p class="firstP">评分人数</p>
       <p class="secondP">{{list.score_num}}</p>
     </div>
-    <div class="fiveDiv">
-      <p class="firstP">应用类型</p>
-      <p class="secondP">{{list.type}}</p>
+    <div class="fourDiv">
+      <p class="firstP">下载码</p>
+      <p class="secondP">{{list.download_code}}</p>
+    </div>
+    <div class="fourDiv">
+      <p class="firstP">安卓下载地址</p>
+      <p class="secondP">{{list.apk_url}}</p>
+    </div>
+    <div class="fourDiv">
+      <p class="firstP">限制下载次数</p>
+      <p class="secondP">{{list.download_limit}}</p>
+    </div>
+    <div class="fourDiv">
+      <p class="firstP">备注</p>
+      <p class="secondP">{{list.remark}}</p>
     </div>
     <div class="sixDiv">
       <p class="firstP">应用截图</p>
@@ -45,10 +57,10 @@
       <p class="firstP">功能介绍</p>
       <p class="secondP introductiontext">{{list.introduction}}</p>
     </div>
-    <div class="nineDiv">
-      <div style="background-image: url('../../../static/image/survey/anniu_xuanzhong.png')">编辑</div>
-      <div style="background-image: url('../../../static/image/survey/anniu.png')">删除</div>
-    </div>
+    <!--<div class="nineDiv">-->
+      <!--<div style="background-image: url('../../../static/image/survey/anniu_xuanzhong.png')">编辑</div>-->
+      <!--<div style="background-image: url('../../../static/image/survey/anniu.png')">删除</div>-->
+    <!--</div>-->
   </div>
 </div>
 </template>
@@ -85,7 +97,7 @@
           this.list=res.data.data
           this.list.icon=BASE_URL+this.list.icon
           for(var i=0;i<this.list.imgs.length;i++){
-              this.imgList.push(BASE_UR+this.list.imgs[i])
+              this.imgList.push(BASE_URL+this.list.imgs[i])
             }
           if(this.list.status==0){
                   this.state='已下架'

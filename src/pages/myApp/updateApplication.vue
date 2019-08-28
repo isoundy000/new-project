@@ -240,6 +240,12 @@
           }
         },
         submission(){
+          const loading = this.$loading({
+            lock: true,
+            text: '拼命签名中',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)'
+          });
           let data={
             id:this.$route.query.id,
             desc:this.textarea, //描述
@@ -264,6 +270,7 @@
           };
           axios.post(BASE_URL+'/api/app/update',qs.stringify(data),config).then(res => {
             console.log(res.data.data)
+            loading.close();
             this.$router.push({
               path:'/appManagement'
             })
