@@ -1,8 +1,12 @@
 export default {
   changeLogin (state, user) {
     state.Authorization = user.Authorization;
-    alert(user.Authorization)
+    //alert(user.Authorization)
     localStorage.setItem('Authorization', user.Authorization);
+  },
+  set_count(state,count){
+    state.count = count;
+    localStorage.setItem('count',count);
   },
   set_money(state,balance){
     state.balance=balance
@@ -15,7 +19,8 @@ export default {
   del_token(state) {
     state.Authorization = null
     state.userName=''
-    state.balance=''
+    state.balance=null
+    state.count=0
     localStorage.removeItem('Authorization')
     localStorage.removeItem('balance')
     localStorage.removeItem('userName')
