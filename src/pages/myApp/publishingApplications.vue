@@ -216,7 +216,8 @@
         state:1,//状态 1 正常 0关闭
         filesize:'',//大小
         img:[],
-        icon1:''
+        icon1:'',
+        judgeMoney:''
       }
     },
     computed: {
@@ -224,23 +225,32 @@
     },
     methods: {
       upload(){
-        var money=localStorage.getItem('balance');
-        alert(money)
-        if(money==0.00){
-          alert("没有余额")
-          this.$confirm('你的用户余额不足不能上传', '提示', {
-            confirmButtonText: '确定',
-            type: 'warning'
-          }).then(() => {
+        let config = {
+          headers:{'token':localStorage.getItem('Authorization')}
+        };
+        axios.get(BASE_URL+'/api/user/index',config).then(res => {
+          this.judgeMoney=res.data.data.money
+          localStorage.setItem('balance', res.data.data.money);
+          if(this.judgeMoney==0.00){
+            // alert("没有余额")
+            this.$confirm('你的用户余额不足不能上传', '提示', {
+              confirmButtonText: '确定',
+              type: 'warning'
+            }).then(() => {
 
-          }).catch(() => {
+            }).catch(() => {
 
-          });
-        }else{
-          this.active = 1
-          this.isSuper = false
-          this.isUpload = true
-        }
+            });
+          }else{
+            this.active = 1
+            this.isSuper = false
+            this.isUpload = true
+          }
+        }, err => {
+          console.log(err)
+        })
+
+
       },
       /*上传图片触发的方法*/
       deleteL(response, file, fileList){
@@ -445,6 +455,7 @@
   display: flex;
   flex-flow: column;
   justify-content: center;
+  /*align-items: center;*/
   margin: 50px auto 0 auto;
 }
   .supplementOne{

@@ -18,7 +18,7 @@
           </el-option>
         </el-select>
         <DatePicker size="large" @on-change="firstTime(value=$event)" v-model="value" format="yyyy-MM-dd" :clearable=false
-                    type="daterange" split-panels placeholder="请选择服务时间段" style="width: 232px;height: 40px"></DatePicker>
+                    type="daterange" split-panels placeholder="请选择服务时间段" style="width: 232px;height: 40px;margin-left: 30px"></DatePicker>
       </div>
       <div class="secondDiv">
         <el-table
@@ -27,44 +27,49 @@
           align="center"
           :header-cell-style="{background:'#e0f2fd'}"
         >
-          <el-table-column
-            prop="id"
-            label="订单编号"
-            >
-          </el-table-column>
+          <!--<el-table-column-->
+            <!--prop="id"-->
+            <!--label="订单编号"-->
+            <!--&gt;-->
+          <!--</el-table-column>-->
           <el-table-column
             prop="name"
             label="应用名称"
            >
           </el-table-column>
+          <!--<el-table-column-->
+            <!--prop="start_time"-->
+            <!--label="开始时间"-->
+           <!--&gt;-->
+          <!--</el-table-column>-->
+          <!--<el-table-column-->
+            <!--prop="end_time"-->
+            <!--label="结束时间"-->
+            <!--&gt;-->
+          <!--</el-table-column>-->
           <el-table-column
-            prop="start_time"
-            label="开始时间"
-           >
+            prop="create_time"
+            label="日期"
+            width="160"
+          >
           </el-table-column>
           <el-table-column
-            prop="end_time"
-            label="结束时间"
-            >
+            prop="udid"
+            label="设备号">
           </el-table-column>
           <el-table-column
-            prop="download_num"
-            label="设备安装数量">
-          </el-table-column>
-          <el-table-column
-            prop="money"
+            prop="moeny"
             label="消费金额"
-            >
+          >
           </el-table-column>
-
 
           <el-table-column
             prop="state"
             label="服务状态"
            >
             <template slot-scope="scope">
-              <span v-if="scope.row.status=== 1" style="color: #43A047">进行中</span>
-              <span v-else-if="scope.row.status===0" style="color: #999999">已完成</span>
+              <span v-if="scope.row.status=== 1" style="color: #43A047">已完成</span>
+              <span v-else-if="scope.row.status===2" style="color: #999999">补签</span>
             </template>
           </el-table-column>
 
@@ -94,9 +99,9 @@
             value:'',
             downSumOptions: [
               {
-                value: '进行中',
-              }, {
                 value: '已完成',
+              }, {
+                value: '补签',
               }],
             tableData: [
 
@@ -119,7 +124,7 @@
             console.log(res.data)
             console.log(res.data.data.list)
             this.total=res.data.data.total
-            this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+            this.pageNumber=parseInt(Math.ceil(Number(this.total)/6))
             this.tableData=res.data.data.list
           }, err => {
             console.log(err)
@@ -130,10 +135,10 @@
         },
         allApp(){
           var state;
-          if(this.appName=='进行中'){
+          if(this.appName=='已完成'){
             state=1
-          }else if(this.appName=='已完成'){
-            state=0
+          }else if(this.appName=='补签'){
+            state=2
           }
           let data={
             status:state,
@@ -146,7 +151,7 @@
             console.log(res.data.data)
             this.tableData=res.data.data.list
             this.total=res.data.data.total
-            this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+            this.pageNumber=parseInt(Math.ceil(Number(this.total)/6))
           }, err => {
             console.log(err)
           })
@@ -163,7 +168,7 @@
             console.log(res.data.data)
             this.tableData=res.data.data.list
             this.total=res.data.data.total
-            this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+            this.pageNumber=parseInt(Math.ceil(Number(this.total)/6))
           }, err => {
             console.log(err)
           })
@@ -180,7 +185,7 @@
             console.log(res.data.data)
             this.tableData=res.data.data.list
             this.total=res.data.data.total
-            this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+            this.pageNumber=parseInt(Math.ceil(Number(this.total)/6))
           }, err => {
             console.log(err)
           })
@@ -200,7 +205,7 @@
           console.log(res.data.data)
           this.tableData=res.data.data.list
           this.total=res.data.data.total
-          this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+          this.pageNumber=parseInt(Math.ceil(Number(this.total)/6))
 
         }, err => {
           console.log(err)

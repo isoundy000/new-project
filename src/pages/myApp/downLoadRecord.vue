@@ -7,47 +7,40 @@
           stripe
           :header-cell-style="{background:'#e0f2fd'}"
         >
-          <el-table-column
-            prop="appName"
-            label="设备型号 "
-          >
-          </el-table-column>
+          <!--<el-table-column-->
+            <!--prop="appName"-->
+            <!--label="设备型号 "-->
+          <!--&gt;-->
+          <!--</el-table-column>-->
           <el-table-column
             prop="udid"
             label="UDID"
           >
           </el-table-column>
           <el-table-column
-            prop="address"
+            prop="create_time"
             label="访问时间"
-            width="160"
           >
           </el-table-column>
           <el-table-column
-            prop="serviceType"
+            prop="update_time"
             label="下载时间"
-            width="160"
           >
           </el-table-column>
+          <!--<el-table-column-->
+            <!--prop="signNumber"-->
+            <!--label="IP地址">-->
+          <!--</el-table-column>-->
           <el-table-column
-            prop="servicePrize"
-            label="过期时间"
+            prop="tag"
+            label="tag"
           >
           </el-table-column>
-          <el-table-column
-            prop="signNumber"
-            label="IP地址">
-          </el-table-column>
-          <el-table-column
-            prop="installNumber"
-            label="AppleID"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="installNumber"
-            label="设备所在地区"
-          >
-          </el-table-column>
+          <!--<el-table-column-->
+            <!--prop="installNumber"-->
+            <!--label="设备所在地区"-->
+          <!--&gt;-->
+          <!--</el-table-column>-->
 
 
 

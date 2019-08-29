@@ -1,9 +1,9 @@
 <template>
     <div class="versionRecord">
       <div class="versionRecordDiv">
-        <div class="firstDiv">
-          <div class="update">更新应用</div>
-        </div>
+        <!--<div class="firstDiv">-->
+          <!--<div class="update">更新应用</div>-->
+        <!--</div>-->
         <div class="secondDiv">
           <el-table
             :data="tableData"
@@ -28,21 +28,21 @@
               width="160"
             >
             </el-table-column>
-            <el-table-column
-              prop=""
-              label="服务类型"
-              width="160"
-              >
-            </el-table-column>
+            <!--<el-table-column-->
+              <!--prop=""-->
+              <!--label="服务类型"-->
+              <!--width="160"-->
+              <!--&gt;-->
+            <!--</el-table-column>-->
             <el-table-column
               prop=""
               label="服务单价"
             >
             </el-table-column>
-            <el-table-column
-              prop=""
-              label="签名次数">
-            </el-table-column>
+            <!--<el-table-column-->
+              <!--prop=""-->
+              <!--label="签名次数">-->
+            <!--</el-table-column>-->
             <el-table-column
               prop=""
               label="安装量"

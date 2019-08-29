@@ -49,9 +49,14 @@
                 isclass: false
               },
               {
+                msg: '补签收费记录',
+                isclass: false
+              },
+              {
                 msg: '统计',
                 isclass: false
-              }
+              },
+
             ]
           }
       },
@@ -90,6 +95,13 @@
               }
             })
           }else if(index==4){
+            this.$router.push({
+              path:'/buqianRecord',
+              query:{
+                id:this.$route.query.id
+              }
+            })
+          } else if(index==5){
             this.$router.push({
               path:'/statistics',
               query:{

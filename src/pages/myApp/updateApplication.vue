@@ -70,6 +70,14 @@
           <p>安卓下载地址</p>
           <el-input :disabled="disInput" class="thirdInput" v-model="EvenInput" placeholder="请输入内容"></el-input>
         </div>
+        <div class="supplementTen">
+          <p>限制下载次数</p>
+          <el-input :disabled="disInput" class="thirdInput" v-model="xianzhiInput" placeholder="请输入内容"></el-input>
+        </div>
+        <div class="supplementTen">
+          <p>备注</p>
+          <el-input :disabled="disInput" class="thirdInput" v-model="beizhuInput" placeholder="请输入内容"></el-input>
+        </div>
         <div class="supplementFourth">
           <p>评分人数</p>
           <el-input :disabled="disInput" class="thirdInput" v-model="fourthInput" placeholder="请输入内容"></el-input>
@@ -135,12 +143,14 @@
         name: "updateApplication",
       data(){
           return{
+            xianzhiInput:'',
+            beizhuInput:'',
             ss:'',
             thirdInput1:'',
             thirdInput2:'',
             textarea:'',
             textarea1:'',
-            limitCount:2,
+            limitCount:4,
             disInput:false,
             hideUpload: false,
             dialogImageUrl: '',
@@ -298,6 +308,10 @@
           this.textarea1=res.data.data.introduction
           this.thirdInput1=res.data.data.name
           this.thirdInput2=res.data.data.version_code
+          this.TenInput=res.data.data.download_code
+          this.EvenInput=res.data.data.apk_url
+          this.beizhuInput=res.data.data.remark
+          this.xianzhiInput=res.data.data.download_limit
           for(var i=0;i<this.list.imgs.length;i++){
             var newobj={}
             newobj.name=i+''

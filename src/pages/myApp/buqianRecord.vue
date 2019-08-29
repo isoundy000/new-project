@@ -8,8 +8,8 @@
           :header-cell-style="{background:'#e0f2fd'}"
         >
           <!--<el-table-column-->
-            <!--prop="id"-->
-            <!--label="订单编号"-->
+          <!--prop="id"-->
+          <!--label="订单编号"-->
           <!--&gt;-->
           <!--</el-table-column>-->
           <el-table-column
@@ -18,9 +18,9 @@
           >
           </el-table-column>
           <!--<el-table-column-->
-            <!--prop="start_time"-->
-            <!--label="开始时间"-->
-            <!--width="160"-->
+          <!--prop="start_time"-->
+          <!--label="开始时间"-->
+          <!--width="160"-->
           <!--&gt;-->
           <!--</el-table-column>-->
           <el-table-column
@@ -45,7 +45,7 @@
             label="服务状态"
           >
             <template slot-scope="scope">
-              <span v-if="scope.row.status=== 1" style="color: #43A047">已完成</span>
+              <span v-if="scope.row.state=== 2" style="color: #999999">补签</span>
             </template>
           </el-table-column>
 
@@ -64,65 +64,65 @@
   import  axios from 'axios'
   import qs from 'qs'
   import {BASE_URL} from "../../api";
-    export default {
-        name: "consumptionRecord",
-      data(){
-        return{
-          total:0,
-          pageNumber:'',
-          current:1,
-          tableData: [
+  export default {
+    name: "consumptionRecord",
+    data(){
+      return{
+        total:0,
+        pageNumber:'',
+        current:1,
+        tableData: [
 
-          ]
-        }
-      },
-      methods:{
-        /*上下页翻页*/
-        indexChange(i){
-          console.log(i)
-          let data={
-            keywords:this.input,
-            page:i,
-            page_size:4,
-          }
-          let config = {
-            headers:{'token':localStorage.getItem('Authorization')}
-          };
-          axios.post(BASE_URL+'/api/app/appPayRecord',qs.stringify(data),config).then(res => {
-            console.log(res.data)
-            console.log(res.data.data.list)
-            this.total=res.data.data.total
-            this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
-            this.tableData=res.data.data.list
-          }, err => {
-            console.log(err)
-          })
-        },
-        pageChange(s){
-          console.log(s)
-        }
-      },
-      mounted(){
-       // alert('详情页333面'+this.$route.query.id)
-        // alert('详情页222面'+this.$route.query.id)
-        // alert('版本记录'+this.$route.query.id)
-        //
+        ]
+      }
+    },
+    methods:{
+      /*上下页翻页*/
+      indexChange(i){
+        console.log(i)
         let data={
-          id:this.$route.query.id
+          keywords:this.input,
+          page:i,
+          page_size:4,
         }
         let config = {
           headers:{'token':localStorage.getItem('Authorization')}
         };
-        axios.post(BASE_URL+'/api/app/appPayRecord',qs.stringify(data),config).then(res => {
+        axios.post(BASE_URL+'/api/app/resign_free',qs.stringify(data),config).then(res => {
+          console.log(res.data)
           console.log(res.data.data.list)
-          this.tableData=res.data.data.list
           this.total=res.data.data.total
           this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+          this.tableData=res.data.data.list
         }, err => {
           console.log(err)
         })
+      },
+      pageChange(s){
+        console.log(s)
       }
+    },
+    mounted(){
+      // alert('详情页333面'+this.$route.query.id)
+      // alert('详情页222面'+this.$route.query.id)
+      // alert('版本记录'+this.$route.query.id)
+      //
+      let data={
+        id:this.$route.query.id
+      }
+      let config = {
+        headers:{'token':localStorage.getItem('Authorization')}
+      };
+      axios.post(BASE_URL+'/api/app/resign_free',qs.stringify(data),config).then(res => {
+        console.log(res.data.data.list)
+        this.tableData=res.data.data.list
+        this.total=res.data.data.total
+        this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+      }, err => {
+        console.log(err)
+      })
     }
+  }
 </script>
 
 <style scoped>

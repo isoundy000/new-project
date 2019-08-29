@@ -46,7 +46,17 @@
             </div>
           </div>
         </div>
-
+        <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
+          <img class="shebeiIcon" src="../../../static/image/survey/shebei@2x.png" alt="">
+          <div class="secondDivText">
+            <p>补签</p>
+            <div class="newAdd">
+              <p>{{list.utotal}}</p>
+              <img src="../../../static/image/survey/jiantou.png" alt="">
+              <p class="newAddP">{{list.utoday}}</p>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="thirdDiv">
         <div @click="recently7" class="recently7"
@@ -61,11 +71,11 @@
         </div>
         <DatePicker size="large" @on-change="firstTime(value=$event)" v-model="value" format="yyyy-MM-dd"
                     :clearable=false
-                    type="daterange" split-panels placeholder="请选择时间段" style="width: 280px;height: 40px"></DatePicker>
-        <div class="export" style="background-image: url('../../../static/image/survey/daoduanniu@2x.png')">
-          <img src="../../../static/image/survey/daochuicon@2x.png" alt="">
-          <p>导出数据</p>
-        </div>
+                    type="daterange" split-panels placeholder="请选择时间段" style="width: 280px;height: 40px;margin-left: 30px"></DatePicker>
+        <!--<div class="export" style="background-image: url('../../../static/image/survey/daoduanniu@2x.png')">-->
+          <!--<img src="../../../static/image/survey/daochuicon@2x.png" alt="">-->
+          <!--<p>导出数据</p>-->
+        <!--</div>-->
 
       </div>
       <div class="fifthDiv">
@@ -74,7 +84,7 @@
           <el-select class="chooseApp" @change="chooseApp()" v-model="appValue" placeholder="选择应用">
             <el-option
               v-for="item in chooseAppOptions"
-              :key="item.value"
+              :key="item.id"
               :label="item.label"
               :value="item.value">
             </el-option>
@@ -109,17 +119,18 @@
         equipment:[],//下载设备总数
         newList:[],//	新增人数
         chooseAppOptions: [
-          {
-            value: '应用一',
-          }, {
-            value: '应用二',
-          }, {
-            value: '应用三',
-          }, {
-            value: '应用四',
-          }, {
-            value: '应用五',
-          }]
+          // {
+          //   value: '应用一',
+          // }, {
+          //   value: '应用二',
+          // }, {
+          //   value: '应用三',
+          // }, {
+          //   value: '应用四',
+          // }, {
+          //   value: '应用五',
+          // }
+          ]
       }
     },
     mounted() {
@@ -256,6 +267,28 @@
       }, err => {
         console.log(err)
       })
+
+
+      let data1={
+        keywords:'',
+        page:1,
+        page_size:999
+      }
+      let config1 = {
+        headers: {'token': localStorage.getItem('Authorization')}
+      };
+      axios.post(BASE_URL+'/api/app/appList',data1, config1).then(res => {
+        console.log(res.data.data)
+        for(var i=0;i<res.data.data.list.length;i++){
+          var newobj={}
+          newobj.value=res.data.data.list[i].name
+          newobj.id=res.data.data.list[i].id
+          this.chooseAppOptions.push(newobj)
+        }
+      }, err => {
+        console.log(err)
+      })
+
 
 
 
@@ -499,6 +532,141 @@
       /*应用详情里面的下拉菜单*/
       chooseApp() {
         console.log(this.appValue)
+        var that=this
+        let obj = {};
+        obj = this.chooseAppOptions.find((item)=>{//这里的userList就是上面遍历的数据源
+          return item.value === this.appValue;//筛选出匹配数据
+        });
+        var id=obj.id
+        function aa(begin, end) {
+          var dateAllArr = new Array();
+          var ab = begin.split("-");
+          var ae = end.split("-");
+          var db = new Date();
+          db.setUTCFullYear(ab[0], ab[1] - 1, ab[2]);
+          var de = new Date();
+          de.setUTCFullYear(ae[0], ae[1] - 1, ae[2]);
+          var unixDb = db.getTime();
+          var unixDe = de.getTime();
+          for (var k = unixDb; k <= unixDe;) {
+            dateAllArr.push((new Date(parseInt(k))).format().toString());
+            k = k + 24 * 60 * 60 * 1000;
+          }
+          return dateAllArr;
+        }
+        let data3={
+          id:id,
+          start:this.starTime,
+          end:this.endTime
+        }
+        let config3 = {
+          headers: {'token': localStorage.getItem('Authorization')}
+        };
+        const loading = this.$loading({
+          lock: true,
+          text: '拼命加载中',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
+        axios.post(BASE_URL+'/api/app/appInfo',data3, config3).then(res => {
+          console.log(res.data.data)
+
+          let myChart = this.$echarts.init(document.getElementById('polygonalChart'))
+          myChart.setOption({
+            tooltip: {
+              trigger: 'axis'
+            },
+            legend: {
+              itemWidth: 17,  // 设置宽度
+              itemHeight: 17, // 设置高度
+              data: [
+                {
+                  name: '总消费金额',
+                  icon: 'image://../../../static/image/survey/yingyong_jie@2x.png'
+                },
+                {
+                  name: '页面总浏览量',
+                  icon: 'image://../../../static/image/survey/yingyong_liulan@2x.png'//格式为'image://+icon文件地址'，其中image::后的//不能省略
+                },
+                {
+                  name: '总下载量',
+                  icon: 'image://../../../static/image/survey/yingyong_xiazhai@2x.png'
+                },
+                {
+                  name: '下载设备总数',
+                  icon: 'image://../../../static/image/survey/yingyong_xiazai@2x.png'
+                },
+                {
+                  name: '新增人数',
+                  icon: 'image://../../../static/image/survey/yingyong_xinzeng@2x (1).png'
+                }
+              ]
+            },
+            grid: {
+              left: '3%',
+              right: '4%',
+              bottom: '3%',
+              containLabel: true
+            },
+            toolbox: {
+              // feature: {
+              //   saveAsImage: {}
+              // }
+            },
+            xAxis: {
+              type: 'category',
+              boundaryGap: false,
+              data: aa(that.starTime, that.endTime)
+            },
+            yAxis: {
+              type: 'value'
+            },
+            series: [
+              {
+                name: '总消费金额',
+                type: 'line',
+                color: '#4877FB',
+                symbolSize: 11,
+                data: res.data.data.money
+              },
+              {
+                name: '页面总浏览量',
+                type: 'line',
+                color: '#00C4C9',
+                symbolSize: 11,
+                data: res.data.data.views
+              },
+              {
+                name: '总下载量',
+                type: 'line',
+                color: '#FF8E32',
+                symbolSize: 11,
+                data: res.data.data.download
+              },
+              {
+                name: '下载设备总数',
+                type: 'line',
+                color: '#A635FF',
+                symbolSize: 11,
+                data: res.data.data.equipment
+              },
+              {
+                name: '新增人数',
+                type: 'line',
+                color: '#ff4eae',
+                symbolSize: 11,
+                data: res.data.data.new
+              }
+            ]
+          })
+          loading.close();
+        }, err => {
+          console.log(err)
+        })
+
+
+
+
       }
 
     }
@@ -527,9 +695,9 @@
   }
 
   .secondDivBg {
-    width: 24%;
+    width: 18%;
     height: 100px;
-    background-size: 290px 100px;
+    background-size: 100% 100px;
     background-repeat: no-repeat;
     display: flex;
     align-items: center;
@@ -560,10 +728,11 @@
   }
 
   .secondDivText {
-    height: 50px;
+    width: 7vw;
+    height: 70px;
     position: relative;
-    margin-left: 34px;
-    font-size: 16px;
+    margin-left: 1.2vw;
+    font-size: 0.95vw;
     color: #333333;
   }
 
@@ -578,7 +747,7 @@
     display: flex;
     align-items: center;
     border: 1px solid #E5E5E5;
-
+position: relative;
   }
 
   .recently7 {
@@ -629,7 +798,8 @@
     justify-content: space-evenly;
     align-items: center;
     color: white;
-    margin-left: 239px;
+    position: absolute;
+    right: 30px;
     font-size: 16px;
     cursor: pointer;
   }
@@ -660,12 +830,14 @@
     padding-left: 17px;
     border-radius: 4px 4px 0px 0px;
     border: 1px solid #E5E5E5;
+    position: relative;
   }
 
   .chooseApp {
     display: inline-block;
     position: relative;
-    margin-left: 760px;
+    position: absolute;
+    right: 30px;
   }
 
   .newAdd {

@@ -22,7 +22,8 @@
               <p class="accountNumber">{{userName}}</p>
             </span>
               <el-dropdown-menu placement=top  class="xiala" slot="dropdown">
-                <el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>
+                <!--<el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>-->
+                <el-dropdown-item>实名认证</el-dropdown-item>
                 <el-dropdown-item>我的余额:￥{{money}}</el-dropdown-item>
                 <el-dropdown-item @click.native="modify">修改密码</el-dropdown-item>
                 <el-dropdown-item @click.native="signOut">退出</el-dropdown-item>
@@ -104,22 +105,50 @@
         for(var i=0;i<this.title.length;i++){
           this.title[i].isclass=false
         }
-        this.title[index].isclass=true
+
         if(index==0){
+          this.title[index].isclass=true
           this.$router.push({
             path:'/survey'
           })
         }else if(index==1){
+          this.title[index].isclass=true
           this.$router.push({
             path:'/appManagement'
           })
         }else if(index==2){
+          this.title[index].isclass=true
           this.$router.push({
             path:'/billManagement'
           })
         }else if(index==3){
-          this.$router.push({
-            path:'/publishingApplications'
+          const h = this.$createElement;
+          this.$msgbox({
+            message: h('p', null, [
+              h('p', { style: ' text-align: center;font-weight:bold' }, '服务使用条款 '),
+              h('p', { style: 'color: grey;margin-top:30px' }, '请在使用iOS 超级签名服务前，仔细阅读并充分理解以下内容及条款：'),
+              h('p', { style: 'color: red;text-indent:2em;text-align:justify;text-justify:inter-ideograph;' }, '您知晓并同意，由我们提供软件签名的技术，您购买此服务是用于您的 App 的内部测试之用途，且需符合苹果iOS 超级签名的所有规定，否则，因此而产生的法律后果由您自行全部承担；'),
+              h('p', { style: 'color: red;text-indent:2em;text-align:justify;text-justify:inter-ideograph;' }, '您知晓并同意，苹果iOS 超级签名因受到苹果政策影响，在未来可能会存在被苹果撤销从而导致应用出现无法安装、或已经安装的应用无法打开等情况，您同意并愿意独立承担该风险以及该风险导致的后续一切损失，并接受我们在后续可能为此而做出任何补偿等措施；'),
+              h('p', { style: 'color: red;text-indent:2em;text-align:justify;text-justify:inter-ideograph;' }, '您知晓并同意，我们提供签名技术来供您下载您的应用，因您对外分发导致App被滥用、恶意下载、刷量而造成的损失，我们仅提供必要的数据支持和反作弊服务，您同意并愿意独立承担因对外分发和推广而导致的风险和风险后续的一切损失。'),
+              h('p', { style: 'color: grey' }, '您已仔细阅读并同意《超级签名服务协议》中的全部内容。'),
+              h('p', { style: 'color: grey' }, '点击“我同意”代表您已仔细阅读并同意以上所有内容'),
+            ]),
+            showCancelButton: true,
+            closeOnClickModal:false,
+            confirmButtonText: '我同意',
+            cancelButtonText: '不同意',
+            beforeClose: (action, instance, done) => {
+              if (action === 'confirm') {
+                done();
+                this.title[index].isclass=true
+                this.$router.push({
+                  path:'/publishingApplications'
+                })
+              } else {
+                done();
+                this.title[0].isclass=true
+              }
+            }
           })
         }
       },
@@ -220,6 +249,7 @@
     list-style: none;
     display: inline-flex;
     justify-content: space-around;
+
   }
 
   .title p:nth-child(1) {
@@ -357,6 +387,11 @@
     margin-left: 30px;
   }
 
+</style>
+<style>
+  /*.el-message-box{*/
+    /*width: 620px !important;*/
+  /*}*/
 </style>
 
 

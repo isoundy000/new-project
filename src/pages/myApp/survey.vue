@@ -56,7 +56,17 @@
             </div>
           </div>
         </div>
-
+        <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
+          <img class="shebeiIcon" src="../../../static/image/survey/shebei@2x.png" alt="">
+          <div class="secondDivText">
+            <p>补签</p>
+            <div class="newAdd">
+              <p>{{list.utotal}}</p>
+              <img src="../../../static/image/survey/jiantou.png" alt="">
+              <p class="newAddP">{{list.utoday}}</p>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="thirdDiv">
         <div class="recently7" @click="recently7"  style="background-image: url('../../../static/image/survey/anniu_s@2x.png')">
@@ -69,11 +79,11 @@
           <p>最近3月</p>
         </div>
         <DatePicker size="large" @on-change="firstTime(value=$event)" v-model="value" format="yyyy-MM-dd" :clearable=false
-                    type="daterange" split-panels placeholder="请选择时间段" style="width: 280px;height: 40px"></DatePicker>
-        <div class="export" style="background-image: url('../../../static/image/survey/daoduanniu@2x.png')">
-          <img src="../../../static/image/survey/daochuicon@2x.png" alt="">
-          <p>导出数据</p>
-        </div>
+                    type="daterange" split-panels placeholder="请选择时间段" style="width: 280px;height: 40px;margin-left: 30px"></DatePicker>
+        <!--<div class="export" style="background-image: url('../../../static/image/survey/daoduanniu@2x.png')">-->
+          <!--<img src="../../../static/image/survey/daochuicon@2x.png" alt="">-->
+          <!--<p>导出数据</p>-->
+        <!--</div>-->
 
       </div>
       <!--<div class="fourthDiv">-->
@@ -98,19 +108,19 @@
       </div>
       <div class="sixthDiv">
         <div class="sixthDivOne">
-          <p>区域新用户下载量</p>
-          <el-select class="downSum" @change="downSum()" v-model="downSumValue" placeholder="新用户下载量">
-            <el-option
-              v-for="item in downSumOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
+          <p>区域用户下载量</p>
+          <!--<el-select class="downSum" @change="downSum()" v-model="downSumValue" placeholder="新用户下载量">-->
+            <!--<el-option-->
+              <!--v-for="item in downSumOptions"-->
+              <!--:key="item.value"-->
+              <!--:label="item.label"-->
+              <!--:value="item.value">-->
+            <!--</el-option>-->
+          <!--</el-select>-->
           <el-select class="allApp" @change="allApp()" v-model="allAppValue" placeholder="所有应用">
             <el-option
-              v-for="item in allAppOptions"
-              :key="item.value"
+              v-for="item in chooseAppOptions"
+              :key="item.id"
               :label="item.label"
               :value="item.value">
             </el-option>
@@ -121,14 +131,14 @@
         <div class="sixthDivOneSmal">
           <div id="mapChart"></div>
           <div class="ranking">
-            <p class="top10">区域新用户下载 TOP10</p>
+            <p class="top10">区域用户下载 TOP10</p>
             <div class="ranking_div">
               <div class="region">
                 <p>区域名称</p>
                 <p style="margin-top: 10px" v-for="(list,index) in areaName" :key="index">{{list.name}}</p>
               </div>
               <div class="newUser">
-                <p>新用户下载量</p>
+                <p>下载量</p>
                 <p style="margin-top: 10px" v-for="(list,index) in areaName" :key="index">{{list.value}}</p>
               </div>
             </div>
@@ -343,12 +353,15 @@
       let data1={
         keywords:'',
         page:1,
-        page_size:10
+        page_size:999
       }
       let config1 = {
         headers: {'token': localStorage.getItem('Authorization')}
       };
       axios.post(BASE_URL+'/api/app/appList',data1, config1).then(res => {
+        console.log(res.data.data)
+
+
         for(var i=0;i<res.data.data.list.length;i++){
           var newobj={}
           newobj.value=res.data.data.list[i].name
@@ -618,7 +631,14 @@
         myChart.setOption({
           tooltip: {
             trigger: 'item',
-            formatter: '{b}<br/>{c} 次'
+            formatter: function (params) {
+              if(params.value){
+                return params.name + '<br/>' + '新设备下载量' + ' : ' + params.value;
+              }else{
+                return params.name + '<br/>' + '新设备下载量' + ' : ' + '0';
+              }
+
+            }
           },
           toolbox: {
             show: true,
@@ -630,7 +650,7 @@
           dataRange: {
             show: true,
             min: 0,
-            max: 3000,
+            max: 300000,
             realtime: true,
             calculable: true,
             color: ['#33B6A4','#B0FDFF']
@@ -1009,6 +1029,30 @@
       /*所有应用*/
       allApp(){
         console.log(this.allAppValue)
+        var that=this
+        let obj = {};
+        obj = this.chooseAppOptions.find((item)=>{//这里的userList就是上面遍历的数据源
+          return item.value === this.allAppValue;//筛选出匹配数据
+        });
+        var id=obj.id
+        let data3={
+          id:id,
+          start:this.starTime,
+          end:this.endTime
+        }
+        let config3 = {
+          headers: {'token': localStorage.getItem('Authorization')}
+        };
+        axios.post(BASE_URL+'/api/app/downloadArea',data3, config3).then(res => {
+          console.log(res.data.data)
+          this.dituList=res.data.data
+          this.areaName=res.data.data
+          this.$nextTick(function() {
+            this.drawMap(this.dituList)
+          })
+        }, err => {
+          console.log(err)
+        })
       }
     }
   }
@@ -1048,9 +1092,9 @@
   }
 
   .secondDivBg {
-    width: 24%;
+    width: 18%;
     height: 100px;
-    background-size: 290px 100px;
+    background-size: 100% 100px;
     background-repeat: no-repeat;
     display: flex;
     align-items: center;
@@ -1081,10 +1125,11 @@
   }
 
   .secondDivText {
-    height: 50px;
+    width: 7vw;
+    height: 70px;
     position: relative;
-    margin-left: 34px;
-    font-size: 16px;
+    margin-left: 1.2vw;
+    font-size: 0.95vw;
     color: #333333;
   }
 
@@ -1203,7 +1248,7 @@ position: relative;
     background-color: #EEEEEE;
     display: flex;
     align-items: center;
-
+    position: relative;
 
     padding-left: 17px;
     border-radius: 4px 4px 0px 0px;
@@ -1222,20 +1267,22 @@ position: relative;
   }
   .downSum{
     display: inline-block;
-    position: relative;
-    margin-left: 200px;
+    position: absolute;
+    right: 625px;
   }
   .allApp{
     display: inline-block;
-    position: relative;
-    margin-left: 20px;
+    position: absolute;
+    right: 360px;
   }
   .sec{
     height: 40px;
+    position: absolute;
+    right: 30px;
   }
   .sixthDivOneSmal{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
   }
   .ranking{
     width: 600px;
@@ -1293,7 +1340,7 @@ position: relative;
 <style>
   .ivu-input {
     height: 40px !important;
-    margin-left: 19px;
+    /*margin-left: 19px;*/
   }
 
   .ivu-input-wrapper {
@@ -1307,5 +1354,8 @@ position: relative;
   .ivu-input-wrapper-large .ivu-input-prefix i, .ivu-input-wrapper-large .ivu-input-suffix i {
     font-size: 28px;
     line-height: 40px;
+  }
+  .ivu-input-with-suffix{
+    padding-right: 0px !important;
   }
 </style>

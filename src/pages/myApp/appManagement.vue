@@ -102,12 +102,7 @@
         <el-table-column
           prop="create_time"
           label="更新时间"
-          width="160">
-        </el-table-column>
-        <el-table-column
-          prop="remark"
-          label="备注"
-          width="160">
+         >
         </el-table-column>
         <el-table-column
           prop="status"
