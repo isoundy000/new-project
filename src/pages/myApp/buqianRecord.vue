@@ -34,7 +34,7 @@
             label="设备号">
           </el-table-column>
           <el-table-column
-            prop="moeny"
+            prop="money"
             label="消费金额"
           >
           </el-table-column>
