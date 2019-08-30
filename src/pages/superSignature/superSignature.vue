@@ -1,5 +1,15 @@
 <template>
   <div class="login">
+    <div class="qqBig">
+      <div class="qq">
+        <img class="qqtouxiang" src="../../../static/image/superSignature/ren.png" alt="">
+        <p>在线咨询</p>
+      </div>
+      <div class="qqtuiguang" >
+        <img src="../../../static/image/superSignature/qqt.png" alt="">
+        <a :href="aUrl" target="_blank">{{qqValue}}</a>
+      </div>
+    </div>
     <div class="Bheader">
       <div class="login_title">
         <img class="login_title_img" src="../../../static/image/superSignature/mumuunlogo.png" alt="">
@@ -18,8 +28,19 @@
       </div>
     </div>
 
-    <div class="banner" style="background-image: url('../../../static/image/superSignature/bannner.png')">
-      <div class="rightnow">立即签名</div>
+    <div class="banner" style="background-image: url('../../../static/image/superSignature/newbg.png')">
+     <div class="bannerDiv">
+       <p class="bannerDivone">超级签名一次  安装永不受影响</p>
+       <img src="../../../static/image/superSignature/zi.png" alt="">
+
+        <p class="bannerDivtwo">国内ios应用商店，申请账号、上传应用费时费力？</p>
+       <p class="bannerDivthree">不一样的ios签名。让你告别掉签烦恼，提高您的应用分发效率，节省大量时间，帮您轻松节省大量获客成本</p>
+       <div @click="rightnow" class="rightnow">立即签名</div>
+     </div>
+      <div class="bannerDivsmall">
+        <img src="../../../static/image/superSignature/newtu.png" alt="">
+      </div>
+
     </div>
     <!--样例展示-->
     <div class="example">
@@ -32,7 +53,7 @@
     <div class="mask" @click="mask" style="display: none">
       <video autoplay="autoplay"  class="video-js vjs-default-skin vjs-big-play-centered" controls
              style="object-fit:fill" >
-        <source :src="asas"  />
+        <source src="../../../static/image/superSignature/ios.mp4"  />
         您的浏览器不支持 video 标签。
       </video>
     </div>
@@ -247,7 +268,7 @@
         <img src="../../../static/image/superSignature/changjianwentibiaoti.png" alt="">
       </div>
       <div class="problemImg">
-        <img src="../../../static/image/superSignature/wentitu@2x.png" alt="">
+        <img src="../../../static/image/superSignature/wenti.png" alt="">
       </div>
     </div>
     <Bfooter></Bfooter>
@@ -255,12 +276,17 @@
 </template>
 
 <script>
+  import {BASE_URL} from "../../api";
+  import  axios from 'axios'
+  import qs from 'qs'
   import Bfooter from '../component/footer'
   import Bheader from '../component/header'
   export default {
     name: "index",
     data() {
       return {
+        aUrl:'',
+        qqValue:'',
         asas:'',
         title: [
           // {
@@ -301,7 +327,17 @@
       Bheader
     },
     mounted(){
-this.asas='../../../static/image/superSignature/Footboys.mp4'
+      /*客服qq*/
+      let config1 = {
+        headers:{'token':localStorage.getItem('Authorization')}
+      };
+      axios.get(BASE_URL+'/api/index/getConfig/name/kefu',config1).then(res => {
+        console.log(res.data.data)
+        this.qqValue=res.data.data.value
+        this.aUrl='http://wpa.qq.com/msgrd?v=3&uin='+this.qqValue+'&site=qq&menu=yes'
+      }, err => {
+        console.log(err)
+      })
     },
     methods: {
       play(){
@@ -371,18 +407,38 @@ this.asas='../../../static/image/superSignature/Footboys.mp4'
         // $(".serviceDivOne .serviceSmall").css({"color": 'black'})
         // $(".serviceDivTwo .serviceSmall").css({"color": 'white'})
       },
+      rightnow(){
+        this.$router.push({
+          path:'/login'
+        })
+      },
       /*顶部标题点击事件*/
       titleName(index) {
-        if (index == 1) {
-          alert("点击了超级签名")
+        if (index == 0) {
+          this.$router.push({
+            path:'/login'
+          })
+          // alert("点击了超级签名")
+        } else if (index == 1) {
+          this.$router.push({
+            path:'/login'
+          })
+          // alert("点击了专属签名")
         } else if (index == 2) {
-          alert("点击了专属签名")
+          this.$router.push({
+            path:'/login'
+          })
+          // alert("点击了企业签名")
         } else if (index == 3) {
-          alert("点击了企业签名")
+          this.$router.push({
+            path:'/login'
+          })
+          // alert("点击了购买服务")
         } else if (index == 4) {
-          alert("点击了购买服务")
-        } else if (index == 5) {
-          alert("点击了发布应用")
+          this.$router.push({
+            path:'/login'
+          })
+          // alert("点击了发布应用")
         }
       },
       /*登录点击事件*/
@@ -437,13 +493,54 @@ this.asas='../../../static/image/superSignature/Footboys.mp4'
 
   .banner {
     width: 100%;
-    height: 450px;
-    background-size: cover;
-    background-repeat: no-repeat;
+
+    height: 550px;
     position: relative;
+    background-repeat: no-repeat;
+    background-size: 100% 550px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     /*height: 368px;*/
   }
-
+  .bannerDiv{
+    width: 1000px;
+    height: 400px;
+    margin-top: 100px;
+  }
+  .bannerDiv img{
+    width: 602px;
+    height: 82px;
+    margin-top: 15px;
+  }
+  .bannerDivone{
+    font-size: 27px;
+    color: #fff;
+    letter-spacing: 18px;
+  }
+  .bannerDivtwo{
+    font-size: 19px;
+    color: #fff;
+    margin-top: 28px;
+  }
+  .bannerDivthree{
+    font-size: 19px;
+    color: #fff;
+    margin-top: 5px;
+  }
+  .bannerDivsmall{
+    margin-right: 10px;
+  }
+  .bannerDivsmall img{
+    width: 350px;
+    height: 326px;
+  }
+/*.banner img{*/
+  /*width:1920px;!*图片宽度*!*/
+  /*position:absolute;*/
+  /*left:50%;*/
+  /*margin-left:-960px;!*图片宽度的一半*!*/
+/*}*/
   .example {
     width: 100%;
     display: flex;
@@ -975,7 +1072,7 @@ this.asas='../../../static/image/superSignature/Footboys.mp4'
 
   .problem {
     width: 100%;
-    height: 1500px;
+    height: 1650px;
     background-color: #F5F5F5;
   }
 
@@ -999,8 +1096,8 @@ this.asas='../../../static/image/superSignature/Footboys.mp4'
   }
 
   .problemImg img {
-    width: 67%;
-    height: 1220px;
+    width: 800px;
+    height: 1410px;
   }
   .login_title {
     width: 100%;
@@ -1163,9 +1260,49 @@ this.asas='../../../static/image/superSignature/Footboys.mp4'
     text-align: center;
     line-height: 50px;
     border-radius: 10px;
-    /* margin-left: 100px; */
+    margin-top: 35px;
+    cursor: pointer;
+  }
+  .qqBig{
     position: absolute;
-    top: 70%;
-    left: 18%;
+    top: 50%;
+    right: 1.05%;
+    z-index: 9999;
+  }
+  .qq{
+    width: 120px;
+    height: 140px;
+    border: 1px solid red;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+
+    background-color: white;
+    border: 1px solid #d0d0d0;
+  }
+  .qqtouxiang{
+    width: 90px;
+    height: 80px;
+  }
+  .qqtuiguang{
+    width: 120px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: #06B2B6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 15px;
+    margin-top: 13px;
+  }
+  .qqtuiguang a{
+    color: white;
+    font-size: 15px;
+  }
+  .qqtuiguang img{
+    width: 20px;
+    height: 20px;
   }
 </style>

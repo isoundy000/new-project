@@ -1,5 +1,15 @@
 <template>
   <div class="login">
+    <div class="qqBig">
+      <div class="qq">
+        <img class="qqtouxiang" src="../../../static/image/superSignature/ren.png" alt="">
+        <p>在线咨询</p>
+      </div>
+      <div class="qqtuiguang" >
+        <img src="../../../static/image/superSignature/qqt.png" alt="">
+        <a :href="aUrl" target="_blank">{{qqValue}}</a>
+      </div>
+    </div>
 
     <div class="Bheader">
       <div class="login_title">
@@ -27,7 +37,8 @@
               <p class="accountNumber">{{userName}}</p>
             </span>
               <el-dropdown-menu placement=top  class="xiala" slot="dropdown">
-                <el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>
+                <!--<el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>-->
+                <el-dropdown-item>实名认证</el-dropdown-item>
                 <el-dropdown-item>我的余额:￥{{money}}</el-dropdown-item>
                 <el-dropdown-item @click.native="modify">修改密码</el-dropdown-item>
                 <el-dropdown-item @click.native="signOut">退出</el-dropdown-item>
@@ -40,8 +51,19 @@
 
       </div>
     </div>
-    <div class="banner" style="background-image: url('../../../static/image/superSignature/bannner.png')">
-      <div class="rightnow">立即签名</div>
+    <div class="banner" style="background-image: url('../../../static/image/superSignature/newbg.png')">
+      <div class="bannerDiv">
+        <p class="bannerDivone">超级签名一次  安装永不受影响</p>
+        <img src="../../../static/image/superSignature/zi.png" alt="">
+
+        <p class="bannerDivtwo">国内ios应用商店，申请账号、上传应用费时费力？</p>
+        <p class="bannerDivthree">不一样的ios签名。让你告别掉签烦恼，提高您的应用分发效率，节省大量时间，帮您轻松节省大量获客成本</p>
+        <div @click="rightnow" class="rightnow">立即签名</div>
+      </div>
+      <div class="bannerDivsmall">
+        <img src="../../../static/image/superSignature/newtu.png" alt="">
+      </div>
+
     </div>
         <!--样例展示-->
         <div class="example">
@@ -54,7 +76,7 @@
     <div class="mask" @click="mask" style="display: none">
       <video autoplay="autoplay"  class="video-js vjs-default-skin vjs-big-play-centered" controls
              style="object-fit:fill" >
-        <source src="../../assets/coverr-clear-water-1559888911402.mp4" type="video/mp4" />
+        <source src="../../../static/image/superSignature/ios.mp4" type="video/mp4" />
         您的浏览器不支持 video 标签。
       </video>
     </div>
@@ -268,7 +290,7 @@
         <img src="../../../static/image/superSignature/changjianwentibiaoti.png" alt="">
         </div>
         <div class="problemImg">
-        <img src="../../../static/image/superSignature/wentitu@2x.png" alt="">
+        <img src="../../../static/image/superSignature/wenti.png" alt="">
         </div>
         </div>
         <Bfooter></Bfooter>
@@ -285,6 +307,8 @@
         name: "index",
         data() {
           return {
+            aUrl:'',
+            qqValue:'',
             title: [
               // {
               //   msg: '首页',
@@ -334,6 +358,17 @@
              console.log(res.data.data)
             localStorage.setItem('balance', res.data.data.money);
             localStorage.setItem('userName', res.data.data.mobile);
+          }, err => {
+            console.log(err)
+          })
+          /*客服qq*/
+          let config1 = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.get(BASE_URL+'/api/index/getConfig/name/kefu',config1).then(res => {
+            console.log(res.data.data)
+            this.qqValue=res.data.data.value
+            this.aUrl='http://wpa.qq.com/msgrd?v=3&uin='+this.qqValue+'&site=qq&menu=yes'
           }, err => {
             console.log(err)
           })
@@ -409,18 +444,88 @@
       /*顶部标题点击事件*/
       titleName(index) {
        if (index == 0) {
-          alert("点击了超级签名")
+          // alert("点击了超级签名")
         } else if (index == 1) {
-          alert("点击了专属签名")
+          // alert("点击了专属签名")
         } else if (index == 2) {
-          alert("点击了企业签名")
+          // alert("点击了企业签名")
         } else if (index == 3) {
-          alert("点击了购买服务")
+          // alert("点击了购买服务")
         } else if (index == 4) {
-         this.$router.push({
-           name:'publishingApplications'
+         const h = this.$createElement;
+         this.$msgbox({
+           message: h('p', null, [
+             h('p', { style: ' text-align: center;font-weight:bold' }, '服务使用条款 '),
+             h('p', { style: 'color: grey;margin-top:30px' }, '请在使用iOS 超级签名服务前，仔细阅读并充分理解以下内容及条款：'),
+             h('p', { style: 'color: red;text-indent:2em;text-align:justify;text-justify:inter-ideograph;' }, '您知晓并同意，由我们提供软件签名的技术，您购买此服务是用于您的 App 的内部测试之用途，且需符合苹果iOS 超级签名的所有规定，否则，因此而产生的法律后果由您自行全部承担；'),
+             h('p', { style: 'color: red;text-indent:2em;text-align:justify;text-justify:inter-ideograph;' }, '您知晓并同意，苹果iOS 超级签名因受到苹果政策影响，在未来可能会存在被苹果撤销从而导致应用出现无法安装、或已经安装的应用无法打开等情况，您同意并愿意独立承担该风险以及该风险导致的后续一切损失，并接受我们在后续可能为此而做出任何补偿等措施；'),
+             h('p', { style: 'color: red;text-indent:2em;text-align:justify;text-justify:inter-ideograph;' }, '您知晓并同意，我们提供签名技术来供您下载您的应用，因您对外分发导致App被滥用、恶意下载、刷量而造成的损失，我们仅提供必要的数据支持和反作弊服务，您同意并愿意独立承担因对外分发和推广而导致的风险和风险后续的一切损失。'),
+             h('p', { style: 'color: grey' }, '您已仔细阅读并同意《超级签名服务协议》中的全部内容。'),
+             h('p', { style: 'color: grey' }, '点击“我同意”代表您已仔细阅读并同意以上所有内容'),
+           ]),
+           showCancelButton: true,
+           closeOnClickModal:false,
+           confirmButtonText: '我同意',
+           cancelButtonText: '不同意',
+           beforeClose: (action, instance, done) => {
+             if (action === 'confirm') {
+               done();
+               this.title[index].isclass=true
+               this.$router.push({
+                 name:'myApp',
+                 params: {
+                   newid: 1
+                 }
+               })
+             } else {
+               done();
+               this.title[0].isclass=true
+               this.$router.push({
+                 path:'/superSignatureAread'
+               })
+             }
+           }
          })
+
+
+
         }
+      },
+      /*立即签名*/
+      rightnow(){
+        const h = this.$createElement;
+        this.$msgbox({
+          message: h('p', null, [
+            h('p', { style: ' text-align: center;font-weight:bold' }, '服务使用条款 '),
+            h('p', { style: 'color: grey;margin-top:30px' }, '请在使用iOS 超级签名服务前，仔细阅读并充分理解以下内容及条款：'),
+            h('p', { style: 'color: red;text-indent:2em;text-align:justify;text-justify:inter-ideograph;' }, '您知晓并同意，由我们提供软件签名的技术，您购买此服务是用于您的 App 的内部测试之用途，且需符合苹果iOS 超级签名的所有规定，否则，因此而产生的法律后果由您自行全部承担；'),
+            h('p', { style: 'color: red;text-indent:2em;text-align:justify;text-justify:inter-ideograph;' }, '您知晓并同意，苹果iOS 超级签名因受到苹果政策影响，在未来可能会存在被苹果撤销从而导致应用出现无法安装、或已经安装的应用无法打开等情况，您同意并愿意独立承担该风险以及该风险导致的后续一切损失，并接受我们在后续可能为此而做出任何补偿等措施；'),
+            h('p', { style: 'color: red;text-indent:2em;text-align:justify;text-justify:inter-ideograph;' }, '您知晓并同意，我们提供签名技术来供您下载您的应用，因您对外分发导致App被滥用、恶意下载、刷量而造成的损失，我们仅提供必要的数据支持和反作弊服务，您同意并愿意独立承担因对外分发和推广而导致的风险和风险后续的一切损失。'),
+            h('p', { style: 'color: grey' }, '您已仔细阅读并同意《超级签名服务协议》中的全部内容。'),
+            h('p', { style: 'color: grey' }, '点击“我同意”代表您已仔细阅读并同意以上所有内容'),
+          ]),
+          showCancelButton: true,
+          closeOnClickModal:false,
+          confirmButtonText: '我同意',
+          cancelButtonText: '不同意',
+          beforeClose: (action, instance, done) => {
+            if (action === 'confirm') {
+              done();
+              this.$router.push({
+                name:'myApp',
+                params: {
+                  newid: 1
+                }
+              })
+            } else {
+              done();
+              this.$router.push({
+                path:'/superSignatureAread'
+              })
+            }
+          }
+        })
+
       },
       /*登录点击事件*/
       loginBtn() {
@@ -489,12 +594,49 @@
 
   .banner {
     width: 100%;
-    height: 450px;
-    background-size: cover;
-    background-repeat: no-repeat;
+
+    height: 550px;
     position: relative;
+    background-repeat: no-repeat;
+    background-size: 100% 550px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     /*height: 368px;*/
   }
+  .bannerDiv{
+    width: 1000px;
+    height: 400px;
+    margin-top: 100px;
+  }
+  .bannerDiv img{
+    width: 602px;
+    height: 82px;
+    margin-top: 15px;
+  }
+  .bannerDivone{
+    font-size: 27px;
+    color: #fff;
+    letter-spacing: 18px;
+  }
+  .bannerDivtwo{
+    font-size: 19px;
+    color: #fff;
+    margin-top: 28px;
+  }
+  .bannerDivthree{
+    font-size: 19px;
+    color: #fff;
+    margin-top: 5px;
+  }
+  .bannerDivsmall{
+    margin-right: 10px;
+  }
+  .bannerDivsmall img{
+    width: 350px;
+    height: 326px;
+  }
+
 
   .example {
     width: 100%;
@@ -1019,7 +1161,7 @@
 
   .problem {
     width: 100%;
-    height: 1500px;
+    height: 1650px;
     background-color: #F5F5F5;
   }
 
@@ -1043,8 +1185,8 @@
   }
 
   .problemImg img {
-    width: 67%;
-    height: 1220px;
+    width: 800px;
+    height: 1410px;
   }
   .login_title {
     width: 100%;
@@ -1223,9 +1365,49 @@
     text-align: center;
     line-height: 50px;
     border-radius: 10px;
-    /* margin-left: 100px; */
+    margin-top: 35px;
+    cursor: pointer;
+  }
+  .qqBig{
     position: absolute;
-    top: 70%;
-    left: 18%;
+    top: 50%;
+    right: 1.05%;
+    z-index: 9999;
+  }
+  .qq{
+    width: 120px;
+    height: 140px;
+    border: 1px solid red;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+
+    background-color: white;
+    border: 1px solid #d0d0d0;
+  }
+  .qqtouxiang{
+    width: 90px;
+    height: 80px;
+  }
+  .qqtuiguang{
+    width: 120px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: #06B2B6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 15px;
+    margin-top: 13px;
+  }
+  .qqtuiguang a{
+    color: white;
+    font-size: 15px;
+  }
+  .qqtuiguang img{
+    width: 20px;
+    height: 20px;
   }
 </style>
