@@ -56,7 +56,7 @@
     margin-top: 17px;
   }
   .footerOne_Odiv{
-    width:90%;
+    width:100%;
     display: flex;
     flex-wrap: wrap;
     margin-top: 10px;
