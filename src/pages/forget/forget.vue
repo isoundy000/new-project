@@ -20,7 +20,7 @@
             <div class="phone_div" :class="{'borderColor':phoneNumberIcon}">
               <img v-if="phoneNumberIcon" src="../../../static/image/login/shouji_s.png" alt="">
               <img v-else src="../../../static/image/login/shouji.png" alt="">
-              <input v-on:input="phoneNumberInput" type="text" placeholder="请输入手机号码" v-model="phoneNumber"
+              <input style="font-size: 15px" v-on:input="phoneNumberInput" type="text" placeholder="请输入手机号码" v-model="phoneNumber"
                      onkeyup="this.value=this.value.replace(/\D/g,'')"
                      onafterpaste="this.value=this.value.replace(/\D/g,'')">
             </div>
@@ -35,16 +35,12 @@
             <div class="set_div" :class="{'borderColor':setPasswordIcon}">
               <img v-if="setPasswordIcon" src="../../../static/image/register/mima_s.png" alt="">
               <img v-else src="../../../static/image/register/mima_n.png" alt="">
-              <input v-on:input="setPasswordInput" type="password" placeholder="设置6至20位登录密码" v-model="setPassword"
-                     onkeyup="this.value=this.value.replace(/\D/g,'')"
-                     onafterpaste="this.value=this.value.replace(/\D/g,'')">
+              <input v-on:input="setPasswordInput" type="password" placeholder="设置6至20位登录密码" v-model="setPassword" >
             </div>
             <div class="password_div" :class="{'borderColor':passwordIcon}">
               <img v-if="passwordIcon" src="../../../static/image/register/mima_s.png" alt="">
               <img v-else src="../../../static/image/register/mima_n.png" alt="">
-              <input v-on:input="passwordInput" type="password" placeholder="请再次输入登录密码" v-model="password"
-                     onkeyup="this.value=this.value.replace(/\D/g,'')"
-                     onafterpaste="this.value=this.value.replace(/\D/g,'')">
+              <input v-on:input="passwordInput" type="password" placeholder="请再次输入登录密码" v-model="password" >
             </div>
           </div>
           <div class="login_state">
@@ -302,7 +298,7 @@
   .banner {
     width: 100%;
     height: 75%;
-
+    position: relative;
     background-size: 100% 100%;
     background-repeat: no-repeat;
     display: flex;
@@ -310,9 +306,10 @@
   }
 
   .loginDiv {
-    width: 22%;
-    height: 77%;
-    margin-left: 55vw;
+    width: 334px;
+    height: 417px;
+    position: absolute;
+    right: 20%;
     background-size: 100% 100%;
     background-repeat: no-repeat;
   }
@@ -339,8 +336,8 @@
 
 
   .phone_div {
-    width: 90%;
-    height: 2.5vw;
+    width: 300px;
+    height: 40px;
     display: flex;
     align-items: center;
     margin: 15px auto 0 auto;
@@ -357,7 +354,7 @@
 
   .phone_div input {
     width: 90%;
-    height: 2.5vw;
+    height: 40px;
     border: 0;
     font-size: 1vw;
     padding-left: 20px;
@@ -365,8 +362,8 @@
     outline: none;
   }
   .verification_div{
-    width: 90%;
-    height: 2.5vw;
+    width:300px;
+    height: 40px;
     display: flex;
     align-items: center;
     margin: 15px auto 0 auto;
@@ -382,7 +379,7 @@
 
   .verification_div input {
     width: 90%;
-    height: 2.5vw;
+    height: 40px;
     border: 0;
     font-size: 1vw;
     padding-left: 20px;
@@ -390,8 +387,8 @@
     outline: none;
   }
   .set_div{
-    width: 90%;
-    height: 2.5vw;
+    width: 300px;
+    height:40px;
     display: flex;
     align-items: center;
     margin: 15px auto 0 auto;
@@ -407,7 +404,7 @@
 
   .set_div input {
     width: 90%;
-    height: 2.5vw;
+    height: 40px;
     border: 0;
     font-size: 1vw;
     padding-left: 20px;
@@ -415,8 +412,8 @@
     outline: none;
   }
   .password_div{
-    width: 90%;
-    height: 2.5vw;
+    width: 300px;
+    height: 40px;
     display: flex;
     align-items: center;
     margin: 15px auto 0 auto;
@@ -432,7 +429,7 @@
 
   .password_div input {
     width: 90%;
-    height: 2.5vw;
+    height:40px;
     border: 0;
     font-size: 1vw;
     padding-left: 20px;
@@ -441,7 +438,7 @@
   }
   input::-webkit-input-placeholder {
     color: #999999;
-    font-size: 1vw;
+    font-size: 15px;
   }
 
   input:-webkit-autofill {
@@ -454,7 +451,7 @@
     line-height: 26px;
     text-align: center;
     color: #333333;
-    font-size: 1vw;
+    font-size: 15px;
     margin-left: 20px;
     cursor: pointer;
     font-family: "MicrosoftYaHei";
@@ -465,7 +462,7 @@
   .login_state {
     width: 100%;
     margin-top: 26px;
-    font-size: 1vw;
+    font-size: 15px;
   }
 
   .login_state_div {
@@ -497,7 +494,7 @@
 
   .loginBtn {
     width: 100%;
-    height: 4vw;
+    height: 50px;
     display: flex;
     justify-content: center;
     margin-top: 20px;
@@ -505,14 +502,14 @@
   }
 
   .loginBtn div {
-    width: 90%;
-    height: 4vw;
-    background-size: 100% 4vw;
+    width: 300px;
+    height: 50px;
+    background-size: 100% 50px;
     background-repeat: no-repeat;
     text-align: center;
-    line-height: 4vw;
+    line-height: 50px;
     color: white;
-    font-size: 1.1vw;
+    font-size: 18px;
   }
 
 
@@ -524,5 +521,8 @@
   }
   .borderColor{
     border: 1px solid #06B2B6;
+  }
+  .el-input__inner{
+    font-size: 15px !important;
   }
 </style>
