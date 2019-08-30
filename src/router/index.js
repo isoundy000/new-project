@@ -14,6 +14,8 @@ import applicationProfile from '@/pages/myApp/applicationProfile'//我的应用-
 import versionRecord from '@/pages/myApp/versionRecord'//我的应用--应用管理--版本记录路由
 import downLoadRecord from '@/pages/myApp/downLoadRecord'//我的应用--应用管理--下载记录路由
 import consumptionRecord from '@/pages/myApp/consumptionRecord'//我的应用--应用管理--消费记录路由
+import buqianRecord from '@/pages/myApp/buqianRecord'//我的应用--应用管理--补签消费记录路由
+
 import statistics from '@/pages/myApp/statistics'//我的应用--应用管理--统计路由
 import billManagement from '@/pages/myApp/billManagement'//我的应用--账单管理路由
 import billConsumptionRecord from '@/pages/myApp/billConsumptionRecord'//我的应用--账单管理--消费记录路由
@@ -110,6 +112,12 @@ const router = new Router({
               path: '/consumptionRecord',
               name: 'consumptionRecord',
               component: consumptionRecord,
+              meta:{keepAlive:true}
+            },
+            {
+              path: '/buqianRecord',
+              name: 'buqianRecord',
+              component: buqianRecord,
               meta:{keepAlive:true}
             },
             {
