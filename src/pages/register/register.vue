@@ -33,17 +33,15 @@
               </div>
               <input v-on:input="verificationNumberInput" type="text" placeholder="请输入短信验证码"
                      v-model="verificationNumber">
-              <div @click="send" class="send ">发送验证码</div>
-              <div class="daojishi3" style="display: none"></div>
+              <div v-if="daojiFlag2" @click="send" class="send ">{{yanMsg}}</div>
+              <div v-else class="daojishi3" >{{countDown}}</div>
             </div>
             <div class="set_div" :class="{'borderColor':setPasswordIcon}">
               <div class="img_div">
                 <img v-if="setPasswordIcon" src="../../../static/image/register/mima_s.png" alt="">
                 <img v-else src="../../../static/image/register/mima_n.png" alt="">
               </div>
-              <input v-on:input="setPasswordInput" type="password" placeholder="设置6至20位登录密码" v-model="setPassword"
-                     onkeyup="this.value=this.value.replace(/\D/g,'')"
-                     onafterpaste="this.value=this.value.replace(/\D/g,'')">
+              <input v-on:input="setPasswordInput" type="password" placeholder="设置6至20位登录密码" v-model="setPassword" >
             </div>
           </div>
           <div class="login_state">
@@ -96,7 +94,10 @@
         isCheck: true,
         isA: true,
         isB: false,
-        xianshi: false
+        xianshi: false,
+        daojiFlag2:true,
+        yanMsg:"发送验证码",
+        countDown:''
       }
     },
     components: {
@@ -143,16 +144,16 @@
       send() {
         var timeClock3;
         var timer_num = 60;
+        var that=this
+
         timeClock3 = setInterval(function () {
           timer_num--;
-          $(".send").hide()
-          $(".daojishi3").show()
-          $('.daojishi3').html(timer_num + '秒');
+          that.daojiFlag2=false
+          that.countDown=timer_num+'秒'
           if (timer_num == 0) {
             clearInterval(timeClock3);
-            $(".send").show()
-            $(".daojishi3").hide()
-            $('.send').html('重新发送');
+            that.daojiFlag2=true
+            that.yanMsg='重新发送'
           }
         }, 1000)
         let data = {
@@ -163,9 +164,12 @@
         axios.post(BASE_URL+'/api/sms/send', qs.stringify(data)).then(res => {
           console.log(res)
           if (res.data.msg == '已被注册') {
-            clearInterval(timeClock3);
+
             this.xianshi = true
             $(".tishiXinxi").html('手机号码已经被注册')
+          }
+          if(timer_num == 0){
+            clearInterval(timeClock3);
           }
         }, err => {
           console.log(err)
@@ -173,11 +177,11 @@
       },
       checklist() {
         this.isCheck = false
-        alert("勾选了")
+        //alert("勾选了")
       },
       noChecklist() {
         this.isCheck = true
-        alert("取消勾选了")
+       // alert("取消勾选了")
       },
       registerBtn() {
         let f = {
@@ -208,9 +212,15 @@
             this.xianshi = true
             $(".tishiXinxi").html('密码必须6-20个字符')
           }else if(res.data.code==200){
-           this.$router.push({
-             path: '/login'
-           })
+           this.$Modal.success({
+             title: '成功',
+             content: '注册成功',
+             onOk: () => {
+               this.$router.push({
+                 path: '/login'
+               })
+             }
+           });
          }
           console.log(res.data)
 
@@ -282,7 +292,7 @@
   .banner {
     width: 100%;
     height: 75%;
-
+    position: relative;
     background-size: 100% 100%;
     background-repeat: no-repeat;
     display: flex;
@@ -290,9 +300,10 @@
   }
 
   .loginDiv {
-    width: 22%;
-    height: 77%;
-    margin-left: 55vw;
+    width: 334px;
+    height: 417px;
+    position: absolute;
+    right: 20%;
     background-size: 100% 100%;
     background-repeat: no-repeat;
   }
@@ -346,8 +357,8 @@
   }
 
   .phone_div {
-    width: 90%;
-    height: 2.5vw;
+    width: 300px;
+    height: 40px;
     display: flex;
     align-items: center;
     margin: 15px auto 0 auto;
@@ -364,7 +375,7 @@
 
   .phone_div input {
     width: 90%;
-    height: 2.5vw;
+    height: 40px;
     border: 0;
     font-size: 1vw;
     padding-left: 20px;
@@ -373,8 +384,8 @@
   }
 
   .verification_div {
-    width: 90%;
-    height: 2.5vw;
+    width: 300px;
+    height: 40px;
     display: flex;
     align-items: center;
     margin: 15px auto 0 auto;
@@ -391,7 +402,7 @@
 
   .verification_div input {
     width: 50%;
-    height: 2.5vw;
+    height: 40px;
     border: 0;
     font-size: 1vw;
     padding-left: 20px;
@@ -400,8 +411,8 @@
   }
 
   .set_div {
-    width: 90%;
-    height: 2.5vw;
+    width: 300px;
+    height: 40px;
     display: flex;
     align-items: center;
     margin: 15px auto 0 auto;
@@ -417,7 +428,7 @@
 
   .set_div input {
     width: 90%;
-    height: 2.5vw;
+    height: 40px;
     border: 0;
     font-size: 1vw;
     padding-left: 20px;
@@ -427,7 +438,7 @@
 
   input::-webkit-input-placeholder {
     color: #999999;
-    font-size: 1vw;
+    font-size: 15px;
   }
 
   input:-webkit-autofill {
@@ -440,7 +451,7 @@
     line-height: 26px;
     text-align: center;
     color: #333333;
-    font-size: 1vw;
+    font-size: 15px;
     margin-left: 20px;
     cursor: pointer;
     font-family: "MicrosoftYaHei";
@@ -451,7 +462,7 @@
   .login_state {
     width: 100%;
     margin-top: 26px;
-    font-size: 1vw;
+    font-size: 15px;
   }
 
   .login_state_div {
@@ -483,7 +494,7 @@
 
   .loginBtn {
     width: 100%;
-    height: 4vw;
+    height: 50px;
     display: flex;
     justify-content: center;
     margin-top: 20px;
@@ -491,14 +502,14 @@
   }
 
   .loginBtn div {
-    width: 90%;
-    height: 4vw;
-    background-size: 100% 4vw;
+    width: 300px;
+    height: 50px;
+    background-size: 100% 50px;
     background-repeat: no-repeat;
     text-align: center;
-    line-height: 4vw;
+    line-height: 50px;
     color: white;
-    font-size: 1.1vw;
+    font-size: 18px;
   }
 
   .login_footer {
