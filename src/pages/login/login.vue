@@ -72,7 +72,7 @@
             <div class="user_div" :class="{'borderColor':accountIcon}">
               <img v-if="accountIcon" src="../../../static/image/login/shouji_s.png" alt="">
               <img v-else src="../../../static/image/login/shouji.png" alt="">
-              <input v-on:input="accountInput" type="text" autocomplete="off" placeholder="请输入账户/手机/邮箱" v-model="account">
+              <input class="login-form-input" v-on:input="accountInput" type="text" autocomplete="off" placeholder="请输入账户/手机/邮箱" v-model="account">
             </div>
             <div class="password_div" :class="{'borderColor':passwordIcon}">
               <img v-if="passwordIcon" src="../../../static/image/register/mima_s.png" alt="">
@@ -156,7 +156,7 @@
       /*短信登录title*/
       msgLogin(){
         /*清空输入框数据*/
-        this.phonenumber=''
+        // this.phonenumber=''
         this.verificationCode=''
         this.account=''
         this.password=''
@@ -173,7 +173,7 @@
       /*账号登录title*/
       accountLogin(){
         /*清空输入框数据*/
-        this.phonenumber=''
+        // this.phonenumber=''
         this.verificationCode=''
         this.account=''
         this.password=''
@@ -430,7 +430,21 @@
     }
   }
 </script>
+<style>
+  .vertical-center-modal{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
+
+  }
+  .vertical-center-modal .ivu-modal{
+    top: 0;
+  }
+
+
+
+</style>
 <style scoped>
   *{
 
@@ -492,17 +506,18 @@
   .banner {
     width: 100%;
     height: 75%;
-
     background-size: 100% 100%;
     background-repeat: no-repeat;
     display: flex;
     align-items: center;
+    position: relative;
   }
 
   .loginDiv {
-    width: 22%;
-    height: 77%;
-    margin-left: 55vw;
+    width: 334px;
+    height: 417px;
+    position: absolute;
+    right: 20%;
     background-size: 100% 100%;
     background-repeat: no-repeat;
   }
@@ -574,15 +589,14 @@
   }
 
   .user_div {
-    width: 90%;
-    height: 2.5vw;
+    width: 300px;
+    height: 40px;
     display: flex;
     align-items: center;
     margin: 0 auto;
     border: 1px solid #DCDCDC;
     border-radius: 8px;
     box-sizing: content-box;
-
   }
 
   .user_div img {
@@ -592,8 +606,8 @@
   }
 
   .user_div input {
-    width: 100%;
-    height: 2.5vw;
+    width: 90%;
+    height:40px;
     border: 0;
     font-size: 15px;
     padding-left: 20px;
@@ -602,8 +616,8 @@
   }
 
   .password_div {
-    width: 90%;
-    height: 2.5vw;
+    width: 300px;
+    height: 40px;
     display: flex;
     align-items: center;
     margin: 15px auto 0 auto;
@@ -620,7 +634,7 @@
 
   .password_div input {
     width: 92%;
-    height: 2.5vw;
+    height: 40px;
     border: 0;
     font-size: 15px;
     padding-left: 20px;
@@ -628,8 +642,8 @@
     outline: none;
   }
 .math_div{
-  width: 90%;
-  height: 2.5vw;
+  width: 300px;
+  height: 40px;
   display: flex;
   align-items: center;
   margin: 15px auto 0 auto;
@@ -639,7 +653,7 @@
 }
   .math_div input {
     width: 60%;
-    height: 2.5vw;
+    height: 40px;
     border: 0;
     font-size: 15px;
     padding-left: 20px;
@@ -648,12 +662,12 @@
   }
   .math_div img{
     width: 110px;
-    height: 2.5vw;
+    height: 40px;
     margin-left: 10px;
   }
   input::-webkit-input-placeholder {
     color: #999999;
-    font-size: 1vw;
+    font-size: 15px;
   }
 
   input:-webkit-autofill {
@@ -666,7 +680,7 @@
     line-height: 26px;
     text-align: center;
     color: #333333;
-    font-size: 1vw;
+    font-size: 15px;
     margin-left: 20px;
     cursor: pointer;
     font-family: "MicrosoftYaHei";
@@ -684,6 +698,7 @@
     width: 90%;
     margin: 0 auto;
     display: flex;
+    font-size: 15px;
     justify-content: space-between;
   }
 
@@ -710,7 +725,7 @@
 
   .loginBtn {
     width: 100%;
-    height: 4vw;
+    height: 50px;
     display: flex;
     justify-content: center;
     margin-top: 20px;
@@ -718,14 +733,14 @@
   }
 
   .loginBtn div {
-    width: 90%;
+    width: 300px;
     height: 50px;
     background-size: 100% 50px;
     background-repeat: no-repeat;
     text-align: center;
     line-height: 50px;
     color: white;
-    font-size: 15px;
+    font-size: 18px;
   }
 
   .login_footer {
@@ -749,15 +764,4 @@
   }
 
 </style>
-<style>
-  .vertical-center-modal{
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
-
-  }
-  .vertical-center-modal .ivu-modal{
-    top: 0;
-  }
-</style>
