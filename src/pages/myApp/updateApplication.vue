@@ -22,7 +22,7 @@
             :on-success="success"
             class="upload-demo"
             accept=".ipa"
-            action="https://ios.yoyoacg.com/api/common/upload"
+            :action="newdeUrl"
             :on-change="handleChange"
             >
             <div @click="upload" class="uploadBtn">
@@ -93,7 +93,7 @@
               :class="{hide:hideUpload}"
               :headers="headers"
               :file-list="imgList"
-              action="https://ios.yoyoacg.com/api/common/upload"
+              :action="newdeUrl"
               list-type="picture-card"
               :on-preview="handlePictureCardPreview"
               :on-remove="handleRemove"
@@ -143,6 +143,7 @@
         name: "updateApplication",
       data(){
           return{
+            newdeUrl:'',
             xianzhiInput:'',
             beizhuInput:'',
             ss:'',
@@ -204,12 +205,23 @@
         /*上传图片成功*/
         success2(response, file){
           var img=file.response.data.url
+          console.log(img)
           this.img.push(img)
+          console.log(this.img)
         },
         handleRemove(file, fileList) {
-          console.log(file, fileList);
-          this.hideUpload = file.length >= this.limitCount;
+          console.log(file);
+          console.log(fileList);
+          var newImg=[];
+          for(var i=0;i<fileList.length;i++){
+            console.log(fileList[i].url.substring(23))
+            newImg.push(fileList[i].url.substring(23))
+            this.img=newImg
+          }
 
+
+          this.hideUpload = file.length >= this.limitCount;
+          console.log(this.img)
         },
         handlePictureCardPreview(file) {
           console.log(file)
@@ -230,6 +242,8 @@
           this.thirdInput1=this.display_name
           this.thirdInput2=this.version_code
           this.icon1=file.response.data.app.icon
+          this.img.push(file.response.data.app.img)
+          console.log(this.img)
         },
         /*开关*/
         swich(){
@@ -259,7 +273,7 @@
           let data={
             id:this.$route.query.id,
             desc:this.textarea, //描述
-            introduction:this.introduction, //功能简介
+            introduction:this.textarea1, //功能简介
             path:this.path, //应用地址
             status:1,//是否启用;1-启用;0-禁用
             score_num:this.fourthInput, //评分人数
@@ -274,6 +288,8 @@
             package_name:this.package_name,
             filesize:this.filesize,
             bundle_name:this.bundle_name,
+            remark:this.beizhuInput,
+            download_limit:this.xianzhiInput
           }
           let config = {
             headers:{'token':localStorage.getItem('Authorization')}
@@ -291,7 +307,7 @@
       },
       mounted(){
           this.ss=BASE_URL
-         // alert(this.$route.query.id)
+        this.newdeUrl=BASE_URL+'/api/common/upload'
         let data={
           id:this.$route.query.id
         }
@@ -317,6 +333,7 @@
             newobj.name=i+''
             newobj.url=BASE_URL+this.list.imgs[i]
             this.imgList.push(newobj)
+            this.img.push(this.list.imgs[i])
           }
           console.log( this.imgList)
 

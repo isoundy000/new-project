@@ -61,9 +61,9 @@
           <div class="secondDivText">
             <p>补签</p>
             <div class="newAdd">
-              <p>{{list.utotal}}</p>
+              <p>{{list.rtotal}}</p>
               <img src="../../../static/image/survey/jiantou.png" alt="">
-              <p class="newAddP">{{list.utoday}}</p>
+              <p class="newAddP">{{list.rtoday}}</p>
             </div>
           </div>
         </div>
@@ -633,9 +633,9 @@
             trigger: 'item',
             formatter: function (params) {
               if(params.value){
-                return params.name + '<br/>' + '新设备下载量' + ' : ' + params.value;
+                return params.name + '<br/>' + '下载量' + ' : ' + params.value;
               }else{
-                return params.name + '<br/>' + '新设备下载量' + ' : ' + '0';
+                return params.name + '<br/>' + '下载量' + ' : ' + '0';
               }
 
             }
@@ -1092,7 +1092,7 @@
   }
 
   .secondDivBg {
-    width: 18%;
+    width: 19%;
     height: 100px;
     background-size: 100% 100px;
     background-repeat: no-repeat;

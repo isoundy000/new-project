@@ -35,11 +35,11 @@
           <img @click="close" src="../../../static/image/survey/guanbi@2x.png" alt="">
         </div>
         <div class="maskDivPay">
-          <div class="weixin" style="background-image: url('../../../static/image/survey/weixinbg.png')">
-           <p>￥{{chongValue}}</p>
-            <qrcode-vue :value="weixinvalue" :size="size" level="H" className='qrcode' id="picture" ref="code"></qrcode-vue>
-            <img class="weixinImg" src="../../../static/image/survey/weixin.png" alt="">
-          </div>
+          <!--<div class="weixin" style="background-image: url('../../../static/image/survey/weixinbg.png')">-->
+           <!--<p>￥{{chongValue}}</p>-->
+            <!--<qrcode-vue :value="weixinvalue" :size="size" level="H" className='qrcode' id="picture" ref="code"></qrcode-vue>-->
+            <!--<img class="weixinImg" src="../../../static/image/survey/weixin.png" alt="">-->
+          <!--</div>-->
           <div class="zhifubao" style="background-image: url('../../../static/image/survey/zhifubaobg.png')">
             <p>￥{{chongValue}}</p>
             <qrcode-vue :value="zhifubaovalue" :size="size" level="H" className='qrcode' id="picture" ref="code"></qrcode-vue>
@@ -146,11 +146,11 @@
         }
       },
       recharge() {
-        $(".weihu").show()
-       // this.isMaskRecharge = true
+        // $(".weihu").show()
+       this.isMaskRecharge = true
       },
       weihu(){
-        $(".weihu").hide()
+        // $(".weihu").hide()
       },
       close() {
         this.isMaskRecharge = false
@@ -180,8 +180,8 @@
         console.log(this.input)
       },
       immediately(){
-        this.isMaskRecharge=false
-        this.isMaskPayment=true
+        // this.isMaskRecharge=false
+        // this.isMaskPayment=true
         if(this.input==''&& this.isFalg==false){
           this.chongValue=500
         }else if(this.input==''&& this.isFalg==true){
@@ -189,6 +189,39 @@
         }else if(this.input!=''){
           this.chongValue=this.input
         }
+        let data = {
+          paytype:'alipay',
+          amount:this.chongValue
+        }
+        let config = {
+          headers: {'token': localStorage.getItem('Authorization')}
+        };
+        axios.post(BASE_URL+'/api/order/createOrder', qs.stringify(data), config).then(res => {
+          console.log(res.data.data)
+          let data1 = {
+            order_sn:res.data.data.order_sn
+
+          }
+          axios.post(BASE_URL+'/api/pay/doPay', qs.stringify(data1), config).then(res => {
+            console.log(res.data)
+            const div = document.createElement('div')
+            div.innerHTML = res.data //此处form就是后台返回接收到的数据
+            document.body.appendChild(div)
+            document.forms[0].submit()
+
+            // const div = document.createElement('div');
+            // div.innerHTML = this.datadorm;
+            // document.body.appendChild(div);
+            // document.forms.alipaysubmit.submit();
+
+          }, err => {
+            console.log(err)
+          })
+        }, err => {
+          console.log(err)
+        })
+
+
       }
     },
     mounted(){
@@ -385,6 +418,7 @@ margin-top: 30px;
     background-color: #14BEC8;
     margin-left: 47px;
     margin-top: 20px;
+    cursor: pointer;
   }
   .maskDivPay{
     display: flex;

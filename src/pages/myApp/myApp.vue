@@ -87,7 +87,15 @@
       }, err => {
         console.log(err)
       })
-      this.$router.push('/survey')
+      if(this.$route.params.newid ==1){
+        this.title[3].isclass=true
+        this.title[0].isclass=false
+        this.$router.push('/publishingApplications')
+      }else{
+        this.$router.push('/survey')
+      }
+
+
     },
     // computed: {
     //   money () {
@@ -146,7 +154,10 @@
                 })
               } else {
                 done();
-                this.title[0].isclass=true
+                 this.title[0].isclass=true
+                this.$router.push({
+                  path:'/survey'
+                })
               }
             }
           })

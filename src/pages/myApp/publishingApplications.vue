@@ -26,7 +26,7 @@
           <p><span></span>ipa包里必须要有embedded.mobieprovision,确保权限完整.</p>
           <p><span></span>ipa包里确保info.plist里的icon、bundleid等信息完整。</p>
           <p><span></span>ipa包最好要没有被其他签名机构重签过,不然可能导致应用闪退或无法安装。</p>
-          <p><span></span>ipa包可以添加其他第三个推送，重签后不影响推送功能。</p>
+          <p><span></span>ipa包可以添加其他第三方推送，重签后不影响推送功能。</p>
         </div>
 
         <div @click="upload" class="uploadBtn">
@@ -47,7 +47,7 @@
             :headers="headers"
             drag
             accept=".ipa"
-            action="https://ios.yoyoacg.com/api/common/upload"
+            :action="newdeUrl"
             multiple>
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -126,7 +126,7 @@
               :on-success="success2"
               :class="{hide:hideUpload}"
               :headers="headers"
-              action="https://ios.yoyoacg.com/api/common/upload"
+              :action="newdeUrl"
               list-type="picture-card"
               :on-preview="handlePictureCardPreview"
               :on-remove="handleRemove"
@@ -178,6 +178,7 @@
     name: "publishingApplications",
     data() {
       return {
+        newdeUrl:'',
         beiInput:'',
         twiInput:'',
         thirdInput1:'',
@@ -357,6 +358,7 @@
     },
     mounted(){
       // alert("4")
+      this.newdeUrl=BASE_URL+'/api/common/upload'
       this.active=0
       this.isSuper=true
     }

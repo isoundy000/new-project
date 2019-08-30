@@ -51,9 +51,9 @@
           <div class="secondDivText">
             <p>补签</p>
             <div class="newAdd">
-              <p>{{list.utotal}}</p>
+              <p>{{list.rtotal}}</p>
               <img src="../../../static/image/survey/jiantou.png" alt="">
-              <p class="newAddP">{{list.utoday}}</p>
+              <p class="newAddP">{{list.rtoday}}</p>
             </div>
           </div>
         </div>
@@ -695,7 +695,7 @@
   }
 
   .secondDivBg {
-    width: 18%;
+    width: 19%;
     height: 100px;
     background-size: 100% 100px;
     background-repeat: no-repeat;
@@ -706,25 +706,25 @@
   .jineIcon {
     width: 52px;
     height: 52px;
-    margin-left: 39px;
+    margin-left: 30px;
   }
 
   .liulanIcon {
     width: 58px;
     height: 37px;
-    margin-left: 39px;
+    margin-left: 30px;
   }
 
   .xiazaiIcon {
     width: 44px;
     height: 44px;
-    margin-left: 39px;
+    margin-left: 30px;
   }
 
   .shebeiIcon {
     width: 34px;
     height: 52px;
-    margin-left: 39px;
+    margin-left: 30px;
   }
 
   .secondDivText {
