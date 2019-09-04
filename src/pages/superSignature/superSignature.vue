@@ -5,9 +5,9 @@
         <img class="qqtouxiang" src="../../../static/image/superSignature/ren.png" alt="">
         <p>在线咨询</p>
       </div>
-      <div class="qqtuiguang" >
+      <div class="qqtuiguang" v-for="(list,index) in qqValue" :key="index">
         <img src="../../../static/image/superSignature/qqt.png" alt="">
-        <a :href="aUrl" target="_blank">{{qqValue}}</a>
+        <a :href="list.newurl" target="_blank">{{list.newqq}}</a>
       </div>
     </div>
     <div class="Bheader">
@@ -29,6 +29,8 @@
     </div>
 
     <div class="banner" style="background-image: url('../../../static/image/superSignature/newbg.png')">
+
+
      <div class="bannerDiv">
        <p class="bannerDivone">超级签名一次  安装永不受影响</p>
        <img src="../../../static/image/superSignature/zi.png" alt="">
@@ -51,7 +53,7 @@
       <img @click="play" class="play" src="../../../static/image/superSignature/Play_anniu@2x.png" alt="" />
     </div>
     <div class="mask" @click="mask" style="display: none">
-      <video autoplay="autoplay"  class="video-js vjs-default-skin vjs-big-play-centered" controls
+      <video   class="video-js vjs-default-skin vjs-big-play-centered" controls
              style="object-fit:fill" >
         <source src="../../../static/image/superSignature/ios.mp4"  />
         您的浏览器不支持 video 标签。
@@ -271,7 +273,7 @@
         <img src="../../../static/image/superSignature/wenti.png" alt="">
       </div>
     </div>
-    <Bfooter></Bfooter>
+    <!--<Bfooter></Bfooter>-->
   </div>
 </template>
 
@@ -327,14 +329,19 @@
       Bheader
     },
     mounted(){
+      var that=this;
       /*客服qq*/
-      let config1 = {
-        headers:{'token':localStorage.getItem('Authorization')}
-      };
-      axios.get(BASE_URL+'/api/index/getConfig/name/kefu',config1).then(res => {
+      axios.get(BASE_URL+'/api/index/getConfig/name/kefu').then(res => {
         console.log(res.data.data)
-        this.qqValue=res.data.data.value
-        this.aUrl='http://wpa.qq.com/msgrd?v=3&uin='+this.qqValue+'&site=qq&menu=yes'
+        for(var i=0;i<res.data.data.length;i++){
+          var obj={};
+          var aa=[]
+          obj.newqq=res.data.data[i]
+          obj.newurl='http://wpa.qq.com/msgrd?v=3&uin='+res.data.data[i]+'&site=qq&menu=yes'
+          aa.push(obj)
+          that.qqValue=aa
+        }
+        console.log(that.qqValue)
       }, err => {
         console.log(err)
       })
@@ -485,10 +492,13 @@
 <style scoped>
   .login {
     /*width: 100%;*/
-    /*height: 100%;*/
+    /*!*height: 100%;*!*/
     /*position: relative;*/
+    /*overflow: hidden;*/
   }
-
+.Bheader{
+  width: 100%;
+}
 
 
   .banner {
@@ -499,37 +509,45 @@
     background-repeat: no-repeat;
     background-size: 100% 550px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+   justify-content: center;
+align-items: center;
+
     /*height: 368px;*/
   }
   .bannerDiv{
-    width: 1000px;
+    /*width: 1000px;*/
     height: 400px;
     margin-top: 100px;
+    margin-left: 3vw;
   }
   .bannerDiv img{
     width: 602px;
     height: 82px;
     margin-top: 15px;
+
   }
   .bannerDivone{
-    font-size: 27px;
+    font-size: 1.8vw;
     color: #fff;
+    width: 44vw;
     letter-spacing: 18px;
+
   }
   .bannerDivtwo{
     font-size: 19px;
     color: #fff;
     margin-top: 28px;
+    width: 23vw;
   }
   .bannerDivthree{
     font-size: 19px;
     color: #fff;
     margin-top: 5px;
+    width: 50vw;
   }
   .bannerDivsmall{
     margin-right: 10px;
+
   }
   .bannerDivsmall img{
     width: 350px;
@@ -1100,7 +1118,7 @@
     height: 1410px;
   }
   .login_title {
-    width: 100%;
+    width: 1920px;
     height: 80px;
     display: flex;
     /*justify-content: space-around;*/
