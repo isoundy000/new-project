@@ -35,7 +35,7 @@
         </div>
         <div class="text">
           <p>点击按钮选择应用的安装包，或拖拽文件到此区域</p>
-          <p>(支持ipa文件，最大200M)</p>
+          <p>(支持ipa文件，最大2G)</p>
         </div>
 
       </div>
@@ -44,7 +44,6 @@
           <el-upload
             class="upload-demo"
             :on-success="success"
-            :headers="headers"
             drag
             accept=".ipa"
             :action="newdeUrl"
@@ -97,9 +96,23 @@
             @change="swich1">
           </el-switch>
         </div>
+        <!--<div class="supplementTwo">-->
+          <!--<p>是否付费</p>-->
+          <!--<el-switch-->
+            <!--v-model="switchValue2"-->
+            <!--active-color="#06B2B6"-->
+            <!--inactive-color="#999999"-->
+            <!--@change="swich2">-->
+          <!--</el-switch>-->
+          <!--<div  v-if="fufei" >-->
+            <!--<el-input class="thirdInput fufei" v-model="fufeiInput" placeholder="请输入内容"></el-input><span style="font-size: 16px;">元/次</span>-->
+
+          <!--</div>-->
+        <!--</div>-->
         <div class="supplementTen">
           <p>下载码</p>
-          <el-input :disabled="disInput" class="thirdInput" v-model="TenInput" placeholder="请输入内容"></el-input>
+          <el-input :disabled="disInput" class="thirdInput" v-model="TenInput" placeholder="请输入内容" onkeyup="this.value=this.value.replace(/\D/g,'')"
+                    onafterpaste="this.value=this.value.replace(/\D/g,'')"></el-input>
         </div>
         <div class="supplementTen">
           <p>安卓下载地址</p>
@@ -107,7 +120,8 @@
         </div>
         <div class="supplementTen">
           <p>限制下载次数</p>
-          <el-input :disabled="disInput" class="thirdInput" v-model="twiInput" placeholder="请输入内容"></el-input>
+          <el-input :disabled="disInput" class="thirdInput" v-model="twiInput" placeholder="请输入内容" onkeyup="this.value=this.value.replace(/\D/g,'')"
+                    onafterpaste="this.value=this.value.replace(/\D/g,'')"></el-input>
         </div>
         <div class="supplementFourth">
           <p>备注</p>
@@ -115,7 +129,8 @@
         </div>
         <div class="supplementFourth">
           <p>评分人数</p>
-          <el-input :disabled="disInput" class="thirdInput" v-model="fourthInput" placeholder="请输入内容"></el-input>
+          <el-input :disabled="disInput" class="thirdInput" v-model="fourthInput" placeholder="请输入内容" onkeyup="this.value=this.value.replace(/\D/g,'')"
+                    onafterpaste="this.value=this.value.replace(/\D/g,'')"></el-input>
         </div>
         <div class="supplementsixth">
           <p>应用截图</p>
@@ -178,9 +193,11 @@
     name: "publishingApplications",
     data() {
       return {
+        fufei:false,
         newdeUrl:'',
         beiInput:'',
         twiInput:'',
+        fufeiInput:'',
         thirdInput1:'',
         thirdInput2:'',
         textarea:'',
@@ -195,6 +212,7 @@
         fivethInput:'',
         switchValue: true,
         switchValue1: true,
+        switchValue2:false,
         current: 0,
         active: 2,
         isSuper: false,
@@ -218,7 +236,9 @@
         filesize:'',//大小
         img:[],
         icon1:'',
-        judgeMoney:''
+        judgeMoney:'',
+        gengxing:1,
+        newState:1
       }
     },
     computed: {
@@ -270,7 +290,7 @@
 
         this.display_name=file.response.data.app.display_name
         this.path=file.response.data.url
-        this.icon=BASE_URL+file.response.data.app.icon
+        this.icon=file.response.data.domain+file.response.data.app.icon
         this.ipa_data_bak=file.response.data.app.ipa_data_bak
         this.package_name=file.response.data.app.package_name
         this.version_code=file.response.data.app.version_code
@@ -297,17 +317,35 @@
       },
       /*开关*/
       swich(){
+      //  alert(this.switchValue)
         if(this.switchValue==false){
           //this.state=0
+          this.newState=0
           this.disInput=true
         }else{
          // this.state=1
+          this.newState=1
           this.disInput=false
         }
       },
       /*开关*/
       swich1(){
-
+      //  alert(this.switchValue1)
+          if(this.switchValue1==true){
+              this.gengxing=1
+          }else{
+            this.gengxing=0
+          }
+      },
+      /*是否付费开关*/
+      swich2(){
+        if(this.switchValue2==true){
+          this.fufei=true
+        }else{
+          this.fufei=false
+          this.fufeiInput=0
+        }
+        console.log(this.fufeiInput)
       },
       /*提交事件*/
       submission(){
@@ -332,11 +370,14 @@
           score_num:this.fourthInput,
           introduction:this.textarea1,
           img:this.img,
-          status:this.state,
+          // status:this.state,
           download_code:this.TenInput,
           apk_url:this.EvenInput,
           download_limit:this.twiInput,
-          remark:this.beiInput
+          remark:this.beiInput,
+          is_update:this.gengxing,
+          status:this.newState,
+          download_money:this.fufeiInput
         }
         let config = {
           headers:{'token':localStorage.getItem('Authorization')}
@@ -542,6 +583,9 @@
     border-radius: 50%;
     margin-right: 10px;
     background-color:#14BEC8 ;
+  }
+  .fufei{
+    width: 70px;
   }
 </style>
 <style>

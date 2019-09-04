@@ -80,10 +80,10 @@
       };
       axios.get(BASE_URL+'/api/user/index',config).then(res => {
         this.money=res.data.data.money
-        this.userName=res.data.data.mobile
+        this.userName=res.data.data.username
         console.log(res.data.data)
         localStorage.setItem('balance', res.data.data.money);
-        localStorage.setItem('userName', res.data.data.mobile);
+        localStorage.setItem('userName', res.data.data.username);
       }, err => {
         console.log(err)
       })
@@ -91,7 +91,11 @@
         this.title[3].isclass=true
         this.title[0].isclass=false
         this.$router.push('/publishingApplications')
-      }else{
+      }else if(this.$route.params.newid ==0){
+        this.title[2].isclass=true
+        this.title[0].isclass=false
+        this.$router.push('/billManagement')
+      } else{
         this.$router.push('/survey')
       }
 
@@ -242,7 +246,7 @@
     justify-content: center;
   }
   .login_title {
-    width:78%;
+    width:1184.97px;
     height: 80px;
     display: flex;
     /*justify-content: space-around;*/
@@ -256,7 +260,7 @@
 
   .title {
     width: 400px;
-    margin-left: 5vw;
+    margin-left: 120px;
     list-style: none;
     display: inline-flex;
     justify-content: space-around;

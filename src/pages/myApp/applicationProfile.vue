@@ -30,10 +30,7 @@
       <p class="firstP">下载码</p>
       <p class="secondP">{{list.download_code}}</p>
     </div>
-    <div class="fourDiv">
-      <p class="firstP">安卓下载地址</p>
-      <p class="secondP">{{list.apk_url}}</p>
-    </div>
+
     <div class="fourDiv">
       <p class="firstP">限制下载次数</p>
       <p class="secondP">{{list.download_limit}}</p>

@@ -34,15 +34,15 @@
         </div>
         <div class="supplementThird1">
           <p>应用名</p>
-          <el-input :disabled="false" class="thirdInput" v-model="thirdInput1" placeholder="请输入内容"></el-input>
+          <el-input :disabled="disInput" class="thirdInput" v-model="thirdInput1" placeholder="请输入内容"></el-input>
         </div>
         <div class="supplementThird2">
           <p>版本号</p>
-          <el-input :disabled="false" class="thirdInput" v-model="thirdInput2" placeholder="请输入内容"></el-input>
+          <el-input :disabled="disInput" class="thirdInput" v-model="thirdInput2" placeholder="请输入内容"></el-input>
         </div>
         <div class="supplementThird">
           <p class="textOne">包名</p>
-          <p class="secondP baoming">{{list.package_name}}</p>
+          <p class="secondP baoming">{{package_name}}</p>
         </div>
         <div class="supplementTwo">
           <p>更新功能</p>
@@ -62,25 +62,37 @@
             @change="swich1">
           </el-switch>
         </div>
+        <!--<div class="supplementTwo">-->
+          <!--<p>是否付费</p>-->
+          <!--<el-switch-->
+            <!--v-model="switchValue2"-->
+            <!--active-color="#06B2B6"-->
+            <!--inactive-color="#999999"-->
+            <!--@change="swich2">-->
+          <!--</el-switch>-->
+          <!--<div v-if="fufei">-->
+            <!--<el-input  class="thirdInput fufei" v-model="fufeiInput" placeholder="请输入内容"></el-input><span style="font-size: 16px;">元/次</span>-->
+          <!--</div>-->
+        <!--</div>-->
         <div class="supplementTen">
           <p>下载码</p>
-          <el-input :disabled="disInput" class="thirdInput" v-model="TenInput" placeholder="请输入内容"></el-input>
+          <el-input  class="thirdInput" v-model="TenInput" placeholder="请输入内容"></el-input>
         </div>
         <div class="supplementTen">
           <p>安卓下载地址</p>
-          <el-input :disabled="disInput" class="thirdInput" v-model="EvenInput" placeholder="请输入内容"></el-input>
+          <el-input  class="thirdInput" v-model="EvenInput" placeholder="请输入内容"></el-input>
         </div>
         <div class="supplementTen">
           <p>限制下载次数</p>
-          <el-input :disabled="disInput" class="thirdInput" v-model="xianzhiInput" placeholder="请输入内容"></el-input>
+          <el-input  class="thirdInput" v-model="xianzhiInput" placeholder="请输入内容"></el-input>
         </div>
         <div class="supplementTen">
           <p>备注</p>
-          <el-input :disabled="disInput" class="thirdInput" v-model="beizhuInput" placeholder="请输入内容"></el-input>
+          <el-input  class="thirdInput" v-model="beizhuInput" placeholder="请输入内容"></el-input>
         </div>
         <div class="supplementFourth">
           <p>评分人数</p>
-          <el-input :disabled="disInput" class="thirdInput" v-model="fourthInput" placeholder="请输入内容"></el-input>
+          <el-input  class="thirdInput" v-model="fourthInput" placeholder="请输入内容"></el-input>
         </div>
 
         <div class="supplementsixth oo">
@@ -108,7 +120,7 @@
         <div class="supplementSeventh">
           <p>应用介绍</p>
           <el-input
-            :disabled="disInput"
+
             class="thirdInput"
             type="textarea"
             :rows="2"
@@ -120,7 +132,7 @@
         <div class="supplementEightth">
           <p>功能介绍</p>
           <el-input
-            :disabled="disInput"
+
             class="thirdInput textarea"
             type="textarea"
             :rows="2"
@@ -143,16 +155,18 @@
         name: "updateApplication",
       data(){
           return{
+            fufei:false,
             newdeUrl:'',
             xianzhiInput:'',
             beizhuInput:'',
             ss:'',
             thirdInput1:'',
             thirdInput2:'',
+            fufeiInput:'',
             textarea:'',
             textarea1:'',
             limitCount:4,
-            disInput:false,
+            disInput:true,
             hideUpload: false,
             dialogImageUrl: '',
             dialogVisible: false,
@@ -161,6 +175,7 @@
             fivethInput:'',
             switchValue: true,
             switchValue1: false,
+            switchValue2:false,
             current: 0,
             active: 2,
             isSuper: false,
@@ -185,11 +200,12 @@
             img:[],
             list:'',
             imgList:[],
-            newState:0
-
+            newState:0,
+            gengxing:1,
           }
       },
       methods:{
+          /*上传文件*/
         handleChange(file, fileList) {
           this.fileList = fileList.slice(-3);
         },
@@ -210,12 +226,16 @@
           console.log(this.img)
         },
         handleRemove(file, fileList) {
-          console.log(file);
-          console.log(fileList);
+          console.log('file',file); //指的是删除的哪一张图片
+          console.log('fileList',fileList);
           var newImg=[];
           for(var i=0;i<fileList.length;i++){
-            console.log(fileList[i].url.substring(23))
-            newImg.push(fileList[i].url.substring(23))
+            console.log('file[i]',file[i]); //指的是删除的哪一张图片
+            console.log('fileList[i]',fileList[i]);
+            // console.log(fileList[i].response.data.url);
+            console.log('fileList[i].url',fileList[i].url)
+            console.log('fileList[i].url.substring(18)',fileList[i].url.substring(18))
+            newImg.push(fileList[i].url.substring(18))
             this.img=newImg
           }
 
@@ -229,10 +249,11 @@
           this.dialogVisible = true;
         },
         success(response, file, fileList) {
+          this.disInput=false
           console.log(file)
           this.display_name=file.response.data.app.display_name
           this.path=file.response.data.url
-          this.icon=BASE_URL+file.response.data.app.icon
+          this.icon=file.response.data.domain+file.response.data.app.icon
           this.ipa_data_bak=file.response.data.app.ipa_data_bak
           this.package_name=file.response.data.app.package_name
           this.version_code=file.response.data.app.version_code
@@ -244,15 +265,16 @@
           this.icon1=file.response.data.app.icon
           this.img.push(file.response.data.app.img)
           console.log(this.img)
+          console.log('图片上传成功的时候的img集合',file.response.data.app.img)
         },
         /*开关*/
         swich(){
           if(this.switchValue==false){
             //this.state=0
-            this.disInput=true
+            this.gengxing=0
           }else{
             // this.state=1
-            this.disInput=false
+            this.gengxing=1
           }
         },
         /*开关*/
@@ -262,7 +284,17 @@
           }else{
             this.newState=1
           }
+        },  /*是否付费开关*/
+        swich2(){
+          if(this.switchValue2==true){
+            this.fufei=true
+          }else{
+            this.fufei=false
+            this.fufeiInput=0
+          }
+          console.log(this.fufeiInput)
         },
+
         submission(){
           const loading = this.$loading({
             lock: true,
@@ -289,7 +321,9 @@
             filesize:this.filesize,
             bundle_name:this.bundle_name,
             remark:this.beizhuInput,
-            download_limit:this.xianzhiInput
+            download_limit:this.xianzhiInput,
+            is_update:this.gengxing,
+            download_money:this.fufeiInput
           }
           let config = {
             headers:{'token':localStorage.getItem('Authorization')}
@@ -328,6 +362,7 @@
           this.EvenInput=res.data.data.apk_url
           this.beizhuInput=res.data.data.remark
           this.xianzhiInput=res.data.data.download_limit
+          this.package_name=res.data.data.package_name
           for(var i=0;i<this.list.imgs.length;i++){
             var newobj={}
             newobj.name=i+''
@@ -555,6 +590,9 @@
     width: 16px;
     height: 20px;
     margin-right: 10px;
+  }
+  .fufei{
+    width: 70px;
   }
 </style>
 <style>

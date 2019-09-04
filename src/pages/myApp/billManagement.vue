@@ -50,7 +50,7 @@
     </div>
     <div class="mask weihu" @click="weihu" style="display: none">
       <div class="maskdiv">
-       <p>支付通道维护中</p>
+       <p>支付通道维护中,请联系客服充值</p>
       </div>
     </div>
 
@@ -146,11 +146,23 @@
         }
       },
       recharge() {
+        axios.get(BASE_URL+'/api/pay/checkPayStatus').then(res => {
+          console.log(res.data.data)
+            if(res.data.data.status=='1'){
+              this.isMaskRecharge = true
+            }else{
+              $(".weihu").show()
+            }
+        }, err => {
+          console.log(err)
+        })
+
+
         // $(".weihu").show()
-       this.isMaskRecharge = true
+       // this.isMaskRecharge = true
       },
       weihu(){
-        // $(".weihu").hide()
+        $(".weihu").hide()
       },
       close() {
         this.isMaskRecharge = false

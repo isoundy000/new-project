@@ -12,61 +12,64 @@
         </div>
       </div>
       <div class="secondDiv">
-        <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
-          <img class="jineIcon" src="../../../static/image/survey/jine@2x.png" alt="">
-          <div class="secondDivText">
-            <p>总消费金额</p>
-            <div class="newAdd">
-              <p>{{list.mtotal}}</p>
-              <img src="../../../static/image/survey/jiantou.png" alt="">
-              <p class="newAddP">{{list.mtoday}}</p>
+
+          <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
+            <img class="jineIcon" src="../../../static/image/survey/jine@2x.png" alt="">
+            <div class="secondDivText">
+              <p>总消费金额</p>
+              <div class="newAdd">
+                <p>{{list.mtotal}}</p>
+                <img src="../../../static/image/survey/jiantou.png" alt="">
+                <p class="newAddP">{{list.mtoday}}</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
-          <img class="liulanIcon" src="../../../static/image/survey/liulan@2x.png" alt="">
-          <div class="secondDivText">
-            <p>页面总浏览量</p>
-            <div class="newAdd">
-              <p>{{list.vtotal}}</p>
-              <img src="../../../static/image/survey/jiantou.png" alt="">
-              <p class="newAddP">{{list.vtoday}}</p>
+          <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
+            <img class="liulanIcon" src="../../../static/image/survey/liulan@2x.png" alt="">
+            <div class="secondDivText">
+              <p>页面总浏览量</p>
+              <div class="newAdd">
+                <p>{{list.vtotal}}</p>
+                <img src="../../../static/image/survey/jiantou.png" alt="">
+                <p class="newAddP">{{list.vtoday}}</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
-          <img class="xiazaiIcon" src="../../../static/image/survey/xiazai@2x.png" alt="">
-          <div class="secondDivText">
-            <p>总下载量</p>
-            <div class="newAdd">
-              <p>{{list.dtotal}}</p>
-              <img src="../../../static/image/survey/jiantou.png" alt="">
-              <p class="newAddP">{{list.dtoday}}</p>
+          <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
+            <img class="xiazaiIcon" src="../../../static/image/survey/xiazai@2x.png" alt="">
+            <div class="secondDivText">
+              <p>总下载量</p>
+              <div class="newAdd">
+                <p>{{list.dtotal}}</p>
+                <img src="../../../static/image/survey/jiantou.png" alt="">
+                <p class="newAddP">{{list.dtoday}}</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
-          <img class="shebeiIcon" src="../../../static/image/survey/shebei@2x.png" alt="">
-          <div class="secondDivText">
-            <p>下载设备总数</p>
-            <div class="newAdd">
-              <p>{{list.utotal}}</p>
-              <img src="../../../static/image/survey/jiantou.png" alt="">
-              <p class="newAddP">{{list.utoday}}</p>
+          <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
+            <img class="shebeiIcon" src="../../../static/image/survey/shebei@2x.png" alt="">
+            <div class="secondDivText">
+              <p>下载设备总数</p>
+              <div class="newAdd">
+                <p>{{list.utotal}}</p>
+                <img src="../../../static/image/survey/jiantou.png" alt="">
+                <p class="newAddP">{{list.utoday}}</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
-          <img class="shebeiIcon" src="../../../static/image/survey/shebei@2x.png" alt="">
-          <div class="secondDivText">
-            <p>补签</p>
-            <div class="newAdd">
-              <p>{{list.rtotal}}</p>
-              <img src="../../../static/image/survey/jiantou.png" alt="">
-              <p class="newAddP">{{list.rtoday}}</p>
+          <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
+            <img class="shebeiIcon" src="../../../static/image/survey/shebei@2x.png" alt="">
+            <div class="secondDivText">
+              <p>补签</p>
+              <div class="newAdd">
+                <p>{{list.rtotal}}</p>
+                <img src="../../../static/image/survey/jiantou.png" alt="">
+                <p class="newAddP">{{list.rtoday}}</p>
+              </div>
             </div>
           </div>
-        </div>
+
+
       </div>
       <div class="thirdDiv">
         <div class="recently7" @click="recently7"  style="background-image: url('../../../static/image/survey/anniu_s@2x.png')">
@@ -92,23 +95,23 @@
         <!--</div>-->
         <!--<div id="columnDiagram"></div>-->
       <!--</div>-->
-      <div class="fifthDiv">
+      <div class="fifthDiv" >
         <div class="fifthDivOne">
           <p>应用详情</p>
           <el-select class="chooseApp" @change="chooseApp()" v-model="appValue" placeholder="选择应用">
             <el-option
               v-for="item in chooseAppOptions"
               :key="item.id"
-              :label="item.label"
-              :value="item.value">
+              :label="item.value"
+              :value="item.id">
             </el-option>
           </el-select>
         </div>
-        <div id="polygonalChart"></div>
+        <div v-loading="loading" id="polygonalChart"></div>
       </div>
       <div class="sixthDiv">
         <div class="sixthDivOne">
-          <p>区域用户下载量</p>
+          <p>区域用户访问量</p>
           <!--<el-select class="downSum" @change="downSum()" v-model="downSumValue" placeholder="新用户下载量">-->
             <!--<el-option-->
               <!--v-for="item in downSumOptions"-->
@@ -197,13 +200,64 @@
         allAppValue:'',//区域新用户下载量里面的所有应用的下拉菜单选中的值
         id:'',
         dituList:'',
-        areaName:[]
+        areaName:[],
+        loading:false
       }
     },
 
     mounted() {
-      // alert("1")
       var that=this
+
+      // alert("1")
+      /*最上面的值*/
+      let data = {
+        id: ''
+      }
+      // alert("2")
+      let config = {
+        headers: {'token': localStorage.getItem('Authorization')}
+      };
+      // alert("3")
+      axios.post(BASE_URL+'/api/app/appStatistics',data, config).then(res => {
+        console.log(res.data.data)
+        // alert("4")
+        this.list = res.data.data
+      }, err => {
+        console.log(err)
+      })
+      // alert("5")
+      /*第一个应用折线图*/
+      let data1={
+        keywords:'',
+        page:1,
+        page_size:999
+      }
+      // alert("6")
+      let config1 = {
+        headers: {'token': localStorage.getItem('Authorization')}
+      };
+      // alert("7")
+      axios.post(BASE_URL+'/api/app/appList',data1, config1).then(res => {
+        console.log(res.data.data)
+        // alert("8")
+
+        for(var i=0;i<res.data.data.list.length;i++){
+          var newobj={}
+          newobj.value=res.data.data.list[i].name
+          newobj.id=res.data.data.list[i].id
+          this.chooseAppOptions.push(newobj)
+        }
+        // alert(res.data.data.list[0].id)
+        this.id=res.data.data.list[0].id
+        that.appValue=res.data.data.list[0].name
+        this.newF(6)
+      }, err => {
+        console.log(err)
+      })
+
+
+
+
       // this.drawColumn()
     /*地图区域名称*/
       let data8={
@@ -223,6 +277,7 @@
 
       var that = this
       that.fengz=function (starTime,endTime,money,views,download,equipment,news) {
+        // alert("9")
         Date.prototype.format = function () {
           var s = '';
           // s+=this.getFullYear()+'-';          // 获取年份。
@@ -336,44 +391,8 @@
           ]
         })
       }
-      /*最上面的值*/
-      let data = {
-        id: ''
-      }
-      let config = {
-        headers: {'token': localStorage.getItem('Authorization')}
-      };
-      axios.post(BASE_URL+'/api/app/appStatistics',data, config).then(res => {
-        console.log(res.data.data)
-        this.list = res.data.data
-      }, err => {
-        console.log(err)
-      })
-      /*第一个应用折线图*/
-      let data1={
-        keywords:'',
-        page:1,
-        page_size:999
-      }
-      let config1 = {
-        headers: {'token': localStorage.getItem('Authorization')}
-      };
-      axios.post(BASE_URL+'/api/app/appList',data1, config1).then(res => {
-        console.log(res.data.data)
 
 
-        for(var i=0;i<res.data.data.list.length;i++){
-          var newobj={}
-          newobj.value=res.data.data.list[i].name
-          newobj.id=res.data.data.list[i].id
-          this.chooseAppOptions.push(newobj)
-        }
-        console.log(res.data.data.list[0].id)
-        this.id=res.data.data.list[0].id
-        this.newF(6)
-      }, err => {
-        console.log(err)
-      })
       /*地图进页面数据*/
 
       let data3={
@@ -412,6 +431,7 @@
     },
     methods: {
       newF:function(count,id){
+        // alert("10")
         var that = this
         // 拼接时间
         const time1 = new Date()
@@ -429,7 +449,7 @@
             }
           }
         }
-
+        // alert("11")
         const Y1 = time1.getFullYear()
         const M1 = ((time1.getMonth() + 1) > 9 ? (time1.getMonth() + 1) : '0' + (time1.getMonth() + 1))
         const D1 = (time1.getDate() > 9 ? time1.getDate() : '0' + time1.getDate())
@@ -448,17 +468,20 @@
         let config = {
           headers: {'token': localStorage.getItem('Authorization')}
         };
-        const loading = this.$loading({
-          lock: true,
-          text: '拼命加载中',
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)'
-        });
+        // const loading = this.$loading({
+        //   lock: true,
+        //   text: '拼命加载中',
+        //   spinner: 'el-icon-loading',
+        //   background: 'rgba(0, 0, 0, 0.7)'
+        // });
+        this.loading=true
         axios.post(BASE_URL+'/api/app/appInfo', qs.stringify(data), config).then(res => {
           console.log(res.data.data)
-
+          // alert("12")
           this.fengz(this.starTime,this.endTime,res.data.data.money,res.data.data.views,res.data.data.download,res.data.data.equipment,res.data.data.new)
-          loading.close();
+          // loading.close();
+          this.loading=false
+          // alert("13")
         }, err => {
           console.log(err)
         })
@@ -688,11 +711,11 @@
               // 自定义名称映射
               nameMap: {
                 '四川': '四川省',
-                '北京':'北京市',
-                '上海':'上海市',
+                '北京':'北京',
+                '上海':'上海',
                 '河北':'河北省',
                 '山西':'山西省',
-                '内蒙古':'内蒙古自治区',
+                '内蒙古':'内蒙古',
                 '辽宁':'辽宁省',
                 '吉林':'吉林省',
                 '黑龙江':'黑龙江省',
@@ -706,21 +729,21 @@
                 '湖北':'湖北省',
                 '湖南':'湖南省',
                 '广东':'广东省',
-                '广西':'广西壮族自治区',
+                '广西':'广西',
                 '海南':'海南省',
                 '贵州':'贵州省',
                 '云南':'云南省',
-                '西藏':'西藏自治区',
+                '西藏':'西藏',
                 '陕西':'陕西省',
                 '甘肃':'甘肃省',
                 '青海':'青海省',
-                '宁夏':'宁夏回族自治区',
-                '新疆':'新疆维吾尔自治区',
-                '北京':'北京市',
-                '天津':'天津市',
-                '重庆':'重庆市',
-                '香港':'香港特别行政区',
-                '澳门':'澳门特别行政区',
+                '宁夏':'宁夏',
+                '新疆':'新疆',
+                '北京':'北京',
+                '天津':'天津',
+                '重庆':'重庆',
+                '香港':'香港',
+                '澳门':'澳门',
                 '台湾':'台湾省'
               }
             }
@@ -757,18 +780,13 @@
         }
         let data = {
           id: that.id,
-          start: that.starTime,
-          end: that.endTime
+          start: this.value[0],
+          end: this.value[1]
         }
         let config = {
           headers: {'token': localStorage.getItem('Authorization')}
         };
-        const loading = this.$loading({
-          lock: true,
-          text: '拼命加载中',
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)'
-        });
+        this.loading=true
         axios.post(BASE_URL+'/api/app/appInfo', qs.stringify(data), config).then(res => {
           console.log(res.data.data)
 
@@ -860,7 +878,7 @@
               }
             ]
           })
-          loading.close();
+          this.loading=false
         }, err => {
           console.log(err)
         })
@@ -890,12 +908,14 @@
       },
       /*应用详情里面的下拉菜单*/
       chooseApp(){
+
         var that=this
-        let obj = {};
-        obj = this.chooseAppOptions.find((item)=>{//这里的userList就是上面遍历的数据源
-          return item.value === this.appValue;//筛选出匹配数据
-        });
-        this.id=obj.id
+        // let obj = {};
+        // obj = this.chooseAppOptions.find((item)=>{//这里的userList就是上面遍历的数据源
+        //   return item.value === this.appValue;//筛选出匹配数据
+        // });
+        this.id=this.appValue
+        // alert(this.id)
         function aa(begin, end) {
           var dateAllArr = new Array();
           var ab = begin.split("-");
@@ -920,12 +940,7 @@
         let config = {
           headers: {'token': localStorage.getItem('Authorization')}
         };
-        const loading = this.$loading({
-          lock: true,
-          text: '拼命加载中',
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)'
-        });
+        this.loading=true
         axios.post(BASE_URL+'/api/app/appInfo', qs.stringify(data), config).then(res => {
           console.log(res.data.data)
 
@@ -1017,7 +1032,7 @@
               }
             ]
           })
-          loading.close();
+          this.loading=false
         }, err => {
           console.log(err)
         })
@@ -1092,7 +1107,7 @@
   }
 
   .secondDivBg {
-    width: 19%;
+    width: 15vw;
     height: 100px;
     background-size: 100% 100px;
     background-repeat: no-repeat;
@@ -1101,31 +1116,31 @@
   }
 
   .jineIcon {
-    width: 52px;
-    height: 52px;
-    margin-left: 39px;
+    width: 2.7vw;
+    height: 2.7vw;
+    margin-left: 2vw;
   }
 
   .liulanIcon {
-    width: 58px;
-    height: 37px;
-    margin-left: 39px;
+    width: 3.92vw;
+    height: 2.5vw;
+    margin-left: 2vw;
   }
 
   .xiazaiIcon {
-    width: 44px;
-    height: 44px;
-    margin-left: 39px;
+    width: 2.83vw;
+    height: 2.83vw;
+    margin-left: 2vw;
   }
 
   .shebeiIcon {
-    width: 34px;
-    height: 52px;
-    margin-left: 39px;
+    width: 2.5vw;
+    height: 3.2vw;
+    margin-left: 2vw;
   }
 
   .secondDivText {
-    width: 7vw;
+    width: 10vw;
     height: 70px;
     position: relative;
     margin-left: 1.2vw;
@@ -1335,6 +1350,9 @@ position: relative;
 
   .newAddP {
     margin-left: 5px;
+  }
+  #polygonalChart div{
+    width: 100% !important;
   }
 </style>
 <style>

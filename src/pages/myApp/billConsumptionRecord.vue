@@ -237,7 +237,7 @@
   .thirdDiv {
     width: 100%;
     /*height: 300px;*/
-    margin: 50px auto 0 auto;
+    margin: 50px auto;
     display: flex;
     align-items: center;
     justify-content: flex-end;

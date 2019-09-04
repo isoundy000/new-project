@@ -57,6 +57,19 @@
                 isclass: false
               },
 
+              {
+                msg: '异常预警',
+                isclass: false
+              },
+              {
+                msg: '应用合并',
+                isclass: false
+              },
+              {
+                msg: '消息推送',
+                isclass: false
+              },
+
             ]
           }
       },
@@ -105,7 +118,32 @@
             this.$router.push({
               path:'/statistics',
               query:{
+                id:this.$route.query.id,
+                name:this.$route.query.name
+              }
+            })
+          }else if(index==6){
+            this.$router.push({
+              path:'/abnormal',
+              query:{
                 id:this.$route.query.id
+                // name:this.$route.query.name
+              }
+            })
+          }else if(index==7){
+            this.$router.push({
+              path:'/applicationMerge',
+              query:{
+                id:this.$route.query.id
+                // name:this.$route.query.name
+              }
+            })
+          }else if(index==8){
+            this.$router.push({
+              path:'/messagePush',
+              query:{
+                id:this.$route.query.id
+                // name:this.$route.query.name
               }
             })
           }
@@ -159,13 +197,13 @@
     display: flex;
   }
   .header_title p{
-    width: 140px;
+    width: 115px;
     height: 50px;
     text-align: center;
     font-family:Microsoft YaHei;
     color: #333333;
     line-height: 50px;
-    font-size: 16px;
+    font-size: 15px;
     cursor: pointer;
   }
   .isColor{

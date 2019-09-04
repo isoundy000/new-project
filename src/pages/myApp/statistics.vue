@@ -90,7 +90,7 @@
             </el-option>
           </el-select>
         </div>
-        <div   id="polygonalChart"></div>
+        <div v-loading="loading"   id="polygonalChart"></div>
       </div>
 
     </div>
@@ -136,7 +136,9 @@
     mounted() {
       var that=this
       that.id=that.$route.query.id
-      var that = this
+      that.name=that.$route.query.name
+      that.appValue=that.$route.query.name
+      //alert(that.name)
       this.$nextTick(function() {
         this.newF(6)
       })
@@ -269,25 +271,26 @@
       })
 
 
-      let data1={
-        keywords:'',
-        page:1,
-        page_size:999
-      }
-      let config1 = {
-        headers: {'token': localStorage.getItem('Authorization')}
-      };
-      axios.post(BASE_URL+'/api/app/appList',data1, config1).then(res => {
-        console.log(res.data.data)
-        for(var i=0;i<res.data.data.list.length;i++){
-          var newobj={}
-          newobj.value=res.data.data.list[i].name
-          newobj.id=res.data.data.list[i].id
-          this.chooseAppOptions.push(newobj)
-        }
-      }, err => {
-        console.log(err)
-      })
+      // let data1={
+      //   keywords:'',
+      //   page:1,
+      //   page_size:999
+      // }
+      // let config1 = {
+      //   headers: {'token': localStorage.getItem('Authorization')}
+      // };
+      // axios.post(BASE_URL+'/api/app/appList',data1, config1).then(res => {
+      //   console.log(res.data.data)
+      //   for(var i=0;i<res.data.data.list.length;i++){
+      //     var newobj={}
+      //     newobj.value=res.data.data.list[i].name
+      //     newobj.id=res.data.data.list[i].id
+      //     this.chooseAppOptions.push(newobj)
+      //   }
+      //   this.appValue=res.data.data.list[i].name
+      // }, err => {
+      //   console.log(err)
+      // })
 
 
 
@@ -333,16 +336,18 @@
         let config = {
           headers: {'token': localStorage.getItem('Authorization')}
         };
-        const loading = this.$loading({
-          lock: true,
-          text: '拼命加载中',
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)'
-        });
+        // const loading = this.$loading({
+        //   lock: true,
+        //   text: '拼命加载中',
+        //   spinner: 'el-icon-loading',
+        //   background: 'rgba(0, 0, 0, 0.7)'
+        // });
+        this.loading=true
         axios.post(BASE_URL+'/api/app/appInfo', qs.stringify(data), config).then(res => {
           console.log(res.data.data)
           this.fengz(this.starTime,this.endTime,res.data.data.money,res.data.data.views,res.data.data.download,res.data.data.equipment,res.data.data.new)
-          loading.close();
+          // loading.close();
+          this.loading=false
         }, err => {
           console.log(err)
         })
@@ -409,18 +414,13 @@
         }
         let data = {
           id: that.id,
-          start: that.starTime,
-          end: that.endTime
+          start: this.value[0],
+          end: this.value[1]
         }
         let config = {
           headers: {'token': localStorage.getItem('Authorization')}
         };
-        const loading = this.$loading({
-          lock: true,
-          text: '拼命加载中',
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)'
-        });
+        this.loading=true
         axios.post(BASE_URL+'/api/app/appInfo', qs.stringify(data), config).then(res => {
             console.log(res.data.data)
 
@@ -517,7 +517,7 @@
                 }
               ]
             })
-          loading.close();
+          this.loading=false
         }, err => {
           console.log(err)
         })
@@ -562,12 +562,7 @@
         let config3 = {
           headers: {'token': localStorage.getItem('Authorization')}
         };
-        const loading = this.$loading({
-          lock: true,
-          text: '拼命加载中',
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)'
-        });
+        this.loading=true
         axios.post(BASE_URL+'/api/app/appInfo',data3, config3).then(res => {
           console.log(res.data.data)
 
@@ -659,16 +654,11 @@
               }
             ]
           })
-          loading.close();
+          this.loading=false
         }, err => {
           console.log(err)
         })
-
-
-
-
       }
-
     }
   }
 </script>

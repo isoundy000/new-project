@@ -61,25 +61,36 @@
       <el-table
         :data="tableData"
         stripe
+        @row-click="tableTr"
         :header-cell-style="{background:'#e0f2fd'}"
       >
+        <el-table-column label="应用图标" width="100">
+          <template slot-scope="scope">
+            <img :src="base_url+scope.row.icon" width="40" height="40" class="head_pic"/>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="name"
           label="应用名称"
-          width="120">
+          >
         </el-table-column>
         <el-table-column
           prop="version_code"
           label="版本号"
-          width="80">
+          >
+        </el-table-column>
+        <el-table-column
+          prop="tag"
+          label="唯一标识"
+          >
         </el-table-column>
         <el-table-column
           prop="url"
           label="安装地址"
-          width="200"
+
          >
           <template slot-scope="scope">
-            <p style="color: #14BEC8;cursor: pointer" @click="handleEdit(tableData[scope.$index].url)">点击下载</p>
+            <p style="color: #14BEC8;cursor: pointer" @click.stop="handleEdit(tableData[scope.$index].url)">点击下载</p>
             <!--<el-button size="small" >编辑          </el-button>-->
           </template>
         </el-table-column>
@@ -119,7 +130,7 @@
           label="操作"
           width="130">
           <template slot-scope="scope">
-            <el-select  class="downSum" @change="allApp(scope.$index,tableData[scope.$index].operation,tableData[scope.$index].id,tableData,tableData[scope.$index].url)"
+            <el-select  class="downSum" @change="allApp(scope.$index,tableData[scope.$index].operation,tableData[scope.$index].id,tableData,tableData[scope.$index].url,tableData[scope.$index].name)"
                        v-model="tableData[scope.$index].operation" placeholder="请选择">
               <el-option
                 v-for="item in downSumOptions"
@@ -135,7 +146,7 @@
     </div>
     <div class="fourthDiv">
       <p>共<span style="color: red">{{pageNumber}}</span> 页/ <span style="color: red">{{total}}</span>条记录</p>
-      <Page @on-change="indexChange" @on-page-size-change="pageChange" :page-size="4" :current="current" :total=total />
+      <Page @on-change="indexChange" @on-page-size-change="pageChange" :page-size="10" :current="current" :total=total />
     </div>
 
 
@@ -155,7 +166,7 @@
     data() {
       return {
         value: '',
-        size: 100,
+        size: 150,
         input: '',
         downSumValue: '',
         isMask: false,
@@ -177,7 +188,8 @@
         total:0,
         pageNumber:'',
         current:1,
-        urlAddress:''
+        urlAddress:'',
+        base_url:''
       }
     },
     components: {
@@ -185,6 +197,16 @@
       QrcodeVue
     },
     methods: {
+      tableTr(row){
+        console.log(row)
+        this.$router.push({
+          path:'/appManagementDetail',
+          query:{
+            id:row.id,
+            name:row.name
+          }
+        })
+      },
       handleEdit(url){
         this.isMask = true
         this.value=url
@@ -194,7 +216,7 @@
         let data={
           keywords:this.input,
           page:this.current,
-          page_size:4,
+          page_size:10,
         }
         let config = {
           headers:{'token':localStorage.getItem('Authorization')}
@@ -203,7 +225,7 @@
           // console.log(res.data)
           // console.log(res.data.data.list)
           this.total=res.data.data.total
-          this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+          this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
           this.tableData=res.data.data.list
         }, err => {
           console.log(err)
@@ -215,7 +237,7 @@
         let data={
           keywords:this.input,
           page:i,
-          page_size:4,
+          page_size:10,
         }
         let config = {
           headers:{'token':localStorage.getItem('Authorization')}
@@ -224,7 +246,7 @@
           console.log(res.data)
           console.log(res.data.data.list)
           this.total=res.data.data.total
-          this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+          this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
           this.tableData=res.data.data.list
         }, err => {
           console.log(err)
@@ -261,7 +283,7 @@
         a.click()
       },
       /*下拉菜单*/
-      allApp(index, nameValue,id,rows,url) {
+      allApp(index, nameValue,id,rows,url,name) {
         if (nameValue == '下载链接') {
           this.isMask = true
           this.value=url
@@ -285,9 +307,9 @@
           this.$router.push({
             path:'/appManagementDetail',
             query:{
-              id:id
+              id:id,
+              name:name
             }
-
           })
 
 
@@ -304,7 +326,7 @@
             let data={
               keywords:this.input,
               page:this.current,
-              page_size:4,
+              page_size:10,
             }
             let config = {
               headers:{'token':localStorage.getItem('Authorization')}
@@ -312,7 +334,7 @@
             axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
               console.log(res.data.data)
               this.total=res.data.data.total
-              this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+              this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
               this.tableData=res.data.data.list
             }, err => {
               console.log(err)
@@ -333,7 +355,7 @@
             let data={
               keywords:this.input,
               page:this.current,
-              page_size:4,
+              page_size:10,
             }
             let config = {
               headers:{'token':localStorage.getItem('Authorization')}
@@ -341,7 +363,7 @@
             axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
              console.log(res.data.data)
               this.total=res.data.data.total
-              this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+              this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
               this.tableData=res.data.data.list
             }, err => {
               console.log(err)
@@ -366,14 +388,14 @@
               let data={
                 keywords:this.input,
                 page:this.current,
-                page_size:4,
+                page_size:10,
               }
               let config = {
                 headers:{'token':localStorage.getItem('Authorization')}
               };
               axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
                 this.total=res.data.data.total
-                this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+                this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
                 this.tableData=res.data.data.list
               }, err => {
                 console.log(err)
@@ -397,10 +419,11 @@
     },
     mounted() {
       // alert("2")
+      this.base_url=BASE_URL
       let data={
         keywords:this.input,
         page:this.current,
-        page_size:4,
+        page_size:10,
       }
       let config = {
         headers:{'token':localStorage.getItem('Authorization')}
@@ -409,7 +432,7 @@
         console.log(res.data)
         console.log(res.data.data.list)
         this.total=res.data.data.total
-        this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+        this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
         this.tableData=res.data.data.list
       }, err => {
         console.log(err)
@@ -489,7 +512,7 @@
   .fourthDiv {
     width: 78%;
     /*height: 300px;*/
-    margin: 50px auto 0 auto;
+    margin: 50px auto;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -509,8 +532,8 @@
   }
 
   .maskDiv {
-    width: 501px;
-    height: 252px;
+    width: 551px;
+    height: 292px;
     background-color: white;
 
   }
@@ -539,15 +562,22 @@
   }
 
   .appManagementSmallOneB {
-    width: 110px;
-    height: 110px;
+    width: 150px;
+    height: 150px;
     border: 1px solid #DCDCDC;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-flow: column;
   }
-
+.appManagementSmallOneB div{
+  width: 150px;
+  height: 150px;
+}
+  .appManagementSmallOneB div canvas{
+    width: 150px !important;
+    height: 150px !important;
+  }
   .appManagementSmallOne p {
     margin-top: 5px;
     color: #14BEC8;
