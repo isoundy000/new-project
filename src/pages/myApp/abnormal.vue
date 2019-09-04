@@ -170,7 +170,7 @@
         },
       },
       mounted(){
-          console.log("xxxvvx2222x022200030ccdd033")
+          console.log("ssss")
         let data={
           id:this.$route.query.id
         }
