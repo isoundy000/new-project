@@ -62,18 +62,18 @@
             @change="swich1">
           </el-switch>
         </div>
-        <!--<div class="supplementTwo">-->
-          <!--<p>是否付费</p>-->
-          <!--<el-switch-->
-            <!--v-model="switchValue2"-->
-            <!--active-color="#06B2B6"-->
-            <!--inactive-color="#999999"-->
-            <!--@change="swich2">-->
-          <!--</el-switch>-->
-          <!--<div v-if="fufei">-->
-            <!--<el-input  class="thirdInput fufei" v-model="fufeiInput" placeholder="请输入内容"></el-input><span style="font-size: 16px;">元/次</span>-->
-          <!--</div>-->
-        <!--</div>-->
+        <div class="supplementTwo">
+          <p>是否付费</p>
+          <el-switch
+            v-model="switchValue2"
+            active-color="#06B2B6"
+            inactive-color="#999999"
+            @change="swich2">
+          </el-switch>
+          <div v-if="fufei">
+            <el-input  class="thirdInput fufei" v-model="fufeiInput" placeholder="请输入内容"></el-input><span style="font-size: 16px;">元/次</span>
+          </div>
+        </div>
         <div class="supplementTen">
           <p>下载码</p>
           <el-input  class="thirdInput" v-model="TenInput" placeholder="请输入内容"></el-input>

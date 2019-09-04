@@ -96,19 +96,19 @@
             @change="swich1">
           </el-switch>
         </div>
-        <!--<div class="supplementTwo">-->
-          <!--<p>是否付费</p>-->
-          <!--<el-switch-->
-            <!--v-model="switchValue2"-->
-            <!--active-color="#06B2B6"-->
-            <!--inactive-color="#999999"-->
-            <!--@change="swich2">-->
-          <!--</el-switch>-->
-          <!--<div  v-if="fufei" >-->
-            <!--<el-input class="thirdInput fufei" v-model="fufeiInput" placeholder="请输入内容"></el-input><span style="font-size: 16px;">元/次</span>-->
+        <div class="supplementTwo">
+          <p>是否付费</p>
+          <el-switch
+            v-model="switchValue2"
+            active-color="#06B2B6"
+            inactive-color="#999999"
+            @change="swich2">
+          </el-switch>
+          <div  v-if="fufei" >
+            <el-input class="thirdInput fufei" v-model="fufeiInput" placeholder="请输入内容"></el-input><span style="font-size: 16px;">元/次</span>
 
-          <!--</div>-->
-        <!--</div>-->
+          </div>
+        </div>
         <div class="supplementTen">
           <p>下载码</p>
           <el-input :disabled="disInput" class="thirdInput" v-model="TenInput" placeholder="请输入内容" onkeyup="this.value=this.value.replace(/\D/g,'')"
@@ -252,21 +252,21 @@
         axios.get(BASE_URL+'/api/user/index',config).then(res => {
           this.judgeMoney=res.data.data.money
           localStorage.setItem('balance', res.data.data.money);
-          if(this.judgeMoney==0.00){
-            // alert("没有余额")
-            this.$confirm('你的用户余额不足不能上传', '提示', {
-              confirmButtonText: '确定',
-              type: 'warning'
-            }).then(() => {
-
-            }).catch(() => {
-
-            });
-          }else{
+          // if(this.judgeMoney==0.00){
+          //   // alert("没有余额")
+          //   this.$confirm('你的用户余额不足不能上传', '提示', {
+          //     confirmButtonText: '确定',
+          //     type: 'warning'
+          //   }).then(() => {
+          //
+          //   }).catch(() => {
+          //
+          //   });
+          // }else{
             this.active = 1
             this.isSuper = false
             this.isUpload = true
-          }
+          // }
         }, err => {
           console.log(err)
         })
@@ -286,24 +286,28 @@
         this.img.push(img)
       },
       success(response, file, fileList) {
-        console.log(file)
-
-        this.display_name=file.response.data.app.display_name
-        this.path=file.response.data.url
-        this.icon=file.response.data.domain+file.response.data.app.icon
-        this.ipa_data_bak=file.response.data.app.ipa_data_bak
-        this.package_name=file.response.data.app.package_name
-        this.version_code=file.response.data.app.version_code
-        this.bundle_name=file.response.data.app.bundle_name
-        this.filesize=file.response.data.app.filesize
-        this.thirdInput=this.package_name
-        this.thirdInput1=this.display_name
-        this.thirdInput2=this.version_code
-        this.icon1=file.response.data.app.icon
-        this.active = 2
-        this.isSuper = false
-        this.isUpload = false
-        this.isSupplement=true
+        console.log(file.response)
+        console.log(file.response.msg)
+        if(file.response.code==1){
+          this.display_name=file.response.data.app.display_name
+          this.path=file.response.data.url
+          this.icon=file.response.data.domain+file.response.data.app.icon
+          this.ipa_data_bak=file.response.data.app.ipa_data_bak
+          this.package_name=file.response.data.app.package_name
+          this.version_code=file.response.data.app.version_code
+          this.bundle_name=file.response.data.app.bundle_name
+          this.filesize=file.response.data.app.filesize
+          this.thirdInput=this.package_name
+          this.thirdInput1=this.display_name
+          this.thirdInput2=this.version_code
+          this.icon1=file.response.data.app.icon
+          this.active = 2
+          this.isSuper = false
+          this.isUpload = false
+          this.isSupplement=true
+        }else{
+          this.$message.error(file.response.msg);
+        }
       },
       handleRemove(file, fileList) {
         console.log(file, fileList);

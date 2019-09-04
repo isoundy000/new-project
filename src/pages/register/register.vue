@@ -11,7 +11,7 @@
     <div class="banner" style="background-image: url('../../../static/image/login/dengluditu.png')">
       <div class="loginDiv" style="background-image: url('../../../static/image/login/denglukuang.png')">
         <div v-show="xianshi"
-             style="width:20%;display:flex;align-items:center;position: absolute;padding-left: 20px;font-size: 1.1vw;color: red;margin-top: 0.5vw">
+             style="width:100%;display:flex;align-items:center;position: absolute;padding-left: 20px;font-size: 13px;color: red;margin-top: 0.5vw">
           <img src="../../../static/image/login/tishi.png" alt="">
           <p class="tishiXinxi" style="padding-left: 10px"></p>
         </div>
@@ -142,38 +142,39 @@
       },
       /*发送验证码倒计时*/
       send() {
-        var timeClock3;
-        var timer_num = 60;
-        var that=this
+        if(this.phoneNumber!=''){
+          var timeClock3;
+          var timer_num = 60;
+          var that=this
 
-        timeClock3 = setInterval(function () {
-          timer_num--;
-          that.daojiFlag2=false
-          that.countDown=timer_num+'秒'
-          if (timer_num == 0) {
-            clearInterval(timeClock3);
-            that.daojiFlag2=true
-            that.yanMsg='重新发送'
+          timeClock3 = setInterval(function () {
+            timer_num--;
+            that.daojiFlag2=false
+            that.countDown=timer_num+'秒'
+            if (timer_num == 0) {
+              clearInterval(timeClock3);
+              that.daojiFlag2=true
+              that.yanMsg='重新发送'
+            }
+          }, 1000)
+          let data = {
+            mobile: this.phoneNumber,
+            event: 'register'
           }
-        }, 1000)
-        let data = {
-          mobile: this.phoneNumber,
-          event: 'register'
+
+          axios.post(BASE_URL+'/api/sms/send', qs.stringify(data)).then(res => {
+            console.log(res)
+            if (res.data.msg == '已被注册') {
+              this.xianshi = true
+              $(".tishiXinxi").html('手机号码已经被注册')
+            }
+            if(timer_num == 0){
+              clearInterval(timeClock3);
+            }
+          }, err => {
+            console.log(err)
+          })
         }
-
-        axios.post(BASE_URL+'/api/sms/send', qs.stringify(data)).then(res => {
-          console.log(res)
-          if (res.data.msg == '已被注册') {
-
-            this.xianshi = true
-            $(".tishiXinxi").html('手机号码已经被注册')
-          }
-          if(timer_num == 0){
-            clearInterval(timeClock3);
-          }
-        }, err => {
-          console.log(err)
-        })
       },
       checklist() {
         this.isCheck = false
@@ -184,49 +185,56 @@
        // alert("取消勾选了")
       },
       registerBtn() {
-        let f = {
-          mobile: this.phoneNumber,
-          captcha: this.verificationNumber,
-          password: this.setPassword
-        }
-        let config = {
-          headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        };
-        axios.post(BASE_URL+'/api/User/register', qs.stringify(f), config).then(res => {
-         if (res.data.msg == '用户名必须4-20个字符') {
-            this.xianshi = true
-            $(".tishiXinxi").html('用户名必须4-20个字符')
-          } else if (res.data.msg == '手机号码不能为空') {
-            this.xianshi = true
-            $(".tishiXinxi").html('手机号码不能为空')
-          } else if (res.data.msg == '验证码不能为空') {
-            this.xianshi = true
-            $(".tishiXinxi").html('验证码不能为空')
-          } else if (res.data.msg == '手机格式不正确') {
-            this.xianshi = true
-            $(".tishiXinxi").html(' 手机格式不正确')
-          } else if (res.data.msg == '密码不能为空') {
-            this.xianshi = true
-            $(".tishiXinxi").html('密码不能为空')
-          } else if (res.data.msg == '密码必须6-20个字符') {
-            this.xianshi = true
-            $(".tishiXinxi").html('密码必须6-20个字符')
-          }else if(res.data.code==200){
-           this.$Modal.success({
-             title: '成功',
-             content: '注册成功',
-             onOk: () => {
-               this.$router.push({
-                 path: '/login'
-               })
-             }
-           });
-         }
-          console.log(res.data)
+        if(this.isCheck==true){
+          this.xianshi = true
+          $(".tishiXinxi").html('请勾选用户服务协议')
+        }else{
+          let f = {
+            mobile: this.phoneNumber,
+            captcha: this.verificationNumber,
+            password: this.setPassword
+          }
+          let config = {
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+          };
+          axios.post(BASE_URL+'/api/User/register', qs.stringify(f), config).then(res => {
+            if (res.data.msg == '用户名必须4-20个字符') {
+              this.xianshi = true
+              $(".tishiXinxi").html('用户名必须4-20个字符')
+            } else if (res.data.msg == '手机号码不能为空') {
+              this.xianshi = true
+              $(".tishiXinxi").html('手机号码不能为空')
+            } else if (res.data.msg == '验证码不能为空') {
+              this.xianshi = true
+              $(".tishiXinxi").html('验证码不能为空')
+            } else if (res.data.msg == '手机格式不正确') {
+              this.xianshi = true
+              $(".tishiXinxi").html(' 手机格式不正确')
+            } else if (res.data.msg == '密码不能为空') {
+              this.xianshi = true
+              $(".tishiXinxi").html('密码不能为空')
+            } else if (res.data.msg == '密码必须6-20个字符') {
+              this.xianshi = true
+              $(".tishiXinxi").html('密码必须6-20个字符')
+            }else if(res.data.code==200){
+              this.$Modal.success({
+                title: '成功',
+                content: '注册成功',
+                onOk: () => {
+                  this.$router.push({
+                    path: '/login'
+                  })
+                }
+              });
+            }
+            console.log(res.data)
 
-        }, err => {
-          console.log(err)
-        })
+          }, err => {
+            console.log(err)
+          })
+        }
+
+
       },
       login() {
         this.$router.push({

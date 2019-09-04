@@ -5,19 +5,18 @@
       <div class="footerOne">
         <p class="contact">联系我们</p>
         <div class="footerOne_Odiv">
-          <p class="kService">客服QQ：<span>7548754124</span></p>
-          <p class="email">公司邮箱：<span>786442168@qq.com</span></p>
-          <p class="address">公司地址：<span>四川省成都市高新区xxx</span> </p>
+          <p class="kService">客服QQ：<span>{{qqValue}}</span></p>
+          <p class="email">公司邮箱：<span>{{qqValue}}@qq.com</span></p>
         </div>
         <div class="footerOne_Tdiv">
-          <p>Copyright © www.AxureUX.com, All Rights Reserved. 助你快速打造友好美观的交互原型</p>
+          <p>Copyright © www.AxureUX.com, All Rights Reserved.</p>
         </div>
       </div>
       <div class="footerTwo">
-        <p class="phoneNumber">24小时客服热线</p>
+        <p class="phoneNumber">超级签名一次</p>
         <div>
-          <img src="../../../static/image/superSignature/dianhua.png" alt="">
-          <p>400-000-0000</p>
+          <!--<img src="../../../static/image/superSignature/dianhua.png" alt="">-->
+          <p>安装永不受影响</p>
         </div>
       </div>
     </div>
@@ -26,8 +25,24 @@
 </template>
 
 <script>
+  import {BASE_URL} from "../../api";
+  import  axios from 'axios'
     export default {
-        name: "Bfooter"
+        name: "Bfooter",
+      data(){
+          return{
+            qqValue:''
+          }
+      },
+      mounted(){
+        /*客服qq*/
+
+        axios.get(BASE_URL+'/api/index/getConfig/name/kefu').then(res => {
+          this.qqValue=res.data.data[0]
+        }, err => {
+          console.log(err)
+        })
+      }
     }
 </script>
 
@@ -43,13 +58,14 @@
     display: flex;
     margin: 0 auto;
     justify-content: space-between;
+    align-items: center;
   }
   .footerOne{
     width: 550px;
     height: 200px;
     color: white;
     font-size: 14px;
-    margin-top: 20px;
+    margin-top: 30px;
   }
   .contact{
     font-size: 20px;
@@ -82,7 +98,7 @@
     height: 100px;
     color: #fff;
     font-size: 17px;
-    margin-top: 85px;
+    margin-top: 30px;
     position: relative;
   }
   .phoneNumber{

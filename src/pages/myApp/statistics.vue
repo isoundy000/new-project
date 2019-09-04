@@ -693,32 +693,33 @@
     align-items: center;
   }
 
+
   .jineIcon {
-    width: 52px;
-    height: 52px;
-    margin-left: 30px;
+    width: 2.7vw;
+    height: 2.7vw;
+    margin-left: 1vw;
   }
 
   .liulanIcon {
-    width: 58px;
-    height: 37px;
-    margin-left: 30px;
+    width: 3.92vw;
+    height: 2.5vw;
+    margin-left: 1vw;
   }
 
   .xiazaiIcon {
-    width: 44px;
-    height: 44px;
-    margin-left: 30px;
+    width: 2.83vw;
+    height: 2.83vw;
+    margin-left: 1vw;
   }
 
   .shebeiIcon {
-    width: 34px;
-    height: 52px;
-    margin-left: 30px;
+    width: 2.5vw;
+    height: 3.2vw;
+    margin-left: 1vw;
   }
 
   .secondDivText {
-    width: 7vw;
+    width: 10vw;
     height: 70px;
     position: relative;
     margin-left: 1.2vw;

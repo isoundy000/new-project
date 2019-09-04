@@ -19,7 +19,7 @@
           <div class="tishi" v-if="isTishi">
             <div class="tishiDiv">
               <img src="../../../static/image/login/tishi.png" alt="">
-              <p class="textTishi">用户名或验证码错误</p>
+              <p class="textTishi">{{tishi}}</p>
               <!--<p >用户名或验证码不能为空</p>-->
             </div>
 
@@ -135,6 +135,7 @@
         isCheck: true,//复选框的选择，默认是不选中
         isTishi:false,//短信登录里面提示
         isTishi1:false,//账号登录里面提示
+        tishi:'',
         tishi1:'',
         isA:true,//点击短信登录的字体颜色，默认是true，是绿色
         isB:false,//点击账号登录的字体颜色，默认是false，是黑色
@@ -235,31 +236,33 @@
       },
       /*发送验证码倒计时*/
        send(){
-        var that=this
-        var timeClock1;
-        var timer_num = 60;
-        timeClock1 = setInterval(function() {
-          timer_num--;
-          that.daojiFlag=false
-          that.countDown=timer_num+'秒'
-          if(timer_num == 0) {
-            clearInterval(timeClock1);
-            that.daojiFlag=true
-            that.yanMsg='重新发送'
-          }
-        }, 1000)
-         let f={
-           mobile:Number(this.phonenumber),
-           event:'mobilelogin'
+         if(this.phonenumber!=''){
+           var that=this
+           var timeClock1;
+           var timer_num = 60;
+           timeClock1 = setInterval(function() {
+             timer_num--;
+             that.daojiFlag=false
+             that.countDown=timer_num+'秒'
+             if(timer_num == 0) {
+               clearInterval(timeClock1);
+               that.daojiFlag=true
+               that.yanMsg='重新发送'
+             }
+           }, 1000)
+           let f={
+             mobile:Number(this.phonenumber),
+             event:'mobilelogin'
+           }
+           let config = {
+             headers:{'Content-Type':'application/x-www-form-urlencoded'}
+           };
+           axios.post(BASE_URL+'/api/sms/send',qs.stringify(f),config).then(res => {
+             console.log(res.data)
+           }, err => {
+             console.log(err)
+           })
          }
-         let config = {
-           headers:{'Content-Type':'application/x-www-form-urlencoded'}
-         };
-          axios.post(BASE_URL+'/api/sms/send',qs.stringify(f),config).then(res => {
-            console.log(res.data)
-          }, err => {
-            console.log(err)
-          })
       },
 
       /*数字验证码*/
@@ -296,7 +299,7 @@
         let _this = this;
         if(this.phonenumber=='' || this.verificationCode==''){
             this.isTishi=true
-           $(".textTishi").html('用户名或验证码不能为空')
+           this.tishi='手机号或验证码不能为空'
         }else{
           this.isTishi=false
           let f={
@@ -308,14 +311,15 @@
           };
           axios.post(BASE_URL+'/api/user/mobilelogin',qs.stringify(f),config).then(res => {
             console.log(res.data)
-            console.log(res.data.data.userinfo.token)
-            _this.userToken =  res.data.data.userinfo.token;
-            var balance= res.data.data.userinfo.money
-            var username= res.data.data.userinfo.mobile
+            // console.log(res.data.data.userinfo.token)
+
             if(res.data.code==0){
               this.isTishi=true
-              $(".textTishi").html('验证码不正确')
+              this.tishi='验证码不正确'
             }else{
+              _this.userToken =  res.data.data.userinfo.token;
+              var balance= res.data.data.userinfo.money
+              var username= res.data.data.userinfo.username
               this.$Modal.success({
                 title: '成功',
                 content: '登录成功',
@@ -571,7 +575,7 @@
   height: 24px;
 }
 .tishiDiv p{
-  font-size: 1.1vw;
+  font-size: 13px;
   color: #FF0000;
   margin-left: 10px;
 }

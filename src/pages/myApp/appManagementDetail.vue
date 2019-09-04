@@ -134,8 +134,8 @@
             this.$router.push({
               path:'/applicationMerge',
               query:{
-                id:this.$route.query.id
-                // name:this.$route.query.name
+                id:this.$route.query.id,
+                apk_url:this.$route.query.apk_url
               }
             })
           }else if(index==8){

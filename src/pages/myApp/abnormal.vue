@@ -24,7 +24,7 @@
           v-model="input2">
         </el-input>
       </div>
-      <div class="btn"><p>保存</p></div>
+      <div class="btn" @click="preservation1"><p>保存</p></div>
     </div>
   </div>
   <div class="abnormalDivOne">
@@ -50,7 +50,7 @@
           v-model="input4">
         </el-input>
       </div>
-      <div class="btn"><p>保存</p></div>
+      <div class="btn" @click="preservation2"><p>保存</p></div>
     </div>
   </div>
   <div class="abnormalDivOne footer">
@@ -68,6 +68,7 @@
           class="firstInput"
           v-model="input5">
         </el-input>
+        <span style="color: black;margin-left: 15px;font-size: 16px">元</span>
       </div>
       <div class="firstDivTwo">
         <p class="fff">下载次数<span>*</span></p>
@@ -76,13 +77,16 @@
           v-model="input6">
         </el-input>
       </div>
-      <div class="btn"><p>保存</p></div>
+      <div class="btn" @click="preservation3"><p>保存</p></div>
     </div>
   </div>
 </div>
 </template>
 
 <script>
+  import axios from 'axios'
+  import qs from 'qs'
+  import {BASE_URL} from "../../api";
     export default {
         name: "abnormal",
       data(){
@@ -125,7 +129,63 @@
           }else{
             this.isOne2=false
           }
+        },
+        preservation1(){
+          let data={
+            id:this.$route.query.id,
+            down_frequency:this.input,
+            down_times:this.input2,
+            auto_close:this.input3,
+            auto_times:this.input4,
+            day_consume:this.input5,
+            day_times:this.input6,
+          }
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.post(BASE_URL+'/api/app/appEarlyWarning',qs.stringify(data),config).then(res => {
+            console.log(res.data)
+            if(res.data.code==200){
+              this.$message({
+                message: '保存成功',
+                type: 'success'
+              });
+            }else if(res.data.code==0){
+              this.$message.error(res.data.msg);
+            }
+          }, err => {
+            console.log(err)
+          })
+        },
+        preservation2(){
+          this.$nextTick(function() {
+            this.preservation1()
+          })
+        },
+        preservation3(){
+          this.$nextTick(function() {
+            this.preservation1()
+          })
+        },
+      },
+      mounted(){
+        let data={
+          id:this.$route.query.id
         }
+        let config = {
+          headers:{'token':localStorage.getItem('Authorization')}
+        };
+        axios.post(BASE_URL+'/api/app/appEarlyWarningInfo',qs.stringify(data),config).then(res => {
+          console.log(res.data.data)
+          this.input=res.data.data.down_frequency
+          this.input2=res.data.data.down_times
+          this.input3=res.data.data.auto_close
+          this.input4=res.data.data.auto_times
+          this.input5=res.data.data.day_consume
+          this.input6=res.data.data.day_times
+        }, err => {
+          console.log(err)
+        })
       }
     }
 </script>

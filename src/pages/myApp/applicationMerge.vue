@@ -23,8 +23,11 @@
         <el-upload
           class="upload-demo"
           drag
-          accept=".ipa"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          :limit='limitCount'
+          :on-success="success"
+          accept=".apk"
+          :action="newdeUrl"
+          :on-change="handleChange"
           multiple>
           <i class="el-icon-upload"></i>
           <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -32,23 +35,62 @@
         </el-upload>
       </div>
     </div>
-    <div class="preservation"><p>保存</p></div>
+    <div class="preservation" @click="preservation"><p>保存</p></div>
   </div>
 </template>
 
 <script>
+  import {BASE_URL} from "../../api";
+  import  axios from 'axios'
+  import qs from 'qs'
   export default {
     name: "applicationMerge",
     data() {
       return {
+        limitCount:1,
         downInput: '',
-        tishi:false
+        tishi:false,
+        newdeUrl:''
       }
     },
     methods:{
       bangzhu(){
         this.tishi=!this.tishi
+      },
+      /*上传文件*/
+      handleChange(file, fileList) {
+        this.fileList = fileList.slice(-3);
+      },
+      success(response, file, fileList) {
+        console.log(response.data)
+        this.downInput=response.data.url
+      },
+      preservation(){
+        let data={
+          app_id:this.$route.query.id,
+          apk_url:this.downInput
+        }
+        let config = {
+          headers:{'token':localStorage.getItem('Authorization')}
+        };
+        axios.post(BASE_URL+'/api/app/apkUrl',qs.stringify(data),config).then(res => {
+          console.log(res.data)
+          if(res.data.code==200){
+            this.$router.push({
+              path:'/appManagement'
+            })
+          }else if(res.data.code==0){
+            this.$message.error(res.data.msg);
+          }
+        }, err => {
+          console.log(err)
+        })
       }
+    },
+    mounted(){
+      this.newdeUrl=BASE_URL+'/api/common/upload'
+      this.downInput=this.$route.query.apk_url
+
     }
   }
 </script>
@@ -121,5 +163,6 @@
     font-size: 16px;
     margin-left: 45px;
     margin-top: 50px;
+    cursor: pointer;
   }
 </style>

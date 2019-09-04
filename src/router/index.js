@@ -15,6 +15,9 @@ import versionRecord from '@/pages/myApp/versionRecord'//我的应用--应用管
 import downLoadRecord from '@/pages/myApp/downLoadRecord'//我的应用--应用管理--下载记录路由
 import consumptionRecord from '@/pages/myApp/consumptionRecord'//我的应用--应用管理--消费记录路由
 import buqianRecord from '@/pages/myApp/buqianRecord'//我的应用--应用管理--补签消费记录路由
+import abnormal from '@/pages/myApp/abnormal'//我的应用--应用管理--异常报警路由
+import applicationMerge from '@/pages/myApp/applicationMerge'//我的应用--应用管理--应用合并路由
+import messagePush from '@/pages/myApp/messagePush'//我的应用--应用管理--消息推送路由
 
 import statistics from '@/pages/myApp/statistics'//我的应用--应用管理--统计路由
 import billManagement from '@/pages/myApp/billManagement'//我的应用--账单管理路由
@@ -125,7 +128,24 @@ const router = new Router({
               name: 'statistics',
               component: statistics,
               meta:{keepAlive:true}
-            }
+            },
+            {
+              path: '/abnormal',
+              name: 'abnormal',
+              component: abnormal,
+              meta:{keepAlive:true}
+            },
+            {
+              path: '/applicationMerge',
+              name: 'applicationMerge',
+              component: applicationMerge,
+              meta:{keepAlive:true}
+            },
+            {
+              path: '/messagePush',
+              name: 'messagePush',
+              component: messagePush
+            },
           ]
         },
         {
