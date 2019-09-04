@@ -131,7 +131,7 @@
           }
         },
         preservation1(){
-          alert("000")
+
           let data={
             id:this.$route.query.id,
             down_frequency:this.input,
