@@ -69,7 +69,8 @@
           }
         ],
         money:'',
-        userName:''
+        userName:'',
+        shoyiMoney:''
       }
     },
 
@@ -81,8 +82,10 @@
       axios.get(BASE_URL+'/api/user/index',config).then(res => {
         this.money=res.data.data.money
         this.userName=res.data.data.username
+        this.shoyiMoney=res.data.data.balance
         console.log(res.data.data)
         localStorage.setItem('balance', res.data.data.money);
+        localStorage.setItem('shoyiMoney', res.data.data.balance);
         localStorage.setItem('userName', res.data.data.username);
       }, err => {
         console.log(err)

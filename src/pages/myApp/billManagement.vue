@@ -68,8 +68,16 @@
       </div>
     </div>
     <div class="secondDiv">
-      <p>账号余额：<span>{{newmoney}}</span>元</p>
-      <div @click="recharge">充值</div>
+      <div class="secondDivONE">
+        <p><span class="secondDivTitle">账号余额：</span><span>{{newmoney}}</span>元</p>
+        <div class="chongzhi" @click="recharge">充值</div>
+      </div>
+      <div class="secondDivTWO">
+        <p><span class="secondDivTitle">收益：</span><span>{{shoyiMoney}}</span>元</p>
+      </div>
+
+
+
     </div>
     <div class="thirdDiv">
       <div class="header_title">
@@ -90,6 +98,7 @@
     name: "billManagement",
     data() {
       return {
+        shoyiMoney:'',
         newmoney:'',
         isFalg:false,
         weixinvalue: 'https://www.baidu.com',
@@ -239,6 +248,8 @@
     mounted(){
       // alert("3")
       this.newmoney=localStorage.getItem('balance');
+      this.shoyiMoney=localStorage.getItem('shoyiMoney');
+
     }
 
   }
@@ -282,11 +293,13 @@
     margin: 32px auto 0 auto;
     background-color: #F7F7F7;
     display: flex;
-    align-items: center;
+    justify-content: center;
+    flex-flow: column;
     font-size: 14px;
   }
 
   .secondDiv p {
+
     margin-left: 17px;
     color: #999999;
   }
@@ -296,7 +309,7 @@
     font-size: 18px;
   }
 
-  .secondDiv div {
+  .secondDiv .chongzhi {
     width: 96px;
     height: 38px;
     text-align: center;
@@ -482,5 +495,15 @@ margin-top: 30px;
     align-items: center;
     justify-content: center;
     font-size: 18px;
+  }
+  .secondDivONE{
+    height: 50px;
+    display: flex;
+    align-items: center;
+  }
+  .secondDivTitle{
+    display: inline-block;
+    width: 98px;
+    text-align: right;
   }
 </style>

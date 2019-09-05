@@ -134,7 +134,7 @@
         <div class="sixthDivOneSmal">
           <div id="mapChart"></div>
           <div class="ranking">
-            <p class="top10">区域用户下载 TOP10</p>
+            <p class="top10">区域用户访问量 TOP10</p>
             <div class="ranking_div">
               <div class="region">
                 <p>区域名称</p>

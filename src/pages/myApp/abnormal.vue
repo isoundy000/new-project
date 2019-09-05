@@ -53,7 +53,7 @@
       <div class="btn" @click="preservation2"><p>保存</p></div>
     </div>
   </div>
-  <div class="abnormalDivOne footer">
+  <div class="abnormalDivOne ">
     <div class="firstTitle">
       <img @click="isNo2" v-if="isChoose2" src="../../../static/image/superSignature/weixuan.png" alt="">
       <img @click="isNo2" v-else src="../../../static/image/superSignature/xuanzhong.png" alt="">
@@ -62,14 +62,14 @@
     </div>
     <div class="firstDiv" v-show="isOne2">
       <p class="fir">每日该应用的消费达到您的预设值时，该应用将自动下架，您可修改消费上限后再次手动上架，或等待第二日自动重新上架。</p>
-      <div class="firstDivOne">
-        <p class="fff">每日消费限制<span>*</span></p>
-        <el-input
-          class="firstInput"
-          v-model="input5">
-        </el-input>
-        <span style="color: black;margin-left: 15px;font-size: 16px">元</span>
-      </div>
+      <!--<div class="firstDivOne">-->
+        <!--<p class="fff">每日消费限制<span>*</span></p>-->
+        <!--<el-input-->
+          <!--class="firstInput"-->
+          <!--v-model="input5">-->
+        <!--</el-input>-->
+        <!--<span style="color: black;margin-left: 15px;font-size: 16px">元</span>-->
+      <!--</div>-->
       <div class="firstDivTwo">
         <p class="fff">下载次数<span>*</span></p>
         <el-input
@@ -78,6 +78,33 @@
         </el-input>
       </div>
       <div class="btn" @click="preservation3"><p>保存</p></div>
+    </div>
+  </div>
+  <div class="abnormalDivOne footer">
+    <div class="firstTitle">
+      <img @click="isNo3" v-if="isChoose3" src="../../../static/image/superSignature/weixuan.png" alt="">
+      <img @click="isNo3" v-else src="../../../static/image/superSignature/xuanzhong.png" alt="">
+
+      <p>总下载消费限制</p>
+    </div>
+    <div class="firstDiv" v-show="isOne3">
+      <p class="fir">总下载该应用的消费达到您的预设值时，该应用将自动下架，您可修改消费上限后再次手动上架。</p>
+      <!--<div class="firstDivOne">-->
+      <!--<p class="fff">每日消费限制<span>*</span></p>-->
+      <!--<el-input-->
+      <!--class="firstInput"-->
+      <!--v-model="input5">-->
+      <!--</el-input>-->
+      <!--<span style="color: black;margin-left: 15px;font-size: 16px">元</span>-->
+      <!--</div>-->
+      <div class="firstDivTwo">
+        <p class="fff">总下载次数<span>*</span></p>
+        <el-input
+          class="secondInput"
+          v-model="input7">
+        </el-input>
+      </div>
+      <div class="btn" @click="preservation4"><p>保存</p></div>
     </div>
   </div>
 </div>
@@ -97,12 +124,15 @@
             isOne1:false,
             isChoose2:true,
             isOne2:false,
+            isChoose3:true,
+            isOne3:false,
             input:'',
             input2:'',
             input3:'',
             input4:'',
             input5:'',
-            input6:''
+            input6:'',
+            input7:''
           }
       },
       methods:{
@@ -130,6 +160,14 @@
             this.isOne2=false
           }
         },
+        isNo3(){
+          this.isChoose3=!this.isChoose3
+          if(this.isChoose3==false){
+            this.isOne3=true
+          }else{
+            this.isOne3=false
+          }
+        },
         preservation1(){
 
           let data={
@@ -140,6 +178,7 @@
             auto_times:this.input4,
             day_consume:this.input5,
             day_times:this.input6,
+            download_limit:this.input7
           }
           let config = {
             headers:{'token':localStorage.getItem('Authorization')}
@@ -168,6 +207,11 @@
             this.preservation1()
           })
         },
+        preservation4(){
+          this.$nextTick(function() {
+            this.preservation1()
+          })
+        },
       },
       mounted(){
           /*asas*/
@@ -185,6 +229,7 @@
           this.input4=res.data.data.auto_times
           this.input5=res.data.data.day_consume
           this.input6=res.data.data.day_times
+          this.input7=res.data.data.download_limit
         }, err => {
           console.log(err)
         })

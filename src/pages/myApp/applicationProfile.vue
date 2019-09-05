@@ -30,11 +30,15 @@
       <p class="firstP">下载码</p>
       <p class="secondP">{{list.download_code}}</p>
     </div>
-
     <div class="fourDiv">
-      <p class="firstP">限制下载次数</p>
-      <p class="secondP">{{list.download_limit}}</p>
+      <p class="firstP">付费金额</p>
+      <p class="secondP">{{list.download_money}}元</p>
     </div>
+
+    <!--<div class="fourDiv">-->
+      <!--<p class="firstP">限制下载次数</p>-->
+      <!--<p class="secondP">{{list.download_limit}}</p>-->
+    <!--</div>-->
     <div class="fourDiv">
       <p class="firstP">备注</p>
       <p class="secondP">{{list.remark}}</p>

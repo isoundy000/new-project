@@ -31,7 +31,7 @@
           multiple>
           <i class="el-icon-upload"></i>
           <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-          <div class="el-upload__tip" slot="tip">只能上传ipa文件，且不超过2G</div>
+          <div class="el-upload__tip" slot="tip">只能上传apk文件，且不超过2G</div>
         </el-upload>
       </div>
     </div>

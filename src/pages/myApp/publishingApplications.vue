@@ -97,7 +97,7 @@
           </el-switch>
         </div>
         <div class="supplementTwo">
-          <p>是否付费</p>
+          <p>付费下载</p>
           <el-switch
             v-model="switchValue2"
             active-color="#06B2B6"
@@ -117,12 +117,15 @@
         <div class="supplementTen">
           <p>安卓下载地址</p>
           <el-input :disabled="disInput" class="thirdInput" v-model="EvenInput" placeholder="请输入内容"></el-input>
+
+
         </div>
-        <div class="supplementTen">
-          <p>限制下载次数</p>
-          <el-input :disabled="disInput" class="thirdInput" v-model="twiInput" placeholder="请输入内容" onkeyup="this.value=this.value.replace(/\D/g,'')"
-                    onafterpaste="this.value=this.value.replace(/\D/g,'')"></el-input>
-        </div>
+        <p>(如需上传安卓apk包,请先上传完ipa包后再到应用管理-查看详情-应用合并上传)</p>
+        <!--<div class="supplementTen">-->
+          <!--<p>限制下载次数</p>-->
+          <!--<el-input :disabled="disInput" class="thirdInput" v-model="twiInput" placeholder="请输入内容" onkeyup="this.value=this.value.replace(/\D/g,'')"-->
+                    <!--onafterpaste="this.value=this.value.replace(/\D/g,'')"></el-input>-->
+        <!--</div>-->
         <div class="supplementFourth">
           <p>备注</p>
           <el-input :disabled="disInput" class="thirdInput" v-model="beiInput" placeholder="请输入内容"></el-input>
@@ -230,6 +233,7 @@
         icon:'',//应用icon
         ipa_data_bak:'',//原始包信息 json加密
         version_code:'',//版本号
+        version_name:'',
         package_name:'',//包名
         bundle_name:'',//bundle名
         state:1,//状态 1 正常 0关闭
@@ -295,6 +299,7 @@
           this.ipa_data_bak=file.response.data.app.ipa_data_bak
           this.package_name=file.response.data.app.package_name
           this.version_code=file.response.data.app.version_code
+          this.version_name=file.response.data.app.version_name
           this.bundle_name=file.response.data.app.bundle_name
           this.filesize=file.response.data.app.filesize
           this.thirdInput=this.package_name
@@ -368,6 +373,7 @@
           ipa_data_bak:this.ipa_data_bak,
           package_name:this.package_name,
           version_code:this.thirdInput2,
+          version_name:this.version_name,
           bundle_name:this.bundle_name,
           filesize:this.filesize,
           desc:this.textarea,
@@ -377,7 +383,7 @@
           // status:this.state,
           download_code:this.TenInput,
           apk_url:this.EvenInput,
-          download_limit:this.twiInput,
+          download_limit:0,
           remark:this.beiInput,
           is_update:this.gengxing,
           status:this.newState,
@@ -388,14 +394,23 @@
         };
         axios.post(BASE_URL+'/api/app/add',qs.stringify(f),config).then(res => {
           console.log(res.data)
-          loading.close();
+          if(res.data.code==200){
+            loading.close();
+            this.$router.push({
+              path:'/appManagement'
+            })
+          }else if(res.data.code==0){
+            loading.close();
+            this.$message.error(res.data.msg);
+          }
 
-          this.$router.push({
-            path:'/appManagement'
-          })
+
+
 
 
         }, err => {
+          loading.close();
+          this.$message.error('系统报错');
           console.log(err)
         })
 
@@ -498,7 +513,7 @@
     justify-content: center;
   }
 .supplement{
-  width: 40%;
+  width: 41%;
   display: flex;
   flex-flow: column;
   justify-content: center;

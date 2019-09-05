@@ -63,7 +63,7 @@
           </el-switch>
         </div>
         <div class="supplementTwo">
-          <p>是否付费</p>
+          <p>付费下载</p>
           <el-switch
             v-model="switchValue2"
             active-color="#06B2B6"
@@ -82,10 +82,10 @@
           <p>安卓下载地址</p>
           <el-input  class="thirdInput" v-model="EvenInput" placeholder="请输入内容"></el-input>
         </div>
-        <div class="supplementTen">
-          <p>限制下载次数</p>
-          <el-input  class="thirdInput" v-model="xianzhiInput" placeholder="请输入内容"></el-input>
-        </div>
+        <!--<div class="supplementTen">-->
+          <!--<p>限制下载次数</p>-->
+          <!--<el-input  class="thirdInput" v-model="xianzhiInput" placeholder="请输入内容"></el-input>-->
+        <!--</div>-->
         <div class="supplementTen">
           <p>备注</p>
           <el-input  class="thirdInput" v-model="beizhuInput" placeholder="请输入内容"></el-input>
@@ -193,6 +193,7 @@
             icon:'',//应用icon
             ipa_data_bak:'',//原始包信息 json加密
             version_code:'',//版本号
+            version_name:'',
             package_name:'',//包名
             bundle_name:'',//bundle名
             state:1,//状态 1 正常 0关闭
@@ -257,6 +258,7 @@
           this.ipa_data_bak=file.response.data.app.ipa_data_bak
           this.package_name=file.response.data.app.package_name
           this.version_code=file.response.data.app.version_code
+          this.version_name=file.response.data.app.version_name
           this.bundle_name=file.response.data.app.bundle_name
           this.filesize=file.response.data.app.filesize
           this.thirdInput=this.package_name
@@ -313,6 +315,7 @@
             apk_url:this.EvenInput, //安卓下载地址
             download_code:this.TenInput,//下载码
             version_code:this.thirdInput2,//版本号
+            version_name:this.version_name,
             display_name:this.thirdInput1,//应用名
             img:this.img,//图片
             icon:this.icon1,
@@ -321,7 +324,7 @@
             filesize:this.filesize,
             bundle_name:this.bundle_name,
             remark:this.beizhuInput,
-            download_limit:this.xianzhiInput,
+            download_limit:0,
             is_update:this.gengxing,
             download_money:this.fufeiInput
           }
@@ -335,7 +338,8 @@
               path:'/appManagement'
             })
           }, err => {
-            console.log(err)
+            loading.close();
+            this.$message.error('系统报错');
           })
         }
       },
@@ -363,6 +367,11 @@
           this.beizhuInput=res.data.data.remark
           this.xianzhiInput=res.data.data.download_limit
           this.package_name=res.data.data.package_name
+          if(res.data.data.download_money!=0){
+            this.switchValue2=true
+            this.fufei=true
+            this.fufeiInput=res.data.data.download_money
+          }
           for(var i=0;i<this.list.imgs.length;i++){
             var newobj={}
             newobj.name=i+''
