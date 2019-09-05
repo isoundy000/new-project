@@ -170,6 +170,7 @@
         },
       },
       mounted(){
+          /*asas*/
         let data={
           id:this.$route.query.id
         }
