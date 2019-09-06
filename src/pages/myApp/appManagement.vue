@@ -66,7 +66,7 @@
       >
         <el-table-column label="应用图标" width="100">
           <template slot-scope="scope">
-            <img :src="base_url+scope.row.icon" width="40" height="40" class="head_pic"/>
+            <img :src="scope.row.icon" width="40" height="40" class="head_pic"/>
           </template>
         </el-table-column>
         <el-table-column

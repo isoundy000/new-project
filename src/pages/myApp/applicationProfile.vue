@@ -96,9 +96,9 @@
         axios.post(BASE_URL+'/api/app/appDes',qs.stringify(data),config).then(res => {
           console.log(res.data.data)
           this.list=res.data.data
-          this.list.icon=BASE_URL+this.list.icon
+          this.list.icon=this.list.icon
           for(var i=0;i<this.list.imgs.length;i++){
-              this.imgList.push(BASE_URL+this.list.imgs[i])
+              this.imgList.push(this.list.imgs[i])
             }
           if(this.list.status==0){
                   this.state='已下架'

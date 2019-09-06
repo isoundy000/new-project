@@ -26,7 +26,7 @@
           :limit='limitCount'
           :on-success="success"
           accept=".apk"
-          :action="newdeUrl"
+          action="//upload.sclichang.com/api/common/upload"
           :on-change="handleChange"
           multiple>
           <i class="el-icon-upload"></i>

@@ -22,7 +22,7 @@
             :on-success="success"
             class="upload-demo"
             accept=".ipa"
-            :action="newdeUrl"
+            action="//upload.sclichang.com/api/common/upload"
             :on-change="handleChange"
             >
             <div @click="upload" class="uploadBtn">
@@ -140,6 +140,37 @@
             v-model="textarea1">
           </el-input>
         </div>
+        <div class="supplementEightth xiaoxituisong">
+          <p style="margin-left: 70px">消息推送</p>
+          <img style="margin-left: 5px;width: 20px;height: 20px" @click="help" src="../../../static/image/superSignature/help.png" alt="">
+          <div v-if="tishi" class="kuang" style="background-image: url('../../../static/image/superSignature/kuang.png')">
+            <p>
+              消息推送可提高用户活跃度及应用留存率，但会影响第三方(微信、QQ等)登录。
+            </p>
+          </div>
+          <div class="xiaoxi" >
+            <div class="liji">
+              <img  v-if="choose" src="../../../static/image/superSignature/danxuan.png" alt="">
+              <img @click="dan1" v-else src="../../../static/image/superSignature/danweixuan.png" alt="">
+              <p>证书推送（请在推送时配置p12证书文件）</p>
+            </div>
+            <div class="liji">
+              <img  v-if="choose1" src="../../../static/image/superSignature/danxuan.png" alt="">
+              <img @click="dan2" v-else src="../../../static/image/superSignature/danweixuan.png" alt="">
+              <p>直接推送（可能会影响微信、QQ等第三方登录）</p>
+            </div>
+            <div class="please">
+              <p class="pleaseText">请谨慎选择！</p>
+              <img style="margin-left: 5px;width: 20px;height: 20px" @click="help1" src="../../../static/image/superSignature/help.png" alt="">
+              <div v-if="tishi1" class="kuang1" style="background-image: url('../../../static/image/superSignature/kuang.png')">
+                <p>
+                  已上传的应用再修改消息提醒方式，可能会导致已安装用户无法正常使用。需要重新上传应用包，选择消息推送后让用户重新下载
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
         <div @click="submission" class="submission">
           <p>立即提交</p>
         </div>
@@ -155,6 +186,11 @@
         name: "updateApplication",
       data(){
           return{
+            tishi:false,
+            tishi1:false,
+            type:1,
+            choose:true,
+            choose1:false,
             fufei:false,
             newdeUrl:'',
             xianzhiInput:'',
@@ -206,6 +242,22 @@
           }
       },
       methods:{
+        help(){
+          this.tishi=!this.tishi
+        },
+        help1(){
+          this.tishi1=!this.tishi1
+        },
+        dan1(){
+          this.choose=true
+          this.choose1=false
+          this.type=1
+        },
+        dan2(){
+          this.choose=false
+          this.choose1=true
+          this.type=2
+        },
           /*上传文件*/
         handleChange(file, fileList) {
           this.fileList = fileList.slice(-3);
@@ -355,7 +407,7 @@
         axios.post(BASE_URL+'/api/app/appDes',qs.stringify(data),config).then(res => {
           console.log(res.data.data)
           this.list=res.data.data
-          this.icon=BASE_URL+this.list.icon
+          this.icon=this.list.icon
           this.fourthInput=res.data.data.score_num
           this.fivethInput=res.data.data.type
           this.textarea=res.data.data.desc
@@ -375,7 +427,7 @@
           for(var i=0;i<this.list.imgs.length;i++){
             var newobj={}
             newobj.name=i+''
-            newobj.url=BASE_URL+this.list.imgs[i]
+            newobj.url=this.list.imgs[i]
             this.imgList.push(newobj)
             this.img.push(this.list.imgs[i])
           }
@@ -602,6 +654,75 @@
   }
   .fufei{
     width: 70px;
+  }
+  .xiaoxi{
+    width: auto;
+    height: 200px;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+  }
+  .liji{
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    margin-top: 9px;
+    font-size: 16px;
+  }
+  .liji p,.dingshi p{
+    margin-left: 10px;
+    color: #333333;
+  }
+  .xiaoxituisong{
+    position: relative;
+  }
+  .kuang {
+    width: 254px;
+    height: 163px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 56%;
+    left: 22%;
+    z-index: 999;
+
+  }
+  .kuang p{
+    width: 207px!important;
+    height: 90px;
+    font-size: 14px;
+    color: #006B6D;
+    margin: 50px auto 0 auto;
+  }
+  .please{
+    display: flex;
+    margin-top: 10px;
+    position: relative;
+  }
+  .pleaseText{
+    width: 100px !important;
+    color: red !important;
+    margin-left: 17px;
+  }
+  .kuang1 {
+    width: 254px;
+    height: 163px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 79%;
+    left: 26%;
+    z-index: 999;
+
+  }
+  .kuang1 p{
+    width: 250px!important;
+    height: 90px;
+    font-size: 14px;
+    color: red !important;
+    margin: 50px auto 0 auto;
+    text-align: justify !important;
+    text-justify: inter-ideograph !important;
   }
 </style>
 <style>
