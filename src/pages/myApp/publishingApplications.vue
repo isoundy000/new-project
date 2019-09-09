@@ -229,7 +229,7 @@
       return {
         tishi:false,
         tishi1:false,
-        type:1,
+        push_type:1,
         choose:true,
         choose1:false,
         fufei:false,
@@ -278,7 +278,8 @@
         icon1:'',
         judgeMoney:'',
         gengxing:1,
-        newState:1
+        newState:1,
+        type:1
       }
     },
     computed: {
@@ -294,12 +295,12 @@
       dan1(){
         this.choose=true
         this.choose1=false
-        this.type=1
+        this.push_type=1
       },
       dan2(){
         this.choose=false
         this.choose1=true
-        this.type=2
+        this.push_type=2
       },
       upload(){
         let config = {
@@ -421,7 +422,7 @@
           display_name:this.thirdInput1,
           path:this.path,
           icon:this.icon1,
-          type:1,
+          push_type:1,
           ipa_data_bak:this.ipa_data_bak,
           package_name:this.package_name,
           version_code:this.thirdInput2,
@@ -440,7 +441,8 @@
           is_update:this.gengxing,
           status:this.newState,
           download_money:this.fufeiInput,
-          type:this.type
+          push_type:this.push_type,
+          type:1
         }
         let config = {
           headers:{'token':localStorage.getItem('Authorization')}

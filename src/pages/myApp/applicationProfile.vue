@@ -11,7 +11,7 @@
       </div>
       <div class="firstDivTwo">
           <p>下载地址</p>
-          <div>{{this.base_url}}{{list.path}}</div>
+          <div>{{download_url}}</div>
       </div>
     </div>
     <div class="secondDiv">
@@ -74,6 +74,7 @@
         name: "applicationProfile",
       data(){
           return{
+            download_url:'',
             list:'',
             state:"",
             enable:'',
@@ -86,6 +87,8 @@
       },
 
       mounted(){
+          // var a='https://'+window.location.hostname+'/download/'+123123132+'.html'
+          // alert(a)
           this.base_url=BASE_URL
         let data={
             id:this.$route.query.id
@@ -97,6 +100,7 @@
           console.log(res.data.data)
           this.list=res.data.data
           this.list.icon=this.list.icon
+          this.download_url='https://'+window.location.hostname+'/download/'+this.list.tag+'.html'
           for(var i=0;i<this.list.imgs.length;i++){
               this.imgList.push(this.list.imgs[i])
             }

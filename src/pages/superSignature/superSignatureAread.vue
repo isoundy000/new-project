@@ -13,7 +13,7 @@
 
     <div class="Bheader">
       <div class="login_title">
-        <img class="login_title_img" src="../../../static/image/superSignature/mumuunlogo.png" alt="">
+        <img class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">
         <div class="title">
           <p @click="titleName(index)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass}"
              @mouseenter="enter(index)"
@@ -1213,7 +1213,7 @@
   }
 
   .login_title .login_title_img {
-    width: 99px;
+    width: 143px;
     height: 39px;
     margin-left: 18.8vw;
   }

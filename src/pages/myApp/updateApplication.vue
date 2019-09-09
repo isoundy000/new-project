@@ -82,6 +82,7 @@
           <p>安卓下载地址</p>
           <el-input  class="thirdInput" v-model="EvenInput" placeholder="请输入内容"></el-input>
         </div>
+        <p style="margin-left: 50px;margin-top: 10px">(如需上传安卓apk包,请先上传完ipa包后再到应用管理-查看详情-应用合并上传)</p>
         <!--<div class="supplementTen">-->
           <!--<p>限制下载次数</p>-->
           <!--<el-input  class="thirdInput" v-model="xianzhiInput" placeholder="请输入内容"></el-input>-->
@@ -283,12 +284,12 @@
           console.log('fileList',fileList);
           var newImg=[];
           for(var i=0;i<fileList.length;i++){
-            console.log('file[i]',file[i]); //指的是删除的哪一张图片
-            console.log('fileList[i]',fileList[i]);
-            // console.log(fileList[i].response.data.url);
-            console.log('fileList[i].url',fileList[i].url)
-            console.log('fileList[i].url.substring(18)',fileList[i].url.substring(18))
-            newImg.push(fileList[i].url.substring(18))
+            // console.log('file[i]',file[i]); //指的是删除的哪一张图片
+            // console.log('fileList[i]',fileList[i]);
+            // // console.log(fileList[i].response.data.url);
+            // console.log('fileList[i].url',fileList[i].url)
+            // console.log('fileList[i].url.substring(18)',fileList[i].url.substring(18))
+            newImg.push(fileList[i].url)
             this.img=newImg
           }
 

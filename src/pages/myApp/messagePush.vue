@@ -157,7 +157,7 @@
               </el-upload>
             </div>
             <div class="maskContentOne2">
-              <p class="mask4text">证书密码</p>
+              <p  class="mask4text">证书密码</p>
               <el-input
                 class="secondInput"
                 v-model="zhengPass"
@@ -248,6 +248,7 @@
         name: "messagePush",
       data(){
           return{
+            cert_url:'',
             typeState:1,
             riTime:'',
             isHave:'',
@@ -281,6 +282,23 @@
           /*密码验证按钮*/
         yanBtn(){
           this.mask4=false
+          let data = {
+            app_id: this.$route.query.id,
+            cert_url:this.cert_url,
+            password:this.zhengPass
+          }
+          let config = {
+            headers: {'token': localStorage.getItem('Authorization')}
+          };
+          axios.post(BASE_URL+'/api/app/pushCert', qs.stringify(data), config).then(res => {
+            console.log(res.data.data)
+
+          }, err => {
+            console.log(err)
+          })
+
+
+
         },
         /*指南问号的mask点击*/
         zhinan(){
@@ -449,6 +467,8 @@
         },
         /*上传p12文件成功返回的参数*/
         success(response, file, fileList) {
+          console.log(response.data.url)
+          this.cert_url=response.data.url
           // this.disInput=false
           // console.log(file)
           // this.display_name=file.response.data.app.display_name

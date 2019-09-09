@@ -2,7 +2,7 @@
   <div class="myApp">
     <div class="surveyHeader">
       <div class="login_title">
-        <img class="login_title_img" src="../../../static/image/superSignature/mumuunlogo.png" alt="">
+        <img class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">
         <div class="title">
           <p @click="appClick(index,list.isclass)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass} ">{{list.msg}}</p>
         </div>
@@ -257,7 +257,7 @@
   }
 
   .login_title .login_title_img {
-    width: 99px;
+    width: 143px;
     height: 39px;
   }
 

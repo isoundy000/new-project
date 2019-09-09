@@ -61,20 +61,6 @@ Vue.config.productionTip = false
 // });
 //判断是否需要登录权限 以及是否登录
 router.beforeEach((to, from, next) => {
-  // let config = {
-  //   headers:{'token':localStorage.getItem('Authorization')}
-  // };
-  // axios.get('https://ios.yoyoacg.com/api/user/index',config).then(res => {
-  //   var balance=res.data.data.money
-  //   var userName=res.data.data.mobile
-  //    console.log(res.data.data)
-  //   localStorage.setItem('balance', balance);
-  //   localStorage.setItem('userName', userName);
-  // }, err => {
-  //   console.log(err)
-  // })
-
-
   if (to.matched.some(res => res.meta.requireAuth)) {// 判断是否需要登录权限
     if (localStorage.getItem('Authorization')){// 判断是否登录
       next()
