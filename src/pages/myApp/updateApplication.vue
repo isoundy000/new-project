@@ -22,7 +22,7 @@
             :on-success="success"
             class="upload-demo"
             accept=".ipa"
-            action="//upload.sclichang.com/api/common/upload"
+            action="//ios.yoyoacg.com/api/common/upload"
             :on-change="handleChange"
             >
             <div @click="upload" class="uploadBtn">
@@ -151,6 +151,11 @@
           </div>
           <div class="xiaoxi" >
             <div class="liji">
+              <img  v-if="newchoose" src="../../../static/image/superSignature/danxuan.png" alt="">
+              <img @click="dan0" v-else src="../../../static/image/superSignature/danweixuan.png" alt="">
+              <p>不推送</p>
+            </div>
+            <div class="liji">
               <img  v-if="choose" src="../../../static/image/superSignature/danxuan.png" alt="">
               <img @click="dan1" v-else src="../../../static/image/superSignature/danweixuan.png" alt="">
               <p>证书推送（请在推送时配置p12证书文件）</p>
@@ -189,8 +194,9 @@
           return{
             tishi:false,
             tishi1:false,
-            type:1,
-            choose:true,
+            type:0,
+            newchoose:true,
+            choose:false,
             choose1:false,
             fufei:false,
             newdeUrl:'',
@@ -249,12 +255,20 @@
         help1(){
           this.tishi1=!this.tishi1
         },
+        dan0(){
+          this.newchoose=true
+          this.choose=false
+          this.choose1=false
+          this.type=0
+        },
         dan1(){
+          this.newchoose=false
           this.choose=true
           this.choose1=false
           this.type=1
         },
         dan2(){
+          this.newchoose=false
           this.choose=false
           this.choose1=true
           this.type=2
@@ -379,7 +393,8 @@
             remark:this.beizhuInput,
             download_limit:0,
             is_update:this.gengxing,
-            download_money:this.fufeiInput
+            download_money:this.fufeiInput,
+            push_type:this.type
           }
           let config = {
             headers:{'token':localStorage.getItem('Authorization')}
@@ -387,9 +402,14 @@
           axios.post(BASE_URL+'/api/app/update',qs.stringify(data),config).then(res => {
             console.log(res.data.data)
             loading.close();
-            this.$router.push({
-              path:'/appManagement'
-            })
+            if(res.data.code==0){
+              this.$message.error(res.data.msg);
+            }else{
+              this.$router.push({
+                path:'/appManagement'
+              })
+            }
+
           }, err => {
             loading.close();
             this.$message.error('系统报错');

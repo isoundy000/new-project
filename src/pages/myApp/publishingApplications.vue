@@ -189,6 +189,11 @@
           </div>
           <div class="xiaoxi">
             <div class="liji">
+              <img  v-if="newchoose" src="../../../static/image/superSignature/danxuan.png" alt="">
+              <img @click="dan0" v-else src="../../../static/image/superSignature/danweixuan.png" alt="">
+              <p>不推送</p>
+            </div>
+            <div class="liji">
               <img  v-if="choose" src="../../../static/image/superSignature/danxuan.png" alt="">
               <img @click="dan1" v-else src="../../../static/image/superSignature/danweixuan.png" alt="">
               <p>证书推送（请在推送时配置p12证书文件）</p>
@@ -229,9 +234,10 @@
       return {
         tishi:false,
         tishi1:false,
-        push_type:1,
-        choose:true,
+        push_type:0,
+        choose:false,
         choose1:false,
+        newchoose:true,
         fufei:false,
         newdeUrl:'',
         beiInput:'',
@@ -292,12 +298,20 @@
       help1(){
         this.tishi1=!this.tishi1
       },
+      dan0(){
+        this.newchoose=true
+        this.choose=false
+        this.choose1=false
+        this.push_type=0
+      },
       dan1(){
+        this.newchoose=false
         this.choose=true
         this.choose1=false
         this.push_type=1
       },
       dan2(){
+        this.newchoose=false
         this.choose=false
         this.choose1=true
         this.push_type=2

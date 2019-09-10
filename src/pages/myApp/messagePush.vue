@@ -54,7 +54,7 @@
             <el-date-picker
               v-model="value1"
               @change="chooseTimeRange"
-              value-format="yyyy-MM-dd hh:mm:ss"
+              value-format="yyyy-MM-dd HH:mm:ss"
               align="bottom"
               type="datetime"
               placeholder="选择日期时间">
@@ -89,24 +89,24 @@
         <div class="maskContent newmaskContent">
           <div class="maskContentOne">
             <p class="text">推送标题</p>
-            <p class="textTwo">sss</p>
+            <p class="textTwo">{{newtitle}}</p>
           </div>
           <div class="maskContentOne">
             <p class="text">推送副标题</p>
-            <p class="textTwo">sss</p>
+            <p class="textTwo">{{newsubtitle}}</p>
           </div>
           <div class="maskContentOne">
             <p class="text">推送内容</p>
-            <p class="textTwo">腐蚀毒粉发第三方水电费收到发的 辅导书发生的发生的防守对方说的话酒店客房间好的是你犯了忌讳哦发收到分手的距离耗费 </p>
+            <p class="textTwo">{{newmsg}}</p>
           </div>
           <div class="maskContentOne">
             <p class="text">推送时间</p>
-            <p class="textTwo">sss</p>
+            <p class="textTwo">{{newpush_time}}</p>
           </div>
 
           <div class="maskContentOne ">
-            <p class="text">推送人群</p>
-            <p class="textTwo">sss</p>
+            <p class="text">推送人数</p>
+            <p class="textTwo">{{newequipment_num}}</p>
           </div>
 
         </div>
@@ -214,7 +214,7 @@
               label="状态">
               <template slot-scope="scope">
                 <span v-if="scope.row.status=== 1" style="color: #43A047">已推送</span>
-                <span v-else-if="scope.row.status=== 2" style="color: #999999">未推送</span>
+                <span v-else-if="scope.row.status=== 0" style="color: #999999">未推送</span>
               </template>
             </el-table-column>
             <el-table-column
@@ -234,7 +234,7 @@
         </div>
         <div class="thirdDiv">
           <p>共<span style="color: red">{{pageNumber}}</span> 页/ <span style="color: red">{{total}}</span>条记录</p>
-          <Page @on-change="indexChange" @on-page-size-change="pageChange" :page-size="4" :current="current" :total=total />
+          <Page @on-change="indexChange" @on-page-size-change="pageChange" :page-size="5" :current="current" :total=total />
         </div>
       </div>
     </div>
@@ -248,6 +248,12 @@
         name: "messagePush",
       data(){
           return{
+            newtitle:'',
+            newsubtitle:'',
+            newmsg:'',
+            newpush_time:'',
+            newequipment_num:'',
+            newpush_type:'',
             cert_url:'',
             typeState:1,
             riTime:'',
@@ -292,7 +298,7 @@
           };
           axios.post(BASE_URL+'/api/app/pushCert', qs.stringify(data), config).then(res => {
             console.log(res.data.data)
-
+            this.$message.error(res.data.msg);
           }, err => {
             console.log(err)
           })
@@ -320,10 +326,37 @@
         /*表格每一行的点击事件*/
         tableTr(row){
             this.mask1=true
+          this.newtitle=''
+          this.newsubtitle=''
+          this.newmsg=''
+          this.newpush_time=''
+          this.newequipment_num=''
+          let data = {
+            id: row.id,
+            type:2
+          }
+          let config = {
+            headers: {'token': localStorage.getItem('Authorization')}
+          };
+          axios.post(BASE_URL+'/api/push/pushHandle', qs.stringify(data), config).then(res => {
+            console.log(res.data.data)
+            this.newtitle=res.data.data.title
+            this.newsubtitle=res.data.data.subtitle
+            this.newmsg=res.data.data.msg
+            this.newpush_time=res.data.data.push_time
+            this.newequipment_num=res.data.data.equipment_num
+          }, err => {
+            console.log(err)
+          })
         },
         /*表格里面的查看*/
         chakanClick(row,id){
           this.mask1=true
+          this.newtitle=''
+          this.newsubtitle=''
+          this.newmsg=''
+          this.newpush_time=''
+          this.newequipment_num=''
           let data = {
             id: id,
             type:2
@@ -333,7 +366,11 @@
           };
           axios.post(BASE_URL+'/api/push/pushHandle', qs.stringify(data), config).then(res => {
             console.log(res.data.data)
-
+            this.newtitle=res.data.data.title
+            this.newsubtitle=res.data.data.subtitle
+            this.newmsg=res.data.data.msg
+            this.newpush_time=res.data.data.push_time
+            this.newequipment_num=res.data.data.equipment_num
           }, err => {
             console.log(err)
           })
@@ -353,10 +390,26 @@
               headers: {'token': localStorage.getItem('Authorization')}
             };
             axios.post(BASE_URL+'/api/push/pushHandle', qs.stringify(data), config).then(res => {
-              console.log(res.data.data)
-              this.total=res.data.data.total
-              this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
-              this.tableData=res.data.data.list
+              let data = {
+                app_id: this.$route.query.id,
+                start:this.startTime,
+                end:this.endTime,
+                page:1,
+                page_size:5
+              }
+              let config = {
+                headers: {'token': localStorage.getItem('Authorization')}
+              };
+              axios.post(BASE_URL+'/api/push/pushLog', qs.stringify(data), config).then(res => {
+                console.log(res.data.data)
+                this.isHave=res.data.data.cert_path
+                this.total=res.data.data.total
+                this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
+                this.tableData=res.data.data.list
+                this.newpush_type=res.data.data.push_type
+              }, err => {
+                console.log(err)
+              })
             }, err => {
               console.log(err)
             })
@@ -370,42 +423,77 @@
           this.endTime=this.value[1]
           console.log(this.value[0])
           console.log(this.value[1])
+          let data = {
+            app_id: this.$route.query.id,
+            start:this.startTime,
+            end:this.endTime,
+            page:1,
+            page_size:5
+          }
+          let config = {
+            headers: {'token': localStorage.getItem('Authorization')}
+          };
+          axios.post(BASE_URL+'/api/push/pushLog', qs.stringify(data), config).then(res => {
+            console.log(res.data.data)
+            this.isHave=res.data.data.cert_path
+            this.total=res.data.data.total
+            this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
+            this.tableData=res.data.data.list
+            this.newpush_type=res.data.data.push_type
+
+
+          }, err => {
+            console.log(err)
+          })
         },
         /*上下页翻页*/
         indexChange(i){
-          console.log(i)
-          // let data={
-          //   keywords:this.input,
-          //   page:i,
-          //   page_size:4,
-          // }
-          // let config = {
-          //   headers:{'token':localStorage.getItem('Authorization')}
-          // };
-          // axios.post(BASE_URL+'/api/app/resign_free',qs.stringify(data),config).then(res => {
-          //   console.log(res.data)
-          //   console.log(res.data.data.list)
-          //   this.total=res.data.data.total
-          //   this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
-          //   this.tableData=res.data.data.list
-          // }, err => {
-          //   console.log(err)
-          // })
+          let data = {
+            app_id: this.$route.query.id,
+            start:this.startTime,
+            end:this.endTime,
+            page:i,
+            page_size:5
+          }
+          let config = {
+            headers: {'token': localStorage.getItem('Authorization')}
+          };
+          axios.post(BASE_URL+'/api/push/pushLog', qs.stringify(data), config).then(res => {
+            console.log(res.data.data)
+            this.isHave=res.data.data.cert_path
+            this.total=res.data.data.total
+            this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
+            this.tableData=res.data.data.list
+            this.newpush_type=res.data.data.push_type
+          }, err => {
+            console.log(err)
+          })
         },
         pageChange(s){
           console.log(s)
         },
         /*创建推送计划*/
         plan(){
-          if(this.isHave==1){
+          this.pushTitle=''
+          this.fupushTitle=''
+          this.pushContent=''
+          this.choose=true
+          this.choose1=true
+          this.timeShow=false
+          this.value1=''
+          if(this.newpush_type==2){
             this.mask=true
           }else{
-            this.mask2=true
+            if(this.isHave==1){
+              this.mask=true
+            }else{
+              this.mask2=true
+            }
           }
-
         },
         /*推送方式配置*/
         planSet(){
+          this.zhengPass=''
           this.mask4=true
         },
         /*关闭按钮*/
@@ -441,17 +529,30 @@
           let config = {
             headers: {'token': localStorage.getItem('Authorization')}
           };
-          axios.post(BASE_URL+'/api/push/pushLog', qs.stringify(data), config).then(res => {
+          axios.post(BASE_URL+'/api/push/sendMessage', qs.stringify(data), config).then(res => {
             console.log(res.data.data)
-            this.total=res.data.data.total
-            this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
-            this.tableData=res.data.data.list
-
-            if(res.data.data.push_type==1){
-              this.isTui=true
-            }else{
-              this.isTui=false
+            let data = {
+              app_id: this.$route.query.id,
+              start:this.startTime,
+              end:this.endTime,
+              page:1,
+              page_size:5
             }
+            let config = {
+              headers: {'token': localStorage.getItem('Authorization')}
+            };
+            axios.post(BASE_URL+'/api/push/pushLog', qs.stringify(data), config).then(res => {
+              console.log(res.data.data)
+              this.isHave=res.data.data.cert_path
+              this.total=res.data.data.total
+              this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
+              this.tableData=res.data.data.list
+              this.newpush_type=res.data.data.push_type
+
+
+            }, err => {
+              console.log(err)
+            })
           }, err => {
             console.log(err)
           })
@@ -507,11 +608,12 @@
         };
         axios.post(BASE_URL+'/api/push/pushLog', qs.stringify(data), config).then(res => {
           console.log(res.data.data)
+        //  alert(res.data.data.push_type)
           this.isHave=res.data.data.cert_path
           this.total=res.data.data.total
           this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
           this.tableData=res.data.data.list
-
+          this.newpush_type=res.data.data.push_type
           if(res.data.data.push_type==1){
               this.isTui=true
           }else{

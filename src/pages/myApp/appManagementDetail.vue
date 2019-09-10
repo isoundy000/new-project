@@ -13,7 +13,7 @@
   </div>
   <div class="secondDiv">
     <div class="header_title">
-      <p @click="appClick(index,list.isclass)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass} ">{{list.msg}}</p>
+      <p @click="appClick(index,list.isclass,list.isHide)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass,'ishide':list.isHide} ">{{list.msg}}</p>
     </div>
     <keep-alive>
       <router-view v-if="$route.meta.keepAlive"></router-view>
@@ -26,7 +26,10 @@
 </template>
 
 <script>
+  import  axios from 'axios'
   import {BASE_URL} from "../../api";
+  import qs from 'qs'
+
     export default {
         name: "appManagementDetail",
       data(){
@@ -34,40 +37,49 @@
             title: [
               {
                 msg: '应用简介',
-                isclass: true
+                isclass: true,
+                isHide:false
               },
               {
                 msg: '版本记录',
-                isclass: false
+                isclass: false,
+                isHide:false
               },
               {
                 msg: '下载记录',
-                isclass: false
+                isclass: false,
+                isHide:false
               },
               {
                 msg: '消费记录',
-                isclass: false
+                isclass: false,
+                isHide:false
               },
               {
                 msg: '补签收费记录',
-                isclass: false
+                isclass: false,
+                isHide:false
               },
               {
                 msg: '统计',
-                isclass: false
+                isclass: false,
+                isHide:false
               },
 
               {
                 msg: '异常预警',
-                isclass: false
+                isclass: false,
+                isHide:false
               },
               {
                 msg: '应用合并',
-                isclass: false
+                isclass: false,
+                isHide:false
               },
               {
                 msg: '消息推送',
-                isclass: false
+                isclass: false,
+                isHide:false
               },
 
             ]
@@ -150,6 +162,14 @@
         },
       },
       mounted(){
+        //  alert(this.$route.query.push_type)
+        if(this.$route.query.push_type==0){
+          this.title[8].isHide=true
+        }else{
+          this.title[8].isHide=false
+        }
+
+
          // alert(this.$route.query.id)
       }
     }
@@ -210,5 +230,8 @@
     color: #06B2B6;
     background-color: white;
     border-top: 2px solid #06B2B6;
+  }
+  .ishide{
+    display: none;
   }
 </style>

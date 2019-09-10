@@ -130,7 +130,7 @@
           label="操作"
           width="130">
           <template slot-scope="scope">
-            <el-select  class="downSum" @change="allApp(scope.$index,tableData[scope.$index].operation,tableData[scope.$index].id,tableData,tableData[scope.$index].url,tableData[scope.$index].name,tableData[scope.$index].apk_url)"
+            <el-select  class="downSum" @change="allApp(scope.$index,tableData[scope.$index].operation,tableData[scope.$index].id,tableData,tableData[scope.$index].url,tableData[scope.$index].name,tableData[scope.$index].apk_url,tableData[scope.$index].push_type)"
                        v-model="tableData[scope.$index].operation" placeholder="请选择">
               <el-option
                 v-for="item in downSumOptions"
@@ -204,7 +204,8 @@
           query:{
             id:row.id,
             name:row.name,
-            apk_url:row.apk_url
+            apk_url:row.apk_url,
+            push_type:row.push_type
           }
         })
       },
@@ -284,7 +285,7 @@
         a.click()
       },
       /*下拉菜单*/
-      allApp(index, nameValue,id,rows,url,name,apk_url) {
+      allApp(index, nameValue,id,rows,url,name,apk_url,push_type) {
 
         if (nameValue == '下载链接') {
           this.isMask = true
@@ -311,7 +312,8 @@
             query:{
               id:id,
               name:name,
-              apk_url:apk_url
+              apk_url:apk_url,
+              push_type:push_type
             }
           })
 
