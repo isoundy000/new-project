@@ -146,6 +146,7 @@
                 :on-success="success"
                 class="upload-demo"
                 accept=".p12"
+                :on-remove="handleRemove"
                 action="//ios.yoyoacg.com/api/common/upload"
                 :on-change="handleChange"
               >
@@ -298,7 +299,18 @@
           };
           axios.post(BASE_URL+'/api/app/pushCert', qs.stringify(data), config).then(res => {
             console.log(res.data.data)
-            this.$message.error(res.data.msg);
+
+            if(res.data.code==0){
+              this.isHave=0
+              this.$message.error(res.data.msg);
+            }else{
+              this.isHave=1
+              this.$message({
+                message: '保存成功',
+                type: 'success'
+              });
+            }
+
           }, err => {
             console.log(err)
           })
@@ -542,12 +554,23 @@
               headers: {'token': localStorage.getItem('Authorization')}
             };
             axios.post(BASE_URL+'/api/push/pushLog', qs.stringify(data), config).then(res => {
-              console.log(res.data.data)
-              this.isHave=res.data.data.cert_path
-              this.total=res.data.data.total
-              this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
-              this.tableData=res.data.data.list
-              this.newpush_type=res.data.data.push_type
+              if(res.data.code==0){
+                this.$message.error(res.data.msg);
+              }else{
+                this.$message({
+                  message: '新增成功',
+                  type: 'success'
+                });
+                console.log(res.data.data)
+                this.isHave=res.data.data.cert_path
+                this.total=res.data.data.total
+                this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
+                this.tableData=res.data.data.list
+                this.newpush_type=res.data.data.push_type
+              }
+
+
+
 
 
             }, err => {
@@ -565,6 +588,10 @@
         chooseTimeRange(t) {
           this.riTime=t
           console.log(t);
+        },
+        handleRemove(file, fileList) {
+          console.log(file, fileList);
+          this.cert_url=''
         },
         /*上传p12文件成功返回的参数*/
         success(response, file, fileList) {
