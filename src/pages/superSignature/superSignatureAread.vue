@@ -580,6 +580,8 @@
       },
       /*修改密码*/
       modify(){
+        var token=localStorage.getItem('Authorization');
+        this.$store.commit('del_token',token)
         this.$router.push({
           path:'/forget'
         })

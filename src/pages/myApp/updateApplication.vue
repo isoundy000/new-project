@@ -22,7 +22,7 @@
             :on-success="success"
             class="upload-demo"
             accept=".ipa"
-            action="//ios.yoyoacg.com/api/common/upload"
+            action="//upload.sclichang.com/api/common/upload"
             :on-change="handleChange"
             >
             <div @click="upload" class="uploadBtn">
@@ -118,6 +118,7 @@
             </el-dialog>
           </div>
         </div>
+        <p style="margin-top: 10px">(建议横图上传2208*1242，竖图1242*2208)</p>
         <div class="supplementSeventh">
           <p>应用介绍</p>
           <el-input
@@ -141,9 +142,9 @@
             v-model="textarea1">
           </el-input>
         </div>
-        <div class="supplementEightth xiaoxituisong">
+        <div class="supplementEightth xiaoxituisong" v-show="istuisong">
           <p style="margin-left: 70px">消息推送</p>
-          <img style="margin-left: 5px;width: 20px;height: 20px" @click="help" src="../../../static/image/superSignature/help.png" alt="">
+          <img style="margin-left: 5px;width: 20px;height: 20px" @click="help" @mouseleave="helpleave()" src="../../../static/image/superSignature/help.png" alt="">
           <div v-if="tishi" class="kuang" style="background-image: url('../../../static/image/superSignature/kuang.png')">
             <p>
               消息推送可提高用户活跃度及应用留存率，但会影响第三方(微信、QQ等)登录。
@@ -167,7 +168,7 @@
             </div>
             <div class="please">
               <p class="pleaseText">请谨慎选择！</p>
-              <img style="margin-left: 5px;width: 20px;height: 20px" @click="help1" src="../../../static/image/superSignature/help.png" alt="">
+              <img style="margin-left: 5px;width: 20px;height: 20px" @click="help1" @mouseleave="helpleave1()" src="../../../static/image/superSignature/help.png" alt="">
               <div v-if="tishi1" class="kuang1" style="background-image: url('../../../static/image/superSignature/kuang.png')">
                 <p>
                   已上传的应用再修改消息提醒方式，可能会导致已安装用户无法正常使用。需要重新上传应用包，选择消息推送后让用户重新下载
@@ -192,6 +193,8 @@
         name: "updateApplication",
       data(){
           return{
+            push_type:'',
+            istuisong:false,
             tishi:false,
             tishi1:false,
             type:0,
@@ -254,6 +257,12 @@
         },
         help1(){
           this.tishi1=!this.tishi1
+        },
+        helpleave1(){
+          this.tishi1=false
+        },
+        helpleave(){
+          this.tishi=false
         },
         dan0(){
           this.newchoose=true
@@ -333,6 +342,20 @@
           this.thirdInput2=this.version_code
           this.icon1=file.response.data.app.icon
           this.img.push(file.response.data.app.img)
+          this.istuisong=true
+          if(this.push_type==0){
+            this.newchoose=true
+            this.choose=false
+            this.choose1=false
+          }else if(this.push_type==1){
+            this.newchoose=false
+            this.choose=true
+            this.choose1=false
+          }else{
+            this.newchoose=false
+            this.choose=false
+            this.choose1=true
+          }
           console.log(this.img)
           console.log('图片上传成功的时候的img集合',file.response.data.app.img)
         },
@@ -440,6 +463,7 @@
           this.beizhuInput=res.data.data.remark
           this.xianzhiInput=res.data.data.download_limit
           this.package_name=res.data.data.package_name
+          this.push_type=res.data.data.push_type
           if(res.data.data.download_money!=0){
             this.switchValue2=true
             this.fufei=true

@@ -20,7 +20,7 @@ import store from './store';
 // Vue.prototype.axios = axios
 import Video from 'video.js'
 import 'video.js/dist/video-js.css'
-
+import {BASE_URL} from "./api";
 Vue.prototype.$video = Video
 Vue.prototype.$http = axios
 
@@ -61,6 +61,27 @@ Vue.config.productionTip = false
 // });
 //判断是否需要登录权限 以及是否登录
 router.beforeEach((to, from, next) => {
+  if(to.path=='/' || to.path=='/login' || to.path=='/forget' || to.path=='/register'){
+  }else{
+    /*判断token过期没有*/
+    let config = {
+      headers: {'token': localStorage.getItem('Authorization')}
+    };
+    axios.get(BASE_URL+'/api/token/check',config)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err=>{
+        console.log(err)
+        next({
+          path: '/login'
+        })
+      })
+  }
+
+
+
+
   if (to.matched.some(res => res.meta.requireAuth)) {// 判断是否需要登录权限
     if (localStorage.getItem('Authorization')){// 判断是否登录
       next()

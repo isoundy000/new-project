@@ -1,11 +1,11 @@
 <template>
   <div class="register">
     <div class="login_title">
-      <img src="../../../static/image/superSignature/mumuunlogo.png" alt="">
+      <img src="../../../static/image/superSignature/mlogo.png" alt="">
 
       <div class="login_title_div">
         <router-link to="/" tag="p">首页</router-link>
-        <p>关于我们</p>
+        <!--<p>关于我们</p>-->
       </div>
     </div>
     <div class="banner" style="background-image: url('../../../static/image/login/dengluditu.png')">
@@ -260,7 +260,7 @@
   }
 
   .login_title img {
-    width: 99px;
+    width: 143px;
     height: 39px;
     margin-left: 18.8vw;
   }

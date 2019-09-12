@@ -2,7 +2,7 @@
   <div class="applicationMerge">
     <div class="applicationMergeOne">
       <p>Andriod下载地址</p>
-      <img @click="bangzhu" class="bangzhu" src="../../../static/image/superSignature/bangzhu.png" alt="">
+      <img @click="bangzhu" @mouseleave="helpleave()" class="bangzhu" src="../../../static/image/superSignature/bangzhu.png" alt="">
       <div v-if="tishi" class="kuang" style="background-image: url('../../../static/image/superSignature/kuang.png')">
         <p>
           Andriod手机打开您的下载地址
@@ -57,6 +57,9 @@
       bangzhu(){
         this.tishi=!this.tishi
       },
+      helpleave(){
+        this.tishi=false
+      },
       /*上传文件*/
       handleChange(file, fileList) {
         this.fileList = fileList.slice(-3);
@@ -89,7 +92,18 @@
     },
     mounted(){
       this.newdeUrl=BASE_URL+'/api/common/upload'
-      this.downInput=this.$route.query.apk_url
+      let data={
+        id:this.$route.query.id
+      }
+      let config = {
+        headers:{'token':localStorage.getItem('Authorization')}
+      };
+      axios.post(BASE_URL+'/api/app/appDes',qs.stringify(data),config).then(res => {
+        console.log(res.data.data)
+        this.downInput=res.data.data.apk_url
+      }, err => {
+        console.log(err)
+      })
 
     }
   }

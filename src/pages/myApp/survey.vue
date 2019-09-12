@@ -124,8 +124,8 @@
             <el-option
               v-for="item in chooseAppOptions"
               :key="item.id"
-              :label="item.label"
-              :value="item.value">
+              :label="item.value"
+              :value="item.id">
             </el-option>
           </el-select>
           <DatePicker class="sec" size="large" @on-change="secondTime(value1=$event)" v-model="value1" format="yyyy-MM-dd" :clearable=false
@@ -199,6 +199,7 @@
         downSumValue:'',//区域新用户下载量里面的新用户下载量下拉菜单选中的值
         allAppValue:'',//区域新用户下载量里面的所有应用的下拉菜单选中的值
         id:'',
+        neid:'',
         dituList:'',
         areaName:[],
         loading:false
@@ -1045,13 +1046,14 @@
       allApp(){
         console.log(this.allAppValue)
         var that=this
-        let obj = {};
-        obj = this.chooseAppOptions.find((item)=>{//这里的userList就是上面遍历的数据源
-          return item.value === this.allAppValue;//筛选出匹配数据
-        });
-        var id=obj.id
+        // let obj = {};
+        // obj = this.chooseAppOptions.find((item)=>{//这里的userList就是上面遍历的数据源
+        //   return item.value === this.allAppValue;//筛选出匹配数据
+        // });
+        // var id=obj.id
+        this.neid=this.allAppValue
         let data3={
-          id:id,
+          id:this.neid,
           start:this.starTime,
           end:this.endTime
         }

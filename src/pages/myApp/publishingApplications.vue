@@ -46,7 +46,7 @@
             :on-success="success"
             drag
             accept=".ipa"
-            action="//ios.yoyoacg.com/api/common/upload"
+            action="//upload.sclichang.com/api/common/upload"
             multiple>
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -156,6 +156,7 @@
             </el-dialog>
           </div>
         </div>
+        <p style="margin-left: 50px;margin-top: 10px">(建议横图上传2208*1242，竖图1242*2208)</p>
         <div class="supplementSeventh">
           <p>应用介绍</p>
           <el-input

@@ -18,7 +18,7 @@
             >
             </el-table-column>
             <el-table-column
-              prop="system_version"
+              prop="version_code"
               label="版本号"
             >
             </el-table-column>

@@ -147,7 +147,7 @@
                 class="upload-demo"
                 accept=".p12"
                 :on-remove="handleRemove"
-                action="//ios.yoyoacg.com/api/common/upload"
+                action="//upload.sclichang.com/api/common/upload"
                 :on-change="handleChange"
               >
                 <div  class="uploadBtn">
