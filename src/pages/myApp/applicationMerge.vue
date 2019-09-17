@@ -26,7 +26,7 @@
           :limit='limitCount'
           :on-success="success"
           accept=".apk"
-          action="//upload.sclichang.com/api/common/upload"
+          :action="upload_url"
           :on-change="handleChange"
           multiple>
           <i class="el-icon-upload"></i>
@@ -40,13 +40,14 @@
 </template>
 
 <script>
-  import {BASE_URL} from "../../api";
+  import {BASE_URL,UPLOAD_BASE_URL} from "../../api";
   import  axios from 'axios'
   import qs from 'qs'
   export default {
     name: "applicationMerge",
     data() {
       return {
+        upload_url:'',
         limitCount:1,
         downInput: '',
         tishi:false,
@@ -92,6 +93,7 @@
     },
     mounted(){
       this.newdeUrl=BASE_URL+'/api/common/upload'
+      this.upload_url=UPLOAD_BASE_URL
       let data={
         id:this.$route.query.id
       }

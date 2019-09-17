@@ -22,7 +22,7 @@
             :on-success="success"
             class="upload-demo"
             accept=".ipa"
-            action="//upload.sclichang.com/api/common/upload"
+            :action="upload_url"
             :on-change="handleChange"
             >
             <div @click="upload" class="uploadBtn">
@@ -186,18 +186,19 @@
 </template>
 
 <script>
-  import {BASE_URL} from "../../api";
+  import {BASE_URL,UPLOAD_BASE_URL} from "../../api";
   import  axios from 'axios'
   import qs from 'qs'
     export default {
         name: "updateApplication",
       data(){
           return{
+            upload_url:'',
             push_type:'',
             istuisong:false,
             tishi:false,
             tishi1:false,
-            type:0,
+            type:'',
             newchoose:true,
             choose:false,
             choose1:false,
@@ -268,19 +269,19 @@
           this.newchoose=true
           this.choose=false
           this.choose1=false
-          this.type=0
+          this.push_type=0
         },
         dan1(){
           this.newchoose=false
           this.choose=true
           this.choose1=false
-          this.type=1
+          this.push_type=1
         },
         dan2(){
           this.newchoose=false
           this.choose=false
           this.choose1=true
-          this.type=2
+          this.push_type=2
         },
           /*上传文件*/
         handleChange(file, fileList) {
@@ -417,7 +418,7 @@
             download_limit:0,
             is_update:this.gengxing,
             download_money:this.fufeiInput,
-            push_type:this.type
+            push_type:this.push_type
           }
           let config = {
             headers:{'token':localStorage.getItem('Authorization')}
@@ -442,6 +443,7 @@
       mounted(){
           this.ss=BASE_URL
         this.newdeUrl=BASE_URL+'/api/common/upload'
+        this.upload_url=UPLOAD_BASE_URL
         let data={
           id:this.$route.query.id
         }

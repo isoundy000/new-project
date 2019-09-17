@@ -26,8 +26,11 @@ import billInvest from '@/pages/myApp/billInvest'//我的应用--账单管理--�
 import publishingApplications from '@/pages/myApp/publishingApplications'//我的应用--发布路由
 import realName from '@/pages/myApp/realName'//我的应用--实名认证
 import personal from '@/pages/myApp/personal'//我的应用--实名认证--个人认证
-import enterprise from '@/pages/myApp/enterprise'//我的应用--实名认证--企业认证
+
 import updateApplication from '@/pages/myApp/updateApplication'//我的应用--更新应用
+import enterprise from '@/pages/myApp/enterprise'//企业签名
+import enterprisePubish from '@/pages/myApp/enterprisePubish'//企业签名-发布应用
+
 
 
 
@@ -96,50 +99,49 @@ const router = new Router({
             {
               path: '/',
               name: 'applicationProfile',
-              component: applicationProfile,
-              meta:{keepAlive:true}
+              component: applicationProfile
+
             },
             {
               path: '/versionRecord',
               name: 'versionRecord',
-              component: versionRecord,
-              meta:{keepAlive:true}
+              component: versionRecord
+
             },
             {
               path: '/downLoadRecord',
               name: 'downLoadRecord',
-              component: downLoadRecord,
-              meta:{keepAlive:true}
+              component: downLoadRecord
+
             },
             {
               path: '/consumptionRecord',
               name: 'consumptionRecord',
-              component: consumptionRecord,
-              meta:{keepAlive:true}
+              component: consumptionRecord
+
             },
             {
               path: '/buqianRecord',
               name: 'buqianRecord',
-              component: buqianRecord,
-              meta:{keepAlive:true}
+              component: buqianRecord
+
             },
             {
               path: '/statistics',
               name: 'statistics',
-              component: statistics,
-              meta:{keepAlive:true}
+              component: statistics
+
             },
             {
               path: '/abnormal',
               name: 'abnormal',
-              component: abnormal,
-              meta:{keepAlive:true}
+              component: abnormal
+
             },
             {
               path: '/applicationMerge',
               name: 'applicationMerge',
-              component: applicationMerge,
-              meta:{keepAlive:true}
+              component: applicationMerge
             },
             {
               path: '/messagePush',
@@ -200,22 +202,27 @@ const router = new Router({
             requireAuth: true
           }
         },
-        {
-          path: '/enterprise',
-          name: 'enterprise',
-          component: enterprise,
-          meta: {
-            requireAuth: true
-          }
-        }
-
-
-
-
-
-
       ]
     },
+    {
+      path: '/enterprise',
+      name: 'enterprise',
+      component: enterprise,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/enterprisePubish',
+      name: 'enterprisePubish',
+      component: enterprisePubish,
+      meta: {
+        requireAuth: true
+      }
+    },
+
+
+
 
 
 

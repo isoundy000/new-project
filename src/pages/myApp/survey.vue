@@ -141,7 +141,7 @@
                 <p style="margin-top: 10px" v-for="(list,index) in areaName" :key="index">{{list.name}}</p>
               </div>
               <div class="newUser">
-                <p>下载量</p>
+                <p>访问量</p>
                 <p style="margin-top: 10px" v-for="(list,index) in areaName" :key="index">{{list.value}}</p>
               </div>
             </div>

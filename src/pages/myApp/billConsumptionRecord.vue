@@ -35,6 +35,7 @@
           <el-table-column
             prop="name"
             label="应用名称"
+            align="center"
            >
           </el-table-column>
           <!--<el-table-column-->
@@ -51,21 +52,26 @@
             prop="create_time"
             label="日期"
             width="160"
+            align="center"
           >
           </el-table-column>
           <el-table-column
             prop="udid"
-            label="设备号">
+            label="设备号"
+            align="center"
+          >
           </el-table-column>
           <el-table-column
             prop="moeny"
             label="消费金额"
+            align="center"
           >
           </el-table-column>
 
           <el-table-column
             prop="state"
             label="服务状态"
+            align="center"
            >
             <template slot-scope="scope">
               <span v-if="scope.row.status=== 1" style="color: #43A047">已完成</span>
@@ -137,24 +143,40 @@
           var state;
           if(this.appName=='已完成'){
             state=1
+            let data={
+              status:state,
+              page_size:6
+            }
+            let config = {
+              headers:{'token':localStorage.getItem('Authorization')}
+            };
+            axios.post(BASE_URL+'/api/app/appPayRecord',qs.stringify(data),config).then(res => {
+              console.log(res.data.data)
+              this.tableData=res.data.data.list
+              this.total=res.data.data.total
+              this.pageNumber=parseInt(Math.ceil(Number(this.total)/6))
+            }, err => {
+              console.log(err)
+            })
           }else if(this.appName=='补签'){
             state=2
+            let data={
+              status:state,
+              page_size:6
+            }
+            let config = {
+              headers:{'token':localStorage.getItem('Authorization')}
+            };
+            axios.post(BASE_URL+'/api/app/resign_free',qs.stringify(data),config).then(res => {
+              console.log(res.data.data)
+              this.tableData=res.data.data.list
+              this.total=res.data.data.total
+              this.pageNumber=parseInt(Math.ceil(Number(this.total)/6))
+            }, err => {
+              console.log(err)
+            })
           }
-          let data={
-            status:state,
-            page_size:6
-          }
-          let config = {
-            headers:{'token':localStorage.getItem('Authorization')}
-          };
-          axios.post(BASE_URL+'/api/app/appPayRecord',qs.stringify(data),config).then(res => {
-            console.log(res.data.data)
-            this.tableData=res.data.data.list
-            this.total=res.data.data.total
-            this.pageNumber=parseInt(Math.ceil(Number(this.total)/6))
-          }, err => {
-            console.log(err)
-          })
+
         },
         firstTime(value){
           let data={

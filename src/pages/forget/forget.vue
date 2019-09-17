@@ -386,7 +386,7 @@
     width: 90%;
     height: 40px;
     border: 0;
-    font-size: 1vw;
+    font-size: 15px;
     padding-left: 20px;
     border-radius: 8px;
     outline: none;

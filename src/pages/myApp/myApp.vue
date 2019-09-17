@@ -23,7 +23,8 @@
             </span>
               <el-dropdown-menu placement=top  class="xiala" slot="dropdown">
                 <!--<el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>-->
-                <el-dropdown-item>实名认证</el-dropdown-item>
+                <!--<el-dropdown-item>实名认证</el-dropdown-item>-->
+                <el-dropdown-item @click.native="recharge">充值</el-dropdown-item>
                 <el-dropdown-item>我的余额:￥{{money}}</el-dropdown-item>
                 <el-dropdown-item @click.native="modify">修改密码</el-dropdown-item>
                 <el-dropdown-item @click.native="signOut">退出</el-dropdown-item>
@@ -104,16 +105,7 @@
 
 
     },
-    // computed: {
-    //   money () {
-    //     alert("2")
-    //     return localStorage.getItem('balance')
-    //   }
-    // },
-    // beforeRouteUpdate() {
-    //   this.money=localStorage.getItem('balance');
-    //   this.userName=localStorage.getItem('userName');
-    // },
+
 
     methods: {
       appClick(index){
@@ -183,20 +175,7 @@
           path: '/register'
         })
       },
-      // /*顶部标题移入效果*/
-      // enter(index) {
-      //   for(var i=0;i<this.title.length;i++){
-      //     this.title[i].isclass=false
-      //   }
-      //   this.title[index].isclass=true
-      // },
-      // /*顶部标题移出效果*/
-      // leave() {
-      //   for(var i=0;i<this.title.length;i++){
-      //     this.title[i].isclass=false
-      //   }
-      //   this.title[0].isclass=true
-      // },
+
       goHome(){
         this.$router.push({
           path: '/superSignatureAread'
@@ -205,6 +184,11 @@
       realName(){
         this.$router.push({
           path:'/realName'
+        })
+      },
+      recharge(){
+        this.$router.push({
+          name:'billManagement'
         })
       },
       /*修改密码*/

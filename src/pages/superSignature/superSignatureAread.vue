@@ -38,7 +38,8 @@
             </span>
               <el-dropdown-menu placement=top  class="xiala" slot="dropdown">
                 <!--<el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>-->
-                <el-dropdown-item>实名认证</el-dropdown-item>
+                <!--<el-dropdown-item>实名认证</el-dropdown-item>-->
+                <el-dropdown-item @click.native="recharge">充值</el-dropdown-item>
                 <el-dropdown-item>我的余额:￥{{money}}</el-dropdown-item>
                 <el-dropdown-item @click.native="modify">修改密码</el-dropdown-item>
                 <el-dropdown-item @click.native="signOut">退出</el-dropdown-item>
@@ -456,6 +457,9 @@
           // alert("点击了专属签名")
         } else if (index == 2) {
           // alert("点击了企业签名")
+         this.$router.push({
+           name:'enterprise'
+         })
         } else if (index == 3) {
            // alert("点击了购买服务")
          this.$router.push({
@@ -576,6 +580,14 @@
         alert("0.0.")
         this.$router.push({
           path:'/realName'
+        })
+      },
+      recharge(){
+        this.$router.push({
+          name:'myApp',
+          params:{
+            newid: 0
+          }
         })
       },
       /*修改密码*/

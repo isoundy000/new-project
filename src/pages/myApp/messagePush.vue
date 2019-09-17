@@ -147,7 +147,7 @@
                 class="upload-demo"
                 accept=".p12"
                 :on-remove="handleRemove"
-                action="//upload.sclichang.com/api/common/upload"
+                :action="newdeUrl"
                 :on-change="handleChange"
               >
                 <div  class="uploadBtn">
@@ -243,12 +243,13 @@
 
 <script>
   import  axios from 'axios'
-  import {BASE_URL} from "../../api";
+  import {BASE_URL,UPLOAD_BASE_URL} from "../../api";
   import qs from 'qs'
     export default {
         name: "messagePush",
       data(){
           return{
+            upload_url:'',
             newtitle:'',
             newsubtitle:'',
             newmsg:'',
@@ -282,7 +283,8 @@
             current:1,
             tableData: [
 
-            ]
+            ],
+            newdeUrl:''
           }
       },
       methods:{
@@ -543,39 +545,38 @@
           };
           axios.post(BASE_URL+'/api/push/sendMessage', qs.stringify(data), config).then(res => {
             console.log(res.data.data)
-            let data = {
-              app_id: this.$route.query.id,
-              start:this.startTime,
-              end:this.endTime,
-              page:1,
-              page_size:5
-            }
-            let config = {
-              headers: {'token': localStorage.getItem('Authorization')}
-            };
-            axios.post(BASE_URL+'/api/push/pushLog', qs.stringify(data), config).then(res => {
-              if(res.data.code==0){
-                this.$message.error(res.data.msg);
-              }else{
-                this.$message({
-                  message: '新增成功',
-                  type: 'success'
-                });
-                console.log(res.data.data)
-                this.isHave=res.data.data.cert_path
-                this.total=res.data.data.total
-                this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
-                this.tableData=res.data.data.list
-                this.newpush_type=res.data.data.push_type
+            if(res.data.code==0){
+              this.$message.error(res.data.msg);
+            }else{
+              let data = {
+                app_id: this.$route.query.id,
+                start:this.startTime,
+                end:this.endTime,
+                page:1,
+                page_size:5
               }
-
-
-
-
-
-            }, err => {
-              console.log(err)
-            })
+              let config = {
+                headers: {'token': localStorage.getItem('Authorization')}
+              };
+              axios.post(BASE_URL+'/api/push/pushLog', qs.stringify(data), config).then(res => {
+                if(res.data.code==0){
+                  this.$message.error(res.data.msg);
+                }else{
+                  this.$message({
+                    message: '新增成功',
+                    type: 'success'
+                  });
+                  console.log(res.data.data)
+                  this.isHave=res.data.data.cert_path
+                  this.total=res.data.data.total
+                  this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
+                  this.tableData=res.data.data.list
+                  this.newpush_type=res.data.data.push_type
+                }
+              }, err => {
+                console.log(err)
+              })
+            }
           }, err => {
             console.log(err)
           })
@@ -623,6 +624,8 @@
 
       },
       mounted(){
+        this.upload_url=UPLOAD_BASE_URL
+        this.newdeUrl=BASE_URL+'/api/common/upload'
         let data = {
           app_id: this.$route.query.id,
           start:this.startTime,
