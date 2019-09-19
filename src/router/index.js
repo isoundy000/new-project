@@ -30,6 +30,10 @@ import personal from '@/pages/myApp/personal'//我的应用--实名认证--个�
 import updateApplication from '@/pages/myApp/updateApplication'//我的应用--更新应用
 import enterprise from '@/pages/myApp/enterprise'//企业签名
 import enterprisePubish from '@/pages/myApp/enterprisePubish'//企业签名-发布应用
+import encapsulationindex from '@/pages/encapsulation/encapsulationindex'//应用封装
+import applist from '@/pages/encapsulation/applist'//应用封装-列表
+import noFlash from '@/pages/encapsulation/noFlash'//应用封装-苹果无闪退
+
 
 
 
@@ -220,6 +224,28 @@ const router = new Router({
         requireAuth: true
       }
     },
+    {
+      path: '/encapsulationindex',
+      name: 'encapsulationindex',
+      component: encapsulationindex,
+      meta: {
+        requireAuth: true
+      },
+      children:[
+        {
+          path: '/',
+          name: 'applist',
+          component: applist,
+        },
+        {
+          path: '/noFlash',
+          name: 'noFlash',
+          component: noFlash,
+        }
+
+      ]
+    },
+
 
 
 

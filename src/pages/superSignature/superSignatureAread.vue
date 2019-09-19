@@ -1,5 +1,26 @@
 <template>
   <div class="login">
+    <Modal
+      v-model="modal1"
+      title="修改密码"
+      :mask-closable="false"
+      class="motai"
+    >
+      <div class="demo-input-suffix">
+        <p>旧密码：</p>
+        <el-input v-model="usedPass" placeholder="请输入旧密码"></el-input>
+      </div>
+      <div class="demo-input-suffix">
+        <p>新密码：</p>
+        <el-input v-model="newPass" placeholder="请输入新密码"></el-input>
+      </div>
+      <div class="demo-input-suffix">
+        <p>确认密码：</p>
+        <el-input v-model="confirmPass" placeholder="请确认密码"></el-input>
+      </div>
+
+      <div @click="ok" class="queOk" slot="footer" >确认</div>
+    </Modal>
     <div class="qqBig">
       <div class="qq">
         <img class="qqtouxiang" src="../../../static/image/superSignature/ren.png" alt="">
@@ -308,6 +329,10 @@
         name: "index",
         data() {
           return {
+            usedPass:'',
+            newPass:'',
+            confirmPass:'',
+            modal1:false,
             aUrl:'',
             qqValue:[],
             title: [
@@ -325,6 +350,10 @@
               },
               {
                 msg: '企业签名',
+                isclass: false
+              },
+              {
+                msg: '应用封装',
                 isclass: false
               },
               {
@@ -461,6 +490,11 @@
            name:'enterprise'
          })
         } else if (index == 3) {
+        // alert("点击了应用封装")
+         this.$router.push({
+           path:'/encapsulationindex'
+         })
+       } else if (index == 4) {
            // alert("点击了购买服务")
          this.$router.push({
            name:'myApp',
@@ -468,7 +502,7 @@
              newid: 0
            }
          })
-        } else if (index == 4) {
+        } else if (index ==5) {
          const h = this.$createElement;
          this.$msgbox({
            message: h('p', null, [
@@ -592,11 +626,40 @@
       },
       /*修改密码*/
       modify(){
-        var token=localStorage.getItem('Authorization');
-        this.$store.commit('del_token',token)
-        this.$router.push({
-          path:'/forget'
+        this.modal1=true
+      },
+      ok(){
+        let data = {
+          oldpwd: this.usedPass,
+          pwd:this.newPass,
+          repwd:this.confirmPass
+        }
+        let config = {
+          headers: {'token': localStorage.getItem('Authorization')}
+        };
+        axios.post(BASE_URL+'/api/user/changePwd', qs.stringify(data), config).then(res => {
+          console.log(res.data.data)
+
+          if(res.data.code==0){
+            this.$message.error(res.data.msg);
+          }else{
+            var token=localStorage.getItem('Authorization');
+            this.$store.commit('del_token',token)
+            this.$message({
+              message: '修改成功',
+              type: 'success'
+            });
+            this.modal1=false
+            this.$router.push({
+                path:'/login'
+              })
+          }
+
+        }, err => {
+          console.log(err)
         })
+
+
       },
       /*退出*/
       signOut(){
@@ -609,7 +672,16 @@
     }
   }
 </script>
+<style>
 
+  .motai .ivu-modal-content{
+    position: relative;
+
+  }
+  .motai .ivu-modal-footer{
+    height: 60px !important;
+  }
+</style>
 <style scoped>
   .login {
     /*width: 100%;*/
@@ -1439,5 +1511,33 @@
   .qqtuiguang img{
     width: 20px;
     height: 20px;
+  }
+
+  .demo-input-suffix{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .demo-input-suffix p{
+    width: 85px;
+    font-size: 15px;
+    text-align: center;
+  }
+  .demo-input-suffix .el-input{
+    width: 50%;
+  }
+
+  .queOk{
+    width: 60px;
+    background-color: #06B2B6;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    border-radius: 10px;
+    position: absolute;
+    right: 10%;
+    cursor: pointer;
   }
 </style>

@@ -1,5 +1,16 @@
 <template>
   <div class="login">
+    <Modal
+      v-model="modal1"
+      title="提示"
+      :mask-closable="false"
+      class="motai"
+      >
+      <p>此为测试服，如需上传应用等请前往正式服 <a href="http://www.iosapp88.com">点我前往正式服</a></p>
+      <div @click="ok" class="queOk" slot="footer" >确认</div>
+    </Modal>
+
+
     <div class="qqBig">
       <div class="qq">
         <img class="qqtouxiang" src="../../../static/image/superSignature/ren.png" alt="">
@@ -287,6 +298,7 @@
     name: "index",
     data() {
       return {
+        modal1:false,
         aUrl:'',
         qqValue:'',
         asas:'',
@@ -305,6 +317,10 @@
           },
           {
             msg: '企业签名',
+            isclass: false
+          },
+          {
+            msg: '应用封装',
             isclass: false
           },
           {
@@ -347,6 +363,9 @@
       })
     },
     methods: {
+      ok(){
+       this.modal1=false
+      },
       play(){
         $(".mask").show()
       },
@@ -446,6 +465,11 @@
             path:'/login'
           })
           // alert("点击了发布应用")
+        } else if (index == 5) {
+          this.$router.push({
+            path:'/login'
+          })
+          // alert("点击了发布应用")
         }
       },
       /*登录点击事件*/
@@ -488,7 +512,16 @@
     }
   }
 </script>
+<style>
 
+  .motai .ivu-modal-content{
+    position: relative;
+
+  }
+  .motai .ivu-modal-footer{
+    height: 60px !important;
+  }
+</style>
 <style scoped>
   .login {
     /*width: 100%;*/
@@ -1323,4 +1356,17 @@ align-items: center;
     width: 20px;
     height: 20px;
   }
+  .queOk{
+    width: 60px;
+    background-color: #06B2B6;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    border-radius: 10px;
+    position: absolute;
+    right: 5%;
+    cursor: pointer;
+  }
+
 </style>
