@@ -74,6 +74,7 @@
       </div>
       <div class="secondDivTWO">
         <p><span class="secondDivTitle">收益：</span><span>{{shoyiMoney}}</span>元</p>
+        <div class="chongzhi" @click="yue">转入余额</div>
       </div>
 
 
@@ -139,6 +140,25 @@
       QrcodeVue
     },
     methods: {
+      yue(){
+        if(this.shoyiMoney==0.00){
+          this.$message.error('收益为0，不能转账');
+        }else{
+          let config = {
+            headers: {'token': localStorage.getItem('Authorization')}
+          };
+          axios.get(BASE_URL+'/api/user/incomeToBalane',config).then(res => {
+            console.log(res.data.data)
+            if(res.data.data!=''){
+              this.newmoney=res.data.data.money
+              this.shoyiMoney=res.data.data.balance
+            }
+          }, err => {
+            console.log(err)
+          })
+        }
+
+      },
       appClick(index) {
         for (var i = 0; i < this.title.length; i++) {
           this.title[i].isclass = false
@@ -299,7 +319,7 @@
   }
 
   .secondDiv p {
-
+    width: 220px;
     margin-left: 17px;
     color: #999999;
   }
@@ -497,6 +517,11 @@ margin-top: 30px;
     font-size: 18px;
   }
   .secondDivONE{
+    height: 50px;
+    display: flex;
+    align-items: center;
+  }
+  .secondDivTWO{
     height: 50px;
     display: flex;
     align-items: center;

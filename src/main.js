@@ -31,7 +31,16 @@ Vue.config.productionTip = false
 
 
 router.beforeEach((to, from, next) => {
-  if(to.path=='/' || to.path=='/login' || to.path=='/forget' || to.path=='/register'){
+  console.log(to.path)
+  if(to.path=='/' && localStorage.getItem('Authorization')){
+    next({
+      path: '/superSignatureAread'
+    })
+  }else{
+
+  }
+
+  if(to.path=='/' || to.path=='/login' || to.path=='/forget' || to.path=='/register'|| to.name=='down'|| to.name=='pay'){
   }else{
     /*判断token过期没有*/
     let config = {

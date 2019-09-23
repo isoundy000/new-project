@@ -353,7 +353,7 @@
                 isclass: false
               },
               {
-                msg: '应用封装',
+                msg: '免签名封装',
                 isclass: false
               },
               {
@@ -492,7 +492,7 @@
         } else if (index == 3) {
         // alert("点击了应用封装")
          this.$router.push({
-           path:'/encapsulationindex'
+           name:'applist'
          })
        } else if (index == 4) {
            // alert("点击了购买服务")

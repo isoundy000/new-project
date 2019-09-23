@@ -175,9 +175,11 @@
                 </p>
               </div>
             </div>
+            <p style="margin-left: 10px;margin-top: 10px">(如需消息推送,请到应用管理-查看详情-应用推送)</p>
           </div>
 
         </div>
+
         <div @click="submission" class="submission">
           <p>立即提交</p>
         </div>

@@ -62,23 +62,24 @@
 
     </div>
   </div>
-  <div class="crumbs">
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/index' }">应用封装 </el-breadcrumb-item>
-      <el-breadcrumb-item>苹果无闪退封装</el-breadcrumb-item>
-    </el-breadcrumb>
+  <div style="width: 100%;display: flex;justify-content: center;">
+    <img style="width: 80%" src="../../../static/image/encapsulation/guanggao.jpg" alt="">
   </div>
   <div class="daoTitle">
-    <div @click="daoTitleOne" class="daoTitleOne" :class="{ 'color': isCo1 }">
-      <img src="../../../static/image/encapsulation/ios_s@2x.png" alt="">
-      <p>苹果无闪退封装</p>
-    </div>
     <div @click="daoTitleTwo" class="daoTitleTwo" :class="{ 'color': isCo2 }">
-      <img src="../../../static/image/encapsulation/putong_n@2x.png" alt="">
+      <img v-if="isPutong" src="../../../static/image/encapsulation/putong_s.png" alt="">
+      <img v-else src="../../../static/image/encapsulation/putong_n@2x.png" alt="">
       <p>普通版封装</p>
     </div>
+    <div @click="daoTitleOne" class="daoTitleOne" :class="{ 'color': isCo1 }">
+      <img v-if="isApple" src="../../../static/image/encapsulation/ios_s@2x.png" alt="">
+      <img v-else src="../../../static/image/encapsulation/ios_n.png" alt="">
+      <p>免签名网页封装</p>
+    </div>
+
     <div @click="daoTitleThree" class="daoTitleThree" :class="{ 'color': isCo }">
-      <img src="../../../static/image/encapsulation/liebiao_n@2x.png" alt="">
+      <img v-if="isApplist" src="../../../static/image/encapsulation/liebiao_s.png" alt="">
+      <img v-else src="../../../static/image/encapsulation/liebiao_n@2x.png" alt="">
       <p>应用列表</p>
     </div>
   </div>
@@ -96,6 +97,9 @@
         name: "encapsulationindex",
       data(){
           return{
+            isPutong:false,
+            isApple:false,
+            isApplist:true,
             total:0,
             pageNumber:'',
             current:1,
@@ -148,7 +152,7 @@
                 isclass: false
               },
               {
-                msg: '应用封装',
+                msg: '免签名封装',
                 isclass: true
               },
               {
@@ -166,6 +170,19 @@
       },
       mounted(){
         var that=this
+        this.$router.push({
+          name:'applist'
+        })
+        // alert(this.$route.query.id)
+        // this.$router.push({
+        //   path:'/encapsulationindex'
+        // })
+        //   this.isCo=true
+        //   this.isCo1=false
+        //   this.isCo2=false
+
+
+
         let config = {
           headers:{'token':localStorage.getItem('Authorization')}
         };
@@ -178,12 +195,38 @@
         }, err => {
           console.log(err)
         })
+
+
+      },
+      watch: {
+        '$route': function (to, from) {
+        //   alert(this.$route.params.id)
+              if(this.$route.params.id==2){
+                  this.isCo=true
+                  this.isCo1=false
+                  this.isCo2=false
+                  this.isApplist=true
+                  this.isApple=false
+                  this.isPutong=false
+              }else if(this.$route.params.id==1){
+                this.isCo=false
+                this.isCo1=true
+                this.isCo2=false
+                this.isApplist=false
+                this.isApple=true
+                this.isPutong=false
+              }
+        }
       },
       methods:{
         daoTitleOne(){
           this.isCo=false
           this.isCo1=true
           this.isCo2=false
+
+          this.isApplist=false
+          this.isApple=true
+          this.isPutong=false
           this.$router.push({
             path:'/noFlash'
           })
@@ -192,11 +235,30 @@
           this.isCo=false
           this.isCo1=false
           this.isCo2=true
+          this.isApplist=false
+          this.isApple=false
+          this.isPutong=true
+          this.$router.push({
+            path:'/ordinary'
+          })
+
+
+
+
+          // this.$alert('该模块正在开发中', '提示', {
+          //   confirmButtonText: '确定',
+          //   callback: action => {
+          //   }
+          // });
+
         },
         daoTitleThree(){
           this.isCo=true
           this.isCo1=false
           this.isCo2=false
+          this.isApplist=true
+          this.isApple=false
+          this.isPutong=false
           this.$router.push({
             path:'/encapsulationindex'
           })
@@ -363,7 +425,7 @@
 <style scoped>
   .encapsulationindex{
     width: 100%;
-    /*height: 100%;*/
+    height: 100%;
     background-color: #f3f6f9;
   }
   .daoTitle{

@@ -1,5 +1,20 @@
 <template>
     <div class="noFlash">
+      <!--<div class="crumbs">-->
+        <!--<el-breadcrumb separator-class="el-icon-arrow-right">-->
+          <!--<el-breadcrumb-item :to="{ path: '/noFlash' }">应用封装 </el-breadcrumb-item>-->
+          <!--<el-breadcrumb-item>苹果无闪退封装</el-breadcrumb-item>-->
+        <!--</el-breadcrumb>-->
+      <!--</div>-->
+      <Modal
+        v-model="modal1"
+        title="购买"
+        :mask-closable="false"
+        class="motai"
+      >
+        <p style="display:flex;align-items:center ;height: 100px; font-size: 16px">请在新打开的页面中完成购买，购买完成后，请根据购买结果点击下面的按钮</p>
+        <div @click="queok" class="queOk" slot="footer" >支付成功</div>
+      </Modal>
       <div class="mask" v-show="mask">
           <div class="maskDiv">
               <p class="selectGN">选择该功能，用户无法在手机上直接删除
@@ -54,6 +69,7 @@
                 :headers="headers"
                 :action="newdeUrl"
                 list-type="picture-card"
+                :file-list="imgList"
                 :on-preview="handlePictureCardPreview"
                 :on-remove="handleRemove"
                 :on-change="deleteL">
@@ -110,82 +126,78 @@
           <div class="selectFirst">
             <p class="selectFirstTitle">订单信息</p>
             <div class="selectFirstDiv">
-              <img class="logoImg" src="../../../static/image/superSignature/success_ico.png" alt="">
+              <div style="width: 65px;height: 65px;display: flex;justify-content: center;align-items: center">
+                <img class="logoImg" :src="isSelectLogo" alt="">
+              </div>
+
               <div>
-                <p class="app_name">公务员考试</p>
-                <p class="version_code">安卓版 1.0</p>
+                <p class="app_name">{{isSelectAppname}}</p>
+                <p class="version_code">{{isSelectVersion}}</p>
               </div>
             </div>
           </div>
           <div class="selectFirst selectSecond">
             <p class="selectFirstTitle">选择到期时间</p>
             <div class="selectFirstDiv">
-              <div class="selectFirstDiv_small ">
-                <img  v-if="ntimeChoose" src="../../../static/image/superSignature/danxuan.png" alt="">
-                <img  v-else @click="timeDan"  src="../../../static/image/superSignature/danweixuan.png" alt="">
-                <p>N天试用</p>
+              <div class="selectFirstDiv_small " v-for="(list,index) in timeSelect" :key="index">
+                <img  v-if="list.status" src="../../../static/image/superSignature/danxuan.png" alt="">
+                <img  v-else @click="timeDan(list.id,list.price,list.status)"  src="../../../static/image/superSignature/danweixuan.png" alt="">
+                <p>{{list.name}}</p>
               </div>
-              <div class="selectFirstDiv_small selectFirstDivMa">
-                <img  v-if="ttimeChoose" src="../../../static/image/superSignature/danxuan.png" alt="">
-                <img  v-else @click="timeDan1" src="../../../static/image/superSignature/danweixuan.png" alt="">
-                <p>3个月</p>
-              </div>
-              <div class="selectFirstDiv_small selectFirstDivMa">
-                <img  v-if="btimeChoose" src="../../../static/image/superSignature/danxuan.png" alt="">
-                <img  v-else @click="timeDan2" src="../../../static/image/superSignature/danweixuan.png" alt="">
-                <p>半年</p>
-              </div>
-              <div class="selectFirstDiv_small selectFirstDivMa">
-                <img  v-if="ytimeChoose" src="../../../static/image/superSignature/danxuan.png" alt="">
-                <img  v-else @click="timeDan3" src="../../../static/image/superSignature/danweixuan.png" alt="">
-                <p>一年</p>
-              </div>
-
+              <p class="selectFirstDiv_small ">(试用期为1天)</p>
             </div>
           </div>
           <div class="selectFirst selectThird">
             <p class="selectFirstTitle">选择支付方式</p>
-            <div class="selectThirdDiv">
+            <div class="selectThirdDiv" style="width: 150px;height: 44px; background-repeat: no-repeat;  background-image: url('../../../static/image/encapsulation/xuanzhong@2x.png')">
               <img src="../../../static/image/encapsulation/zfbicon@2x.png" alt="">
             </div>
           </div>
           <div class="selectFour">
-            <p class="selectFourTitle">支付金额：<span style="font-size: 26px;color: #FF0000">¥</span><span style="font-size: 26px;color: #FF0000">100</span></p>
+            <p class="selectFourTitle">支付金额：<span style="font-size: 26px;color: #FF0000">¥</span><span style="font-size: 26px;color: #FF0000">{{money}}</span></p>
           </div>
           <div class="selectFive">
             <div class="seondGo" @click="seondGo">上一步</div>
-            <div class="seondNext" @click="seondNext">下一步</div>
+            <div class="seondNext" @click="pay">去支付</div>
           </div>
         </div>
         <div v-if="isDown">
           <div class="applogoDiv">
             <div class="applogoDivFirst">
-              <img src="../../../static/image/superSignature/success_ico.png" alt="">
-              <p class="applogoDivFirstName">公务员考试</p>
+              <img :src="isDownLogo" alt="">
+              <p class="applogoDivFirstName">{{isDownAppname}}</p>
             </div>
             <div class="applogoDivSecond">
-              <p>版本：1.0</p>
-              <p>大小：10M</p>
+              <p style="width:86px;
+              color: white;
+              text-align: center;
+              line-height: 22px;
+              font-size: 12px;
+height:22px;
+background:rgba(254,140,142,1);
+border-radius:4px;">iOS无闪退版</p>
+              <p>版本：{{isDownVersion}}</p>
+              <p>大小：{{isDownSize}}</p>
             </div>
           </div>
           <div class="downPFirst oneone">
             <p class="downPFirstP">包名(BundlelD) : </p>
-            <p class="downPFirstPT">com.dcliu.DMGJBCYBOA</p>
+            <p class="downPFirstPT">{{isDownBuid}}</p>
           </div>
           <div class="downPFirst">
             <p class="downPFirstP">到期时间： </p>
-            <p class="downPFirstPT">2019-10-01 18:51:15</p>
+            <p class="downPFirstPT">{{isDownUptime}}</p>
           </div>
           <div class="downPFirst">
             <p class="downPFirstP">封装状态： </p>
-            <p class="downPFirstPT">正在封装 (80s)</p>
+            <p class="downPFirstPT">正在封装 ({{countDown}}s)</p>
           </div>
           <div class="downPFirst">
             <p class="downPFirstP">下载链接： </p>
-            <p class="downPFirstUrl ">http://www.iOSapp88.com</p>
+            <p class="downPFirstUrl ">{{isDownUrl}}</p>
           </div>
           <div class="anzhuang" @click="install">
-            <p>安装应用</p>
+            <div>安装应用</div>
           </div>
 
         </div>
@@ -204,10 +216,22 @@
         name: "noFlash",
       data(){
           return{
-            isJiben:false,
+            modal1:false,
+            isDownLogo:'',
+            isDownAppname:'',
+            isDownVersion:'',
+            isDownSize:'',
+            isDownBuid:'',
+            isDownUptime:'',
+            isDownUrl:'',
+            isSelectLogo:'',
+            isSelectAppname:'',
+            isSelectVersion:'',
+            isSelectSize:'',
+            isJiben:true,
             isSelect:false,
-            isDown:true,
-            active:2,
+            isDown:false,
+            active:0,
             appnameInput:'',//应用名称输入框值
             appUrl:'',//网站链接输入框值
             limitCount:1,//允许照片上传的个数
@@ -223,6 +247,7 @@
             choose:true,//可删除
             choose1:false,//密码删除
             choose2:false,//永不删除
+            deleteType:1,
             isInputShow:false,//密码删除输入框显示与否布尔值
             isCo:false,//下一步颜色布尔值
             mask:false,//永久删除遮罩层
@@ -232,6 +257,13 @@
             ttimeChoose:false,//3天试用
             btimeChoose:false,//半年试用
             ytimeChoose:false,//一年试用
+            money:0,
+            storageImg:'',
+            imgList:[],
+            timeSelect:[],
+            newid:'',
+            selectId:1,
+            countDown:80
           }
       },
       methods:{
@@ -249,6 +281,8 @@
         },
         /*上传图片成功*/
         success2(response, file){
+          this.storageImg=response.data.domain+response.data.url
+          console.log(response.data.domain+response.data.url)
           this.img=file.response.data.url
           console.log(this.img)
           this.verification()
@@ -277,6 +311,7 @@
           this.choose1=false
           this.choose2=false
           this.isInputShow=false
+          this.deleteType=1
           this.verification()
         },
         dan2(){
@@ -285,6 +320,7 @@
           this.choose2=false
           this.isInputShow=true
           this.password=''
+          this.deleteType=2
           this.verification()
         },
         dan3(){
@@ -293,6 +329,7 @@
           this.choose2=true
           this.isInputShow=false
           this.mask=true
+          this.deleteType=3
           this.verification()
         },
         /*表单验证*/
@@ -326,51 +363,258 @@
           this.choose2=false
         },
         nextStep(){
-          this.active=1
-          this.isSelect=true
-          this.isJiben=false
-        },
-        timeDan(){
-          this.ntimeChoose=true
-          this.ttimeChoose=false
-          this.btimeChoose=false
-          this.ytimeChoose=false
-        },
-        timeDan1(){
-          this.ntimeChoose=false
-          this.ttimeChoose=true
-          this.btimeChoose=false
-          this.ytimeChoose=false
-        },
-        timeDan2(){
-          this.ntimeChoose=false
-          this.ttimeChoose=false
-          this.btimeChoose=true
-          this.ytimeChoose=false
-        },
-        timeDan3(){
-          this.ntimeChoose=false
-          this.ttimeChoose=false
-          this.btimeChoose=false
-          this.ytimeChoose=true
-        },
-        seondGo(){
-          this.active=0
-          this.isSelect=false
-          this.isJiben=true
-          console.log(this.img)
-          console.log(this.dialogImageUrl)
-          this.dialogImageUrl=this.img
-        },
-        seondNext(){
-          this.active=1
-          this.isSelect=true
-          this.isJiben=true
+          let data={
+            app_name:this.appnameInput,
+            icon:this.img,
+            url:this.appUrl,
+            type:this.deleteType,
+            password:this.password,
+          }
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.post(BASE_URL+'/api/encapsulation/noFlashBack',qs.stringify(data),config).then(res => {
+            if(res.data.code==200){
+              this.active=1
+              this.isSelect=true
+              this.isJiben=false
+              this.newid=res.data.data.id
+              console.log(res.data.data.id)
+              let data1={
+                id:res.data.data.id
+              }
+              let config1 = {
+                headers:{'token':localStorage.getItem('Authorization')}
+              };
+              axios.post(BASE_URL+'/api/encapsulation/info',qs.stringify(data1),config1).then(res => {
+                console.log(res.data.data)
+                this.isSelectLogo=res.data.data.icon
+                this.isSelectAppname=res.data.data.name
+                this.isSelectVersion=res.data.data.version_code
+                this.isSelectSize=res.data.data.filesize
+                this.isDownBuid=res.data.data.bundle
+                this.isDownUptime=res.data.data.expire_time
+                this.isDownUrl=window.location.hostname+'/#/down?tag='+res.data.data.tag
+              }, err => {
+                console.log(err)
+              })
+
+
+
+            }else if(res.data.code==0){
+              this.$message.error(res.data.msg);
+            }
+          }, err => {
+            this.$message.error('系统报错');
+            console.log(err)
+          })
+
+
+
 
         },
+        timeDan(index,money,status){
+          this.timeSelect[0].status=false
+          this.timeSelect[1].status=false
+          this.timeSelect[2].status=false
+          this.timeSelect[3].status=false
+          this.selectId=this.timeSelect[index-1].id
+          if(index==1){
+            this.money=money
+            this.timeSelect[0].status=true
+          }else if(index==2){
+            this.money=money
+
+            this.timeSelect[index-1].status=true
+
+          }else if(index==3){
+            this.timeSelect[index-1].status=true
+            this.money=money
+          }else if(index==4){
+            this.money=money
+            this.timeSelect[index-1].status=true
+          }
+        },
+
+        seondGo(){
+          var that=this
+          that.active=0
+          that.isSelect=false
+          that.isJiben=true
+          that.imgList=[]
+          var newobj={}
+          newobj.name=''
+          newobj.url=that.storageImg
+          that.imgList.push(newobj)
+        },
+        pay(){
+
+            let data = {
+              id:this.newid,
+              price_id:this.selectId,
+              pay_type:1
+            }
+            let config = {
+              headers: {'token': localStorage.getItem('Authorization')}
+            };
+            axios.post(BASE_URL+'/api/encapsulation/signature',qs.stringify(data),config).then(res => {
+             if(res.data.code==200){
+               this.$message({
+                 message: '支付成功',
+                 type: 'success'
+               });
+
+               this.active=2
+               this.isSelect=false
+               this.isJiben=false
+               this.isDown=true
+               var timeClock2;
+               var that=this
+               timeClock2 = setInterval(function() {
+                 that.countDown--
+                 if(that.countDown == 0) {
+                   clearInterval(timeClock2);
+                 }
+               }, 1000)
+               let data2={
+                 id:this.newid
+               }
+               let config2 = {
+                 headers:{'token':localStorage.getItem('Authorization')}
+               };
+               axios.post(BASE_URL+'/api/encapsulation/info',qs.stringify(data2),config2).then(res => {
+                 console.log(res.data.data)
+                 this.isDownLogo=res.data.data.icon
+                 this.isDownAppname=res.data.data.name
+                 this.isDownVersion=res.data.data.version_code
+                 this.isDownSize=res.data.data.filesize
+                 this.isDownBuid=res.data.data.bundle
+                 this.isDownUptime=res.data.data.expire_time
+
+                 this.isDownUrl=window.location.hostname+'/#/down?tag='+res.data.data.tag
+               }, err => {
+                 console.log(err)
+               })
+             }else if(res.data.code==0){
+               this.$message.error(res.data.msg);
+             }else{
+               // const div = document.createElement('div')
+               // div.innerHTML = res.data //此处form就是后台返回接收到的数据
+               // document.body.appendChild(div)
+               // document.forms[0].submit()
+               this.modal1=true
+               let routerData = this.$router.resolve({path:'/pay',query:{htmls:res.data}})
+               window.open(routerData.href,'_blank')
+               let data2={
+                 id:this.newid
+               }
+               let config2 = {
+                 headers:{'token':localStorage.getItem('Authorization')}
+               };
+               axios.post(BASE_URL+'/api/encapsulation/info',qs.stringify(data2),config2).then(res => {
+                 console.log(res.data.data)
+                 this.isDownLogo=res.data.data.icon
+                 this.isDownAppname=res.data.data.name
+                 this.isDownVersion=res.data.data.version_code
+                 this.isDownSize=res.data.data.filesize
+                 this.isDownBuid=res.data.data.bundle
+                 this.isDownUptime=res.data.data.expire_time
+                 this.isDownUrl=window.location.hostname+'/#/down?tag='+res.data.data.tag
+               }, err => {
+                 console.log(err)
+               })
+             }
+
+
+
+
+
+
+            }, err => {
+              console.log(err)
+            })
+
+
+
+
+
+        },
+        queok(){
+        //  alert(this.newid)
+          let data={
+            app_id:this.newid
+          }
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.post(BASE_URL+'/api/encapsulation/checkOrderPay',data,config).then(res => {
+            console.log(res.data)
+            if(res.data.code==200){
+              this.active=2
+              this.isSelect=false
+              this.isJiben=false
+              this.isDown=true
+              this.modal1=false
+              let data2={
+                id:this.newid
+              }
+              let config2 = {
+                headers:{'token':localStorage.getItem('Authorization')}
+              };
+              axios.post(BASE_URL+'/api/encapsulation/info',qs.stringify(data2),config2).then(res => {
+                console.log(res.data.data)
+                this.isDownLogo=res.data.data.icon
+                this.isDownAppname=res.data.data.name
+                this.isDownVersion=res.data.data.version_code
+                this.isDownSize=res.data.data.filesize
+                this.isDownBuid=res.data.data.bundle
+                this.isDownUptime=res.data.data.expire_time
+
+                this.isDownUrl=window.location.hostname+'/#/down?tag='+res.data.data.tag
+                var timeClock2;
+                var that=this
+                timeClock2 = setInterval(function() {
+                  that.countDown--
+                  if(that.countDown == 0) {
+                    clearInterval(timeClock2);
+                  }
+                }, 1000)
+              }, err => {
+                console.log(err)
+              })
+            }else if(res.data.code==0){
+              this.$message.error(res.data.msg);
+            }
+          }, err => {
+            this.$message.error('系统报错');
+            console.log(err)
+          })
+        },
+        install(){
+            this.$router.push({
+              name:'applist',
+              params:{
+                id:2
+              }
+            })
+        }
       },
       mounted(){
         this.newdeUrl=BASE_URL+'/api/common/upload'
+
+        axios.post(BASE_URL+'/api/encapsulation/payConfig').then(res => {
+          console.log(res.data.data)
+          if(res.data.code==200){
+            this.timeSelect=res.data.data
+          }else if(res.data.code==0){
+            this.$message.error(res.data.msg);
+          }
+        }, err => {
+          this.$message.error('系统报错');
+          console.log(err)
+        })
+
+
       }
     }
 </script>
@@ -449,11 +693,14 @@
   }
 </style>
 <style scoped>
+  .noFlash{
+    background-color: #f3f6f9;
+  }
   .noFlashDiv{
     width:80% ;
     height: auto;
     background-color: white;
-    margin: 10px auto;
+    margin: 10px auto 0 auto;
   }
   .secondDivSmall {
     width: 100%;
@@ -518,6 +765,7 @@
     line-height: 50px;
     text-align: center;
     cursor: pointer;
+    margin-bottom: 30px;
   }
   .lvnextStep{
     width:167px;
@@ -583,8 +831,8 @@
     color: #999999 !important;
   }
   .logoImg{
-    width:40px;
-    height:40px;
+   max-height: 100%;
+    max-width: 100%erw;
     border-radius:8px;
   }
   .selectFirst{
@@ -629,6 +877,7 @@
     margin-top: 6px;
   }
   .selectFirstDiv_small{
+    width: 100px;
     display: flex;
     align-items: center;
     font-size: 14px;
@@ -735,6 +984,10 @@ margin-top: 20px;
     margin-left: 10px;
   }
   .anzhuang{
+    height: 100px;
+    background-color: white;
+  }
+  .anzhuang div{
     width:167px;
     height:50px;
     background:rgba(2,178,181,1);
@@ -744,6 +997,23 @@ margin-top: 20px;
     color: white;
     font-size: 16px;
     margin: 60px auto 0 auto;
+    cursor: pointer;
+  }
+  .crumbs{
+    width: 80%;
+    margin: 50px auto 30px auto;
+  }
+  .queOk{
+    width: 80px;
+    background-color: #06B2B6;
+    height: 38px;
+    text-align: center;
+    line-height: 38px;
+    color: white;
+    font-size: 15px;
+    border-radius: 10px;
+    position: absolute;
+    right: 5%;
     cursor: pointer;
   }
 </style>

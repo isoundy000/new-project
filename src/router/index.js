@@ -33,8 +33,18 @@ import enterprisePubish from '@/pages/myApp/enterprisePubish'//企业签名-发�
 import encapsulationindex from '@/pages/encapsulation/encapsulationindex'//应用封装
 import applist from '@/pages/encapsulation/applist'//应用封装-列表
 import noFlash from '@/pages/encapsulation/noFlash'//应用封装-苹果无闪退
+import ordinary from '@/pages/encapsulation/ordinary'//应用封装-普通封装
+import ordinaryInformation from '@/pages/encapsulation/ordinaryInformation'//应用封装-普通封装-基本信息
+import ordinaryIcon from '@/pages/encapsulation/ordinaryIcon'//应用封装-普通封装-上传图标
+import ordinaryConfig from '@/pages/encapsulation/ordinaryConfig'//应用封装-普通封装-配置插件
+import ordinaryChoose from '@/pages/encapsulation/ordinaryChoose'//应用封装-普通封装-选择套餐
+import ordinaryDownApp from '@/pages/encapsulation/ordinaryDownApp'//应用封装-普通封装-下载应用
 
 
+
+
+import down from '@/pages/down/down'//下载页面
+import pay from '@/pages/pay/pay'//支付页面
 
 
 
@@ -241,10 +251,71 @@ const router = new Router({
           path: '/noFlash',
           name: 'noFlash',
           component: noFlash,
-        }
+        },
+        {
+          path: '/ordinary',
+          name: 'ordinary',
+          component: ordinary,
+          children:[
+            {
+              path: '/',
+              name: 'ordinaryConfig',
+              component: ordinaryConfig,
+              meta: {
+                keepAlive: true
+              }
+            },
+            {
+              path: '/ordinaryIcon',
+              name: 'ordinaryIcon',
+              component: ordinaryIcon,
+              meta: {
+                keepAlive: true
+              }
+            },
+            {
+              path: '/ordinaryConfig',
+              name: 'ordinaryConfig',
+              component: ordinaryConfig,
+              meta: {
+                keepAlive: true
+              }
+            },
+            {
+              path: '/ordinaryChoose',
+              name: 'ordinaryChoose',
+              component: ordinaryChoose,
+              meta: {
+                keepAlive: true
+              }
+            },
+            {
+              path: '/ordinaryDownApp',
+              name: 'ordinaryDownApp',
+              component: ordinaryDownApp,
+              meta: {
+                keepAlive: true
+              }
+            },
+
+
+          ]
+        },
+
 
       ]
     },
+    {
+      path: '/down',
+      name: 'down',
+      component: down,
+    },
+    {
+      path: '/pay',
+      name: 'pay',
+      component: pay,
+    },
+
 
 
 

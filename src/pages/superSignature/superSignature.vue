@@ -320,7 +320,7 @@
             isclass: false
           },
           {
-            msg: '应用封装',
+            msg: '免签名封装',
             isclass: false
           },
           {
