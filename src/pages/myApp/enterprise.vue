@@ -94,6 +94,9 @@
 
       </div>
     </div>
+    <div class="newsecondDiv">
+      <img style="width: 100%" src="../../../static/image/superSignature/guanggao.jpg" alt="">
+    </div>
     <div class="secondDiv">
       <el-input
         class="seachInput"
@@ -855,7 +858,12 @@
     justify-content: space-between;
     margin: 48px auto 0 auto;
   }
-
+.newsecondDiv{
+  width: 78%;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+}
   .seachInput {
     width: 306px;
   }

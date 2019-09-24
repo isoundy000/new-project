@@ -765,7 +765,7 @@ border-radius:4px;">iOS无闪退版</p>
     line-height: 50px;
     text-align: center;
     cursor: pointer;
-    margin-bottom: 30px;
+    margin-bottom: 100px;
   }
   .lvnextStep{
     width:167px;

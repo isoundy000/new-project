@@ -21,7 +21,7 @@
         <div class="whiteDiv" >
           <div class="whiteDivBig">
             <el-select class="downSum" @change="allApp()"
-                       v-model="appName" placeholder="服务状态">
+                       v-model="appName" placeholder="平台状态">
               <el-option
                 v-for="item in downSumOptions"
                 :key="item.value"
@@ -75,7 +75,7 @@
                 width="260"
               >
                 <template slot-scope="scope" class="caozuo">
-                  <span >{{downData}}/{{tableData[scope.$index].tag}}</span>
+                  <span >{{downdownUrl}}{{tableData[scope.$index].tag}}</span>
                   <!--<qrcode-vue style="margin-left: 10px" value="value2" :size="size2" level="H" className='qrcode' id="picture" ref="code"></qrcode-vue>-->
                 </template>
               </el-table-column>
@@ -136,7 +136,7 @@
                 <img class="whiteDiv2FirstLogoDivImg" :src="iconData" alt="">
               </div>
               <div class="whiteDiv2FirstLogoDivText">
-                <p>{{appnameData}} <span>iOS无闪退版</span></p>
+                <p>{{appnameData}} <span>{{apptext}}</span></p>
                 <p>版本：{{versionData}}</p>
                 <p>大小：{{sizeData}}</p>
                 <p>更新时间：{{updateTimeData}}</p>
@@ -251,7 +251,9 @@
         name: "applist",
       data(){
           return{
+            downdownUrl:'',
             downShow:'',
+            apptext:'',
             modal1:false,
             newid:'',
             money:'',
@@ -359,10 +361,13 @@
               this.isApplist=false
               this.isDetail=true
               this.isXufei=false
-              if(res.data.data.type==2){
+              alert(res.data.data.type)
+              if(res.data.data.type==2){//无包 无闪退封装
                 this.downShow=false
-              }else if(res.data.data.type==1){
+                this.apptext='ios无闪退版'
+              }else if(res.data.data.type==1){ //有包 普通封装
                 this.downShow=true
+                this.apptext='普通封装'
               }
 
 
@@ -376,6 +381,8 @@
 
         },
         downLOAD(){
+
+          // alert(this.mobileConfig)
           window.location.href=this.mobileConfig
         },
         chakanClick(row,id){
@@ -725,6 +732,7 @@
             this.tableData=res.data.data.list
             this.total=res.data.data.total
             this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
+            this.downdownUrl=window.location.hostname+'/#/down?tag='
             for(var i=0;i<res.data.data.list.length;i++){
               this.downData=window.location.hostname+'/#/down?tag='+res.data.data.list[i].tag
               this.value2=window.location.hostname+'/#/down?tag='+res.data.data.list[i].tag
