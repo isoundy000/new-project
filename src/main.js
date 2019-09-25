@@ -13,7 +13,8 @@ import echarts from 'echarts'
 // 引入axios
 import axios from 'axios'
 // 挂载到vue原型链上
-
+import './assets/icon/iconfont.js' //引入阿里巴巴图标库js
+import './assets/icon/iconfont.css'//引入阿里巴巴图标库css
 
 import Vuex from 'vuex'
 import store from './store';

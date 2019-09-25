@@ -142,7 +142,7 @@
 
         >
           <template slot-scope="scope">
-            <p style="color: #14BEC8;cursor: pointer" @click.stop="handleEdit(tableData[scope.$index].url)">点击下载</p>
+            <p style="color: #14BEC8;cursor: pointer" @click.stop="handleEdit(tableData[scope.$index].tag)">点击下载</p>
             <!--<el-button size="small" >编辑          </el-button>-->
           </template>
         </el-table-column>
@@ -256,8 +256,6 @@
         isMask: false,
         downSumOptions: [
           {
-            value: '下载链接',
-          },{
             value: '上架',
           },{
             value: '下架',
@@ -359,10 +357,26 @@
       //     }
       //   })
       // },
-      handleEdit(url){
-        this.isMask = true
-        this.value=url
-        this.urlAddress=url
+      handleEdit(tag){
+        let data={
+          tag:tag
+        }
+        let config = {
+          headers:{'token':localStorage.getItem('Authorization')}
+        };
+        axios.post(BASE_URL+'/api/business/download',qs.stringify(data),config).then(res => {
+          console.log(res.data)
+          if(res.data.code==200){
+            window.location.href=res.data.data.url
+          }else if(res.data.code==0){
+            this.$message.error(res.data.msg);
+          }
+        }, err => {
+          console.log(err)
+        })
+        // this.isMask = true
+        // this.value=url
+        // this.urlAddress=url
       },
       seachInput(){
         let data={
