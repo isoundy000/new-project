@@ -239,142 +239,188 @@
       :mask-closable="false"
       class="customDiv"
     >
-     <div class="customDivMain" >
-       <div class="customDivMainSmall1" style="background-image: url('../../../static/image/ordinary/shouji.png')">
-         <p v-html="beijingstyleInner"></p>
-          <div class="customDivMainSmall1Div">
-            <div class="zhuangtai1">
-             <img  src="../../../static/image/ordinary/zhuangtai1.png" alt="">
-            </div>
-            <div class="customIconDiv">
-              <div class="firstIcon">
-                <div class="firstIconDiv">
-                  <i class="iconfont">&#xe75f;</i>
-                </div>
-                <div class="firstIconDiv">
-                  <i class="iconfont">&#xe75f;</i>
-                </div>
-              </div>
-              <div class="homepage">首页</div>
-              <div class="secondIcon">
-                <div class="secondIconDiv">
-                  <i class="iconfont">&#xe75f;</i>
-                </div>
-                <div class="secondIconDiv">
-                  <i class="iconfont">&#xe75f;</i>
-                </div>
-              </div>
-            </div>
-          </div>
-       </div>
-      <div>
-        <div class="customDivMainSmall2" >
-          <div class="customDivMainselsectDiv">
-            <p class="daoHangTitle">状态栏显示</p>
-            <div class="customDivMainselsect">
-              <img v-if="customShowStateOne" src="../../../static/image/superSignature/danxuan.png" alt="">
-              <img v-else @click="customStateDan1()" src="../../../static/image/superSignature/danweixuan.png" alt="">
-              <p>开启</p>
-            </div>
-            <div class="customDivMainselsect">
-              <img v-if="customShowStateTwo" src="../../../static/image/superSignature/danxuan.png" alt="">
-              <img v-else @click="customStateDan2()" src="../../../static/image/superSignature/danweixuan.png" alt="">
-              <p>关闭</p>
-            </div>
-          </div>
-          <div class="customDivMainselsectDiv">
-            <p class="daoHangTitle">状态栏样式</p>
-            <div class="customDivMainselsect">
-              <img v-if="customShowCssOne" src="../../../static/image/superSignature/danxuan.png" alt="">
-              <img v-else @click="customCssDan1()" src="../../../static/image/superSignature/danweixuan.png" alt="">
-              <p>自定义颜色</p>
-            </div>
-            <div class="customDivMainselsect">
-              <img v-if="customShowCssTwo" src="../../../static/image/superSignature/danxuan.png" alt="">
-              <img v-else @click="customCssDan2()" src="../../../static/image/superSignature/danweixuan.png" alt="">
-              <p>背景图</p>
-            </div>
-          </div>
-          <div class="customDivMainselsectDiv">
-            <p class="daoHangTitle">背景颜色</p>
-            <div class="beijingSelectColor" style="margin-left: 20px">
-              <el-color-picker
-                v-model="beijingcolor"
-                @active-change="beijingSelectColor"
-                @change="beijingSelectColorRinow"
-                :predefine="predefineColors">
-              </el-color-picker>
-            </div>
-          </div>
-          <div class="customDivMainselsectDiv">
-            <p class="daoHangTitle">文字颜色</p>
-            <div class="customDivMainselsect">
-              <img v-if="customShowTextOne" src="../../../static/image/superSignature/danxuan.png" alt="">
-              <img v-else @click="customTextDan1()" src="../../../static/image/superSignature/danweixuan.png" alt="">
-              <p>黑</p>
-            </div>
-            <div class="customDivMainselsect">
-              <img v-if="customShowTextTwo" src="../../../static/image/superSignature/danxuan.png" alt="">
-              <img v-else @click="customTextDan2()" src="../../../static/image/superSignature/danweixuan.png" alt="">
-              <p>白</p>
-            </div>
-          </div>
-        </div>
-        <div class="customDivMainSmall3" >
-          <div class="customDivMainselsectDiv">
-            <p class="daoHangTitle">标题栏显示</p>
-            <div class="customDivMainselsect">
-              <img v-if="customShowTitleOne" src="../../../static/image/superSignature/danxuan.png" alt="">
-              <img v-else @click="customTitleDan1()" src="../../../static/image/superSignature/danweixuan.png" alt="">
-              <p>开启</p>
-            </div>
-            <div class="customDivMainselsect">
-              <img v-if="customShowTitleTwo" src="../../../static/image/superSignature/danxuan.png" alt="">
-              <img v-else @click="customTitleDan2()" src="../../../static/image/superSignature/danweixuan.png" alt="">
-              <p>关闭</p>
-            </div>
-          </div>
-          <div class="customDivMainselsectDiv">
-            <p class="daoHangTitle">标题文字</p>
-            <div class="customDivMainselsect">
-              <el-input
-                style="width: 200px"
-                v-model="titleTextinput"
-                @change="titleTextinputChange">
-              </el-input>
-            </div>
+      <!--自定义导航栏左边-->
+      <div class="customDivMain" >
+        <div class="customDivMainSmall1" style="background-image: url('../../../static/image/ordinary/shouji.png')">
+          <p v-html="beijingstyleInner"></p>
+          <div class="customDivMainSmall1Div" v-show="customDivMainSmall1DivShow">
 
-          </div>
-          <div class="customDivMainselsectDiv">
-            <p class="daoHangTitle">背景颜色</p>
-            <div class="beijingSelectColor" style="margin-left: 20px">
-              <el-color-picker
-                v-model="beijingcolor"
-                @active-change="beijingSelectColor"
-                @change="beijingSelectColorRinow"
-                :predefine="predefineColors">
-              </el-color-picker>
+            <div class="zhuangtai1" v-show="zhuangtai1Show">
+              <img v-if="imgShow"  src="../../../static/image/ordinary/zhuangtai1.png" alt="">
+              <img v-else src="../../../static/image/ordinary/ztl_hei.png" alt="">
+
+            </div>
+            <p v-html="beijingstyleInner2"></p>
+            <p v-html="beijingstyleInner3"></p>
+            <div class="customIconDiv" v-show="biaptiShow">
+              <div class="firstIcon daohangtextcolor">
+                <div class="firstIconDiv" v-for="(leftIconList,index) in leftIcon">
+                  <i class="iconfont " :class="leftIconList"></i>
+                </div>
+              </div>
+              <div class="homepage daohangtextcolor">{{titleTextinput}}</div>
+              <div class="secondIcon daohangtextcolor">
+                <div class="secondIconDiv" v-for="(rightIconList,index) in rightIcon">
+                  <i class="iconfont " :class="rightIconList"></i>
+                </div>
+
+              </div>
+            </div>
+            <div class="custFooter">
+              <div class="custFooterDiv">
+                <div class="custFooterDivCircular"></div>
+                <p>首页</p>
+              </div>
+              <div class="custFooterDiv">
+                <div class="custFooterDivCircular"></div>
+                <p>空白</p>
+              </div>
+              <div class="custFooterDiv">
+                <div class="custFooterDivCircular"></div>
+                <p>空白</p>
+              </div>
+              <div class="custFooterDiv">
+                <div class="custFooterDivCircular"></div>
+                <p>空白</p>
+              </div>
             </div>
           </div>
-          <div class="customDivMainselsectDiv">
-            <p class="daoHangTitle">文字颜色</p>
-            <div class="customDivMainselsect">
-              <img v-if="customShowTextOne" src="../../../static/image/superSignature/danxuan.png" alt="">
-              <img v-else @click="customTextDan1()" src="../../../static/image/superSignature/danweixuan.png" alt="">
-              <p>黑</p>
-            </div>
-            <div class="customDivMainselsect">
-              <img v-if="customShowTextTwo" src="../../../static/image/superSignature/danxuan.png" alt="">
-              <img v-else @click="customTextDan2()" src="../../../static/image/superSignature/danweixuan.png" alt="">
-              <p>白</p>
+          <div class="customDivMainSmall1Div22" v-show="customDivMainSmall1Div22Show" style="background-image: url('../../../static/image/ordinary/bg@2x.png')">
+            <div class="zhuangtai12" v-show="zhuangtai1Show">
+              <img v-if="imgShow"  src="../../../static/image/ordinary/zhuangtai1.png" alt="">
+              <img v-else src="../../../static/image/ordinary/ztl_hei.png" alt="">
+
             </div>
           </div>
         </div>
+        <div>
+          <!--自定义导航栏右边-->
+          <div class="customDivMainSmall2" >
+            <div class="customDivMainselsectDiv">
+              <p class="daoHangTitle">状态栏显示</p>
+              <div class="customDivMainselsect">
+                <img v-if="customShowStateOne" src="../../../static/image/superSignature/danxuan.png" alt="">
+                <img v-else @click="customStateDan1()" src="../../../static/image/superSignature/danweixuan.png" alt="">
+                <p>开启</p>
+              </div>
+              <div class="customDivMainselsect">
+                <img v-if="customShowStateTwo" src="../../../static/image/superSignature/danxuan.png" alt="">
+                <img v-else @click="customStateDan2()" src="../../../static/image/superSignature/danweixuan.png" alt="">
+                <p>关闭</p>
+              </div>
+            </div>
+            <div class="customDivMainselsectDiv" v-show="zhuangtai1Show">
+              <p class="daoHangTitle">状态栏样式</p>
+              <div class="customDivMainselsect">
+                <img v-if="customShowCssOne" src="../../../static/image/superSignature/danxuan.png" alt="">
+                <img v-else @click="customCssDan1()" src="../../../static/image/superSignature/danweixuan.png" alt="">
+                <p>自定义颜色</p>
+              </div>
+              <div class="customDivMainselsect">
+                <img v-if="customShowCssTwo" src="../../../static/image/superSignature/danxuan.png" alt="">
+                <img v-else @click="customCssDan2()" src="../../../static/image/superSignature/danweixuan.png" alt="">
+                <p>背景图</p>
+              </div>
+            </div>
+            <div class="customDivMainselsectDiv" v-show="zhuangtai1Show">
+              <p class="daoHangTitle">背景颜色</p>
+              <div class="beijingSelectColor" style="margin-left: 20px">
+                <el-color-picker
+                  v-model="beijingcolor"
+                  @active-change="beijingSelectColor"
+                  @change="beijingSelectColorRinow"
+                  :predefine="predefineColors">
+                </el-color-picker>
+              </div>
+            </div>
+            <div class="customDivMainselsectDiv" v-show="zhuangtai1Show">
+              <p class="daoHangTitle">文字颜色</p>
+              <div class="customDivMainselsect">
+                <img v-if="customShowTextOne" src="../../../static/image/superSignature/danxuan.png" alt="">
+                <img v-else @click="customTextDan1()" src="../../../static/image/superSignature/danweixuan.png" alt="">
+                <p>白</p>
+              </div>
+              <div class="customDivMainselsect">
+                <img v-if="customShowTextTwo" src="../../../static/image/superSignature/danxuan.png" alt="">
+                <img v-else @click="customTextDan2()" src="../../../static/image/superSignature/danweixuan.png" alt="">
+                <p>黑</p>
+              </div>
+            </div>
+          </div>
+          <div class="customDivMainSmall3" >
+            <div class="customDivMainselsectDiv">
+              <p class="daoHangTitle">标题栏显示</p>
+              <div class="customDivMainselsect">
+                <img v-if="customShowTitleOne" src="../../../static/image/superSignature/danxuan.png" alt="">
+                <img v-else @click="customTitleDan1()" src="../../../static/image/superSignature/danweixuan.png" alt="">
+                <p>开启</p>
+              </div>
+              <div class="customDivMainselsect">
+                <img v-if="customShowTitleTwo" src="../../../static/image/superSignature/danxuan.png" alt="">
+                <img v-else @click="customTitleDan2()" src="../../../static/image/superSignature/danweixuan.png" alt="">
+                <p>关闭</p>
+              </div>
+            </div>
+            <div class="customDivMainselsectDiv" v-show="biaptiShow">
+              <p class="daoHangTitle">标题文字</p>
+              <div class="customDivMainselsect">
+                <el-input
+                  style="width: 200px"
+                  maxlength="4"
+                  v-model="titleTextinput"
+                  @change="titleTextinputChange">
+                </el-input>
+              </div>
+
+            </div>
+            <div class="customDivMainselsectDiv" v-show="biaptiShow">
+              <p class="daoHangTitle">背景颜色</p>
+              <div class="beijingSelectColor" style="margin-left: 20px">
+                <el-color-picker
+                  v-model="beijingcolor2"
+                  @active-change="beijingSelectColor2"
+                  @change="beijingSelectColorRinow2"
+                  :predefine="predefineColors">
+                </el-color-picker>
+              </div>
+            </div>
+            <div class="customDivMainselsectDiv" v-show="biaptiShow">
+              <p class="daoHangTitle">文字、图标颜色</p>
+              <div class="beijingSelectColor" style="margin-left: 20px">
+                <el-color-picker
+                  v-model="beijingcolor3"
+                  @active-change="beijingSelectColor3"
+                  @change="beijingSelectColorRinow3"
+                  :predefine="predefineColors">
+                </el-color-picker>
+              </div>
+            </div>
+            <div class="customDivMainselsectDiv1" v-show="biaptiShow">
+              <p class="daoHangTitle">左侧功能</p>
+              <div class="customDivMainselsectDiv11" >
+                <div class="customDivMainselsectDiv11Check" v-for="(leftList,index) in leftCheckboxList" :key="index">
+                  <el-checkbox-group   v-model="newXinzhi"  :min="0" :max="2">
+                  <el-checkbox name="type" :label="leftList.name"  @change="leftListChange(index,leftList.checkValue,leftList.name,leftList.icon)" :checked="leftCheckboxList[index].checkValue">{{leftList.name}}</el-checkbox>
+                  </el-checkbox-group>
+                </div>
+              </div>
+            </div>
+            <div class="customDivMainselsectDiv1" v-show="biaptiShow">
+              <p class="daoHangTitle">右侧功能</p>
+              <div class="customDivMainselsectDiv11" >
+                <div class="customDivMainselsectDiv11Check" v-for="(rightList,index) in rightCheckboxList" :key="index">
+                  <el-checkbox-group  v-model="newXinzhi1" :min="0" :max="2">
+                    <el-checkbox name="type" :label="rightList.name"  @change="rightListChange(index,rightList.checkValue,rightList.name,rightList.icon)"  :checked="rightCheckboxList[index].checkValue">{{rightList.name}}</el-checkbox>
+                  </el-checkbox-group>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-     </div>
-
-      <div class="queOk" @click="zoomOk" slot="footer">保存修改</div>
+      <div class="queOk" @click="customOk" slot="footer">保存修改</div>
     </Modal>
 
 
@@ -525,7 +571,7 @@
             </el-switch>
           </div>
         </div>
-        <div class="ordinaryConfigDivMainSmall ordinaryConfigRight" :class="{ 'configColor': config9}">
+        <div @click="customClick" class="ordinaryConfigDivMainSmall ordinaryConfigRight" :class="{ 'configColor': config9}">
           <div class="ordinaryConfigDivMainSmallLeft">
             <img v-if="ordinaryConfigCustom" src="../../../static/image/ordinary/daohang_n.png" alt="">
             <img v-else src="../../../static/image/ordinary/daohang_s.png" alt="">
@@ -574,10 +620,19 @@
 </template>
 
 <script>
+  import  axios from 'axios'
+  import {BASE_URL,UPLOAD_BASE_URL} from "../../api";
+  import qs from 'qs'
   export default {
     name: "ordinaryConfig",
     data() {
       return {
+        customDivMainSmall1Div22Show:false, //自定义状态栏样式---自定义颜色
+        customDivMainSmall1DivShow:true,//自定义状态栏样式---背景图
+        zheng:false,
+        imgShow:true,
+        newXinzhi:[],
+        newXinzhi1:[],
         jiazaiswitch: false,//加载效果开关布尔值
         ordinaryConfigJiazai: true,//灰色加载效果开关
         config1: false,//加载效果border颜色布尔值
@@ -645,24 +700,39 @@
         customswitch: false,//自定义导航栏开关布尔值
         ordinaryConfigCustom: true,//灰色自定义导航栏开关
         config9: false,//自定义导航栏border颜色布尔值
-        modal9: true,//自定义导航栏模态框
+        modal9: false,//自定义导航栏模态框
         customShowStateOne:true,
         customShowStateTwo:false,
+        customState:1,//状态栏显示值(传给后台的值，默认为1)
         customShowCssOne:true,
         customShowCssTwo:false,
+        zhuangtai1Show:true,
+        biaptiShow:true,
+        customCss:1,//状态栏样式值(传给后台的值，默认为1)
         customShowTextOne:true,
         customShowTextTwo:false,
+        customText:1,//状态栏样式值(传给后台的值，默认为1)
         customShowTitleOne:true,
         customShowTitleTwo:false,
+        customTitle:1,//状态栏样式值(传给后台的值，默认为1)
         titleTextinput:'首页',
-        beijingcolor: 'rgba(2,178,181,1)',
-        beijingstyleInner: ' ',
+        beijingcolor: 'rgba(2,178,181,1)', //状态栏背景色默认值
+        beijingcolor2:'rgba(2,178,181,1)',//标题栏背景色默认值
+        beijingcolor3:'rgba(255,255,255,1)',//标题栏背景色默认值
+        beijingstyleInner: ' ',//状态栏颜色选择
+        beijingstyleInner2:'',//标题栏颜色选择
+        beijingstyleInner3:'',//文字图标颜色选择
         footerswitch: false,//自定义底栏开关布尔值
         ordinaryConfigFooter: true,//灰色自定义底栏开关
         config10: false,//自定义底栏border颜色布尔值
         isNext: true,
         isNext1: false,
-
+        leftCheckboxList:[],
+        rightCheckboxList:[],
+        newleftIcon:[],
+        leftIcon:[],
+        rightIcon:[],
+        checked:false,
         predefineColors: [
           '#000000',
           '#434343',
@@ -782,7 +852,7 @@
       },
       jiazaiSelectColor(ss) {
         console.log(ss)
-       // this.jiaziastyleInner = `<style>.dynamicJiazai{ background-color: ${ss};}</style>`
+        // this.jiaziastyleInner = `<style>.dynamicJiazai{ background-color: ${ss};}</style>`
       },
       jiazaiSelectColorRinow(aa) {
         console.log(aa)
@@ -1054,22 +1124,38 @@
         }
         this.verification()
       },
+      customClick(){
+        this.modal9 = true
+      },
+      /*状态栏显示单选*/
       customStateDan1(){
         this.customShowStateOne=true
         this.customShowStateTwo=false
+        this.zhuangtai1Show=true
+        this.customState=1
       },
       customStateDan2(){
         this.customShowStateOne=false
         this.customShowStateTwo=true
+        this.zhuangtai1Show=false
+        this.customState=2
       },
+      /*状态栏样式单选*/
       customCssDan1(){
         this.customShowCssOne=true
         this.customShowCssTwo=false
+        this.customCss=1
+        this.customDivMainSmall1DivShow=true
+        this.customDivMainSmall1Div22Show=false
       },
       customCssDan2(){
         this.customShowCssOne=false
         this.customShowCssTwo=true
+        this.customCss=2
+        this.customDivMainSmall1DivShow=false
+        this.customDivMainSmall1Div22Show=true
       },
+      /*状态栏背景色*/
       beijingSelectColor(ss){
         console.log(ss)
         // this.beijingstyleInner = `<style>.zhuangtai1{ background-color: ${ss};}</style>`
@@ -1078,24 +1164,90 @@
         console.log(aa)
         this.beijingstyleInner = `<style>.zhuangtai1{ background-color: ${aa};}</style>`
       },
+      /*标题栏背景色*/
+      beijingSelectColor2(ss){
+        console.log(ss)
+        // this.beijingstyleInner2 = `<style>.customIconDiv{ background-color: ${ss};}</style>`
+      },
+      beijingSelectColorRinow2(aa){
+        console.log(aa)
+        this.beijingstyleInner2 = `<style>.customIconDiv{ background-color: ${aa};}</style>`
+      },
+      /*文字图标颜色*/
+      beijingSelectColor3(ss){
+        console.log(ss)
+        // this.beijingstyleInner3 = `<style>.daohangtextcolor{ color: ${ss};}</style>`
+      },
+      beijingSelectColorRinow3(aa){
+        console.log(aa)
+        this.beijingstyleInner3 = `<style>.daohangtextcolor{ color: ${aa};}</style>`
+      },
+      /*文字颜色单选*/
       customTextDan1(){
         this.customShowTextOne=true
         this.customShowTextTwo=false
+        this.customText=1
+        this.imgShow=true
       },
       customTextDan2(){
         this.customShowTextOne=false
         this.customShowTextTwo=true
+        this.customText=2
+        this.imgShow=false
       },
+      /*标题栏显示单选*/
       customTitleDan1(){
         this.customShowTitleOne=true
         this.customShowTitleTwo=false
+        this.customTitle=1
+        this.biaptiShow=true
       },
       customTitleDan2(){
         this.customShowTitleOne=false
         this.customShowTitleTwo=true
+        this.customTitle=2
+        this.biaptiShow=false
       },
+      /*自定义导航栏标题文字输入框*/
       titleTextinputChange(){
 
+      },
+      leftListChange(index,value,name,icon){
+        this.leftCheckboxList[index].checkValue=!this.leftCheckboxList[index].checkValue
+        if(this.leftCheckboxList[index].checkValue==true){
+          this.leftIcon.push(this.leftCheckboxList[index].icon)
+          console.log(this.leftIcon)
+        }else{
+          var newIndex = this.leftIcon.findIndex(item =>{
+            if(item==icon){
+              return true
+            }
+          })
+          this.leftIcon.splice(newIndex,1)
+        }
+        console.log(this.leftCheckboxList)
+      },
+      rightListChange(index,value,name,icon){
+        this.rightCheckboxList[index].checkValue=!this.rightCheckboxList[index].checkValue
+        if(this.rightCheckboxList[index].checkValue==true){
+          this.rightIcon.push(this.rightCheckboxList[index].icon)
+          console.log(this.rightIcon)
+        }else{
+          var newIndex = this.rightIcon.findIndex(item =>{
+            if(item==icon){
+              return true
+            }
+          })
+          this.rightIcon.splice(newIndex,1)
+        }
+        console.log(this.rightCheckboxList)
+      },
+      customOk(){
+        this.modal9 = false
+        this.customswitch = true
+        this.ordinaryConfigCustom = false
+        this.config9 = true
+        this.verification()
       },
       /*自定义底栏栏开关*/
       footerswichChange() {
@@ -1140,7 +1292,31 @@
     mounted() {
       this.jiaziastyleInner = `<style>.dynamicJiazai{ background-color: ${this.jiazaicolor};}</style>`
       this.beijingstyleInner = `<style>.zhuangtai1{ background-color: ${this.beijingcolor};}</style>`
-      //alert('接受值00：'+this.$route.params.aa)
+      this.beijingstyleInner2 = `<style>.customIconDiv{ background-color: ${this.beijingcolor2};}</style>`
+      this.beijingstyleInner3 = `<style>.daohangtextcolor{color: ${this.beijingcolor3};}</style>`
+      /*获取自定义导航栏左右功能复选框集合*/
+      axios.post(BASE_URL+'/api/encapsulation/getPackagePluginTitleNav').then(res => {
+        console.log(res.data.data)
+        this.leftCheckboxList=res.data.data.left
+        this.rightCheckboxList=res.data.data.right
+        for(var i=0;i<this.leftCheckboxList.length;i++){
+          var checkValue={}
+          var xianzhi={}
+          this.leftCheckboxList[i].checkValue=false
+          this.leftCheckboxList[i].xianzhi=false
+          console.log(this.leftCheckboxList)
+        }
+        for(var i=0;i<this.rightCheckboxList.length;i++){
+          var checkValue={}
+          this.rightCheckboxList[i].checkValue=false
+          console.log(this.rightCheckboxList)
+        }
+
+      }, err => {
+        console.log(err)
+      })
+
+
     }
   }
 </script>
@@ -1228,7 +1404,7 @@
   }
   .customDiv .ivu-modal-content {
     width: 850px;
-    height: 701px;
+    height: 731px;
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
 
@@ -1241,6 +1417,17 @@
     padding: 0;
     /*margin-top: 16px;*/
   }
+  .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+    background-color: #02B2B5;
+    border-color: #02B2B5;
+  }
+  .el-checkbox__input.is-checked+.el-checkbox__label {
+    color: #02B2B5;
+  }
+  /*.customDivMainselsectDiv11 .el-checkbox__inner{*/
+    /*background-color: #02B2B5;*/
+    /*border-color: #02B2B5;*/
+  /*}*/
 </style>
 <style scoped>
   .ordinaryConfig {
@@ -1616,7 +1803,7 @@
   }
   .customDivMainSmall1{
     width: 350px;
-    height: 566px;
+    height: 596px;
     background-repeat: no-repeat;
     background-size: 266px 566px;
     background-position:center center;
@@ -1624,21 +1811,21 @@
   }
   .customDivMainSmall2{
     width: 450px;
-    height: 236px;
+    height: auto;
+    height: auto;
     border-bottom: 1px solid #E5E5E5;
     margin-left: 20px;
+    padding-bottom: 20px;
   }
   .customDivMainSmall3{
     width: 450px;
     height: 236px;
-    border-bottom: 1px solid #E5E5E5;
     margin-left: 20px;
   }
   .customDivMainSmall1Div{
     width: 240px;
     height: 45px;
 
-    background-color: red;
     margin: 70px auto 0 auto;
 
   }
@@ -1650,11 +1837,26 @@
   .zhuangtai1 img{
     margin: 5px auto 0 auto;
   }
-  .customIconDiv{
-    width: 100%;
+  .customDivMainSmall1Div22{
+    width: 240px;
+    height: 108px;
+    background-repeat: no-repeat;
+    background-size: 240px 108px;
+    margin: 70px auto 0 auto;
+
+  }
+  .customDivMainSmall1Div22 .zhuangtai12{
     display: flex;
     justify-content: center;
-    margin-top: 5px;
+    padding-top: 5px;
+  }
+  .customIconDiv{
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    /*margin-top: 5px;*/
+    padding-top: 5px;
   }
   .firstIcon{
     width: 33.3%;
@@ -1667,17 +1869,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    /*border: 1px solid red;*/
   }
-  .firstIconDiv img{
+  .firstIconDiv .iconfont{
     max-width: 100%;
     max-height: 100%;
+    font-size: 15px;
   }
   .homepage{
     width: 33.3%;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
   }
   .secondIcon{
     width: 33.3%;
@@ -1696,14 +1899,23 @@
     max-width: 100%;
     max-height: 100%;
   }
-  .iconfont{
-    color: white;
-  }
+
   .customDivMainselsectDiv{
     height: 30px;
     display: flex;
     align-items: center;
     margin-top: 20px;
+  }
+  .customDivMainselsectDiv1{
+    height: 39px;
+    margin-top: 25px;
+
+  }
+  .customDivMainselsectDiv11{
+    height: 20px;
+    margin-top: 10px;
+    display: flex;
+    flex-flow: row;
   }
   .customDivMainselsect{
     display: flex;
@@ -1720,5 +1932,30 @@
   }
   .daoHangTitle{
     width: 100px;
+    font-size: 14px;
+  }
+  .customDivMainselsectDiv11Check {
+    width: 80px;
+  }
+  .custFooter{
+    width: 98%;
+    margin: 340px auto 0 auto;
+    height: 50px;
+    background-color: #EDFFFF;
+    display: flex;
+    justify-content: space-around;
+  }
+  .custFooterDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    color: #DCDCDC;
+  }
+  .custFooterDivCircular{
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #DCDCDC;
   }
 </style>

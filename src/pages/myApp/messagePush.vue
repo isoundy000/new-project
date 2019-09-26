@@ -134,7 +134,7 @@
 
             <div class="maskContentOne2">
               <p class="mask4text">Bundle ID</p>
-              <p class="textTwo">AD.iOSapp.dwad</p>
+              <p class="textTwo">{{bund_id}}</p>
             </div>
             <div class="maskContentOne2">
               <p class="mask4text">鉴权方式</p>
@@ -143,6 +143,7 @@
             <div class="maskContentOne2">
               <p class="mask4text">证书配置</p>
               <el-upload
+                :limit='limitCount'
                 :on-success="success"
                 class="upload-demo"
                 accept=".p12"
@@ -154,8 +155,11 @@
                   <img src="../../../static/image/survey/shangchuanicon.png" alt="">
                   <p>立即上传</p>
                 </div>
+
                 <div slot="tip" class="el-upload__tip">只能上传.p12文件</div>
+
               </el-upload>
+              <p v-show="cert_urlShow" style="color: red;margin-left: 15px;text-align: left;font-size: 18px">已上传</p>
             </div>
             <div class="maskContentOne2">
               <p  class="mask4text">证书密码</p>
@@ -249,6 +253,9 @@
         name: "messagePush",
       data(){
           return{
+            cert_urlShow:false,
+            cert_url:'',
+            bund_id:'',
             upload_url:'',
             newtitle:'',
             newsubtitle:'',
@@ -284,7 +291,8 @@
             tableData: [
 
             ],
-            newdeUrl:''
+            newdeUrl:'',
+            limitCount:1
           }
       },
       methods:{
@@ -624,6 +632,14 @@
 
       },
       mounted(){
+          if(this.$route.query.cert_path!=null){
+            this.cert_urlShow=true
+          }else{
+            this.cert_urlShow=false
+          }
+         //alert(this.$route.query.cert_path)
+        this.cert_url=this.$route.query.cert_path
+        this.bund_id=this.$route.query.package_name
         this.upload_url=UPLOAD_BASE_URL
         this.newdeUrl=BASE_URL+'/api/common/upload'
         let data = {

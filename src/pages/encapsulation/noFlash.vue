@@ -96,7 +96,7 @@
                <div class="passDeleteDiv">
                  <img   v-if="choose1" src="../../../static/image/superSignature/danxuan.png" alt="">
                  <img @click="dan2"  v-else src="../../../static/image/superSignature/danweixuan.png" alt="">
-                 <p>密码删除</p>
+                 <p>密码删除<span style="margin-left: 10px">(仅适用于IOS13以下的系统)</span> </p>
                </div>
                <el-input
                  v-show="isInputShow"

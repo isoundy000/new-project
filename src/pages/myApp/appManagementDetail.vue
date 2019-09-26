@@ -154,7 +154,9 @@
             this.$router.push({
               path:'/messagePush',
               query:{
-                id:this.$route.query.id
+                id:this.$route.query.id,
+                package_name:this.$route.query.package_name,
+                cert_path:this.$route.query.cert_path
                 // name:this.$route.query.name
               }
             })
@@ -162,7 +164,7 @@
         },
       },
       mounted(){
-        //  alert(this.$route.query.push_type)
+        // alert(this.$route.query.cert_path)
         if(this.$route.query.push_type==0){
           this.title[8].isHide=true
         }else{
