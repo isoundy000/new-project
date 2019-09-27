@@ -402,7 +402,7 @@
               <div class="customDivMainselsectDiv11" >
                 <div class="customDivMainselsectDiv11Check" v-for="(leftList,index) in leftCheckboxList" :key="index+4">
                   <el-checkbox-group   v-model="newXinzhi"  :min="0" :max="2">
-                  <el-checkbox name="type" :label="leftList.name"  @change="leftListChange(index,leftList.checkValue,leftList.name,leftList.icon)" :checked="leftCheckboxList[index].checkValue">{{leftList.name}}</el-checkbox>
+                  <el-checkbox style="width: 50px" name="type" :label="leftList.name"  @change="leftListChange(index,leftList.checkValue,leftList.name,leftList.icon)" :checked="leftCheckboxList[index].checkValue">{{leftList.name}}</el-checkbox>
                   </el-checkbox-group>
                 </div>
               </div>
@@ -558,7 +558,7 @@
                     >
                     </el-input>
                   </div>
-                  <div class="newAddTrFour">
+                  <div class="newAddTrFour" @click="addIcon(index)">
                     <img src="../../../static/image/ordinary/tianjiatubiao@2x.png" alt="">
                   </div>
                   <div class="newAddTrFive">
@@ -621,7 +621,23 @@
 
       <div class="queOk" @click="customOk" slot="footer">保存修改</div>
     </Modal>
-
+    <!--icon-->
+    <Modal
+      v-model="modal11"
+      title="选择图标"
+      :mask-closable="false"
+      :footer-hide="true"
+      class="iconDiv"
+    >
+      <div class="iconDivMain">
+         <div class="iconstyle" v-for="(list,index) in iconList" :key="index+12" @mouseenter="iconEnter(index)" @mouseleave="iconLeave(index)">
+           <div class="iconDivSmall">
+             <i class="iconfont" :class="[list.icon,{'isLike':list.iconColor}]"></i>
+           </div>
+           <p :class="{'isLike':list.iconColor}">{{list.name}}</p>
+         </div>
+      </div>
+    </Modal>
 
 
 
@@ -785,7 +801,7 @@
             </el-switch>
           </div>
         </div>
-        <div class="ordinaryConfigDivMainSmall ordinaryConfigRight" :class="{ 'configColor': config10}">
+        <div @click="footerClick" class="ordinaryConfigDivMainSmall ordinaryConfigRight" :class="{ 'configColor': config10}">
           <div class="ordinaryConfigDivMainSmallLeft">
             <img v-if="ordinaryConfigFooter" src="../../../static/image/ordinary/dilan_n.png" alt="">
             <img v-else src="../../../static/image/ordinary/dilan_s.png" alt="">
@@ -925,7 +941,7 @@
         footerswitch: false,//自定义底栏开关布尔值
         ordinaryConfigFooter: true,//灰色自定义底栏开关
         config10: false,//自定义底栏border颜色布尔值
-        modal10: true,//自定义底栏模态框
+        modal10: false,//自定义底栏模态框
         footerstyleInner:'',
         footerstyleInner1:'',
         footerShowTextOne:true,
@@ -970,6 +986,8 @@
         leftIcon:[],
         rightIcon:[],
         checked:false,
+        modal11:true,
+        iconList:[],
         predefineColors: [
           '#000000',
           '#434343',
@@ -1503,6 +1521,9 @@
         }
         this.verification()
       },
+      footerClick(){
+        this.modal10 = true
+      },
       /*状态栏背景色*/
       footerSelectColor(ss) {
         console.log(ss)
@@ -1608,6 +1629,22 @@
             this.kedian=false
           }
       },
+      addIcon(index){
+        this.modal11=true
+      },
+      iconEnter(index){
+        console.log(this.iconList[index].iconColor);
+        let obj = this.iconList[index];
+        obj.iconColor = !obj.iconColor;
+        this.$set(this.iconList, index, obj);
+
+      },
+      iconLeave(index){
+        console.log(this.iconList[index].iconColor);
+        let obj = this.iconList[index];
+        obj.iconColor = !obj.iconColor;
+        this.$set(this.iconList, index, obj);
+      },
       /*表单验证*/
       verification() {
         if (this.jiazaiswitch == true || this.xialaswitch == true || this.qingliswitch == true || this.tuichuswitch == true || this.browserswitch == true || this.shareswitch == true || this.depositswitch == true || this.zoomswitch == true || this.customswitch == true || this.footerswitch == true) {
@@ -1679,6 +1716,19 @@
           this.chooseFunctionOptions.push(newobj)
         }
 
+
+      }, err => {
+        console.log(err)
+      })
+
+      /*获取自定义icon集合*/
+      axios.post(BASE_URL+'/api/encapsulation/getPackagePluginIcon').then(res => {
+        console.log(res.data.data)
+        this.iconList=res.data.data
+        for(var i=0;i<this.iconList.length;i++){
+          this.iconList[i].iconColor=false
+        }
+        console.log(this.iconList)
 
       }, err => {
         console.log(err)
@@ -1795,6 +1845,17 @@
 
   .footerDiv .ivu-modal {
     width: 1100px !important;
+  }
+  .iconDiv .ivu-modal-content {
+    width:800px;
+    height: 601px;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+
+  }
+
+  .iconDiv .ivu-modal {
+    width: 800px !important;
   }
   .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner {
     background-color: #02B2B5;
@@ -2488,5 +2549,46 @@
   }
   .newAddTraddBtnhui p{
     margin-left: 5px;
+  }
+  .iconDivMain{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid black;
+  }
+  .iconstyle{
+    width: 70px;
+    height: 70px;
+    margin-left: 12px;
+    margin-top: 10px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    /*border: 1px solid red;*/
+  }
+  .iconDivSmall{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*border: 1px solid red;*/
+  }
+  .iconDivMain .iconfont{
+    font-size: 50px;
+    color: #666666;
+  }
+  .iconstyle p{
+    width: 70px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    text-align: center;
+    color: #666666;
+    font-size: 14px;
+  }
+  .isLike{
+    color: #06B2B6 !important;
   }
 </style>
