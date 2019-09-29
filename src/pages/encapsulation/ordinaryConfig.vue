@@ -36,45 +36,18 @@
           </div>
         </div>
       </div>
-      <div class="jiazaiSelectColor">
-        <p>颜色样式</p>
-        <el-color-picker
-          v-model="jiazaicolor"
-          @active-change="jiazaiSelectColor"
-          @change="jiazaiSelectColorRinow"
-          :predefine="predefineColors">
-        </el-color-picker>
+      <div class="jiazaiSelectColor" >
+        <div v-if="jiazaidonghuaCss">
+          <p>颜色样式</p>
+          <el-color-picker
+            v-model="jiazaicolor"
+            @active-change="jiazaiSelectColor"
+            @change="jiazaiSelectColorRinow"
+            :predefine="predefineColors">
+          </el-color-picker>
+        </div>
       </div>
       <div class="queOk" @click="jiazaiOk" slot="footer">保存修改</div>
-    </Modal>
-    <!--下拉刷新-->
-    <Modal
-      v-model="modal2"
-      title="下拉刷新"
-      :mask-closable="false"
-      class="xialaDiv"
-    >
-      <div class="xialaDivMain">
-        <div class="xialaOpen" @click="xialaOpen" :class="{ 'selectColor': xiaSelect1 }">开启</div>
-        <div class="xialaClose" :class="{ 'selectColor': xiaSelect2 }" @click="xialaClose">关闭</div>
-      </div>
-
-      <div class="queOk" @click="xialaOk" slot="footer">保存修改</div>
-    </Modal>
-    <!--清理缓存-->
-    <Modal
-      v-model="modal3"
-      title="清理缓存"
-      :mask-closable="false"
-      class="qingliDiv"
-    >
-      <div class="xialaDivMain">
-        <div class="xialaOpen" @click="qingliOpen" :class="{ 'selectColor': qingSelect1 }">开启</div>
-        <div class="xialaClose" :class="{ 'selectColor': qingSelect2 }" @click="qingliClose">关闭</div>
-      </div>
-      <p style="color: #FF0000;font-size: 12px;margin-top: 10px">每次开启APP，后台自动清理缓存</p>
-
-      <div class="queOk" @click="qingliOk" slot="footer">保存修改</div>
     </Modal>
     <!--退出提示-->
     <Modal
@@ -202,36 +175,8 @@
 
       <div class="queOk" @click="shareOk" slot="footer">保存修改</div>
     </Modal>
-    <!--长按存图-->
-    <Modal
-      v-model="modal7"
-      title="长按存图"
-      :mask-closable="false"
-      class="qingliDiv"
-    >
-      <div class="xialaDivMain">
-        <div class="xialaOpen" @click="depositOpen" :class="{ 'selectColor': depositSelect1 }">开启</div>
-        <div class="xialaClose" :class="{ 'selectColor': depositSelect2 }" @click="depositClose">关闭</div>
-      </div>
-      <p style="color: #FF0000;font-size: 12px;margin-top: 10px">长按图片即刻保存到手机相册中</p>
 
-      <div class="queOk" @click="depositOk" slot="footer">保存修改</div>
-    </Modal>
-    <!--网页缩放-->
-    <Modal
-      v-model="modal8"
-      title="网页缩放"
-      :mask-closable="false"
-      class="qingliDiv"
-    >
-      <div class="xialaDivMain">
-        <div class="xialaOpen" @click="zoomOpen" :class="{ 'selectColor': zoomSelect1 }">开启</div>
-        <div class="xialaClose" :class="{ 'selectColor': zoomSelect2 }" @click="zoomClose">关闭</div>
-      </div>
-      <p style="color: #FF0000;font-size: 12px;margin-top: 10px">支持手势对网页进行放大缩小</p>
 
-      <div class="queOk" @click="zoomOk" slot="footer">保存修改</div>
-    </Modal>
     <!--自定义导航栏-->
     <Modal
       v-model="modal9"
@@ -402,7 +347,7 @@
               <div class="customDivMainselsectDiv11" >
                 <div class="customDivMainselsectDiv11Check" v-for="(leftList,index) in leftCheckboxList" :key="index+4">
                   <el-checkbox-group   v-model="newXinzhi"  :min="0" :max="2">
-                  <el-checkbox style="width: 50px" name="type" :label="leftList.name"  @change="leftListChange(index,leftList.checkValue,leftList.name,leftList.icon)" :checked="leftCheckboxList[index].checkValue">{{leftList.name}}</el-checkbox>
+                  <el-checkbox  name="type" :label="leftList.name"  @change="leftListChange(index,leftList.checkValue,leftList.name,leftList.icon,leftList.type,leftList.image)" :checked="leftCheckboxList[index].checkValue">{{leftList.name}}</el-checkbox>
                   </el-checkbox-group>
                 </div>
               </div>
@@ -412,7 +357,7 @@
               <div class="customDivMainselsectDiv11" >
                 <div class="customDivMainselsectDiv11Check" v-for="(rightList,index) in rightCheckboxList" :key="index+5">
                   <el-checkbox-group  v-model="newXinzhi1" :min="0" :max="2">
-                    <el-checkbox name="type" :label="rightList.name"  @change="rightListChange(index,rightList.checkValue,rightList.name,rightList.icon)"  :checked="rightCheckboxList[index].checkValue">{{rightList.name}}</el-checkbox>
+                    <el-checkbox name="type" :label="rightList.name"  @change="rightListChange(index,rightList.checkValue,rightList.name,rightList.icon,rightList.type,rightList.image)"  :checked="rightCheckboxList[index].checkValue">{{rightList.name}}</el-checkbox>
                   </el-checkbox-group>
                 </div>
               </div>
@@ -455,14 +400,19 @@
             <p v-html="footerstyleInner1"></p>
             <div class="custFooter">
               <div class="custFooterDiv" v-for="(list,index)  in footerText" :key="index+6">
-                <div class="custFooterDivCircular" v-show="onlyIcon"></div>
-                <!--<i class="iconfont icon-yiliaohangyedeICON-"></i>-->
+                <div class="custFooterDivCircular" v-if="list.icon == ''" ></div>
+                <div v-else style="width: 20px;height: 20px;display: flex;align-items: center;justify-content: center">
+                  <i v-show="onlyIcon" style="font-size: 18px"  class="iconfont" :class="list.icon"></i>
+                </div>
+
                 <!--<p v-if="list.isText">{{list.text}}</p>-->
                 <p v-show="onlyText">{{list.daohangnameInput}}</p>
               </div>
               <div class="custFooterDiv" v-for="(list,index)  in footerText2" :key="index+10">
-                <div v-show="onlyIcon" class="custFooterDivCircular"></div>
-                <!--<i class="iconfont icon-yiliaohangyedeICON-"></i>-->
+                <div   class="custFooterDivCircular" v-if="list.icon == ''"></div>
+                <div v-else style="width: 20px;height: 20px;display: flex;align-items: center;justify-content: center">
+                  <i v-show="onlyIcon" style="font-size: 18px"  class="iconfont" :class="list.icon"></i>
+                </div>
                 <!--<p v-if="list.isText">{{list.text}}</p>-->
                 <p v-show="onlyText">{{list.daohangnameInput}}</p>
               </div>
@@ -539,7 +489,7 @@
                     <p>{{list.name}}</p>
                   </div>
                  <div class="newAddTrTwo">
-                   <el-select class="chooseApp" @change="chooseFunction()" v-model="list.functionValue" placeholder="请选择">
+                   <el-select class="chooseApp" @change="chooseFunction(index,list.functionValue)" v-model="list.functionValue" placeholder="请选择">
                      <el-option
                        v-for="item in chooseFunctionOptions"
                        :key="item.id"
@@ -558,8 +508,13 @@
                     >
                     </el-input>
                   </div>
-                  <div class="newAddTrFour" @click="addIcon(index)">
-                    <img src="../../../static/image/ordinary/tianjiatubiao@2x.png" alt="">
+                  <div class="newAddTrFour" @click="addIcon(index)" v-if="list.isIconImg" >
+                    <img style="width: 38px;height: 38px;" src="../../../static/image/ordinary/tianjiatubiao@2x.png" alt="">
+                  </div>
+                  <div class="newAddTrFour" @click="addIcon(index)" v-else>
+                    <div style="width: 38px;height: 38px;border: 1px solid #E5E5E5;display: flex;align-items: center;justify-content: center">
+                      <i style="font-size: 32px" class="iconfont " :class="list.icon"></i>
+                    </div>
                   </div>
                   <div class="newAddTrFive">
 
@@ -570,7 +525,7 @@
                     <p>{{list.name}}</p>
                   </div>
                   <div class="newAddTrTwo">
-                    <el-select class="chooseApp" @change="chooseFunction()" v-model="list.functionValue" placeholder="请选择">
+                    <el-select class="chooseApp" @change="chooseFunction(index)" v-model="list.functionValue" placeholder="请选择">
                       <el-option
                         v-for="item in chooseFunctionOptions"
                         :key="item.id"
@@ -590,8 +545,13 @@
                     </el-input>
 
                   </div>
-                  <div class="newAddTrFour">
-                    <img src="../../../static/image/ordinary/tianjiatubiao@2x.png" alt="">
+                  <div class="newAddTrFour" @click="addIcon1(index)" v-if="list.isIconImg" >
+                    <img style="width: 38px;height: 38px;" src="../../../static/image/ordinary/tianjiatubiao@2x.png" alt="">
+                  </div>
+                  <div class="newAddTrFour" @click="addIcon1(index)" v-else>
+                    <div style="width: 38px;height: 38px;border: 1px solid #E5E5E5;display: flex;align-items: center;justify-content: center">
+                      <i style="font-size: 32px" class="iconfont " :class="list.icon"></i>
+                    </div>
                   </div>
                   <div class="newAddTrFive" >
                     <div @click="newAddTrdel(index,list.name)" v-show="list.delShow">
@@ -619,7 +579,7 @@
 
       </div>
 
-      <div class="queOk" @click="customOk" slot="footer">保存修改</div>
+      <div class="queOk" @click="newcustomOk" slot="footer">保存修改</div>
     </Modal>
     <!--icon-->
     <Modal
@@ -630,7 +590,7 @@
       class="iconDiv"
     >
       <div class="iconDivMain">
-         <div class="iconstyle" v-for="(list,index) in iconList" :key="index+12" @mouseenter="iconEnter(index)" @mouseleave="iconLeave(index)">
+         <div class="iconstyle" v-for="(list,index) in iconList" :key="index+12" @click="iconClick(index)" @mouseenter="iconEnter(index)" @mouseleave="iconLeave(index)">
            <div class="iconDivSmall">
              <i class="iconfont" :class="[list.icon,{'isLike':list.iconColor}]"></i>
            </div>
@@ -638,7 +598,23 @@
          </div>
       </div>
     </Modal>
-
+    <!--icon-->
+    <Modal
+      v-model="modal12"
+      title="选择图标"
+      :mask-closable="false"
+      :footer-hide="true"
+      class="iconDiv"
+    >
+      <div class="iconDivMain">
+        <div class="iconstyle" v-for="(list,index) in iconList" :key="index+12" @click="iconClick1(index)" @mouseenter="iconEnter(index)" @mouseleave="iconLeave(index)">
+          <div class="iconDivSmall">
+            <i class="iconfont" :class="[list.icon,{'isLike':list.iconColor}]"></i>
+          </div>
+          <p :class="{'isLike':list.iconColor}">{{list.name}}</p>
+        </div>
+      </div>
+    </Modal>
 
 
 
@@ -841,6 +817,7 @@
     name: "ordinaryConfig",
     data() {
       return {
+        newXiaLaList:[],
         customDivMainSmall3:true,
         customDivMainSmall5:false,
         customDivMainSmall1Div22Show:false, //自定义状态栏样式---自定义颜色
@@ -853,32 +830,30 @@
         ordinaryConfigJiazai: true,//灰色加载效果开关
         config1: false,//加载效果border颜色布尔值
         modal1: false,//加载效果模态框
+        jiazaidonghuaCss:true,
         jiazaiTextColor1: true,//加载效果模态框文字颜色
         jiazaiTextColor2: false,//加载效果模态框文字颜色
         jiazaiTextBorder1: true,//加载效果模态框border颜色
         jiazaiTextBorder2: false,//加载效果模态框border颜色
         jiaziastyleInner: '',
         jiazaicolor: 'rgba(2,178,181,1)',
-        jiazaiValue: 1,
+        loading_color:'#06B2B6',//加载选择颜色16精制(传给后台)
+        jiazaiValue: 1,//选择的是左边还是右边(默认加载进度条)
+        loading_status:0,//加载动画开关(默认关闭0，开启1)
         xialaswitch: false,//下拉刷新开关布尔值
         ordinaryConfigXiala: true,//灰色下拉刷新开关
         config2: false,//下拉刷新border颜色布尔值
-        modal2: false,//下拉刷新模态框
-        xiaSelect1: true,
-        xiaSelect2: false,
-        xialaValue: 1,//下拉刷新值(传给后台的值，默认为1)
+        refresh_down:0,//(下拉刷新开关，传给后台)
         qingliswitch: false,//清理缓存开关布尔值
         ordinaryConfigQingli: true,//灰色清理缓存开关
         config3: false,//清理缓存border颜色布尔值
-        modal3: false,//清理缓存模态框
-        qingSelect1: true,
-        qingSelect2: false,
-        qingliValue: 1,//清理缓存值(传给后台的值，默认为1)
+        clean_cache:0,//(清理缓存开关，传给后台)
         redText: true,
         tuichuswitch: false,//退出提示开关布尔值
         ordinaryConfigTuichu: true,//灰色退出提示开关
         config4: false,//退出提示border颜色布尔值
         modal4: false,//退出提示模态框
+        exit_status:0,//退出开关(默认关闭0，开启1)
         tuichuValue: 1,//退出提示值(传给后台的值，默认为1)
         tuichuShowOne: true,//退出第一个单选框
         tuichuShowTwo: false,//退出第一个单选框
@@ -887,6 +862,7 @@
         ordinaryConfigBrowser: true,//灰色浏览器内核开关
         config5: false,//浏览器内核border颜色布尔值
         modal5: false,//浏览器内核模态框
+        browser_status:0,
         browserShowOne: true,
         browserShowTwo: false,
         browserShowThree: true,
@@ -897,28 +873,27 @@
         ordinaryConfigShare: true,//灰色分享开关
         config6: false,//分享border颜色布尔值
         modal6: false,//分享模态框
+        share_status:0,
         share_content: '',//分享内容
         share_url: '',//分享链接
         depositswitch: false,//长按存图开关布尔值
         ordinaryConfigDeposit: true,//灰色长按存图开关
         config7: false,//长按存图border颜色布尔值
-        modal7: false,//长按存图模态框
-        depositSelect1: true,
-        depositSelect2: false,
-        depositValue: 1,//长按存图值(传给后台的值，默认为1)
+        save_picture:0,//(长按存图开关，传给后台)
         zoomswitch: false,//网页缩放开关布尔值
         ordinaryConfigZoom: true,//灰色网页缩放开关
         config8: false,//网页缩放border颜色布尔值
-        modal8: false,//网页缩放模态框
-        zoomSelect1: true,
-        zoomSelect2: false,
-        zoomValue: 1,//网页缩放值(传给后台的值，默认为1)
+        web_page_zoom:0,//(网页缩放开关，传给后台)
         customswitch: false,//自定义导航栏开关布尔值
         ordinaryConfigCustom: true,//灰色自定义导航栏开关
         config9: false,//自定义导航栏border颜色布尔值
         modal9: false,//自定义导航栏模态框
+        nav_status:0,//(自定义导航开关，传给后台)
         customShowStateOne:true,
         customShowStateTwo:false,
+        nav_bar_bgcolor:'#06B2B6',//导航状态栏背景颜色16精制(传给后台)
+        nav_title_bgcolor:'#06B2B6',//导航标题栏背景颜色
+        nav_title_text_icon_color:'#FFFFFF',
         customState:1,//状态栏显示值(传给后台的值，默认为1)
         customShowCssOne:true,
         customShowCssTwo:false,
@@ -940,8 +915,24 @@
         beijingstyleInner3:'',//文字图标颜色选择
         footerswitch: false,//自定义底栏开关布尔值
         ordinaryConfigFooter: true,//灰色自定义底栏开关
+        nav_title_left_type:[],//导航标题栏左侧type_id
+        nav_title_left_name:[],//导航标题栏左侧功能名称
+        nav_title_left_icon:[],//导航标题栏左侧功能图标地址
+
+        nav_title_right_type:[],//导航标题栏右左侧type_id
+        nav_title_right_name:[],//导航标题栏右侧功能名称
+        nav_title_right_icon:[],//导航标题栏右侧功能图标地址
         config10: false,//自定义底栏border颜色布尔值
         modal10: false,//自定义底栏模态框
+        bottom_status:0,//(自定义底栏开关，传给后台)
+        bottom_bgcolor:'#06B2B6',//底部导航栏背景颜色
+        bottom_default_color:'#FFFFFF',//底部导航栏文字和图标默认颜色
+        bottom_nav_type:[],//底部导航type_id
+        bottom_nav_name:[],//底部导航名称
+        bottom_nav_icon:[],//底部导航图标地址
+
+
+
         footerstyleInner:'',
         footerstyleInner1:'',
         footerShowTextOne:true,
@@ -956,6 +947,8 @@
         kedian:true,
         onlyIcon:true,
         onlyText:true,
+        indexAdd:'',
+        indexAdd1:'',
         footerText:[
           {
             icon:'',
@@ -963,7 +956,9 @@
             isText:false,
             name:'导航1',
             functionValue:'',
-            daohangnameInput:'空白'
+            daohangnameInput:'空白',
+            isIconImg:true,
+            image:''
           },
           {
             icon:'',
@@ -971,7 +966,10 @@
             isText:true,
             name:'导航2',
             functionValue:'',
-            daohangnameInput:'空白'
+            daohangnameInput:'空白',
+            isIconImg:true,
+            image:''
+
           },
 
         ],
@@ -986,7 +984,11 @@
         leftIcon:[],
         rightIcon:[],
         checked:false,
-        modal11:true,
+        modal11:false,
+        modal12:false,
+
+        isIconImg:true,//默认显示上传图标图片
+        iconImg:'',//图标
         iconList:[],
         predefineColors: [
           '#000000',
@@ -1071,9 +1073,11 @@
         if (this.jiazaiswitch == true) {
           this.ordinaryConfigJiazai = false
           this.config1 = true
+          this.loading_status=1
         } else {
           this.ordinaryConfigJiazai = true
           this.config1 = false
+          this.loading_status=0
         }
         this.verification()
       },
@@ -1095,6 +1099,7 @@
         this.jiazaiTextBorder1 = true
         this.jiazaiTextColor2 = false
         this.jiazaiTextBorder2 = false
+        this.jiazaidonghuaCss=true
         this.jiazaiValue = 1
       },
       /*加载效果模态框里面的右边*/
@@ -1103,6 +1108,7 @@
         this.jiazaiTextBorder1 = false
         this.jiazaiTextColor2 = true
         this.jiazaiTextBorder2 = true
+        this.jiazaidonghuaCss=false
         this.jiazaiValue = 2
       },
       jiazaiSelectColor(ss) {
@@ -1110,6 +1116,7 @@
         // this.jiaziastyleInner = `<style>.dynamicJiazai{ background-color: ${ss};}</style>`
       },
       jiazaiSelectColorRinow(aa) {
+        this.loading_color=aa
         console.log(aa)
         this.jiaziastyleInner = `<style>.dynamicJiazai{ background-color: ${aa};}</style>`
 
@@ -1119,34 +1126,26 @@
         if (this.xialaswitch == true) {
           this.ordinaryConfigXiala = false
           this.config2 = true
+          this.refresh_down=1
         } else {
           this.ordinaryConfigXiala = true
           this.config2 = false
+          this.refresh_down=0
         }
         this.verification()
       },
       /*下拉刷新整体点击*/
       xialaClick() {
-        this.modal2 = true
-      },
-      /*下拉刷新模态框里面的开启*/
-      xialaOpen() {
-        this.xiaSelect1 = true
-        this.xiaSelect2 = false
-        this.xialaValue = 1
-      },
-      /*下拉刷新模态框里面的关闭*/
-      xialaClose() {
-        this.xiaSelect1 = false
-        this.xiaSelect2 = true
-        this.xialaValue = 2
-      },
-      /*下拉刷新模态框里面的确认*/
-      xialaOk() {
-        this.modal2 = false
-        this.xialaswitch = true
-        this.ordinaryConfigXiala = false
-        this.config2 = true
+        this.xialaswitch=!this.xialaswitch
+        if (this.xialaswitch == true) {
+          this.ordinaryConfigXiala = false
+          this.config2 = true
+          this.refresh_down=1
+        } else {
+          this.ordinaryConfigXiala = true
+          this.config2 = false
+          this.refresh_down=0
+        }
         this.verification()
       },
       /*清理缓存开关*/
@@ -1154,45 +1153,38 @@
         if (this.qingliswitch == true) {
           this.ordinaryConfigQingli = false
           this.config3 = true
+          this.clean_cache=1
         } else {
           this.ordinaryConfigQingli = true
           this.config3 = false
+          this.clean_cache=0
         }
         this.verification()
       },
       qingliClick() {
-        this.modal3 = true
-      },
-      /*下拉刷新模态框里面的开启*/
-      qingliOpen() {
-        this.qingSelect1 = true
-        this.qingSelect2 = false
-        this.qingliValue = 1
-        this.redText = true
-      },
-      /*下拉刷新模态框里面的关闭*/
-      qingliClose() {
-        this.qingSelect1 = false
-        this.qingSelect2 = true
-        this.qingliValue = 2
-        this.redText = false
-      },
-      /*下拉刷新模态框里面的确认*/
-      qingliOk() {
-        this.modal3 = false
-        this.qingliswitch = true
-        this.ordinaryConfigQingli = false
-        this.config3 = true
+        this.qingliswitch=!this.qingliswitch
+        if (this.qingliswitch == true) {
+          this.ordinaryConfigQingli = false
+          this.config3 = true
+          this.clean_cache=1
+        } else {
+          this.ordinaryConfigQingli = true
+          this.config3 = false
+          this.clean_cache=0
+        }
         this.verification()
       },
+
       /*退出提示开关*/
       tuichuswichChange() {
         if (this.tuichuswitch == true) {
           this.ordinaryConfigTuichu = false
           this.config4 = true
+          this.exit_status=1
         } else {
           this.ordinaryConfigTuichu = true
           this.config4 = false
+          this.exit_status=2
         }
         this.verification()
       },
@@ -1229,9 +1221,11 @@
         if (this.browserswitch == true) {
           this.ordinaryConfigBrowser = false
           this.config5 = true
+          this.browser_status=1
         } else {
           this.ordinaryConfigBrowser = true
           this.config5 = false
+          this.browser_status=0
         }
         this.verification()
       },
@@ -1270,9 +1264,11 @@
         if (this.shareswitch == true) {
           this.ordinaryConfigShare = false
           this.config6 = true
+          this.share_status=1
         } else {
           this.ordinaryConfigShare = true
           this.config6 = false
+          this.share_status=0
         }
         this.verification()
       },
@@ -1301,81 +1297,66 @@
         if (this.depositswitch == true) {
           this.ordinaryConfigDeposit = false
           this.config7 = true
+          this.save_picture=1
         } else {
           this.ordinaryConfigDeposit = true
           this.config7 = false
+          this.save_picture=0
         }
         this.verification()
       },
       depositClick() {
-        this.modal7 = true
-      },
-      /*下拉刷新模态框里面的开启*/
-      depositOpen() {
-        this.depositSelect1 = true
-        this.depositSelect2 = false
-        this.depositValue = 1
-        this.redText = true
-      },
-      /*下拉刷新模态框里面的关闭*/
-      depositClose() {
-        this.depositSelect1 = false
-        this.depositSelect2 = true
-        this.depositValue = 2
-        this.redText = false
-      },
-      /*下拉刷新模态框里面的确认*/
-      depositOk() {
-        this.modal7 = false
-        this.depositswitch = true
-        this.ordinaryConfigDeposit = false
-        this.config7 = true
+        this.depositswitch=!this.depositswitch
+        if (this.depositswitch == true) {
+          this.ordinaryConfigDeposit = false
+          this.config7 = true
+          this.save_picture=1
+        } else {
+          this.ordinaryConfigDeposit = true
+          this.config7 = false
+          this.save_picture=0
+        }
         this.verification()
       },
+
+
       /*网页缩放开关*/
       zoomswichChange() {
         if (this.zoomswitch == true) {
           this.ordinaryConfigZoom = false
           this.config8 = true
+          this.web_page_zoom=1
         } else {
           this.ordinaryConfigZoom = true
           this.config8 = false
+          this.web_page_zoom=0
         }
         this.verification()
       },
       zoomClick() {
-        this.modal8 = true
-      },
-      /*下拉刷新模态框里面的开启*/
-      zoomOpen() {
-        this.zoomSelect1 = true
-        this.zoomSelect2 = false
-        this.zoomValue = 1
-        this.redText = true
-      },
-      /*下拉刷新模态框里面的关闭*/
-      zoomClose() {
-        this.zoomSelect1 = false
-        this.zoomSelect2 = true
-        this.zoomValue = 2
-        this.redText = false
-      },
-      /*下拉刷新模态框里面的确认*/
-      zoomOk() {
-        this.modal8 = false
-        this.zoomswitch = true
-        this.ordinaryConfigZoom = false
-        this.config8 = true
+        this.zoomswitch=!this.zoomswitch
+        if (this.zoomswitch == true) {
+          this.ordinaryConfigZoom = false
+          this.config8 = true
+          this.web_page_zoom=1
+        } else {
+          this.ordinaryConfigZoom = true
+          this.config8 = false
+          this.web_page_zoom=0
+        }
         this.verification()
       },
+
       /*自定义导航栏开关*/
       customswichChange() {
         if (this.customswitch == true) {
           this.ordinaryConfigCustom = false
           this.config9 = true
+          this.nav_status=1
         } else {
           this.ordinaryConfigCustom = true
           this.config9 = false
+          this.nav_status=0
         }
         this.verification()
       },
@@ -1393,7 +1374,7 @@
         this.customShowStateOne = false
         this.customShowStateTwo = true
         this.zhuangtai1Show = false
-        this.customState = 2
+        this.customState = 0
       },
       /*状态栏样式单选*/
       customCssDan1() {
@@ -1409,7 +1390,7 @@
       customCssDan2() {
         this.customShowCssOne = false
         this.customShowCssTwo = true
-        this.customCss = 2
+        this.customCss = 0
         $(".rightBeijing").hide()
         $(".customDivMainSmall3").hide()
         $(".customDivMainSmall5").show()
@@ -1422,6 +1403,7 @@
         // this.beijingstyleInner = `<style>.zhuangtai1{ background-color: ${ss};}</style>`
       },
       beijingSelectColorRinow(aa) {
+        this.nav_bar_bgcolor=aa
         console.log(aa)
         this.beijingstyleInner = `<style>.zhuangtai1{ background-color: ${aa};}</style>`
       },
@@ -1440,6 +1422,7 @@
         // this.beijingstyleInner3 = `<style>.daohangtextcolor{ color: ${ss};}</style>`
       },
       beijingSelectColorRinow3(aa) {
+        this.nav_title_text_icon_color=aa
         console.log(aa)
         this.beijingstyleInner3 = `<style>.daohangtextcolor{ color: ${aa};}</style>`
       },
@@ -1466,18 +1449,20 @@
       customTitleDan2() {
         this.customShowTitleOne = false
         this.customShowTitleTwo = true
-        this.customTitle = 2
+        this.customTitle = 0
         this.biaptiShow = false
       },
       /*自定义导航栏标题文字输入框*/
       titleTextinputChange() {
 
       },
-      leftListChange(index, value, name, icon) {
+      leftListChange(index, value, name, icon, type, image) {
         this.leftCheckboxList[index].checkValue = !this.leftCheckboxList[index].checkValue
         if (this.leftCheckboxList[index].checkValue == true) {
           this.leftIcon.push(this.leftCheckboxList[index].icon)
-          console.log(this.leftIcon)
+          this.nav_title_left_type.push(this.leftCheckboxList[index].type)
+          this.nav_title_left_name.push(this.leftCheckboxList[index].name)
+          this.nav_title_left_icon.push(this.leftCheckboxList[index].image)
         } else {
           var newIndex = this.leftIcon.findIndex(item => {
             if (item == icon) {
@@ -1485,13 +1470,19 @@
             }
           })
           this.leftIcon.splice(newIndex, 1)
+          this.nav_title_left_type.splice(newIndex, 1)
+          this.nav_title_left_name.splice(newIndex, 1)
+          this.nav_title_left_icon.splice(newIndex, 1)
         }
         console.log(this.leftCheckboxList)
       },
-      rightListChange(index, value, name, icon) {
+      rightListChange(index, value, name, icon,type,image) {
         this.rightCheckboxList[index].checkValue = !this.rightCheckboxList[index].checkValue
         if (this.rightCheckboxList[index].checkValue == true) {
           this.rightIcon.push(this.rightCheckboxList[index].icon)
+          this.nav_title_right_type.push(this.rightCheckboxList[index].type)
+          this.nav_title_right_name.push(this.rightCheckboxList[index].name)
+          this.nav_title_right_icon.push(this.rightCheckboxList[index].image)
           console.log(this.rightIcon)
         } else {
           var newIndex = this.rightIcon.findIndex(item => {
@@ -1500,6 +1491,9 @@
             }
           })
           this.rightIcon.splice(newIndex, 1)
+          this.nav_title_right_type.splice(newIndex, 1)
+          this.nav_title_right_name.splice(newIndex, 1)
+          this.nav_title_right_icon.splice(newIndex, 1)
         }
         console.log(this.rightCheckboxList)
       },
@@ -1515,9 +1509,11 @@
         if (this.footerswitch == true) {
           this.ordinaryConfigFooter = false
           this.config10 = true
+          this.bottom_status=1
         } else {
           this.ordinaryConfigFooter = true
           this.config10 = false
+          this.bottom_status=0
         }
         this.verification()
       },
@@ -1530,6 +1526,7 @@
         // this.footerstyleInner = `<style>.custFooter{ background-color: ${ss};}</style>`
       },
       footerSelectColorRinow(aa) {
+        this.bottom_bgcolor=aa
         console.log(aa)
         this.footerstyleInner = `<style>.custFooter{ background-color: ${aa};}</style>`
       },
@@ -1539,6 +1536,7 @@
         // this.footerstyleInner1 = `<style>.custFooterDiv{ color: ${ss};}</style>`
       },
       footerSelectColorRinow1(aa) {
+        this.bottom_default_color=aa
         console.log(aa)
         this.footerstyleInner1 = `<style>.custFooterDiv{ color: ${aa};}</style>`
       },
@@ -1594,12 +1592,50 @@
       },
       /*清空*/
       delAll(){
-        this.footerText2=''
+        this.footerText2=[]
         this.kedian=true
       },
       /*自定义底栏导航功能下拉菜单*/
-      chooseFunction(){
+      chooseFunction(index,type_id){
+       // alert(index)
+      //  alert(this.newXiaLaList[index].type)
+        // var aaaa=['aa','bb','cc','dd']
+        // aaaa[5].push(type_id)
+        // console.log(aaaa)
+        //aa.push(type_id)
 
+          console.log(this.bottom_nav_type)
+      },
+      newcustomOk(){
+
+
+
+
+
+        for(var i=0;i<this.footerText.length;i++){
+          // alert('输入框的值'+i+this.footerText[i].daohangnameInput)
+          // alert('typeid值'+i+this.footerText[i].functionValue)
+          // alert('图片值'+i+this.footerText[i].image)
+          console.log(this.footerText.daohangnameInput)
+          if(this.footerText[i].daohangnameInput!=''&& this.footerText[i].functionValue!='' && this.footerText[i].image!=''){
+            alert("滚去填写完整")
+            this.modal10=true
+          }else{
+            alert("111")
+            this.modal10=false
+            this.bottom_nav_type.push(this.footerText[i].functionValue)
+            this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
+            this.bottom_nav_icon.push(this.footerText[i].image)
+          }
+
+
+
+        }
+        console.log(this.bottom_nav_type)
+        console.log(this.bottom_nav_name)
+        console.log(this.bottom_nav_icon)
+        // console.log(this.footerText)
+        // console.log(this.footerText2)
       },
       /*自定义底栏导航名称输入框*/
       daohangnameInputEvent(index){
@@ -1613,17 +1649,9 @@
            //this.textOne=false
       },
       newAddTraddBtn(){
-        // icon:'',
-        //   text:'空白',
-        //   isText:true,
-        //   name:'导航2',
-        //   functionValue:'',
-        //   daohangnameInput:'空白'
-
-
           console.log(this.footerText2)
           var i=Number(this.footerText2.length)+3 ;
-          this.footerText2.push({name: '导航'+i,daohangnameInput:'空白',functionValue:'',isText:true,delShow:false});
+          this.footerText2.push({name: '导航'+i,daohangnameInput:'空白',functionValue:'',isText:true,delShow:false,isIconImg:true,icon:'',image:''});
         console.log(this.footerText2)
           if(this.footerText2.length==3){
             this.kedian=false
@@ -1631,16 +1659,41 @@
       },
       addIcon(index){
         this.modal11=true
+        this.indexAdd=index
+       // alert(index)
+      },
+      iconClick(index){
+        this.modal11=false
+        // this.isIconImg=false
+        // this.iconImg=this.iconList[index].image
+        this.footerText[this.indexAdd].isIconImg=false
+        this.footerText[this.indexAdd].icon=this.iconList[index].icon
+        this.footerText[this.indexAdd].image=this.iconList[index].image
+        console.log(this.iconList[index])
+      },
+      addIcon1(index){
+        this.modal12=true
+        this.indexAdd1=index
+       // alert(index)
+      },
+      iconClick1(index){
+        this.modal12=false
+        // this.isIconImg=false
+        // this.iconImg=this.iconList[index].image
+        this.footerText2[this.indexAdd1].isIconImg=false
+        this.footerText2[this.indexAdd1].icon=this.iconList[index].icon
+        this.footerText2[this.indexAdd1].image=this.iconList[index].image
+        console.log(this.iconList[index])
       },
       iconEnter(index){
-        console.log(this.iconList[index].iconColor);
+       // console.log(this.iconList[index].iconColor);
         let obj = this.iconList[index];
         obj.iconColor = !obj.iconColor;
         this.$set(this.iconList, index, obj);
 
       },
       iconLeave(index){
-        console.log(this.iconList[index].iconColor);
+        //console.log(this.iconList[index].iconColor);
         let obj = this.iconList[index];
         obj.iconColor = !obj.iconColor;
         this.$set(this.iconList, index, obj);
@@ -1661,9 +1714,111 @@
         this.$router.push({
           name: 'ordinaryChoose',
           params: {
-            active: 3
+            active: 3,
+            loading_type:this.jiazaiValue,//加载动画类型
+            loading_color:this.loading_color,//加载动画颜色
+            loading_status:this.loading_status, //加载动画开关
+            refresh_down:this.refresh_down,//下拉刷新开关
+            clean_cache:this.clean_cache,//清理缓存开关
+            exit_option:this.tuichuValue,//退出类型
+            exit_status:this.exit_status,//退出提示开关
+            browser_status:this.browser_status,//浏览器内核开关
+            browser_android:this.browser_android,//浏览器内核安卓
+            browser_ios:this.browser_ios,//浏览器内核ios
+            share_status:this.share_status,//分享开关
+            share_content:this.share_content,//分享内容
+            share_url:this.share_url,//分享内容
+            save_picture:this.save_picture,//长按存图开关
+            nav_status:this.nav_status,//自定义导航栏开关
+            nav_bar_status:this.customState, //自定义导航状态栏1-开启0-关闭默认1
+            nav_bar_display_mode:this.customCss,//导航状态栏显示方式1-自定义颜色2-背景图延伸默认1
+            nav_bar_bgcolor:this.nav_bar_bgcolor,//导航状态栏背景颜色
+            nav_bar_text_color:this.customText,//导航状态栏文字颜色1-白色2-黑色
+            nav_title_status:this.customTitle,//导航标题栏1-开启0-关闭
+            nav_title_text:this.titleTextinput,//导航标题栏文字(默认应用名称
+            nav_title_bgcolor:this.nav_title_bgcolor,//导航标题栏背景颜色
+            nav_title_text_icon_color:this.nav_title_text_icon_color,//导航标题栏文字图标颜色
+            nav_title_left_type:this.nav_title_left_type,//导航标题栏左侧type_id
+            nav_title_left_name:this.nav_title_left_name,//导航标题栏左侧功能名称
+            nav_title_left_icon:this.nav_title_left_icon,//导航标题栏左侧功能图标地址
+            nav_title_right_type:this.nav_title_right_type,//导航标题栏右侧type_id
+            nav_title_right_name:this.nav_title_right_name,//导航标题栏右侧功能名称
+            nav_title_right_icon:this.nav_title_right_icon,//导航标题栏右侧功能图标地址
+            bottom_status:this.bottom_status,//底部导航栏1-开启0-关闭
+            bottom_bgcolor:this.bottom_bgcolor,//底部导航栏背景颜色
+            bottom_default_color:this.bottom_default_color,//底部导航栏文字和图标默认颜色
+            bottom_display:this.footerShowValue,//底部导航栏显示1-名称&图标2-图标3-名称
+            bottom_nav_type:this.bottom_nav_type,//	底部导航type_id
+            bottom_nav_name:this.bottom_nav_name,//	底部导航名称
+            bottom_nav_icon:this.bottom_nav_icon,//	底部导航图标地址
+            icon:this.$route.params.icon,
+            start_img:this.$route.params.start_img,
+            start_time:this.$route.params.start_time,
+            app_name:this.$route.params.app_name,
+            website:this.$route.params.website,
+            platform:this.$route.params.platform,
+            screen:this.$route.params.screen,
+            version:this.$route.params.version,
+            bundle:this.$route.params.bundle,
           }
         })
+        let data={
+          loading_type:this.jiazaiValue,//加载动画类型
+          loading_color:this.loading_color,//加载动画颜色
+          loading_status:this.loading_status, //加载动画开关
+          refresh_down:this.refresh_down,//下拉刷新开关
+          clean_cache:this.clean_cache,//清理缓存开关
+          exit_option:this.tuichuValue,//退出类型
+          exit_status:this.exit_status,//退出提示开关
+          browser_status:this.browser_status,//浏览器内核开关
+          browser_android:this.browser_android,//浏览器内核安卓
+          browser_ios:this.browser_ios,//浏览器内核ios
+          share_status:this.share_status,//分享开关
+          share_content:this.share_content,//分享内容
+          share_url:this.share_url,//分享内容
+          save_picture:this.save_picture,//长按存图开关
+          nav_status:this.nav_status,//自定义导航栏开关
+          nav_bar_status:this.customState, //自定义导航状态栏1-开启0-关闭默认1
+          nav_bar_display_mode:this.customCss,//导航状态栏显示方式1-自定义颜色2-背景图延伸默认1
+          nav_bar_bgcolor:this.nav_bar_bgcolor,//导航状态栏背景颜色
+          nav_bar_text_color:this.customText,//导航状态栏文字颜色1-白色2-黑色
+          nav_title_status:this.customTitle,//导航标题栏1-开启0-关闭
+          nav_title_text:this.titleTextinput,//导航标题栏文字(默认应用名称
+          nav_title_bgcolor:this.nav_title_bgcolor,//导航标题栏背景颜色
+          nav_title_text_icon_color:this.nav_title_text_icon_color,//导航标题栏文字图标颜色
+          nav_title_left_type:this.nav_title_left_type,//导航标题栏左侧type_id
+          nav_title_left_name:this.nav_title_left_name,//导航标题栏左侧功能名称
+          nav_title_left_icon:this.nav_title_left_icon,//导航标题栏左侧功能图标地址
+          nav_title_right_type:this.nav_title_right_type,//导航标题栏右侧type_id
+          nav_title_right_name:this.nav_title_right_name,//导航标题栏右侧功能名称
+          nav_title_right_icon:this.nav_title_right_icon,//导航标题栏右侧功能图标地址
+          bottom_status:this.bottom_status,//底部导航栏1-开启0-关闭
+          bottom_bgcolor:this.bottom_bgcolor,//底部导航栏背景颜色
+          bottom_default_color:this.bottom_default_color,//底部导航栏文字和图标默认颜色
+          bottom_display:this.footerShowValue,//底部导航栏显示1-名称&图标2-图标3-名称
+          bottom_nav_type:this.bottom_nav_type,//	底部导航type_id
+          bottom_nav_name:this.bottom_nav_name,//	底部导航名称
+          bottom_nav_icon:this.bottom_nav_icon,//	底部导航图标地址
+          icon:this.$route.params.icon,
+          start_img:this.$route.params.start_img,
+          start_time:this.$route.params.start_time,
+          app_name:this.$route.params.app_name,
+          website:this.$route.params.website,
+          platform:this.$route.params.platform,
+          screen:this.$route.params.screen,
+          version:this.$route.params.version,
+          bundle:this.$route.params.bundle,
+        }
+        let config = {
+          headers:{'token':localStorage.getItem('Authorization')}
+        };
+        axios.post(BASE_URL+'/api/encapsulation/normalPackage',data,config).then(res => {
+          console.log(res.data.data)
+
+        }, err => {
+          console.log(err)
+        })
+
       },
       previousStep() {
         this.$router.push({
@@ -1709,14 +1864,13 @@
       /*获取自定义底栏导航功能下拉菜单集合*/
       axios.post(BASE_URL+'/api/encapsulation/getPackagePluginNav').then(res => {
         console.log(res.data.data)
+        this.newXiaLaList=res.data.data
         for(var i=0;i<res.data.data.length;i++){
           var newobj={}
           newobj.value=res.data.data[i].name
-          newobj.id=res.data.data[i].id
+          newobj.id=res.data.data[i].type
           this.chooseFunctionOptions.push(newobj)
         }
-
-
       }, err => {
         console.log(err)
       })
@@ -1729,7 +1883,6 @@
           this.iconList[i].iconColor=false
         }
         console.log(this.iconList)
-
       }, err => {
         console.log(err)
       })
@@ -1821,7 +1974,7 @@
     width: 700px !important;
   }
   .customDiv .ivu-modal-content {
-    width: 850px;
+    width: 1000px;
     height: 731px;
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
@@ -1829,7 +1982,7 @@
   }
 
   .customDiv .ivu-modal {
-    width: 850px !important;
+    width: 1000px !important;
   }
   .customDiv .ivu-modal-body{
     padding: 0;
@@ -1837,7 +1990,7 @@
   }
   .footerDiv .ivu-modal-content {
     width:1100px;
-    height: 731px;
+    height: 751px;
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
 
@@ -2104,6 +2257,7 @@
 
   .jiazaiSelectColor {
     width: 80%;
+    height: 80px;
     margin: 30px auto 0 auto;
 
   }
@@ -2277,7 +2431,7 @@
     padding-bottom: 20px;
   }
   .customDivMainSmall3{
-    width: 450px;
+    width: 550px;
     height: 236px;
     margin-left: 20px;
   }
@@ -2400,10 +2554,13 @@
 
   }
   .customDivMainselsectDiv11{
+    width: 100%;
     height: 20px;
     margin-top: 10px;
     display: flex;
     flex-flow: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
   .customDivMainselsect{
     display: flex;
@@ -2435,8 +2592,9 @@
     font-size: 14px;
   }
   .customDivMainselsectDiv11Check {
-    width: 80px;
+    width: auto;
   }
+
   .custFooter{
     width: 98%;
     margin: 340px auto 0 auto;

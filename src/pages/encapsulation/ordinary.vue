@@ -29,6 +29,7 @@
       watch: {
         '$route': function (to, from) {
              alert(this.$route.params.active)
+          console.log('接受值：'+JSON.stringify(this.$route.params))
           if(this.$route.params.active==0){
             this.active=0
           //  alert("基本信息")

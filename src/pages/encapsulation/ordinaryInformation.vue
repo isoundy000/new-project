@@ -17,7 +17,7 @@
        <p class="ordinaryInformationMainDivTitle"><span>* </span>网站链接</p>
        <el-input
          class="ordinaryInformationMainDivRight"
-         placeholder="填写要封装的网页链接"
+         placeholder="填写要封装的网页链接,以http://或者https://开头"
          v-model="informationUrlInput"
          v-on:input="informationUrlInputChange"
         >
@@ -252,16 +252,33 @@
           }
         },
         nextStep(){
-          this.$router.push({
-            name:'ordinaryIcon',
-            params:{
-              active:1,
-              aa:this.input1,
-              bb:this.input2,
-              cc:this.input3,
-              dd:this.input4,
-            }
-          })
+          var Expression = /http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+          var objExp = new RegExp(Expression);
+          if (objExp.test(this.informationUrlInput) == true) {
+            this.$router.push({
+              name:'ordinaryIcon',
+              params:{
+                active:1,
+                app_name:this.informationNameInput,
+                website:this.informationUrlInput,
+                platform:this.equipmentTypeNum,
+                screen:this.anyhowNum,
+                version:this.informationVersionInput,
+                bundle:this.informationBundleInput
+              }
+            })
+
+          } else {
+            this.$message.error('您输入的链接地址有误');
+          }
+          // alert('应用名称'+this.informationNameInput)
+          // alert('网站链接'+this.informationUrlInput)
+          // alert('平台1-ios2-android'+this.equipmentTypeNum)
+          // alert('横竖屏1-竖屏2-横屏'+this.anyhowNum)
+          // alert('版本号-值为空时默认'+this.informationVersionInput)
+          // alert('bundle_id-值为空时默认'+this.informationBundleInput)
+
+
         }
       }
     }

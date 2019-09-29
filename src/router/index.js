@@ -259,8 +259,8 @@ const router = new Router({
           children:[
             {
               path: '/',
-              name: 'ordinaryConfig',
-              component: ordinaryConfig,
+              name: 'ordinaryInformation',
+              component: ordinaryInformation,
               meta: {
                 keepAlive: true
               }

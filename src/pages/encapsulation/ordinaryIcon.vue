@@ -1,6 +1,6 @@
 <template>
 <div class="ordinaryIcon">
-  <div class="ordinaryIconDiv icon">
+  <div class="ordinaryIconDiv newicon">
     <p class="ordinaryIconDivP">应用图标:</p>
     <div style="width: 592px;display: flex;align-items: center;margin-left: 3%">
       <el-upload
@@ -240,7 +240,16 @@
           this.$router.push({
             name:'ordinaryConfig',
             params:{
-              active:2
+              active:2,
+              icon:this.ordinaryIconLogoimg,
+              start_img:this.ordinaryIconStartgoimg,
+              start_time:this.ordinaryNum,
+              app_name:this.$route.params.app_name,
+              website:this.$route.params.website,
+              platform:this.$route.params.platform,
+              screen:this.$route.params.screen,
+              version:this.$route.params.version,
+              bundle:this.$route.params.bundle,
             }
           })
         },
@@ -255,12 +264,13 @@
       },
       mounted(){
         this.newdeUrl=BASE_URL+'/api/common/upload'
-          //alert('接受值：'+this.$route.params.aa)
+        // console.log('接受值：'+this.$route.params)
+       console.log('接受值：'+JSON.stringify(this.$route.params))
       }
     }
 </script>
 <style>
-  .icon .el-upload--picture-card {
+  .newicon .el-upload--picture-card {
     background-color: #fbfdff;
     border: 1px dashed #c0ccda;
     border-radius: 6px;
@@ -271,11 +281,11 @@
     line-height: 130px;
     vertical-align: top;
   }
-  .icon .el-upload-list--picture-card .el-upload-list__item-thumbnail {
+  .newicon .el-upload-list--picture-card .el-upload-list__item-thumbnail {
     max-width: 100%;
     max-height: 100%;
   }
-  .icon .el-upload-list--picture-card .el-upload-list__item{
+  .newicon .el-upload-list--picture-card .el-upload-list__item{
     overflow: hidden;
     background-color: #fff;
     border: 1px solid #c0ccda;
