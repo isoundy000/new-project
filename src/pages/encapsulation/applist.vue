@@ -94,6 +94,7 @@
                   <span v-if="scope.row.status=== 1" >已完成</span>
                   <span v-if="scope.row.status=== 0" >封装中</span>
                   <span v-if="scope.row.status=== -1" >已删除</span>
+                  <span v-if="scope.row.status=== -2" >封装失败</span>
                 </template>
               </el-table-column>
               <el-table-column
@@ -361,7 +362,7 @@
               this.isApplist=false
               this.isDetail=true
               this.isXufei=false
-              alert(res.data.data.type)
+              // alert(res.data.data.type)
               if(res.data.data.type==2){//无包 无闪退封装
                 this.downShow=false
                 this.apptext='ios无闪退版'
@@ -418,6 +419,14 @@
               this.isApplist=false
               this.isDetail=true
               this.isXufei=false
+              // alert(res.data.data.type)
+              if(res.data.data.type==2){//无包 无闪退封装
+                this.downShow=false
+                this.apptext='ios无闪退版'
+              }else if(res.data.data.type==1){ //有包 普通封装
+                this.downShow=true
+                this.apptext='普通封装'
+              }
             }else if(res.data.code==0){
               this.$message.error(res.data.msg);
             }

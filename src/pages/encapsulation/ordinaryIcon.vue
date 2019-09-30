@@ -5,6 +5,7 @@
     <div style="width: 592px;display: flex;align-items: center;margin-left: 3%">
       <el-upload
         class="ss"
+        :before-upload="beforeAvatarUpload"
         :limit='limitCount'
         :on-success="success"
         :class="{hide:hideUpload}"
@@ -128,6 +129,20 @@
         }
       },
       methods:{
+        beforeAvatarUpload(file) {
+          const isJPG = (file.type === 'image/jpeg'||file.type === 'image/png');
+
+          const isLt2M = file.size / 1024 / 1024 < 1;
+
+          if (!isJPG) {
+            this.$message.error('上传图标图片只能是 JPG和PNG格式!');
+          }
+
+          if (!isLt2M) {
+            this.$message.error('上传图标图片大小不能超过 2MB!');
+          }
+          return isJPG && isLt2M;
+        },
         /*上传图片成功*/
         success(response, file){
           console.log(response.data.domain+response.data.url)

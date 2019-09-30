@@ -6,6 +6,7 @@
        <p class="ordinaryInformationMainDivTitle"><span>* </span>应用名称</p>
        <el-input
          class="ordinaryInformationMainDivRight"
+         maxlength="5"
          placeholder="请填写APP名称，建议五个字以内"
          v-model="informationNameInput"
          v-on:input="informationNameInputChange"
@@ -132,7 +133,7 @@
             informationUrlInput:'',//网站链接
             equipmentTypeAnd:true,//设备类型单选框布尔值
             equipmentTypeiOS:false,//设备类型单选框布尔值
-            equipmentTypeNum:1,//设备类型单选框值(传给后台的值)
+            equipmentTypeNum:2,//设备类型单选框值(传给后台的值)
             anyhowHorizontal:true,//竖屏单选框布尔值
             anyhowVertical:false,//横屏单选框布尔值
             anyhowNum:1,//横屏单选框值(传给后台的值)
@@ -163,14 +164,14 @@
         equipmentTypeAndClick(){
           this.equipmentTypeAnd=true
           this.equipmentTypeiOS=false
-          this.equipmentTypeNum=1
+          this.equipmentTypeNum=2
           this.verification()
         },
         /*设备类型单选框点击(IOS)*/
         equipmentTypeClick(){
           this.equipmentTypeiOS=true
           this.equipmentTypeAnd=false
-          this.equipmentTypeNum=2
+          this.equipmentTypeNum=1
         },
         /*竖屏单选框布尔值*/
         anyhowHorizontalClick(){
