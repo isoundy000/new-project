@@ -347,7 +347,7 @@
               <div class="customDivMainselsectDiv11" >
                 <div class="customDivMainselsectDiv11Check" v-for="(leftList,index) in leftCheckboxList" :key="index+4">
                   <el-checkbox-group   v-model="newXinzhi"  :min="0" :max="2">
-                  <el-checkbox  name="type" :label="leftList.name"  @change="leftListChange(index,leftList.checkValue,leftList.name,leftList.icon,leftList.type,leftList.image)" :checked="leftCheckboxList[index].checkValue">{{leftList.name}}</el-checkbox>
+                    <el-checkbox  name="type" :label="leftList.name"  @change="leftListChange(index,leftList.checkValue,leftList.name,leftList.icon,leftList.type,leftList.image)" :checked="leftCheckboxList[index].checkValue">{{leftList.name}}</el-checkbox>
                   </el-checkbox-group>
                 </div>
               </div>
@@ -491,16 +491,16 @@
                   <div class="newAddTrOne">
                     <p>{{list.name}}</p>
                   </div>
-                 <div class="newAddTrTwo">
-                   <el-select class="chooseApp" @change="chooseFunction(index,list.functionValue)" v-model="list.functionValue" placeholder="请选择">
-                     <el-option
-                       v-for="item in chooseFunctionOptions"
-                       :key="item.id"
-                       :label="item.value"
-                       :value="item.id">
-                     </el-option>
-                   </el-select>
-                 </div>
+                  <div class="newAddTrTwo">
+                    <el-select class="chooseApp" @change="chooseFunction(index,list.functionValue)" v-model="list.functionValue" placeholder="请选择">
+                      <el-option
+                        v-for="item in chooseFunctionOptions"
+                        :key="item.id"
+                        :label="item.value"
+                        :value="item.id">
+                      </el-option>
+                    </el-select>
+                  </div>
                   <div class="newAddTrThree" v-if="onlyText">
                     <el-input
                       maxlength="4"
@@ -596,12 +596,12 @@
       class="iconDiv"
     >
       <div class="iconDivMain">
-         <div class="iconstyle" v-for="(list,index) in iconList" :key="index+12" @click="iconClick(index)" @mouseenter="iconEnter(index)" @mouseleave="iconLeave(index)">
-           <div class="iconDivSmall">
-             <i class="iconfont" :class="[list.icon,{'isLike':list.iconColor}]"></i>
-           </div>
-           <p :class="{'isLike':list.iconColor}">{{list.name}}</p>
-         </div>
+        <div class="iconstyle" v-for="(list,index) in iconList" :key="index+12" @click="iconClick(index)" @mouseenter="iconEnter(index)" @mouseleave="iconLeave(index)">
+          <div class="iconDivSmall">
+            <i class="iconfont" :class="[list.icon,{'isLike':list.iconColor}]"></i>
+          </div>
+          <p :class="{'isLike':list.iconColor}">{{list.name}}</p>
+        </div>
       </div>
     </Modal>
     <!--icon-->
@@ -1627,23 +1627,25 @@
           this.footerText[i].isIconImg=true
           this.footerText[i].functionValue=''
           this.footerText[i].icon=''
+          this.footerText[i].daohangnameInput='空白'
+
         }
         console.log(this.footerText)
       },
       /*自定义底栏导航功能下拉菜单*/
       chooseFunction(index,type_id){
-       // alert(index)
-      //  alert(this.newXiaLaList[index].type)
+        // alert(index)
+        //  alert(this.newXiaLaList[index].type)
         // var aaaa=['aa','bb','cc','dd']
         // aaaa[5].push(type_id)
         // console.log(aaaa)
         //aa.push(type_id)
 
-          console.log(this.bottom_nav_type)
+        console.log(this.bottom_nav_type)
       },
       newcustomOk(){
-        //alert("5")
-        this.modal10 = false
+        console.log(this.footerText2)
+        //this.modal10 = false
         this.footerswitch = true
         this.ordinaryConfigFooter = false
         this.config10 = true
@@ -1651,12 +1653,98 @@
         this.bottom_nav_type=[]
         this.bottom_nav_name=[]
         this.bottom_nav_icon=[]
-        for(var i=0;i<this.footerText.length;i++){
+
+        /*判断有没有新增的导航选项*/
+        if(this.footerText2.length==0){ //没有新增的选项只有前两个
+          if(this.footerText[0].functionValue==''||this.footerText[1].functionValue==''){
+            this.$message.error('请选择导航功能');
+          }else if(this.footerText[0].daohangnameInput=='空白'||this.footerText[1].daohangnameInput=='空白' ||this.footerText[0].daohangnameInput==''||this.footerText[1].daohangnameInput==''){
+            this.$message.error('请填写导航名称');
+          }else if(this.footerText[0].image==''||this.footerText[1].image==''){
+            this.$message.error('请选择导航图标');
+          }else{
+            for(var i=0;i<this.footerText.length;i++){
+              this.modal10=false
+              this.bottom_nav_type.push(this.footerText[i].functionValue)
+              this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
+              this.bottom_nav_icon.push(this.footerText[i].image)
+            }
+          }
+        }else if(this.footerText2.length==1){
+          if(this.footerText2[0].functionValue==''){
+            this.$message.error('请选择导航功能');
+          }else if(this.footerText2[0].daohangnameInput=='空白' || this.footerText2[0].daohangnameInput==''){
+            this.$message.error('请填写导航名称');
+          }else if(this.footerText2[0].image==''){
+            this.$message.error('请选择导航图标');
+          }else{
+            for(var i=0;i<this.footerText.length;i++){
+              this.bottom_nav_type.push(this.footerText[i].functionValue)
+              this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
+              this.bottom_nav_icon.push(this.footerText[i].image)
+            }
+            for(var i=0;i<this.footerText2.length;i++){
+              this.bottom_nav_type.push(this.footerText2[i].functionValue)
+              this.bottom_nav_name.push(this.footerText2[i].daohangnameInput)
+              this.bottom_nav_icon.push(this.footerText2[i].image)
+            }
             this.modal10=false
-            this.bottom_nav_type.push(this.footerText[i].functionValue)
-            this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
-            this.bottom_nav_icon.push(this.footerText[i].image)
+          }
+        }else if(this.footerText2.length==2){
+          if(this.footerText2[0].functionValue=='' ||this.footerText2[1].functionValue==''){
+            this.$message.error('请选择导航功能');
+          }else if(this.footerText2[0].daohangnameInput=='空白' || this.footerText2[0].daohangnameInput=='' || this.footerText2[1].daohangnameInput=='空白' || this.footerText2[1].daohangnameInput==''){
+            this.$message.error('请填写导航名称');
+          }else if(this.footerText2[0].image=='' || this.footerText2[1].image==''){
+            this.$message.error('请选择导航图标');
+          }else{
+            for(var i=0;i<this.footerText.length;i++){
+              this.bottom_nav_type.push(this.footerText[i].functionValue)
+              this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
+              this.bottom_nav_icon.push(this.footerText[i].image)
+            }
+            for(var i=0;i<this.footerText2.length;i++){
+              this.bottom_nav_type.push(this.footerText2[i].functionValue)
+              this.bottom_nav_name.push(this.footerText2[i].daohangnameInput)
+              this.bottom_nav_icon.push(this.footerText2[i].image)
+            }
+            this.modal10=false
+          }
+        }else if(this.footerText2.length==3){
+          if(this.footerText2[0].functionValue=='' ||this.footerText2[1].functionValue=='' ||this.footerText2[2].functionValue==''){
+            this.$message.error('请选择导航功能');
+          }else if(this.footerText2[0].daohangnameInput=='空白' || this.footerText2[0].daohangnameInput=='' || this.footerText2[1].daohangnameInput=='空白' || this.footerText2[1].daohangnameInput=='' || this.footerText2[2].daohangnameInput=='空白' || this.footerText2[2].daohangnameInput==''){
+            this.$message.error('请填写导航名称');
+          }else if(this.footerText2[0].image=='' || this.footerText2[1].image=='' || this.footerText2[2].image==''){
+            this.$message.error('请选择导航图标');
+          }else{
+            for(var i=0;i<this.footerText.length;i++){
+              this.bottom_nav_type.push(this.footerText[i].functionValue)
+              this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
+              this.bottom_nav_icon.push(this.footerText[i].image)
+            }
+            for(var i=0;i<this.footerText2.length;i++){
+              this.bottom_nav_type.push(this.footerText2[i].functionValue)
+              this.bottom_nav_name.push(this.footerText2[i].daohangnameInput)
+              this.bottom_nav_icon.push(this.footerText2[i].image)
+            }
+            this.modal10=false
+          }
         }
+
+
+
+
+        // for(var i=0;i<this.footerText.length;i++){
+        //
+        //       this.modal10=false
+        //       this.bottom_nav_type.push(this.footerText[i].functionValue)
+        //       this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
+        //       this.bottom_nav_icon.push(this.footerText[i].image)
+        //
+        //
+        //
+        // }
         console.log(this.bottom_nav_type)
         console.log(this.bottom_nav_name)
         console.log(this.bottom_nav_icon)
@@ -1664,29 +1752,29 @@
       /*自定义底栏导航名称输入框*/
       daohangnameInputEvent(index){
         if(this.footerText[index].daohangnameInput==''){
-         // alert("22")
+          // alert("22")
           this.footerText[index].daohangnameInput='空白'
         }else{
-         // this.footerText[index].daohangnameInput=this.footerText[index].daohangnameInput
+          // this.footerText[index].daohangnameInput=this.footerText[index].daohangnameInput
         }
 
-           //this.textOne=false
+        //this.textOne=false
       },
       newAddTraddBtn(){
 
 
-          console.log(this.footerText2)
-          var i=Number(this.footerText2.length)+3 ;
-          this.footerText2.push({name: '导航'+i,daohangnameInput:'空白',functionValue:'',isText:true,delShow:false,isIconImg:true,icon:'',image:''});
         console.log(this.footerText2)
-          if(this.footerText2.length==3){
-            this.kedian=false
-          }
+        var i=Number(this.footerText2.length)+3 ;
+        this.footerText2.push({name: '导航'+i,daohangnameInput:'空白',functionValue:'',isText:true,delShow:false,isIconImg:true,icon:'',image:''});
+        console.log(this.footerText2)
+        if(this.footerText2.length==3){
+          this.kedian=false
+        }
       },
       addIcon(index){
         this.modal11=true
         this.indexAdd=index
-       // alert(index)
+        // alert(index)
       },
       iconClick(index){
         this.modal11=false
@@ -1700,7 +1788,7 @@
       addIcon1(index){
         this.modal12=true
         this.indexAdd1=index
-       // alert(index)
+        // alert(index)
       },
       iconClick1(index){
         this.modal12=false
@@ -1712,7 +1800,7 @@
         console.log(this.iconList[index])
       },
       iconEnter(index){
-       // console.log(this.iconList[index].iconColor);
+        // console.log(this.iconList[index].iconColor);
         let obj = this.iconList[index];
         obj.iconColor = !obj.iconColor;
         this.$set(this.iconList, index, obj);
@@ -1851,7 +1939,7 @@
             this.$message.error(res.data.msg);
           }
         }, err => {
-          console.log(err)
+          this.$message.error('系统错误');
         })
 
       },
@@ -2066,11 +2154,11 @@
     color: #02B2B5;
   }
   .newAddTr .el-input{
-      width: 150px;
+    width: 150px;
   }
   /*.customDivMainselsectDiv11 .el-checkbox__inner{*/
-    /*background-color: #02B2B5;*/
-    /*border-color: #02B2B5;*/
+  /*background-color: #02B2B5;*/
+  /*border-color: #02B2B5;*/
   /*}*/
 </style>
 <style scoped>
@@ -2616,12 +2704,12 @@
     margin-left: 20px;
     font-size: 14px;
   }
-.footerDivMainselsect{
-  width: 160px;
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-}
+  .footerDivMainselsect{
+    width: 160px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+  }
   .footerDivMainselsect p{
     margin-left: 15px;
   }
@@ -2680,7 +2768,7 @@
     color: #999999;
   }
   /*.addDanhangTitle p{*/
-    /*width: 33.33%;*/
+  /*width: 33.33%;*/
   /*}*/
   .newAddTr{
     display: flex;
@@ -2716,20 +2804,20 @@
   .daohangInput{
     width: 150px;
   }
-.newAddTraddBtn{
-  width:132px;
-  height:38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 14px;
-  margin-top: 30px;
-  margin-bottom: 20px;
-  background:rgba(2,178,181,1);
-  border-radius:2px;
-  cursor: pointer;
-}
+  .newAddTraddBtn{
+    width:132px;
+    height:38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 14px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    background:rgba(2,178,181,1);
+    border-radius:2px;
+    cursor: pointer;
+  }
   .newAddTraddBtn img{
     margin-right: 5px;
   }

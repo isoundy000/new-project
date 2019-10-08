@@ -80,7 +80,7 @@
       <div class="btn" @click="preservation3"><p>保存</p></div>
     </div>
   </div>
-  <div class="abnormalDivOne footer">
+  <div class="abnormalDivOne ">
     <div class="firstTitle">
       <img @click="isNo3" v-if="isChoose3" src="../../../static/image/superSignature/weixuan.png" alt="">
       <img @click="isNo3" v-else src="../../../static/image/superSignature/xuanzhong.png" alt="">
@@ -107,6 +107,28 @@
       <div class="btn" @click="preservation4"><p>保存</p></div>
     </div>
   </div>
+  <div class="abnormalDivOne footer">
+    <div class="firstTitle">
+      <img @click="isNo4" v-if="isChoose4" src="../../../static/image/superSignature/weixuan.png" alt="">
+      <img @click="isNo4" v-else src="../../../static/image/superSignature/xuanzhong.png" alt="">
+
+      <p>防盗刷人机验证 <span style="margin-left: 5px">(开启后用户必须滑动方块解锁后才能下载)</span></p>
+    </div>
+    <div class="firstDiv" v-show="isOne4">
+
+      <div class="firstDivTwo">
+        <el-switch
+          v-model="switchValue"
+          active-color="#06B2B6"
+          inactive-color="#999999"
+          @change="swich">
+        </el-switch>
+      </div>
+      <div class="btn" @click="preservation4"><p>保存</p></div>
+    </div>
+
+
+  </div>
 </div>
 </template>
 
@@ -118,6 +140,8 @@
         name: "abnormal",
       data(){
           return{
+            switchValue:true,
+            switchNum:1,
             isChoose:true,
             isOne:false,
             isChoose1:true,
@@ -126,6 +150,8 @@
             isOne2:false,
             isChoose3:true,
             isOne3:false,
+            isChoose4:true,
+            isOne4:false,
             input:'',
             input2:'',
             input3:'',
@@ -136,6 +162,13 @@
           }
       },
       methods:{
+        swich(){
+          if(this.switchValue==true){
+            this.switchNum=1
+          }else{
+            this.switchNum=0
+          }
+        },
         isNo(){
           this.isChoose=!this.isChoose
           if(this.isChoose==false){
@@ -166,6 +199,14 @@
             this.isOne3=true
           }else{
             this.isOne3=false
+          }
+        },
+        isNo4(){
+          this.isChoose4=!this.isChoose4
+          if(this.isChoose4==false){
+            this.isOne4=true
+          }else{
+            this.isOne4=false
           }
         },
         preservation1(){
@@ -236,7 +277,15 @@
       }
     }
 </script>
-
+<style>
+  .abnormalDivOne .el-switch__core {
+    width: 60px !important;
+  }
+  .abnormalDivOne .el-switch{
+    width: 60px !important;
+    margin-left: 0px !important;
+  }
+</style>
 <style scoped>
   .abnormal{
     width: 100%;
@@ -248,6 +297,14 @@
     height: auto;
     margin-left: 42px;
     margin-top: 61px;
+  }
+  .newabnormalDivOne{
+    width: 100%;
+    height: auto;
+    margin-left: 42px;
+    margin-bottom: 30px;
+    font-size: 14px;
+    color: #333333;
   }
   .abnormalDivOne .fff{
     color:#999999 ;
@@ -328,6 +385,7 @@
     cursor: pointer;
   }
   .footer{
-    margin-bottom: 50px;
+    margin-bottom: 30px;
   }
+
 </style>

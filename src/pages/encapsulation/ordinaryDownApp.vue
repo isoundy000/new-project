@@ -59,7 +59,7 @@ border-radius:4px;">普通封装版</p>
         name: "ordinaryDownApp",
       data(){
         return{
-          countDown:60,
+          countDown:80,
           isDownSize:'',
           isDownUrl:'',
           newnewID:'',
@@ -212,7 +212,7 @@ border-radius:4px;">普通封装版</p>
     line-height: 50px;
     color: white;
     font-size: 16px;
-    margin: 60px auto 0 auto;
+    margin: 60px auto 35px auto;
     cursor: pointer;
   }
   .crumbs{
