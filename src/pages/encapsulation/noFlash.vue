@@ -628,7 +628,7 @@ border-radius:4px;">iOS无闪退版</p>
   }
   .el-switch{
     width: 60px !important;
-    margin-left: 20px;
+    /*margin-left: 20px;*/
   }
   .el-switch__core{
     width: 60px !important;

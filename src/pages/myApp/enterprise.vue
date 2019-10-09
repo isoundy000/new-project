@@ -55,7 +55,7 @@
     </div>
     <div class="Bheader">
       <div class="login_title">
-        <img class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">
+        <img @click="logoHome" class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">
         <div class="title">
           <p @click="titleName(index)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass}"
              @mouseenter="enter(index)"
@@ -275,6 +275,11 @@
       QrcodeVue
     },
     methods: {
+      logoHome(){
+        this.$router.push({
+          path:'/superSignatureAread'
+        })
+      },
       enterpriseUpload(){
         this.$router.push({
           path:'/enterprisePubish'

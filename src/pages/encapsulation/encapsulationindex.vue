@@ -23,7 +23,7 @@
   </Modal>
   <div class="Bheader">
     <div class="login_title">
-      <img class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">
+      <img @click="logoHome" class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">
       <div class="title">
         <p @click="titleName(index)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass}"
            @mouseenter="enter(index)"
@@ -219,6 +219,11 @@
         }
       },
       methods:{
+        logoHome(){
+          this.$router.push({
+            path:'/superSignatureAread'
+          })
+        },
         daoTitleOne(){
           this.isCo=false
           this.isCo1=true
@@ -232,24 +237,24 @@
           })
         },
         daoTitleTwo(){
-          this.isCo=false
-          this.isCo1=false
-          this.isCo2=true
-          this.isApplist=false
-          this.isApple=false
-          this.isPutong=true
-          this.$router.push({
-            path:'/ordinary'
-          })
+          // this.isCo=false
+          // this.isCo1=false
+          // this.isCo2=true
+          // this.isApplist=false
+          // this.isApple=false
+          // this.isPutong=true
+          // this.$router.push({
+          //   path:'/ordinary'
+          // })
 
 
 
 
-          // this.$alert('该模块正在开发中', '提示', {
-          //   confirmButtonText: '确定',
-          //   callback: action => {
-          //   }
-          // });
+          this.$alert('该模块正在开发中', '提示', {
+            confirmButtonText: '确定',
+            callback: action => {
+            }
+          });
 
         },
         daoTitleThree(){

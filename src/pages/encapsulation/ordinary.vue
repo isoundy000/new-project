@@ -70,13 +70,7 @@
   .hide .el-upload--picture-card {
     display: none;
   }
-  .el-switch{
-    width: 60px !important;
-    margin-left: 20px;
-  }
-  .el-switch__core{
-    width: 60px !important;
-  }
+
   .el-step__icon.is-text {
     width: 50px;
     height: 50px;

@@ -49,7 +49,10 @@
         </div>
         <div class="supplementThird1">
           <p>应用名</p>
-          <el-input :disabled="false" class="thirdInput" v-model="thirdInput1" placeholder="请输入内容"></el-input>
+          <div>
+            <el-input :disabled="false" class="thirdInput" v-model="thirdInput1" placeholder="请输入内容"></el-input>
+          </div>
+
         </div>
         <div class="supplementThird2">
           <p>版本号</p>
@@ -59,14 +62,17 @@
           <p>包名</p>
           <el-input :disabled="true" class="thirdInput" v-model="thirdInput" placeholder="请输入内容"></el-input>
         </div>
-        <div class="supplementTwo">
+        <div class="supplementThird2">
           <p>是否启用</p>
-          <el-switch
-            v-model="switchValue"
-            active-color="#06B2B6"
-            inactive-color="#999999"
-            @change="swich">
-          </el-switch>
+          <div style="margin-top: 10px">
+            <el-switch
+              v-model="switchValue"
+              active-color="#06B2B6"
+              inactive-color="#999999"
+              @change="swich">
+            </el-switch>
+          </div>
+
         </div>
 
         <div class="supplementFourth">
@@ -98,8 +104,9 @@
               <img width="100%" :src="dialogImageUrl" alt="">
             </el-dialog>
           </div>
+          <p style="margin-top: 10px">(建议横图上传2208*1242，竖图1242*2208)</p>
         </div>
-        <p style="margin-left: 50px;margin-top: 10px">(建议横图上传2208*1242，竖图1242*2208)</p>
+
         <div class="supplementSeventh">
           <p>应用介绍</p>
           <el-input
@@ -460,12 +467,13 @@
     justify-content: center;
   }
   .supplement{
-    width: 41%;
+    width: 80%;
     display: flex;
     flex-flow: column;
     justify-content: center;
     /*align-items: center;*/
     margin: 50px auto 0 auto;
+    background-color: #f6f6f6;
   }
   .supplementOne{
     display: flex;
@@ -480,7 +488,7 @@
   }
   .supplementTwo p:nth-child(1),.supplementTen p:nth-child(1),.supplementThird p:nth-child(1),.supplementThird1 p:nth-child(1),.supplementThird2 p:nth-child(1),.supplementFourth p:nth-child(1),.supplementFiveth p:nth-child(1),.supplementsixth p:nth-child(1),.supplementSeventh p:nth-child(1),.supplementEightth p:nth-child(1){
     width: 120px;
-    text-align: right;
+    text-align: left;
     font-size: 16px;
     color: #333333;
   }
@@ -504,14 +512,14 @@
   }
 
   .supplementTen,.supplementThird,.supplementThird1,.supplementThird2,.supplementFourth,.supplementFiveth,.supplementsixth,.supplementSeventh,.supplementEightth{
-    display: flex;
-    align-items: center;
-    margin-top: 15px;
+    width: 95%;
+    margin: 20px auto 0;
+    position: relative;
   }
 
   .thirdInput{
-    width: 310px;
-    margin-left: 20px;
+    width: 100%;
+    margin-top: 10px;
   }
   .text{
     font-size: 14px;
@@ -631,7 +639,7 @@
   }
   .el-switch{
     width: 60px !important;
-    margin-left: 20px;
+    /*margin-left: 20px;*/
   }
   .el-switch__core{
     width: 60px !important;

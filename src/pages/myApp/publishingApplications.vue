@@ -66,48 +66,80 @@
           </div>
 
         </div>
-        <div class="supplementThird1">
+        <div class="supplementThird2">
           <p>应用名</p>
-          <el-input :disabled="false" class="thirdInput" v-model="thirdInput1" placeholder="请输入内容"></el-input>
+          <div>
+            <el-input :disabled="false" class="thirdInput" v-model="thirdInput1" placeholder="请输入内容"></el-input>
+          </div>
+
         </div>
         <div class="supplementThird2">
           <p>版本号</p>
-          <el-input :disabled="false" class="thirdInput" v-model="thirdInput2" placeholder="请输入内容"></el-input>
-        </div>
-        <div class="supplementThird">
-          <p>包名</p>
-          <el-input :disabled="true" class="thirdInput" v-model="thirdInput" placeholder="请输入内容"></el-input>
-        </div>
-        <div class="supplementTwo">
-          <p>是否启用</p>
-          <el-switch
-            v-model="switchValue"
-            active-color="#06B2B6"
-            inactive-color="#999999"
-            @change="swich">
-          </el-switch>
-        </div>
-        <div class="supplementTwo">
-          <p>更新功能</p>
-          <el-switch
-            v-model="switchValue1"
-            active-color="#06B2B6"
-            inactive-color="#999999"
-            @change="swich1">
-          </el-switch>
-        </div>
-        <div class="supplementTwo">
-          <p>付费下载</p>
-          <el-switch
-            v-model="switchValue2"
-            active-color="#06B2B6"
-            inactive-color="#999999"
-            @change="swich2">
-          </el-switch>
-          <div  v-if="fufei" >
-            <el-input class="thirdInput fufei" v-model="fufeiInput" placeholder="请输入内容"></el-input><span style="font-size: 16px;">元/次</span>
-
+          <div>
+            <el-input :disabled="false" class="thirdInput" v-model="thirdInput2" placeholder="请输入内容"></el-input>
           </div>
+
+        </div>
+        <div class="supplementThird2">
+          <p>包名</p>
+          <div>
+            <el-input :disabled="true" class="thirdInput" v-model="thirdInput" placeholder="请输入内容"></el-input>
+          </div>
+
+        </div>
+        <div class="supplementThird2">
+          <p>是否启用</p>
+          <div style="margin-top: 10px">
+            <el-switch
+              v-model="switchValue"
+              active-color="#06B2B6"
+              inactive-color="#999999"
+              @change="swich">
+            </el-switch>
+          </div>
+
+        </div>
+        <div class="supplementThird2">
+          <p>更新功能</p>
+          <div style="margin-top: 10px">
+            <el-switch
+              v-model="switchValue1"
+              active-color="#06B2B6"
+              inactive-color="#999999"
+              @change="swich1">
+            </el-switch>
+          </div>
+
+        </div>
+        <div class="supplementThird2">
+          <p>付费下载</p>
+          <div style="margin-top: 10px">
+            <el-switch
+              v-model="switchValue2"
+              active-color="#06B2B6"
+              inactive-color="#999999"
+              @change="swich2">
+            </el-switch>
+            <div  v-if="fufei" >
+              <el-input style="width: 50%" class="thirdInput fufei" v-model="fufeiInput" placeholder="请输入内容"></el-input><span style="font-size: 16px;">元/次</span>
+
+            </div>
+          </div>
+
+
+        </div>
+        <div class="supplementThird2">
+          <p>防盗刷</p>
+          <div style="margin-top: 10px">
+            <el-switch
+              v-model="newswitchValue"
+              active-color="#06B2B6"
+              inactive-color="#999999"
+              @change="newswich2">
+            </el-switch>
+            <p style="margin-top: 10px">(开启后用户必须滑动方块解锁后才能下载)</p>
+          </div>
+
         </div>
         <div class="supplementTen">
           <p>下载码</p>
@@ -116,11 +148,14 @@
         </div>
         <div class="supplementTen">
           <p>安卓下载地址</p>
-          <el-input :disabled="disInput" class="thirdInput" v-model="EvenInput" placeholder="请输入内容"></el-input>
+          <div style="margin-top: 10px">
+            <el-input :disabled="disInput" class="thirdInput" v-model="EvenInput" placeholder="请输入内容"></el-input>
+          </div>
+          <p style="margin-top: 10px">(如需上传安卓apk包,请先上传完ipa包后再到应用管理-查看详情-应用合并上传)</p>
 
 
         </div>
-        <p style="margin-left: 50px;margin-top: 10px">(如需上传安卓apk包,请先上传完ipa包后再到应用管理-查看详情-应用合并上传)</p>
+
         <!--<div class="supplementTen">-->
           <!--<p>限制下载次数</p>-->
           <!--<el-input :disabled="disInput" class="thirdInput" v-model="twiInput" placeholder="请输入内容" onkeyup="this.value=this.value.replace(/\D/g,'')"-->
@@ -155,8 +190,9 @@
               <img width="100%" :src="dialogImageUrl" alt="">
             </el-dialog>
           </div>
+          <p style="margin-top: 10px">(建议横图上传2208*1242，竖图1242*2208)</p>
         </div>
-        <p style="margin-left: 50px;margin-top: 10px">(建议横图上传2208*1242，竖图1242*2208)</p>
+
         <div class="supplementSeventh">
           <p>应用介绍</p>
           <el-input
@@ -181,8 +217,11 @@
           </el-input>
         </div>
         <div class="supplementEightth xiaoxituisong">
-          <p>消息推送</p>
-          <img style="margin-left: 5px;width: 20px;height: 20px" @click="help" @mouseleave="helpleave()" src="../../../static/image/superSignature/help.png" alt="">
+          <div style="display: flex;align-items: center">
+            <p style="width: 70px">消息推送</p>
+            <img style="margin-left: 5px;width: 20px;height: 20px" @click="help" @mouseleave="helpleave()" src="../../../static/image/superSignature/help.png" alt="">
+          </div>
+
           <div v-if="tishi" class="kuang" style="background-image: url('../../../static/image/superSignature/kuang.png')">
             <p>
               消息推送可提高用户活跃度及应用留存率，但会影响第三方(微信、QQ等)登录。
@@ -234,6 +273,8 @@
     name: "publishingApplications",
     data() {
       return {
+        newswitchValue:true,
+        newswitchNum:1,
         upload_url:'',
         tishi:false,
         tishi1:false,
@@ -432,6 +473,14 @@
         }
         console.log(this.fufeiInput)
       },
+      newswich2(){
+        if(this.newswitchValue==true){
+          this.newswitchNum=1
+        }else{
+          this.newswitchNum=0
+        }
+        console.log(this.newswitchNum)
+      },
       /*提交事件*/
       submission(){
         // this.active = 3
@@ -465,7 +514,8 @@
           status:this.newState,
           download_money:this.fufeiInput,
           push_type:this.push_type,
-          type:1
+          type:1,
+          is_vaptcha:this.newswitchNum
         }
         let config = {
           headers:{'token':localStorage.getItem('Authorization')}
@@ -593,12 +643,13 @@
     justify-content: center;
   }
 .supplement{
-  width: 41%;
+  width: 80%;
   display: flex;
   flex-flow: column;
   justify-content: center;
   /*align-items: center;*/
   margin: 50px auto 0 auto;
+  background-color: #f6f6f6;
 }
   .supplementOne{
     display: flex;
@@ -613,7 +664,7 @@
   }
  .supplementTwo p:nth-child(1),.supplementTen p:nth-child(1),.supplementThird p:nth-child(1),.supplementThird1 p:nth-child(1),.supplementThird2 p:nth-child(1),.supplementFourth p:nth-child(1),.supplementFiveth p:nth-child(1),.supplementsixth p:nth-child(1),.supplementSeventh p:nth-child(1),.supplementEightth p:nth-child(1){
     width: 120px;
-    text-align: right;
+    text-align: left;
     font-size: 16px;
     color: #333333;
   }
@@ -637,14 +688,17 @@
   }
 
   .supplementTen,.supplementThird,.supplementThird1,.supplementThird2,.supplementFourth,.supplementFiveth,.supplementsixth,.supplementSeventh,.supplementEightth{
-    display: flex;
-    align-items: center;
-    margin-top: 15px;
+    /*display: flex;*/
+    /*align-items: center;*/
+    width: 95%;
+    margin: 20px auto 0 auto;
+    position: relative;
   }
 
   .thirdInput{
-    width: 310px;
-    margin-left: 20px;
+    width: 100%;
+    margin-top: 10px;
+
   }
   .text{
     font-size: 14px;
@@ -688,7 +742,7 @@
   }
   .xiaoxi{
     width: 600px;
-    height: 200px;
+    height: auto;
     display: flex;
     flex-flow: column;
 
@@ -697,7 +751,7 @@
   .liji{
     display: flex;
     align-items: center;
-    margin-left: 20px;
+    /*margin-left: 20px;*/
     margin-top: 9px;
     font-size: 16px;
   }
@@ -714,8 +768,8 @@
     background-size: 100% 100%;
     background-repeat: no-repeat;
     position: absolute;
-    top: 56%;
-    left: 13%;
+    top: 10%;
+    left: 4.5%;
     z-index: 999;
 
   }
@@ -740,8 +794,8 @@
     background-size: 100% 100%;
     background-repeat: no-repeat;
     position: absolute;
-    top: 56%;
-    left: 22%;
+    top: 60%;
+    left: 18%;
     z-index: 999;
 
   }
@@ -764,7 +818,7 @@
   }
   .el-switch{
     width: 60px !important;
-    margin-left: 20px;
+    /*margin-left: 20px;*/
   }
 .el-switch__core{
   width: 60px !important;

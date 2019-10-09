@@ -54,7 +54,7 @@
       </div>
       <div class="thirdDiv">
         <p>共<span style="color: red">{{pageNumber}}</span> 页/ <span style="color: red">{{total}}</span>条记录</p>
-        <Page @on-change="indexChange" @on-page-size-change="pageChange" :page-size="4" :current="current" :total=total />
+        <Page @on-change="indexChange" @on-page-size-change="pageChange" :page-size="8" :current="current" :total=total />
       </div>
     </div>
   </div>
@@ -81,9 +81,9 @@
       indexChange(i){
         console.log(i)
         let data={
-          keywords:this.input,
+          id:this.$route.query.id,
           page:i,
-          page_size:4,
+          page_size:8,
         }
         let config = {
           headers:{'token':localStorage.getItem('Authorization')}
@@ -92,7 +92,7 @@
           console.log(res.data)
           console.log(res.data.data.list)
           this.total=res.data.data.total
-          this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+          this.pageNumber=parseInt(Math.ceil(Number(this.total)/8))
           this.tableData=res.data.data.list
         }, err => {
           console.log(err)
@@ -108,7 +108,9 @@
       // alert('版本记录'+this.$route.query.id)
       //
       let data={
-        id:this.$route.query.id
+        id:this.$route.query.id,
+        page:1,
+        page_size:8,
       }
       let config = {
         headers:{'token':localStorage.getItem('Authorization')}
@@ -117,7 +119,7 @@
         console.log(res.data.data.list)
         this.tableData=res.data.data.list
         this.total=res.data.data.total
-        this.pageNumber=parseInt(Math.ceil(Number(this.total)/4))
+        this.pageNumber=parseInt(Math.ceil(Number(this.total)/8))
       }, err => {
         console.log(err)
       })
@@ -133,7 +135,7 @@
   }
   .consumptionRecord{
     width: 93%;
-    height: 600px;
+    height: 700px;
     margin: 30px auto 0 auto;
 
   }

@@ -67,7 +67,7 @@
               },
 
               {
-                msg: '异常预警',
+                msg: '防盗刷设置',
                 isclass: false,
                 isHide:false
               },

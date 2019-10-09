@@ -23,7 +23,7 @@
         <div @click="ok" class="queOk" slot="footer" >确认</div>
       </Modal>
       <div class="login_title">
-        <img class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">
+        <img @click="logoHome" class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">
         <div class="title">
           <p @click="appClick(index,list.isclass)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass} ">{{list.msg}}</p>
         </div>
@@ -133,6 +133,11 @@
 
 
     methods: {
+      logoHome(){
+        this.$router.push({
+          path:'/superSignatureAread'
+        })
+      },
       appClick(index){
         for(var i=0;i<this.title.length;i++){
           this.title[i].isclass=false
