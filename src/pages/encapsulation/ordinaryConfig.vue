@@ -1646,9 +1646,15 @@
       newcustomOk(){
         console.log(this.footerText2)
         //this.modal10 = false
+<<<<<<< HEAD
 
 
 
+=======
+        this.footerswitch = true
+        this.ordinaryConfigFooter = false
+        this.config10 = true
+>>>>>>> origin/master
         this.verification()
         this.bottom_nav_type=[]
         this.bottom_nav_name=[]
@@ -1665,9 +1671,12 @@
           }else{
             for(var i=0;i<this.footerText.length;i++){
               this.modal10=false
+<<<<<<< HEAD
               this.config10 = true
               this.footerswitch = true
               this.ordinaryConfigFooter = false
+=======
+>>>>>>> origin/master
               this.bottom_nav_type.push(this.footerText[i].functionValue)
               this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
               this.bottom_nav_icon.push(this.footerText[i].image)
@@ -1692,9 +1701,12 @@
               this.bottom_nav_icon.push(this.footerText2[i].image)
             }
             this.modal10=false
+<<<<<<< HEAD
             this.config10 = true
             this.footerswitch = true
             this.ordinaryConfigFooter = false
+=======
+>>>>>>> origin/master
           }
         }else if(this.footerText2.length==2){
           if(this.footerText2[0].functionValue=='' ||this.footerText2[1].functionValue==''){
@@ -1714,6 +1726,7 @@
               this.bottom_nav_name.push(this.footerText2[i].daohangnameInput)
               this.bottom_nav_icon.push(this.footerText2[i].image)
             }
+<<<<<<< HEAD
             this.modal10=false
             this.config10 = true
             this.footerswitch = true
@@ -1741,6 +1754,29 @@
             this.config10 = true
             this.footerswitch = true
             this.ordinaryConfigFooter = false
+=======
+            this.modal10=false
+          }
+        }else if(this.footerText2.length==3){
+          if(this.footerText2[0].functionValue=='' ||this.footerText2[1].functionValue=='' ||this.footerText2[2].functionValue==''){
+            this.$message.error('请选择导航功能');
+          }else if(this.footerText2[0].daohangnameInput=='空白' || this.footerText2[0].daohangnameInput=='' || this.footerText2[1].daohangnameInput=='空白' || this.footerText2[1].daohangnameInput=='' || this.footerText2[2].daohangnameInput=='空白' || this.footerText2[2].daohangnameInput==''){
+            this.$message.error('请填写导航名称');
+          }else if(this.footerText2[0].image=='' || this.footerText2[1].image=='' || this.footerText2[2].image==''){
+            this.$message.error('请选择导航图标');
+          }else{
+            for(var i=0;i<this.footerText.length;i++){
+              this.bottom_nav_type.push(this.footerText[i].functionValue)
+              this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
+              this.bottom_nav_icon.push(this.footerText[i].image)
+            }
+            for(var i=0;i<this.footerText2.length;i++){
+              this.bottom_nav_type.push(this.footerText2[i].functionValue)
+              this.bottom_nav_name.push(this.footerText2[i].daohangnameInput)
+              this.bottom_nav_icon.push(this.footerText2[i].image)
+            }
+            this.modal10=false
+>>>>>>> origin/master
           }
         }
 
