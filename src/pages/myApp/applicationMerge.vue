@@ -66,7 +66,7 @@
         this.fileList = fileList.slice(-3);
       },
       success(response, file, fileList) {
-        console.log(response.data)
+        // console.log(response.data)
         this.downInput=response.data.url
       },
       preservation(){
@@ -78,7 +78,7 @@
           headers:{'token':localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL+'/api/app/apkUrl',qs.stringify(data),config).then(res => {
-          console.log(res.data)
+          // console.log(res.data)
           if(res.data.code==200){
             this.$router.push({
               path:'/appManagement'
@@ -87,7 +87,7 @@
             this.$message.error(res.data.msg);
           }
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
       }
     },
@@ -101,10 +101,10 @@
         headers:{'token':localStorage.getItem('Authorization')}
       };
       axios.post(BASE_URL+'/api/app/appDes',qs.stringify(data),config).then(res => {
-        console.log(res.data.data)
+        // console.log(res.data.data)
         this.downInput=res.data.data.apk_url
       }, err => {
-        console.log(err)
+        // console.log(err)
       })
 
     }

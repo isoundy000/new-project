@@ -23,38 +23,35 @@
         <div @click="ok" class="queOk" slot="footer" >确认</div>
       </Modal>
       <div class="login_title">
-        <img @click="logoHome" class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">
-        <div class="title">
+        <div class="login_title_first">
+          <img @click="logoHome" class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">
+        </div>
+        <div class="title login_title_second">
           <p @click="appClick(index,list.isclass)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass} ">{{list.msg}}</p>
         </div>
-
-        <div class="alreadyLoginP" >
-          <div class="alreadyLogin">
-
+        <div class="alreadyLoginP login_title_third" >
             <div @click="goHome" class="myappBtn" >
               <p>返回首页</p>
             </div>
-
             <!--<el-badge :value="3" class="item">-->
               <!--<img class="tixingBtn" src="../../../static/image/superSignature/tixing@2x.png" alt="">-->
             <!--</el-badge>-->
-            <el-dropdown placement=top>
-            <span class="el-dropdown-link">
-              <p class="accountNumber">{{userName}}</p>
-            </span>
-              <el-dropdown-menu placement=top  class="xiala" slot="dropdown">
-                <!--<el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>-->
-                <!--<el-dropdown-item>实名认证</el-dropdown-item>-->
-                <el-dropdown-item @click.native="recharge">充值</el-dropdown-item>
-                <el-dropdown-item>我的余额:￥{{money}}</el-dropdown-item>
-                <el-dropdown-item @click.native="modify">修改密码</el-dropdown-item>
-                <el-dropdown-item @click.native="signOut">退出</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-
+            <div style="width: 100px;text-align: center">
+              <el-dropdown placement=top>
+              <span class="el-dropdown-link">
+                <p class="accountNumber">{{userName}}</p>
+              </span>
+                <el-dropdown-menu placement=top  class="xiala" slot="dropdown">
+                  <!--<el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>-->
+                  <!--<el-dropdown-item>实名认证</el-dropdown-item>-->
+                  <el-dropdown-item @click.native="recharge">充值</el-dropdown-item>
+                  <el-dropdown-item>我的余额:￥{{money}}</el-dropdown-item>
+                  <el-dropdown-item @click.native="modify">修改密码</el-dropdown-item>
+                  <el-dropdown-item @click.native="signOut">退出</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </div>
             <img class="headUrl" src="../../../static/image/superSignature/touxiang@2x.png" alt="">
-
-          </div>
         </div>
       </div>
     </div>
@@ -109,12 +106,12 @@
         this.money=res.data.data.money
         this.userName=res.data.data.username
         this.shoyiMoney=res.data.data.balance
-        console.log(res.data.data)
+        // console.log(res.data.data)
         localStorage.setItem('balance', res.data.data.money);
         localStorage.setItem('shoyiMoney', res.data.data.balance);
         localStorage.setItem('userName', res.data.data.username);
       }, err => {
-        console.log(err)
+        // console.log(err)
       })
       if(this.$route.params.newid ==1){
         this.title[3].isclass=true
@@ -235,7 +232,7 @@
           headers: {'token': localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL+'/api/user/changePwd', qs.stringify(data), config).then(res => {
-          console.log(res.data.data)
+          // console.log(res.data.data)
 
           if(res.data.code==0){
             this.$message.error(res.data.msg);
@@ -253,7 +250,7 @@
           }
 
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
 
 
@@ -281,8 +278,8 @@
           }
           this.title[0].isclass=true
         }
-        console.log(to)
-        console.log(from)
+        // console.log(to)
+        // console.log(from)
       }
     }
   }
@@ -291,24 +288,27 @@
   .surveyHeader{
     width: 100%;
     display: flex;
+
     justify-content: center;
   }
   .login_title {
-    width:1184.97px;
+    width:78%;
     height: 80px;
     display: flex;
     /*justify-content: space-around;*/
     align-items: center;
+    border: 1px solid transparent;
   }
 
   .login_title .login_title_img {
     width: 143px;
     height: 39px;
+
   }
 
   .title {
-    width: 400px;
-    margin-left: 120px;
+
+    /*margin-left: 120px;*/
     list-style: none;
     display: inline-flex;
     justify-content: space-around;
@@ -388,10 +388,10 @@
   }
 
   .alreadyLogin {
-    width: 400px;
+    /*width: 400px;*/
     height: 30px;
     margin-top: -5px;
-    margin-left: 20px;
+    /*margin-left: 20px;*/
     display: flex;
     align-items: center;
     position: relative;
@@ -420,19 +420,13 @@
   .accountNumber {
     color: #999999;
     font-size: 14px;
-    margin-left: 50px;
+    /*margin-left: 50px;*/
     cursor: pointer;
   }
   .alreadyLoginP{
-    margin-left: 190px;
+    /*margin-left: 190px;*/
   }
-  .headUrl {
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    right: 0;
-    cursor: pointer;
-  }
+
 
   .el-badge {
     width: 30px;
@@ -476,7 +470,35 @@
     right: 10%;
     cursor: pointer;
   }
-
+  .login_title_first{
+    width: 20%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  .login_title_second{
+    width: 55%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  .login_title_third{
+    width: 25%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
+  .headUrl {
+    width: 50px;
+    height: 50px;
+    /*position: absolute;*/
+    /*right: 0;*/
+    cursor: pointer;
+  }
 </style>
 <style>
   .motai .ivu-modal-content{
@@ -486,6 +508,7 @@
   .motai .ivu-modal-footer{
     height: 60px !important;
   }
+
 </style>
 
 

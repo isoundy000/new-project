@@ -97,7 +97,7 @@
           headers:{'token':localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL+'/api/app/appDes',qs.stringify(data),config).then(res => {
-          console.log(res.data.data)
+          // console.log(res.data.data)
           this.list=res.data.data
           this.list.icon=this.list.icon
           this.download_url='https://'+window.location.hostname+'/download/'+this.list.tag+'.html'
@@ -112,7 +112,7 @@
               this.enable='是'
             }
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
       }
     }

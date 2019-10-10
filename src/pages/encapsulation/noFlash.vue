@@ -282,9 +282,9 @@ border-radius:4px;">iOS无闪退版</p>
         /*上传图片成功*/
         success2(response, file){
           this.storageImg=response.data.domain+response.data.url
-          console.log(response.data.domain+response.data.url)
+          // console.log(response.data.domain+response.data.url)
           this.img=file.response.data.url
-          console.log(this.img)
+          // console.log(this.img)
           this.verification()
           //this.img.push(img)
         },
@@ -294,15 +294,15 @@ border-radius:4px;">iOS无闪退版</p>
           this.verification()
         },
         handleRemove(file, fileList) {
-          console.log(file, fileList);
+          // console.log(file, fileList);
           this.img=''
           this.hideUpload = file.length >= this.limitCount;
           this.verification()
         },
         handlePictureCardPreview(file) {
-          console.log(file)
+          // console.log(file)
           this.dialogImageUrl = file.url;
-          console.log(this.dialogImageUrl)
+          // console.log(this.dialogImageUrl)
           this.img=file.url
           this.dialogVisible = true;
         },
@@ -379,7 +379,7 @@ border-radius:4px;">iOS无闪退版</p>
               this.isSelect=true
               this.isJiben=false
               this.newid=res.data.data.id
-              console.log(res.data.data.id)
+              // console.log(res.data.data.id)
               let data1={
                 id:res.data.data.id
               }
@@ -387,7 +387,7 @@ border-radius:4px;">iOS无闪退版</p>
                 headers:{'token':localStorage.getItem('Authorization')}
               };
               axios.post(BASE_URL+'/api/encapsulation/info',qs.stringify(data1),config1).then(res => {
-                console.log(res.data.data)
+                // console.log(res.data.data)
                 this.isSelectLogo=res.data.data.icon
                 this.isSelectAppname=res.data.data.name
                 this.isSelectVersion=res.data.data.version_code
@@ -396,7 +396,7 @@ border-radius:4px;">iOS无闪退版</p>
                 this.isDownUptime=res.data.data.expire_time
                 this.isDownUrl=window.location.hostname+'/#/down?tag='+res.data.data.tag
               }, err => {
-                console.log(err)
+                // console.log(err)
               })
 
 
@@ -406,7 +406,7 @@ border-radius:4px;">iOS无闪退版</p>
             }
           }, err => {
             this.$message.error('系统报错');
-            console.log(err)
+            // console.log(err)
           })
 
 
@@ -483,7 +483,7 @@ border-radius:4px;">iOS无闪退版</p>
                  headers:{'token':localStorage.getItem('Authorization')}
                };
                axios.post(BASE_URL+'/api/encapsulation/info',qs.stringify(data2),config2).then(res => {
-                 console.log(res.data.data)
+                 // console.log(res.data.data)
                  this.isDownLogo=res.data.data.icon
                  this.isDownAppname=res.data.data.name
                  this.isDownVersion=res.data.data.version_code
@@ -493,7 +493,7 @@ border-radius:4px;">iOS无闪退版</p>
 
                  this.isDownUrl=window.location.hostname+'/#/down?tag='+res.data.data.tag
                }, err => {
-                 console.log(err)
+                 // console.log(err)
                })
              }else if(res.data.code==0){
                this.$message.error(res.data.msg);
@@ -512,7 +512,7 @@ border-radius:4px;">iOS无闪退版</p>
                  headers:{'token':localStorage.getItem('Authorization')}
                };
                axios.post(BASE_URL+'/api/encapsulation/info',qs.stringify(data2),config2).then(res => {
-                 console.log(res.data.data)
+                 // console.log(res.data.data)
                  this.isDownLogo=res.data.data.icon
                  this.isDownAppname=res.data.data.name
                  this.isDownVersion=res.data.data.version_code
@@ -521,7 +521,7 @@ border-radius:4px;">iOS无闪退版</p>
                  this.isDownUptime=res.data.data.expire_time
                  this.isDownUrl=window.location.hostname+'/#/down?tag='+res.data.data.tag
                }, err => {
-                 console.log(err)
+                 // console.log(err)
                })
              }
 
@@ -531,7 +531,7 @@ border-radius:4px;">iOS无闪退版</p>
 
 
             }, err => {
-              console.log(err)
+              // console.log(err)
             })
 
 
@@ -548,7 +548,7 @@ border-radius:4px;">iOS无闪退版</p>
             headers:{'token':localStorage.getItem('Authorization')}
           };
           axios.post(BASE_URL+'/api/encapsulation/checkOrderPay',data,config).then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             if(res.data.code==200){
               this.active=2
               this.isSelect=false
@@ -562,7 +562,7 @@ border-radius:4px;">iOS无闪退版</p>
                 headers:{'token':localStorage.getItem('Authorization')}
               };
               axios.post(BASE_URL+'/api/encapsulation/info',qs.stringify(data2),config2).then(res => {
-                console.log(res.data.data)
+                // console.log(res.data.data)
                 this.isDownLogo=res.data.data.icon
                 this.isDownAppname=res.data.data.name
                 this.isDownVersion=res.data.data.version_code
@@ -580,14 +580,14 @@ border-radius:4px;">iOS无闪退版</p>
                   }
                 }, 1000)
               }, err => {
-                console.log(err)
+                // console.log(err)
               })
             }else if(res.data.code==0){
               this.$message.error(res.data.msg);
             }
           }, err => {
             this.$message.error('系统报错');
-            console.log(err)
+            // console.log(err)
           })
         },
         install(){
@@ -603,7 +603,7 @@ border-radius:4px;">iOS无闪退版</p>
         this.newdeUrl=BASE_URL+'/api/common/upload'
 
         axios.post(BASE_URL+'/api/encapsulation/payConfig').then(res => {
-          console.log(res.data.data)
+          // console.log(res.data.data)
           if(res.data.code==200){
             this.timeSelect=res.data.data
           }else if(res.data.code==0){
@@ -611,7 +611,7 @@ border-radius:4px;">iOS无闪退版</p>
           }
         }, err => {
           this.$message.error('系统报错');
-          console.log(err)
+          // console.log(err)
         })
 
 

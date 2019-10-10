@@ -23,14 +23,17 @@
     </div>
     <div class="Bheader">
       <div class="login_title">
-        <img class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">
-        <div class="title">
+        <div class="login_title_first">
+          <img class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">
+        </div>
+
+        <div class="title login_title_second">
           <p @click="titleName(index)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass}"
              @mouseenter="enter(index)"
              @mouseleave="leave(index)">{{list.msg}}</p>
         </div>
 
-        <div  class="login_title_div">
+        <div  class="login_title_div login_title_third">
           <p @click="loginBtn">登录</p>
           <p @click="registerBtn">注册</p>
         </div>
@@ -348,7 +351,7 @@
       var that=this;
       /*客服qq*/
       axios.get(BASE_URL+'/api/index/getConfig/name/kefu').then(res => {
-        console.log(res.data.data)
+        // console.log(res.data.data)
         for(var i=0;i<res.data.data.length;i++){
           var obj={};
           var aa=[]
@@ -357,9 +360,9 @@
           aa.push(obj)
           that.qqValue=aa
         }
-        console.log(that.qqValue)
+        // console.log(that.qqValue)
       }, err => {
-        console.log(err)
+        // console.log(err)
       })
     },
     methods: {
@@ -1151,9 +1154,10 @@ align-items: center;
     height: 1410px;
   }
   .login_title {
-    width: 1920px;
+    width: 80%;
     height: 80px;
     display: flex;
+    margin: 0 auto;
     /*justify-content: space-around;*/
     align-items: center;
   }
@@ -1161,12 +1165,13 @@ align-items: center;
   .login_title .login_title_img {
     width: 143px;
     height: 39px;
-    margin-left: 18.8vw;
+
+    /*margin-left: 18.8vw;*/
   }
 
   .title {
     width: 500px;
-    margin-left: 5vw;
+    /*margin-left: 5vw;*/
     list-style: none;
     display: inline-flex;
     justify-content: space-around;
@@ -1200,7 +1205,7 @@ align-items: center;
     display: flex;
     font-size: 16px;
     color: #323232;
-    margin-left: 6vw;
+    /*margin-left: 6vw;*/
   }
 
   .login_title_div p:nth-child(1) {
@@ -1368,5 +1373,24 @@ align-items: center;
     right: 5%;
     cursor: pointer;
   }
-
+  .login_title_first{
+    width: 20%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  .login_title_second{
+    width: 55%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+  }
+  .login_title_third{
+    width: 25%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 </style>

@@ -117,7 +117,7 @@
       methods:{
         /*上下页翻页*/
         indexChange(i){
-          console.log(i)
+          // console.log(i)
           let data={
             keywords:this.input,
             page:i,
@@ -127,17 +127,17 @@
             headers:{'token':localStorage.getItem('Authorization')}
           };
           axios.post(BASE_URL+'/api/app/appPayRecord',qs.stringify(data),config).then(res => {
-            console.log(res.data)
-            console.log(res.data.data.list)
+            // console.log(res.data)
+            // console.log(res.data.data.list)
             this.total=res.data.data.total
             this.pageNumber=parseInt(Math.ceil(Number(this.total)/6))
             this.tableData=res.data.data.list
           }, err => {
-            console.log(err)
+            // console.log(err)
           })
         },
         pageChange(s){
-          console.log(s)
+          // console.log(s)
         },
         allApp(){
           var state;
@@ -151,12 +151,12 @@
               headers:{'token':localStorage.getItem('Authorization')}
             };
             axios.post(BASE_URL+'/api/app/appPayRecord',qs.stringify(data),config).then(res => {
-              console.log(res.data.data)
+              // console.log(res.data.data)
               this.tableData=res.data.data.list
               this.total=res.data.data.total
               this.pageNumber=parseInt(Math.ceil(Number(this.total)/6))
             }, err => {
-              console.log(err)
+              // console.log(err)
             })
           }else if(this.appName=='补签'){
             state=2
@@ -168,12 +168,12 @@
               headers:{'token':localStorage.getItem('Authorization')}
             };
             axios.post(BASE_URL+'/api/app/resign_free',qs.stringify(data),config).then(res => {
-              console.log(res.data.data)
+              // console.log(res.data.data)
               this.tableData=res.data.data.list
               this.total=res.data.data.total
               this.pageNumber=parseInt(Math.ceil(Number(this.total)/6))
             }, err => {
-              console.log(err)
+              // console.log(err)
             })
           }
 
@@ -187,12 +187,12 @@
             headers:{'token':localStorage.getItem('Authorization')}
           };
           axios.post(BASE_URL+'/api/app/appPayRecord',qs.stringify(data),config).then(res => {
-            console.log(res.data.data)
+            // console.log(res.data.data)
             this.tableData=res.data.data.list
             this.total=res.data.data.total
             this.pageNumber=parseInt(Math.ceil(Number(this.total)/6))
           }, err => {
-            console.log(err)
+            // console.log(err)
           })
         },
         seachInput(){
@@ -204,12 +204,12 @@
             headers:{'token':localStorage.getItem('Authorization')}
           };
           axios.post(BASE_URL+'/api/app/appPayRecord',qs.stringify(data),config).then(res => {
-            console.log(res.data.data)
+            // console.log(res.data.data)
             this.tableData=res.data.data.list
             this.total=res.data.data.total
             this.pageNumber=parseInt(Math.ceil(Number(this.total)/6))
           }, err => {
-            console.log(err)
+            // console.log(err)
           })
         }
 
@@ -224,13 +224,13 @@
           headers:{'token':localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL+'/api/app/appPayRecord',qs.stringify(data),config).then(res => {
-          console.log(res.data.data)
+          // console.log(res.data.data)
           this.tableData=res.data.data.list
           this.total=res.data.data.total
           this.pageNumber=parseInt(Math.ceil(Number(this.total)/6))
 
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
       }
     }

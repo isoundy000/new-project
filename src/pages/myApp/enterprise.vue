@@ -55,8 +55,11 @@
     </div>
     <div class="Bheader">
       <div class="login_title">
-        <img @click="logoHome" class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">
-        <div class="title">
+        <div class="login_title_first">
+          <img @click="logoHome" class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">
+        </div>
+
+        <div class="title login_title_second">
           <p @click="titleName(index)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass}"
              @mouseenter="enter(index)"
              @mouseleave="leave(index)">{{list.msg}}</p>
@@ -65,7 +68,7 @@
 
 
 
-        <div class="alreadyLogin">
+        <div class="alreadyLogin login_title_third">
 
           <div @click="myappBtn" class="myappBtn" >
             <p>我的应用</p>
@@ -74,19 +77,22 @@
           <!--<el-badge :value="3" class="item">-->
           <!--<img class="tixingBtn" src="../../../static/image/superSignature/tixing@2x.png" alt="">-->
           <!--</el-badge>-->
-          <el-dropdown placement=top>
+          <div style="width: 100px">
+            <el-dropdown placement=top>
             <span class="el-dropdown-link">
               <p class="accountNumber">{{userName}}</p>
             </span>
-            <el-dropdown-menu placement=top  class="xiala" slot="dropdown">
-              <!--<el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>-->
-              <!--<el-dropdown-item>实名认证</el-dropdown-item>-->
-              <el-dropdown-item @click.native="recharge">充值</el-dropdown-item>
-              <el-dropdown-item>我的余额:￥{{money}}</el-dropdown-item>
-              <el-dropdown-item @click.native="modify">修改密码</el-dropdown-item>
-              <el-dropdown-item @click.native="signOut">退出</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
+              <el-dropdown-menu placement=top  class="xiala" slot="dropdown">
+                <!--<el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>-->
+                <!--<el-dropdown-item>实名认证</el-dropdown-item>-->
+                <el-dropdown-item @click.native="recharge">充值</el-dropdown-item>
+                <el-dropdown-item>我的余额:￥{{money}}</el-dropdown-item>
+                <el-dropdown-item @click.native="modify">修改密码</el-dropdown-item>
+                <el-dropdown-item @click.native="signOut">退出</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
+
 
           <img class="headUrl" src="../../../static/image/superSignature/touxiang@2x.png" alt="">
 
@@ -166,7 +172,7 @@
         <el-table-column
           prop="status"
           label="状态"
-          width="70">
+          >
           <template slot-scope="scope">
             <span v-if="scope.row.status=== 1" style="color: #43A047">分发中</span>
             <span v-else-if="scope.row.status=== 0" style="color: #999999">已下架</span>
@@ -370,14 +376,14 @@
           headers:{'token':localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL+'/api/business/download',qs.stringify(data),config).then(res => {
-          console.log(res.data)
+          // console.log(res.data)
           if(res.data.code==200){
             window.location.href=res.data.data.url
           }else if(res.data.code==0){
             this.$message.error(res.data.msg);
           }
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
         // this.isMask = true
         // this.value=url
@@ -400,12 +406,12 @@
           this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
           this.tableData=res.data.data.list
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
       },
       /*上下页翻页*/
       indexChange(i){
-        console.log(i)
+        // console.log(i)
         let data={
           keywords:this.input,
           page:i,
@@ -416,17 +422,17 @@
           headers:{'token':localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
-          console.log(res.data)
-          console.log(res.data.data.list)
+          // console.log(res.data)
+          // console.log(res.data.data.list)
           this.total=res.data.data.total
           this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
           this.tableData=res.data.data.list
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
       },
       pageChange(s){
-        console.log(s)
+        // console.log(s)
       },
       copy(){
         var text = document.getElementById("text").innerText;
@@ -498,15 +504,15 @@
               headers:{'token':localStorage.getItem('Authorization')}
             };
             axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
-              console.log(res.data.data)
+              // console.log(res.data.data)
               this.total=res.data.data.total
               this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
               this.tableData=res.data.data.list
             }, err => {
-              console.log(err)
+              // console.log(err)
             })
           }, err => {
-            console.log(err)
+            // console.log(err)
           })
         } else if (nameValue == '下架') {
           //   alert("选择了下架")
@@ -528,15 +534,15 @@
               headers:{'token':localStorage.getItem('Authorization')}
             };
             axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
-              console.log(res.data.data)
+              // console.log(res.data.data)
               this.total=res.data.data.total
               this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
               this.tableData=res.data.data.list
             }, err => {
-              console.log(err)
+              // console.log(err)
             })
           }, err => {
-            console.log(err)
+            // console.log(err)
           })
         } else if (nameValue == '删除') {
           this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -566,10 +572,10 @@
                 this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
                 this.tableData=res.data.data.list
               }, err => {
-                console.log(err)
+                // console.log(err)
               })
             }, err => {
-              console.log(err)
+              // console.log(err)
             })
           }).catch(() => {
 
@@ -630,7 +636,7 @@
           headers: {'token': localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL+'/api/user/changePwd', qs.stringify(data), config).then(res => {
-          console.log(res.data.data)
+          // console.log(res.data.data)
 
           if(res.data.code==0){
             this.$message.error(res.data.msg);
@@ -648,7 +654,7 @@
           }
 
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
 
 
@@ -671,11 +677,11 @@
       axios.get(BASE_URL+'/api/user/index',config88).then(res => {
         this.money=res.data.data.money
         this.userName=res.data.data.username
-        console.log(res.data.data)
+        // console.log(res.data.data)
         localStorage.setItem('balance', res.data.data.money);
         localStorage.setItem('userName', res.data.data.username);
       }, err => {
-        console.log(err)
+        // console.log(err)
       })
       // alert("2")
       this.base_url=BASE_URL
@@ -689,13 +695,13 @@
         headers:{'token':localStorage.getItem('Authorization')}
       };
       axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
-        console.log(res.data)
-        console.log(res.data.data.list)
+        // console.log(res.data)
+        // console.log(res.data.data.list)
         this.total=res.data.data.total
         this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
         this.tableData=res.data.data.list
       }, err => {
-        console.log(err)
+        // console.log(err)
       })
 
     }
@@ -709,9 +715,10 @@
     position: relative;
   }
   .login_title {
-    width: 100%;
+    width: 80%;
     height: 80px;
     display: flex;
+    margin: 0 auto;
     /*justify-content: space-around;*/
     align-items: center;
   }
@@ -719,12 +726,13 @@
   .login_title .login_title_img {
     width: 143px;
     height: 39px;
-    margin-left: 18.8vw;
+
+    /*margin-left: 18.8vw;*/
   }
 
   .title {
     width: 500px;
-    margin-left: 5vw;
+    /*margin-left: 5vw;*/
     list-style: none;
     display: inline-flex;
     justify-content: space-around;
@@ -788,10 +796,10 @@
   }
 
   .alreadyLogin {
-    width: 300px;
+    /*width: 300px;*/
     height: 30px;
     margin-top: -5px;
-    margin-left: 20px;
+    /*margin-left: 20px;*/
     display: flex;
     align-items: center;
 
@@ -827,7 +835,6 @@
   .headUrl {
     width: 50px;
     height: 50px;
-    margin-left: 20px;
     cursor: pointer;
   }
 
@@ -872,13 +879,13 @@
   }
 
   .secondDiv {
-    width: 78%;
+    width: 80%;
     display: flex;
     justify-content: space-between;
     margin: 48px auto 0 auto;
   }
 .newsecondDiv{
-  width: 78%;
+  width: 80%;
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
@@ -902,7 +909,7 @@
   }
 
   .thirdDiv {
-    width: 78%;
+    width: 80%;
     /*height: 300px;*/
     margin: 50px auto 0 auto;
     display: flex;
@@ -1055,6 +1062,25 @@
     position: absolute;
     right: 10%;
     cursor: pointer;
+  }
+  .login_title_first{
+    width: 20%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  .login_title_second{
+    width: 55%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+  }
+  .login_title_third{
+    width: 25%;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
   }
 </style>
 <style>

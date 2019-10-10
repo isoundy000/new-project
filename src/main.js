@@ -32,7 +32,7 @@ Vue.config.productionTip = false
 
 
 router.beforeEach((to, from, next) => {
-  console.log(to.path)
+  // console.log(to.path)
   if(to.path=='/' && localStorage.getItem('Authorization')){
     next({
       path: '/superSignatureAread'
@@ -49,10 +49,10 @@ router.beforeEach((to, from, next) => {
     };
     axios.get(BASE_URL+'/api/token/check',config)
       .then(res => {
-        console.log(res)
+        // console.log(res)
       })
       .catch(err=>{
-        console.log(err)
+        // console.log(err)
         next({
           path: '/login'
         })
@@ -63,8 +63,8 @@ router.beforeEach((to, from, next) => {
     if (localStorage.getItem('Authorization')){// 判断是否登录
       next()
     } else {// 没登录则跳转到登录界面
-      console.log(to)
-      console.log(to.fullPath)
+      // console.log(to)
+      // console.log(to.fullPath)
       next({
         path: '/login',
         query: {redirect: to.fullPath}

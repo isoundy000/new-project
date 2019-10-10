@@ -148,13 +148,13 @@
             headers: {'token': localStorage.getItem('Authorization')}
           };
           axios.get(BASE_URL+'/api/user/incomeToBalane',config).then(res => {
-            console.log(res.data.data)
+            // console.log(res.data.data)
             if(res.data.data!=''){
               this.newmoney=res.data.data.money
               this.shoyiMoney=res.data.data.balance
             }
           }, err => {
-            console.log(err)
+            // console.log(err)
           })
         }
 
@@ -176,14 +176,14 @@
       },
       recharge() {
         axios.get(BASE_URL+'/api/pay/checkPayStatus').then(res => {
-          console.log(res.data.data)
+          // console.log(res.data.data)
             if(res.data.data.status=='1'){
               this.isMaskRecharge = true
             }else{
               $(".weihu").show()
             }
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
 
 
@@ -211,14 +211,14 @@
         }
         this.amount[index].isClass = true
         this.btnchongValue=value
-        console.log(value)
-        console.log(this.btnchongValue)
+        // console.log(value)
+        // console.log(this.btnchongValue)
       },
       moneyInput(){
         for (var i = 0; i < this.amount.length; i++) {
           this.amount[i].isClass = false
         }
-        console.log(this.input)
+        // console.log(this.input)
       },
       immediately(){
         // this.isMaskRecharge=false
@@ -238,13 +238,13 @@
           headers: {'token': localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL+'/api/order/createOrder', qs.stringify(data), config).then(res => {
-          console.log(res.data.data)
+          // console.log(res.data.data)
           let data1 = {
             order_sn:res.data.data.order_sn
 
           }
           axios.post(BASE_URL+'/api/pay/doPay', qs.stringify(data1), config).then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             const div = document.createElement('div')
             div.innerHTML = res.data //此处form就是后台返回接收到的数据
             document.body.appendChild(div)
@@ -256,10 +256,10 @@
             // document.forms.alipaysubmit.submit();
 
           }, err => {
-            console.log(err)
+            // console.log(err)
           })
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
 
 

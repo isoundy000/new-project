@@ -148,7 +148,7 @@
               headers: {'token': localStorage.getItem('Authorization')}
             };
             axios.post(BASE_URL + '/api/encapsulation/info', qs.stringify(data2), config2).then(res => {
-              console.log(res.data.data)
+              // console.log(res.data.data)
               if(res.data.code==200){
                 this.$router.push({
                   name: 'ordinaryDownApp',
@@ -178,7 +178,7 @@
               //
               // this.isDownUrl = window.location.hostname + '/#/down?tag=' + res.data.data.tag
             }, err => {
-              console.log(err)
+              // console.log(err)
             })
           } else if (res.data.code == 0) {
             this.$message.error(res.data.msg);
@@ -190,7 +190,7 @@
 
 
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
 
 
@@ -204,7 +204,7 @@
           headers:{'token':localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL+'/api/encapsulation/checkOrderPay',data,config).then(res => {
-          console.log(res.data)
+          // console.log(res.data)
           if(res.data.code==200){
 
             this.modal1=false
@@ -215,7 +215,7 @@
               headers:{'token':localStorage.getItem('Authorization')}
             };
             axios.post(BASE_URL+'/api/encapsulation/info',qs.stringify(data2),config2).then(res => {
-              console.log(res.data.data)
+              // console.log(res.data.data)
               this.$router.push({
                 name: 'ordinaryDownApp',
                 params: {
@@ -232,14 +232,14 @@
                 }
               })
             }, err => {
-              console.log(err)
+              // console.log(err)
             })
           }else if(res.data.code==0){
             this.$message.error(res.data.msg);
           }
         }, err => {
           this.$message.error('系统报错');
-          console.log(err)
+          // console.log(err)
         })
       }
     },
@@ -253,7 +253,7 @@
         headers: {'token': localStorage.getItem('Authorization')}
       };
       axios.post(BASE_URL + '/api/encapsulation/payConfig', data, config).then(res => {
-        console.log(res.data.data)
+        // console.log(res.data.data)
         if(res.data.code==200){
           this.timeSelect=res.data.data
           this.selectId=this.timeSelect[0].id
@@ -262,7 +262,7 @@
         }
       }, err => {
         this.$message.error('系统报错');
-        console.log(err)
+        // console.log(err)
       })
     }
   }

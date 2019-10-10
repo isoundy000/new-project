@@ -188,7 +188,7 @@
         },
         /*版本号输入框失焦事件*/
         informationVersionInputChange(){
-          if(this.informationVersionInput!='' && this.bundleMoren==true){
+          if((this.informationVersionInput!='' && this.bundleMoren==true && this.bundleMy==false) || (this.informationVersionInput!='' && this.bundleMoren==false && this.bundleMy==true && this.informationBundleInput!='')){
             this.isNext1=true
             this.isNext=false
           }else{
@@ -216,7 +216,7 @@
         },
         /*Bundle输入框失焦事件*/
         informationBundleInputChange(){
-          if(this.informationBundleInput!=''){
+          if((this.informationBundleInput!='' && this.versionMoren==true && this.versionMy==false) || (this.informationBundleInput!='' && this.versionMoren==false && this.versionMy==true && this.informationVersionInput!='')){
             this.isNext1=true
             this.isNext=false
           }else{

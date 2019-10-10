@@ -337,7 +337,7 @@
           };
           axios.post(BASE_URL+'/api/encapsulation/info',qs.stringify(data),config).then(res => {
             if(res.data.code==200){
-              console.log(res.data)
+              // console.log(res.data)
               if(res.data.data.status== 1){
                 this.statusData='已完成'
               }else if(res.data.data.status== 0){
@@ -396,7 +396,7 @@
           };
           axios.post(BASE_URL+'/api/encapsulation/info',qs.stringify(data),config).then(res => {
             if(res.data.code==200){
-              console.log(res.data)
+              // console.log(res.data)
               if(res.data.data.status== 1){
                 this.statusData='已完成'
               }else if(res.data.data.status== 0){
@@ -448,7 +448,7 @@
             type:2
           }
           axios.post(BASE_URL+'/api/encapsulation/payConfig',data2).then(res => {
-            console.log(res.data.data)
+            // console.log(res.data.data)
             if(res.data.code==200){
               this.timeSelect=res.data.data
               this.money=this.timeSelect[0].price
@@ -458,11 +458,11 @@
             }
           }, err => {
             this.$message.error('系统报错');
-            console.log(err)
+            // console.log(err)
           })
         },
         xufeiClick(row,id){
-          console.log(row)
+          // console.log(row)
           this.newid=row.id
           this.isApplist=false
           this.isDetail=false
@@ -475,7 +475,7 @@
             type:2
           }
           axios.post(BASE_URL+'/api/encapsulation/payConfig',data2).then(res => {
-            console.log(res.data.data)
+            // console.log(res.data.data)
             if(res.data.code==200){
               this.timeSelect=res.data.data
               this.money=this.timeSelect[0].price
@@ -485,7 +485,7 @@
             }
           }, err => {
             this.$message.error('系统报错');
-            console.log(err)
+            // console.log(err)
           })
         },
         timeDan(index,money,status){
@@ -528,9 +528,9 @@
                 headers:{'token':localStorage.getItem('Authorization')}
               };
               axios.post(BASE_URL+'/api/encapsulation/appList',qs.stringify(data1),config1).then(res => {
-                console.log(res.data)
+                // console.log(res.data)
                 if(res.data.code==200){
-                  console.log(res.data.data.list)
+                  // console.log(res.data.data.list)
                   this.tableData=res.data.data.list
                   this.total=res.data.data.total
                   this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
@@ -539,10 +539,10 @@
                 }
               }, err => {
                 this.$message.error('系统报错');
-                console.log(err)
+                // console.log(err)
               })
             }, err => {
-              console.log(err)
+              // console.log(err)
             })
           }).catch(() => {
 
@@ -559,9 +559,9 @@
             headers:{'token':localStorage.getItem('Authorization')}
           };
           axios.post(BASE_URL+'/api/encapsulation/appList',qs.stringify(data),config).then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             if(res.data.code==200){
-              console.log(res.data.data.list)
+              // console.log(res.data.data.list)
               this.tableData=res.data.data.list
               this.total=res.data.data.total
               this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
@@ -570,7 +570,7 @@
             }
           }, err => {
             this.$message.error('系统报错');
-            console.log(err)
+            // console.log(err)
           })
         },
         pageChange(){
@@ -587,9 +587,9 @@
             headers:{'token':localStorage.getItem('Authorization')}
           };
           axios.post(BASE_URL+'/api/encapsulation/appList',qs.stringify(data),config).then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             if(res.data.code==200){
-              console.log(res.data.data.list)
+              // console.log(res.data.data.list)
               this.tableData=res.data.data.list
               this.total=res.data.data.total
               this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
@@ -598,7 +598,7 @@
             }
           }, err => {
             this.$message.error('系统报错');
-            console.log(err)
+            // console.log(err)
           })
         },
         allApp(){
@@ -617,9 +617,9 @@
             headers:{'token':localStorage.getItem('Authorization')}
           };
           axios.post(BASE_URL+'/api/encapsulation/appList',qs.stringify(data),config).then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             if(res.data.code==200){
-              console.log(res.data.data.list)
+              // console.log(res.data.data.list)
               this.tableData=res.data.data.list
               this.total=res.data.data.total
               this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
@@ -628,7 +628,7 @@
             }
           }, err => {
             this.$message.error('系统报错');
-            console.log(err)
+            // console.log(err)
           })
         },
         pay(){
@@ -661,7 +661,7 @@
               window.open(routerData.href,'_blank')
             }
           }, err => {
-            console.log(err)
+            // console.log(err)
           })
 
 
@@ -677,7 +677,7 @@
             headers:{'token':localStorage.getItem('Authorization')}
           };
           axios.post(BASE_URL+'/api/encapsulation/checkOrderPay',data,config).then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             if(res.data.code==200){
               this.modal1=false
               this.isApplist=true
@@ -693,9 +693,9 @@
                 headers:{'token':localStorage.getItem('Authorization')}
               };
               axios.post(BASE_URL+'/api/encapsulation/appList',qs.stringify(data),config).then(res => {
-                console.log(res.data)
+                // console.log(res.data)
                 if(res.data.code==200){
-                  console.log(res.data.data.list)
+                  // console.log(res.data.data.list)
                   this.tableData=res.data.data.list
                   this.total=res.data.data.total
                   this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
@@ -708,7 +708,7 @@
                 }
               }, err => {
                 this.$message.error('系统报错');
-                console.log(err)
+                // console.log(err)
               })
 
 
@@ -718,7 +718,7 @@
             }
           }, err => {
             this.$message.error('系统报错');
-            console.log(err)
+            // console.log(err)
           })
         }
 
@@ -735,9 +735,9 @@
           headers:{'token':localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL+'/api/encapsulation/appList',qs.stringify(data),config).then(res => {
-          console.log(res.data)
+          // console.log(res.data)
           if(res.data.code==200){
-            console.log(res.data.data.list)
+            // console.log(res.data.data.list)
             this.tableData=res.data.data.list
             this.total=res.data.data.total
             this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
@@ -751,7 +751,7 @@
           }
         }, err => {
           this.$message.error('系统报错');
-          console.log(err)
+          // console.log(err)
         })
 
 

@@ -225,7 +225,7 @@
             headers:{'token':localStorage.getItem('Authorization')}
           };
           axios.post(BASE_URL+'/api/app/appEarlyWarning',qs.stringify(data),config).then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             if(res.data.code==200){
               this.$message({
                 message: '保存成功',
@@ -235,7 +235,7 @@
               this.$message.error(res.data.msg);
             }
           }, err => {
-            console.log(err)
+            // console.log(err)
           })
         },
         preservation2(){
@@ -263,7 +263,7 @@
           headers:{'token':localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL+'/api/app/appEarlyWarningInfo',qs.stringify(data),config).then(res => {
-          console.log(res.data.data)
+          // console.log(res.data.data)
           this.input=res.data.data.down_frequency
           this.input2=res.data.data.down_times
           this.input3=res.data.data.auto_close
@@ -272,7 +272,7 @@
           this.input6=res.data.data.day_times
           this.input7=res.data.data.download_limit
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
       }
     }

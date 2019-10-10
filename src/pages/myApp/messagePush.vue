@@ -308,7 +308,7 @@
             headers: {'token': localStorage.getItem('Authorization')}
           };
           axios.post(BASE_URL+'/api/app/pushCert', qs.stringify(data), config).then(res => {
-            console.log(res.data.data)
+            // console.log(res.data.data)
 
             if(res.data.code==0){
               this.isHave=0
@@ -322,7 +322,7 @@
             }
 
           }, err => {
-            console.log(err)
+            // console.log(err)
           })
 
 
@@ -361,14 +361,14 @@
             headers: {'token': localStorage.getItem('Authorization')}
           };
           axios.post(BASE_URL+'/api/push/pushHandle', qs.stringify(data), config).then(res => {
-            console.log(res.data.data)
+            // console.log(res.data.data)
             this.newtitle=res.data.data.title
             this.newsubtitle=res.data.data.subtitle
             this.newmsg=res.data.data.msg
             this.newpush_time=res.data.data.push_time
             this.newequipment_num=res.data.data.equipment_num
           }, err => {
-            console.log(err)
+            // console.log(err)
           })
         },
         /*表格里面的查看*/
@@ -387,14 +387,14 @@
             headers: {'token': localStorage.getItem('Authorization')}
           };
           axios.post(BASE_URL+'/api/push/pushHandle', qs.stringify(data), config).then(res => {
-            console.log(res.data.data)
+            // console.log(res.data.data)
             this.newtitle=res.data.data.title
             this.newsubtitle=res.data.data.subtitle
             this.newmsg=res.data.data.msg
             this.newpush_time=res.data.data.push_time
             this.newequipment_num=res.data.data.equipment_num
           }, err => {
-            console.log(err)
+            // console.log(err)
           })
         },
         /*表格里面的删除*/
@@ -423,17 +423,17 @@
                 headers: {'token': localStorage.getItem('Authorization')}
               };
               axios.post(BASE_URL+'/api/push/pushLog', qs.stringify(data), config).then(res => {
-                console.log(res.data.data)
+                // console.log(res.data.data)
                 this.isHave=res.data.data.cert_path
                 this.total=res.data.data.total
                 this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
                 this.tableData=res.data.data.list
                 this.newpush_type=res.data.data.push_type
               }, err => {
-                console.log(err)
+                // console.log(err)
               })
             }, err => {
-              console.log(err)
+              // console.log(err)
             })
           }).catch(() => {
 
@@ -443,8 +443,8 @@
         firstTime(){
           this.startTime=this.value[0]
           this.endTime=this.value[1]
-          console.log(this.value[0])
-          console.log(this.value[1])
+          // console.log(this.value[0])
+          // console.log(this.value[1])
           let data = {
             app_id: this.$route.query.id,
             start:this.startTime,
@@ -456,7 +456,7 @@
             headers: {'token': localStorage.getItem('Authorization')}
           };
           axios.post(BASE_URL+'/api/push/pushLog', qs.stringify(data), config).then(res => {
-            console.log(res.data.data)
+            // console.log(res.data.data)
             this.isHave=res.data.data.cert_path
             this.total=res.data.data.total
             this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
@@ -465,7 +465,7 @@
 
 
           }, err => {
-            console.log(err)
+            // console.log(err)
           })
         },
         /*上下页翻页*/
@@ -481,18 +481,18 @@
             headers: {'token': localStorage.getItem('Authorization')}
           };
           axios.post(BASE_URL+'/api/push/pushLog', qs.stringify(data), config).then(res => {
-            console.log(res.data.data)
+            // console.log(res.data.data)
             this.isHave=res.data.data.cert_path
             this.total=res.data.data.total
             this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
             this.tableData=res.data.data.list
             this.newpush_type=res.data.data.push_type
           }, err => {
-            console.log(err)
+            // console.log(err)
           })
         },
         pageChange(s){
-          console.log(s)
+          // console.log(s)
         },
         /*创建推送计划*/
         plan(){
@@ -552,7 +552,7 @@
             headers: {'token': localStorage.getItem('Authorization')}
           };
           axios.post(BASE_URL+'/api/push/sendMessage', qs.stringify(data), config).then(res => {
-            console.log(res.data.data)
+            // console.log(res.data.data)
             if(res.data.code==0){
               this.$message.error(res.data.msg);
             }else{
@@ -574,7 +574,7 @@
                     message: '新增成功',
                     type: 'success'
                   });
-                  console.log(res.data.data)
+                  // console.log(res.data.data)
                   this.isHave=res.data.data.cert_path
                   this.total=res.data.data.total
                   this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
@@ -582,11 +582,11 @@
                   this.newpush_type=res.data.data.push_type
                 }
               }, err => {
-                console.log(err)
+                // console.log(err)
               })
             }
           }, err => {
-            console.log(err)
+            // console.log(err)
           })
         },
         /*新增确定取消按钮*/
@@ -596,15 +596,15 @@
         /*日历时间选择*/
         chooseTimeRange(t) {
           this.riTime=t
-          console.log(t);
+          // console.log(t);
         },
         handleRemove(file, fileList) {
-          console.log(file, fileList);
+          // console.log(file, fileList);
           this.cert_url=''
         },
         /*上传p12文件成功返回的参数*/
         success(response, file, fileList) {
-          console.log(response.data.url)
+          // console.log(response.data.url)
           this.cert_url=response.data.url
           // this.disInput=false
           // console.log(file)
@@ -623,7 +623,7 @@
           // this.icon1=file.response.data.app.icon
           // this.img.push(file.response.data.app.img)
           // console.log(this.img)
-          console.log('图片上传成功的时候的img集合',file.response.data.app.img)
+          // console.log('图片上传成功的时候的img集合',file.response.data.app.img)
         },
         /*上传文件*/
         handleChange(file, fileList) {
@@ -653,7 +653,7 @@
           headers: {'token': localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL+'/api/push/pushLog', qs.stringify(data), config).then(res => {
-          console.log(res.data.data)
+          // console.log(res.data.data)
         //  alert(res.data.data.push_type)
           this.isHave=res.data.data.cert_path
           this.total=res.data.data.total
@@ -667,7 +667,7 @@
           }
 
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
       }
     }

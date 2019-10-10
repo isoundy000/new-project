@@ -802,9 +802,9 @@
       </div>
     </div>
     <div class="ordinaryConfigDivMain2">
-      <div style="width:100%;margin-bottom: 50px;display: flex;margin-top: 90px;justify-content: space-evenly">
+      <div style="width:100%;margin-bottom: 50px;display: flex;margin-top: 90px;">
         <p style="width: 190px" class="gonextStep" @click="previousStep">上一步</p>
-        <p style="width: 190px" v-show="isNext" class="huinextStep">下一步</p>
+        <p style="width: 190px;margin-left: 25px" v-show="isNext" class="huinextStep" >下一步</p>
         <p style="width: 190px" v-show="isNext1" class="lvnextStep" @click="nextStep">下一步</p>
         <p style="width: 190px"></p>
         <p style="width: 190px"></p>
@@ -1132,12 +1132,12 @@
         this.jiazaiValue = 2
       },
       jiazaiSelectColor(ss) {
-        console.log(ss)
+        // console.log(ss)
         // this.jiaziastyleInner = `<style>.dynamicJiazai{ background-color: ${ss};}</style>`
       },
       jiazaiSelectColorRinow(aa) {
         this.loading_color=aa
-        console.log(aa)
+        // console.log(aa)
         this.jiaziastyleInner = `<style>.dynamicJiazai{ background-color: ${aa};}</style>`
 
       },
@@ -1429,31 +1429,31 @@
       },
       /*状态栏背景色*/
       beijingSelectColor(ss) {
-        console.log(ss)
+        // console.log(ss)
         // this.beijingstyleInner = `<style>.zhuangtai1{ background-color: ${ss};}</style>`
       },
       beijingSelectColorRinow(aa) {
         this.nav_bar_bgcolor=aa
-        console.log(aa)
+        // console.log(aa)
         this.beijingstyleInner = `<style>.zhuangtai1{ background-color: ${aa};}</style>`
       },
       /*标题栏背景色*/
       beijingSelectColor2(ss) {
-        console.log(ss)
+        // console.log(ss)
         // this.beijingstyleInner2 = `<style>.customIconDiv{ background-color: ${ss};}</style>`
       },
       beijingSelectColorRinow2(aa) {
-        console.log(aa)
+        // console.log(aa)
         this.beijingstyleInner2 = `<style>.customIconDiv{ background-color: ${aa};}</style>`
       },
       /*文字图标颜色*/
       beijingSelectColor3(ss) {
-        console.log(ss)
+        // console.log(ss)
         // this.beijingstyleInner3 = `<style>.daohangtextcolor{ color: ${ss};}</style>`
       },
       beijingSelectColorRinow3(aa) {
         this.nav_title_text_icon_color=aa
-        console.log(aa)
+        // console.log(aa)
         this.beijingstyleInner3 = `<style>.daohangtextcolor{ color: ${aa};}</style>`
       },
       /*文字颜色单选*/
@@ -1504,7 +1504,7 @@
           this.nav_title_left_name.splice(newIndex, 1)
           this.nav_title_left_icon.splice(newIndex, 1)
         }
-        console.log(this.leftCheckboxList)
+        // console.log(this.leftCheckboxList)
       },
       rightListChange(index, value, name, icon,type,image) {
         this.rightCheckboxList[index].checkValue = !this.rightCheckboxList[index].checkValue
@@ -1513,7 +1513,7 @@
           this.nav_title_right_type.push(this.rightCheckboxList[index].type)
           this.nav_title_right_name.push(this.rightCheckboxList[index].name)
           this.nav_title_right_icon.push(this.rightCheckboxList[index].image)
-          console.log(this.rightIcon)
+          // console.log(this.rightIcon)
         } else {
           var newIndex = this.rightIcon.findIndex(item => {
             if (item == icon) {
@@ -1525,7 +1525,7 @@
           this.nav_title_right_name.splice(newIndex, 1)
           this.nav_title_right_icon.splice(newIndex, 1)
         }
-        console.log(this.rightCheckboxList)
+        // console.log(this.rightCheckboxList)
       },
       customOk() {
         this.modal9 = false
@@ -1552,22 +1552,22 @@
       },
       /*状态栏背景色*/
       footerSelectColor(ss) {
-        console.log(ss)
+        // console.log(ss)
         // this.footerstyleInner = `<style>.custFooter{ background-color: ${ss};}</style>`
       },
       footerSelectColorRinow(aa) {
         this.bottom_bgcolor=aa
-        console.log(aa)
+        // console.log(aa)
         this.footerstyleInner = `<style>.custFooter{ background-color: ${aa};}</style>`
       },
       /*状态栏背景色*/
       footerSelectColor1(ss) {
-        console.log(ss)
+        // console.log(ss)
         // this.footerstyleInner1 = `<style>.custFooterDiv{ color: ${ss};}</style>`
       },
       footerSelectColorRinow1(aa) {
         this.bottom_default_color=aa
-        console.log(aa)
+        // console.log(aa)
         this.footerstyleInner1 = `<style>.custFooterDiv{ color: ${aa};}</style>`
       },
       footerTextDan1(){
@@ -1632,7 +1632,7 @@
           this.footerText[i].daohangnameInput=''
           this.footerText[i].isText=true
         }
-        console.log(this.footerText)
+        // console.log(this.footerText)
       },
       /*自定义底栏导航功能下拉菜单*/
       chooseFunction(index,type_id){
@@ -1643,10 +1643,10 @@
         // console.log(aaaa)
         //aa.push(type_id)
 
-        console.log(this.bottom_nav_type)
+        // console.log(this.bottom_nav_type)
       },
       newcustomOk(){
-        console.log(this.footerText2)
+        // console.log(this.footerText2)
         //this.modal10 = false
 
 
@@ -1784,9 +1784,9 @@
         //
         //
         // }
-        console.log(this.bottom_nav_type)
-        console.log(this.bottom_nav_name)
-        console.log(this.bottom_nav_icon)
+        // console.log(this.bottom_nav_type)
+        // console.log(this.bottom_nav_name)
+        // console.log(this.bottom_nav_icon)
       },
       /*自定义底栏导航名称输入框*/
       daohangnameInputEvent(index){
@@ -1806,12 +1806,36 @@
         }
       },
       newAddTraddBtn(){
-
-
-        console.log(this.footerText2)
         var i=Number(this.footerText2.length)+3 ;
         this.footerText2.push({name: '导航'+i,daohangnameInput:'',functionValue:'',isText:true,delShow:false,isIconImg:true,icon:'',image:'',text:'空白'});
-        console.log(this.footerText2)
+        if(this.footerText2.length==1){
+          let change = this.footerText2[0]
+          change.name='导航3'
+          this.$set(this.footerText2,0,change)
+        }else if(this.footerText2.length==2){
+          let change = this.footerText2[0]
+          change.name='导航3'
+          this.$set(this.footerText2,0,change)
+
+          let change1 = this.footerText2[1]
+          change1.name='导航4'
+          this.$set(this.footerText2,1,change1)
+        }else if(this.footerText2.length==3){
+          let change = this.footerText2[0]
+          change.name='导航3'
+          this.$set(this.footerText2,0,change)
+
+          let change1 = this.footerText2[1]
+          change1.name='导航4'
+          this.$set(this.footerText2,1,change1)
+
+          let change2 = this.footerText2[2]
+          change2.name='导航5'
+          this.$set(this.footerText2,2,change2)
+        }
+
+
+
         if(this.footerText2.length==3){
           this.kedian=false
         }
@@ -1828,7 +1852,7 @@
         this.footerText[this.indexAdd].isIconImg=false
         this.footerText[this.indexAdd].icon=this.iconList[index].icon
         this.footerText[this.indexAdd].image=this.iconList[index].image
-        console.log(this.iconList[index])
+        // console.log(this.iconList[index])
       },
       addIcon1(index){
         this.modal12=true
@@ -1842,7 +1866,7 @@
         this.footerText2[this.indexAdd1].isIconImg=false
         this.footerText2[this.indexAdd1].icon=this.iconList[index].icon
         this.footerText2[this.indexAdd1].image=this.iconList[index].image
-        console.log(this.iconList[index])
+        // console.log(this.iconList[index])
       },
       iconEnter(index){
         // console.log(this.iconList[index].iconColor);
@@ -1872,8 +1896,8 @@
       nextStep() {
         this.informationData=JSON.parse(localStorage.getItem('informationData'));
         this.iconData=JSON.parse(localStorage.getItem('iconData'));
-        console.log(this.informationData)
-        console.log(this.iconData)
+        // console.log(this.informationData)
+        // console.log(this.iconData)
 
         this.icon=this.iconData.icon
         this.start_img=this.iconData.start_img
@@ -1939,7 +1963,7 @@
           headers:{'token':localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL+'/api/encapsulation/normalPackage',data,config).then(res => {
-          console.log(res.data.data.id)
+          // console.log(res.data.data.id)
           this.newID=res.data.data.id
           if(res.data.code==200){
             this.$router.push({
@@ -2029,7 +2053,7 @@
 
       /*获取自定义导航栏左右功能复选框集合*/
       axios.post(BASE_URL+'/api/encapsulation/getPackagePluginTitleNav').then(res => {
-        console.log(res.data.data)
+        // console.log(res.data.data)
         this.leftCheckboxList=res.data.data.left
         this.rightCheckboxList=res.data.data.right
         for(var i=0;i<this.leftCheckboxList.length;i++){
@@ -2037,21 +2061,21 @@
           var xianzhi={}
           this.leftCheckboxList[i].checkValue=false
           this.leftCheckboxList[i].xianzhi=false
-          console.log(this.leftCheckboxList)
+          // console.log(this.leftCheckboxList)
         }
         for(var i=0;i<this.rightCheckboxList.length;i++){
           var checkValue={}
           this.rightCheckboxList[i].checkValue=false
-          console.log(this.rightCheckboxList)
+          // console.log(this.rightCheckboxList)
         }
 
       }, err => {
-        console.log(err)
+        // console.log(err)
       })
 
       /*获取自定义底栏导航功能下拉菜单集合*/
       axios.post(BASE_URL+'/api/encapsulation/getPackagePluginNav').then(res => {
-        console.log(res.data.data)
+        // console.log(res.data.data)
         this.newXiaLaList=res.data.data
         for(var i=0;i<res.data.data.length;i++){
           var newobj={}
@@ -2060,19 +2084,19 @@
           this.chooseFunctionOptions.push(newobj)
         }
       }, err => {
-        console.log(err)
+        // console.log(err)
       })
 
       /*获取自定义icon集合*/
       axios.post(BASE_URL+'/api/encapsulation/getPackagePluginIcon').then(res => {
-        console.log(res.data.data)
+        // console.log(res.data.data)
         this.iconList=res.data.data
         for(var i=0;i<this.iconList.length;i++){
           this.iconList[i].iconColor=false
         }
-        console.log(this.iconList)
+        // console.log(this.iconList)
       }, err => {
-        console.log(err)
+        // console.log(err)
       })
 
 

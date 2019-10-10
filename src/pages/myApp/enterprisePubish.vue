@@ -232,7 +232,7 @@
           this.isUpload = true
           // }
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
 
 
@@ -250,8 +250,8 @@
         this.img.push(img)
       },
       success(response, file, fileList) {
-        console.log(file.response)
-        console.log(file.response.msg)
+        // console.log(file.response)
+        // console.log(file.response.msg)
         if(file.response.code==1){
           this.display_name=file.response.data.app.display_name
           this.path=file.response.data.url
@@ -275,12 +275,12 @@
         }
       },
       handleRemove(file, fileList) {
-        console.log(file, fileList);
+        // console.log(file, fileList);
         this.hideUpload = file.length >= this.limitCount;
 
       },
       handlePictureCardPreview(file) {
-        console.log(file)
+        // console.log(file)
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
       },
@@ -345,7 +345,7 @@
           headers:{'token':localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL+'/api/app/add',qs.stringify(f),config).then(res => {
-          console.log(res.data)
+          // console.log(res.data)
           if(res.data.code==200){
             loading.close();
             this.$router.push({
@@ -363,7 +363,7 @@
         }, err => {
           loading.close();
           this.$message.error('系统报错');
-          console.log(err)
+          // console.log(err)
         })
 
       }

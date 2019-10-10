@@ -118,7 +118,7 @@
         <el-table-column
           prop="status"
           label="状态"
-          width="70">
+          >
           <template slot-scope="scope">
             <span v-if="scope.row.status=== 1" style="color: #43A047">分发中</span>
             <span v-else-if="scope.row.status=== 0" style="color: #999999">已下架</span>
@@ -198,8 +198,8 @@
     },
     methods: {
       tableTr(row){
-        console.log(row)
-        console.log(row)
+        // console.log(row)
+        // console.log(row)
         this.$router.push({
           path:'/appManagementDetail',
           query:{
@@ -233,12 +233,12 @@
           this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
           this.tableData=res.data.data.list
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
       },
       /*上下页翻页*/
       indexChange(i){
-        console.log(i)
+        // console.log(i)
         let data={
           keywords:this.input,
           page:i,
@@ -248,17 +248,17 @@
           headers:{'token':localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
-          console.log(res.data)
-          console.log(res.data.data.list)
+          // console.log(res.data)
+          // console.log(res.data.data.list)
           this.total=res.data.data.total
           this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
           this.tableData=res.data.data.list
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
       },
       pageChange(s){
-        console.log(s)
+        // console.log(s)
       },
       copy(){
         var text = document.getElementById("text").innerText;
@@ -342,15 +342,15 @@
               headers:{'token':localStorage.getItem('Authorization')}
             };
             axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
-              console.log(res.data.data)
+              // console.log(res.data.data)
               this.total=res.data.data.total
               this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
               this.tableData=res.data.data.list
             }, err => {
-              console.log(err)
+              // console.log(err)
             })
           }, err => {
-            console.log(err)
+            // console.log(err)
           })
         } else if (nameValue == '下架') {
        //   alert("选择了下架")
@@ -371,15 +371,15 @@
               headers:{'token':localStorage.getItem('Authorization')}
             };
             axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
-             console.log(res.data.data)
+             // console.log(res.data.data)
               this.total=res.data.data.total
               this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
               this.tableData=res.data.data.list
             }, err => {
-              console.log(err)
+              // console.log(err)
             })
           }, err => {
-            console.log(err)
+            // console.log(err)
           })
         } else if (nameValue == '删除') {
           this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -408,10 +408,10 @@
                 this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
                 this.tableData=res.data.data.list
               }, err => {
-                console.log(err)
+                // console.log(err)
               })
             }, err => {
-              console.log(err)
+              // console.log(err)
             })
           }).catch(() => {
 
@@ -439,13 +439,13 @@
         headers:{'token':localStorage.getItem('Authorization')}
       };
       axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
-        console.log(res.data)
-        console.log(res.data.data.list)
+        // console.log(res.data)
+        // console.log(res.data.data.list)
         this.total=res.data.data.total
         this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
         this.tableData=res.data.data.list
       }, err => {
-        console.log(err)
+        // console.log(err)
       })
 
     }

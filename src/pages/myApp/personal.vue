@@ -121,13 +121,13 @@
       },
       methods:{
         deleteL(response, file){
-          console.log(response)
-          console.log(file.length)
-          console.log(this.limitCount)
+          // console.log(response)
+          // console.log(file.length)
+          // console.log(this.limitCount)
           this.hideUpload = file.length >= this.limitCount;
         },
         handleRemove(file, fileList) {
-          console.log(file, fileList);
+          // console.log(file, fileList);
           this.hideUpload = file.length >= this.limitCount;
 
         },

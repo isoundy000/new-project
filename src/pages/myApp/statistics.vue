@@ -264,10 +264,10 @@
         headers: {'token': localStorage.getItem('Authorization')}
       };
       axios.post(BASE_URL+'/api/app/appStatistics', qs.stringify(data), config).then(res => {
-        console.log(res.data.data)
+        // console.log(res.data.data)
         that.list = res.data.data
       }, err => {
-        console.log(err)
+        // console.log(err)
       })
 
 
@@ -344,12 +344,12 @@
         // });
         this.loading=true
         axios.post(BASE_URL+'/api/app/appInfo', qs.stringify(data), config).then(res => {
-          console.log(res.data.data)
+          // console.log(res.data.data)
           this.fengz(this.starTime,this.endTime,res.data.data.money,res.data.data.views,res.data.data.download,res.data.data.equipment,res.data.data.new)
           // loading.close();
           this.loading=false
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
       },
       recently7() {
@@ -387,8 +387,8 @@
       /*日历查询*/
       firstTime() {
         var that=this
-        console.log(this.value[0])
-        console.log(this.value[1])
+        // console.log(this.value[0])
+        // console.log(this.value[1])
         Date.prototype.format = function () {
           var s = '';
           // s+=this.getFullYear()+'-';          // 获取年份。
@@ -422,7 +422,7 @@
         };
         this.loading=true
         axios.post(BASE_URL+'/api/app/appInfo', qs.stringify(data), config).then(res => {
-            console.log(res.data.data)
+            // console.log(res.data.data)
 
             let myChart = this.$echarts.init(document.getElementById('polygonalChart'))
             myChart.setOption({
@@ -519,7 +519,7 @@
             })
           this.loading=false
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
       },
       /*折线图*/
@@ -531,7 +531,7 @@
       // },
       /*应用详情里面的下拉菜单*/
       chooseApp() {
-        console.log(this.appValue)
+        // console.log(this.appValue)
         var that=this
         let obj = {};
         obj = this.chooseAppOptions.find((item)=>{//这里的userList就是上面遍历的数据源
@@ -564,7 +564,7 @@
         };
         this.loading=true
         axios.post(BASE_URL+'/api/app/appInfo',data3, config3).then(res => {
-          console.log(res.data.data)
+          // console.log(res.data.data)
 
           let myChart = this.$echarts.init(document.getElementById('polygonalChart'))
           myChart.setOption({
@@ -656,7 +656,7 @@
           })
           this.loading=false
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
       }
     }

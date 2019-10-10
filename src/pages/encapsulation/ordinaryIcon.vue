@@ -145,9 +145,9 @@
         },
         /*上传图片成功*/
         success(response, file){
-          console.log(response.data.domain+response.data.url)
+          // console.log(response.data.domain+response.data.url)
           this.ordinaryIconLogoimg=file.response.data.url
-          console.log(this.ordinaryIconLogoimg)
+          // console.log(this.ordinaryIconLogoimg)
           this.verification()
           //this.img.push(img)
         },
@@ -157,24 +157,24 @@
           this.verification()
         },
         handleRemove(file, fileList) {
-          console.log(file, fileList);
+          // console.log(file, fileList);
           this.ordinaryIconLogoimg=''
           this.hideUpload = file.length >= this.limitCount;
           this.verification()
         },
         handlePictureCardPreview(file) {
-          console.log(file)
+          // console.log(file)
           this.dialogImageUrl = file.url;
-          console.log(this.dialogImageUrl)
+          // console.log(this.dialogImageUrl)
           this.ordinaryIconLogoimg=file.url
           this.dialogVisible = true;
         },
         /*启动页*/
         /*上传图片成功*/
         success1(response, file){
-          console.log(response.data.domain+response.data.url)
+          // console.log(response.data.domain+response.data.url)
           this.ordinaryIconStartgoimg=file.response.data.url
-          console.log(this.ordinaryIconStartgoimg)
+          // console.log(this.ordinaryIconStartgoimg)
           this.verification()
           //this.img.push(img)
         },
@@ -184,15 +184,15 @@
           this.verification()
         },
         handleRemove1(file, fileList) {
-          console.log(file, fileList);
+          // console.log(file, fileList);
           this.ordinaryIconStartgoimg=''
           this.hideUpload1 = file.length >= 1;
           this.verification()
         },
         handlePictureCardPreview1(file) {
-          console.log(file)
+          // console.log(file)
           this.dialogImageUrl1 = file.url;
-          console.log(this.dialogImageUrl1)
+          // console.log(this.dialogImageUrl1)
           this.ordinaryIconStartgoimg=file.url
           this.dialogVisible1 = true;
         },
@@ -277,7 +277,7 @@
       mounted(){
         this.newdeUrl=BASE_URL+'/api/common/upload'
         // console.log('接受值：'+this.$route.params)
-       console.log('接受值：'+JSON.stringify(this.$route.params))
+       // console.log('接受值：'+JSON.stringify(this.$route.params))
       }
     }
 </script>

@@ -360,13 +360,13 @@
         /*上传图片成功*/
         success2(response, file){
           var img=file.response.data.url
-          console.log(img)
+          // console.log(img)
           this.img.push(img)
-          console.log(this.img)
+          // console.log(this.img)
         },
         handleRemove(file, fileList) {
-          console.log('file',file); //指的是删除的哪一张图片
-          console.log('fileList',fileList);
+          // console.log('file',file); //指的是删除的哪一张图片
+          // console.log('fileList',fileList);
           var newImg=[];
           for(var i=0;i<fileList.length;i++){
             // console.log('file[i]',file[i]); //指的是删除的哪一张图片
@@ -380,16 +380,16 @@
 
 
           this.hideUpload = file.length >= this.limitCount;
-          console.log(this.img)
+          // console.log(this.img)
         },
         handlePictureCardPreview(file) {
-          console.log(file)
+          // console.log(file)
           this.dialogImageUrl = file.url;
           this.dialogVisible = true;
         },
         success(response, file, fileList) {
           this.disInput=false
-          console.log(file)
+          // console.log(file)
           this.display_name=file.response.data.app.display_name
           this.path=file.response.data.url
           this.icon=file.response.data.domain+file.response.data.app.icon
@@ -418,8 +418,8 @@
             this.choose=false
             this.choose1=true
           }
-          console.log(this.img)
-          console.log('图片上传成功的时候的img集合',file.response.data.app.img)
+          // console.log(this.img)
+          // console.log('图片上传成功的时候的img集合',file.response.data.app.img)
         },
         /*开关*/
         swich(){
@@ -446,7 +446,7 @@
             this.fufei=false
             this.fufeiInput=0
           }
-          console.log(this.fufeiInput)
+          // console.log(this.fufeiInput)
         },
         newswich2(){
           if(this.newswitchValue==true){
@@ -492,7 +492,7 @@
             headers:{'token':localStorage.getItem('Authorization')}
           };
           axios.post(BASE_URL+'/api/app/update',qs.stringify(data),config).then(res => {
-            console.log(res.data.data)
+            // console.log(res.data.data)
             loading.close();
             if(res.data.code==0){
               this.$message.error(res.data.msg);
@@ -519,7 +519,7 @@
           headers:{'token':localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL+'/api/app/appDes',qs.stringify(data),config).then(res => {
-          console.log(res.data.data)
+          // console.log(res.data.data)
           this.list=res.data.data
           this.icon=this.list.icon
           this.fourthInput=res.data.data.score_num
@@ -553,10 +553,10 @@
             this.imgList.push(newobj)
             this.img.push(this.list.imgs[i])
           }
-          console.log( this.imgList)
+          // console.log( this.imgList)
 
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
       }
     }

@@ -79,7 +79,7 @@
       methods:{
         /*上下页翻页*/
         indexChange(i){
-          console.log(i)
+          // console.log(i)
           let data={
             id:this.$route.query.id,
             page:i,
@@ -89,17 +89,17 @@
             headers:{'token':localStorage.getItem('Authorization')}
           };
           axios.post(BASE_URL+'/api/app/appPayRecord',qs.stringify(data),config).then(res => {
-            console.log(res.data)
-            console.log(res.data.data.list)
+            // console.log(res.data)
+            // console.log(res.data.data.list)
             this.total=res.data.data.total
             this.pageNumber=parseInt(Math.ceil(Number(this.total)/8))
             this.tableData=res.data.data.list
           }, err => {
-            console.log(err)
+            // console.log(err)
           })
         },
         pageChange(s){
-          console.log(s)
+          // console.log(s)
         }
       },
       mounted(){
@@ -116,12 +116,12 @@
           headers:{'token':localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL+'/api/app/appPayRecord',qs.stringify(data),config).then(res => {
-          console.log(res.data.data.list)
+          // console.log(res.data.data.list)
           this.tableData=res.data.data.list
           this.total=res.data.data.total
           this.pageNumber=parseInt(Math.ceil(Number(this.total)/8))
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
       }
     }

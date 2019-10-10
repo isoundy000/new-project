@@ -34,8 +34,11 @@
 
     <div class="Bheader">
       <div class="login_title">
-        <img class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">
-        <div class="title">
+        <div class="login_title_first">
+          <img class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">
+        </div>
+
+        <div class="title login_title_second">
           <p @click="titleName(index)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass}"
              @mouseenter="enter(index)"
              @mouseleave="leave(index)">{{list.msg}}</p>
@@ -44,7 +47,7 @@
 
 
 
-          <div class="alreadyLogin">
+          <div class="alreadyLogin login_title_third">
 
             <div @click="myappBtn" class="myappBtn" >
               <p>我的应用</p>
@@ -53,19 +56,22 @@
             <!--<el-badge :value="3" class="item">-->
               <!--<img class="tixingBtn" src="../../../static/image/superSignature/tixing@2x.png" alt="">-->
             <!--</el-badge>-->
-            <el-dropdown placement=top>
+            <div style="width: 100px">
+              <el-dropdown placement=top>
             <span class="el-dropdown-link">
               <p class="accountNumber">{{userName}}</p>
             </span>
-              <el-dropdown-menu placement=top  class="xiala" slot="dropdown">
-                <!--<el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>-->
-                <!--<el-dropdown-item>实名认证</el-dropdown-item>-->
-                <el-dropdown-item @click.native="recharge">充值</el-dropdown-item>
-                <el-dropdown-item>我的余额:￥{{money}}</el-dropdown-item>
-                <el-dropdown-item @click.native="modify">修改密码</el-dropdown-item>
-                <el-dropdown-item @click.native="signOut">退出</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
+                <el-dropdown-menu placement=top  class="xiala" slot="dropdown">
+                  <!--<el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>-->
+                  <!--<el-dropdown-item>实名认证</el-dropdown-item>-->
+                  <el-dropdown-item @click.native="recharge">充值</el-dropdown-item>
+                  <el-dropdown-item>我的余额:￥{{money}}</el-dropdown-item>
+                  <el-dropdown-item @click.native="modify">修改密码</el-dropdown-item>
+                  <el-dropdown-item @click.native="signOut">退出</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </div>
+
 
             <img class="headUrl" src="../../../static/image/superSignature/touxiang@2x.png" alt="">
 
@@ -386,18 +392,18 @@
           axios.get(BASE_URL+'/api/user/index',config).then(res => {
             this.money=res.data.data.money
             this.userName=res.data.data.username
-             console.log(res.data.data)
+             // console.log(res.data.data)
             localStorage.setItem('balance', res.data.data.money);
             localStorage.setItem('userName', res.data.data.username);
           }, err => {
-            console.log(err)
+            // console.log(err)
           })
           /*客服qq*/
           let config1 = {
             headers:{'token':localStorage.getItem('Authorization')}
           };
           axios.get(BASE_URL+'/api/index/getConfig/name/kefu',config1).then(res => {
-            console.log(res.data.data)
+            // console.log(res.data.data)
 
             for(var i=0;i<res.data.data.length;i++){
               var obj={};
@@ -405,9 +411,9 @@
               obj.newurl='http://wpa.qq.com/msgrd?v=3&uin='+res.data.data[i]+'&site=qq&menu=yes'
               that.qqValue.push(obj)
             }
-            console.log(that.qqValue)
+            // console.log(that.qqValue)
           }, err => {
-            console.log(err)
+            // console.log(err)
           })
     },
     methods: {
@@ -638,7 +644,7 @@
           headers: {'token': localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL+'/api/user/changePwd', qs.stringify(data), config).then(res => {
-          console.log(res.data.data)
+          // console.log(res.data.data)
 
           if(res.data.code==0){
             this.$message.error(res.data.msg);
@@ -656,7 +662,7 @@
           }
 
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
 
 
@@ -1291,22 +1297,24 @@
     height: 1410px;
   }
   .login_title {
-    width: 100%;
+    width: 80%;
     height: 80px;
     display: flex;
     /*justify-content: space-around;*/
     align-items: center;
+    margin: 0 auto;
   }
 
   .login_title .login_title_img {
     width: 143px;
     height: 39px;
-    margin-left: 18.8vw;
+
+    /*margin-left: 18.8vw;*/
   }
 
   .title {
     width: 500px;
-    margin-left: 5vw;
+    /*margin-left: 5vw;*/
     list-style: none;
     display: inline-flex;
     justify-content: space-around;
@@ -1373,7 +1381,7 @@
     width: 300px;
     height: 30px;
     margin-top: -5px;
-    margin-left: 20px;
+    /*margin-left: 20px;*/
     display: flex;
     align-items: center;
 
@@ -1409,7 +1417,6 @@
   .headUrl {
     width: 50px;
     height: 50px;
-    margin-left: 20px;
     cursor: pointer;
   }
 
@@ -1539,5 +1546,24 @@
     position: absolute;
     right: 10%;
     cursor: pointer;
+  }
+  .login_title_first{
+    width: 20%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  .login_title_second{
+    width: 55%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+  }
+  .login_title_third{
+    width: 25%;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
   }
 </style>

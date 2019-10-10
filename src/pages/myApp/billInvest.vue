@@ -129,27 +129,27 @@
             headers:{'token':localStorage.getItem('Authorization')}
           };
           axios.post(BASE_URL+'/api/order/orderList',qs.stringify(data),config).then(res => {
-            console.log(res.data.data.list)
+            // console.log(res.data.data.list)
             this.tableData=res.data.data.list
             this.total=res.data.data.total
             this.pageNumber=parseInt(Math.ceil(Number(this.total)/6))
           }, err => {
-            console.log(err)
+            // console.log(err)
           })
         },
         allApp(){
           this.order()
-          console.log(this.appName)
+          // console.log(this.appName)
         },
         firstTime(a){
-          console.log(a)
+          // console.log(a)
           this.starTime=a[0]
           this.endTime=a[1]
           this.order()
         },
         /*上下页翻页*/
         indexChange(i){
-          console.log(i)
+          // console.log(i)
           let data={
             keywords:this.input,
             status:this.appName,
@@ -162,17 +162,17 @@
             headers:{'token':localStorage.getItem('Authorization')}
           };
           axios.post(BASE_URL+'/api/order/orderList',qs.stringify(data),config).then(res => {
-            console.log(res.data)
-            console.log(res.data.data.list)
+            // console.log(res.data)
+            // console.log(res.data.data.list)
             this.total=res.data.data.total
             this.pageNumber=parseInt(Math.ceil(Number(this.total)/6))
             this.tableData=res.data.data.list
           }, err => {
-            console.log(err)
+            // console.log(err)
           })
         },
         pageChange(s){
-          console.log(s)
+          // console.log(s)
         }
       },
       mounted(){

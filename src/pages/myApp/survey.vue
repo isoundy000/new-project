@@ -220,11 +220,11 @@
       };
       // alert("3")
       axios.post(BASE_URL+'/api/app/appStatistics',data, config).then(res => {
-        console.log(res.data.data)
+        // console.log(res.data.data)
         // alert("4")
         this.list = res.data.data
       }, err => {
-        console.log(err)
+        // console.log(err)
       })
       // alert("5")
       /*第一个应用折线图*/
@@ -239,7 +239,7 @@
       };
       // alert("7")
       axios.post(BASE_URL+'/api/app/appList',data1, config1).then(res => {
-        console.log(res.data.data)
+        // console.log(res.data.data)
         // alert("8")
 
         for(var i=0;i<res.data.data.list.length;i++){
@@ -253,7 +253,7 @@
         that.appValue=res.data.data.list[0].name
         this.newF(6)
       }, err => {
-        console.log(err)
+        // console.log(err)
       })
 
 
@@ -270,10 +270,10 @@
         headers: {'token': localStorage.getItem('Authorization')}
       };
       axios.post(BASE_URL+'/api/app/downloadArea',data8,config8).then(res => {
-        console.log(res.data.data)
+        // console.log(res.data.data)
         this.areaName=res.data.data
       }, err => {
-        console.log(err)
+        // console.log(err)
       })
 
       var that = this
@@ -405,13 +405,13 @@
         headers: {'token': localStorage.getItem('Authorization')}
       };
       axios.post(BASE_URL+'/api/app/downloadArea',data3, config3).then(res => {
-        console.log(res.data.data)
+        // console.log(res.data.data)
         this.dituList=res.data.data
         this.$nextTick(function() {
           this.drawMap(this.dituList)
         })
       }, err => {
-        console.log(err)
+        // console.log(err)
       })
 
 
@@ -477,14 +477,14 @@
         // });
         this.loading=true
         axios.post(BASE_URL+'/api/app/appInfo', qs.stringify(data), config).then(res => {
-          console.log(res.data.data)
+          // console.log(res.data.data)
           // alert("12")
           this.fengz(this.starTime,this.endTime,res.data.data.money,res.data.data.views,res.data.data.download,res.data.data.equipment,res.data.data.new)
           // loading.close();
           this.loading=false
           // alert("13")
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
       },
       recently7() {
@@ -649,7 +649,7 @@
 
       /*地图*/
       drawMap(aa){
-        console.log(this.dituList)
+        // console.log(this.dituList)
         this.$echarts.registerMap('china', chinaJson);
         let myChart = this.$echarts.init(document.getElementById('mapChart'))
         myChart.setOption({
@@ -754,8 +754,8 @@
       /*第一个日历选中*/
       firstTime(a) {
         var that=this
-        console.log(this.value[0])
-        console.log(this.value[1])
+        // console.log(this.value[0])
+        // console.log(this.value[1])
         Date.prototype.format = function () {
           var s = '';
           // s+=this.getFullYear()+'-';          // 获取年份。
@@ -789,7 +789,7 @@
         };
         this.loading=true
         axios.post(BASE_URL+'/api/app/appInfo', qs.stringify(data), config).then(res => {
-          console.log(res.data.data)
+          // console.log(res.data.data)
 
           let myChart = this.$echarts.init(document.getElementById('polygonalChart'))
           myChart.setOption({
@@ -881,13 +881,13 @@
           })
           this.loading=false
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
       },
       /*第二个日历选中*/
       secondTime(b){
-        console.log(b[0])
-        console.log(b[1])
+        // console.log(b[0])
+        // console.log(b[1])
         let data3={
           id:'',
           start:b[0],
@@ -897,14 +897,14 @@
           headers: {'token': localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL+'/api/app/downloadArea',data3, config3).then(res => {
-          console.log(res.data.data)
+          // console.log(res.data.data)
           this.dituList=res.data.data
           this.areaName=res.data.data
           this.$nextTick(function() {
             this.drawMap(this.dituList)
           })
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
       },
       /*应用详情里面的下拉菜单*/
@@ -943,7 +943,7 @@
         };
         this.loading=true
         axios.post(BASE_URL+'/api/app/appInfo', qs.stringify(data), config).then(res => {
-          console.log(res.data.data)
+          // console.log(res.data.data)
 
           let myChart = this.$echarts.init(document.getElementById('polygonalChart'))
           myChart.setOption({
@@ -1035,16 +1035,16 @@
           })
           this.loading=false
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
       },
       /*新用户下载量*/
       downSum(){
-        console.log(this.downSumValue)
+        // console.log(this.downSumValue)
       },
       /*所有应用*/
       allApp(){
-        console.log(this.allAppValue)
+        // console.log(this.allAppValue)
         var that=this
         // let obj = {};
         // obj = this.chooseAppOptions.find((item)=>{//这里的userList就是上面遍历的数据源
@@ -1061,14 +1061,14 @@
           headers: {'token': localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL+'/api/app/downloadArea',data3, config3).then(res => {
-          console.log(res.data.data)
+          // console.log(res.data.data)
           this.dituList=res.data.data
           this.areaName=res.data.data
           this.$nextTick(function() {
             this.drawMap(this.dituList)
           })
         }, err => {
-          console.log(err)
+          // console.log(err)
         })
       }
     }
