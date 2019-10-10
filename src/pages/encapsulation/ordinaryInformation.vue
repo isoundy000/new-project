@@ -78,7 +78,7 @@
          class="informationVersionInput"
          placeholder="请输入版本号"
          v-model="informationVersionInput"
-         v-on:input="informationVersionInputChange">
+        @change="informationVersionInputChange">
        </el-input>
 
      </div>
@@ -104,7 +104,7 @@
          class="informationVersionInput"
          placeholder="请输入包名（Bundle ID）"
          v-model="informationBundleInput"
-         v-on:input="informationBundleInputChange">
+         @change="informationBundleInputChange">
        </el-input>
 
      </div>
@@ -256,16 +256,19 @@
           var Expression = /http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
           var objExp = new RegExp(Expression);
           if (objExp.test(this.informationUrlInput) == true) {
+            let data={
+              app_name:this.informationNameInput,
+              website:this.informationUrlInput,
+              platform:this.equipmentTypeNum,
+              screen:this.anyhowNum,
+              version:this.informationVersionInput,
+              bundle:this.informationBundleInput
+            }
+            localStorage.setItem('informationData', JSON.stringify(data));
             this.$router.push({
               name:'ordinaryIcon',
               params:{
                 active:1,
-                app_name:this.informationNameInput,
-                website:this.informationUrlInput,
-                platform:this.equipmentTypeNum,
-                screen:this.anyhowNum,
-                version:this.informationVersionInput,
-                bundle:this.informationBundleInput
               }
             })
 

@@ -408,16 +408,16 @@
                 </div>
 
 
-                <!--<p v-if="list.isText">{{list.text}}</p>-->
-                <p v-show="onlyText">{{list.daohangnameInput}}</p>
+                <p v-if="list.isText">{{list.text}}</p>
+                <p v-else >{{list.daohangnameInput}}</p>
               </div>
               <div class="custFooterDiv" v-for="(list,index)  in footerText2" :key="index+10">
                 <div   class="custFooterDivCircular" v-if="list.icon == ''"></div>
                 <div v-else style="width: 20px;height: 20px;display: flex;align-items: center;justify-content: center">
                   <i v-show="onlyIcon" style="font-size: 18px"  class="iconfont" :class="list.icon"></i>
                 </div>
-                <!--<p v-if="list.isText">{{list.text}}</p>-->
-                <p v-show="onlyText">{{list.daohangnameInput}}</p>
+                <p v-if="list.isText">{{list.text}}</p>
+                <p v-else >{{list.daohangnameInput}}</p>
               </div>
 
 
@@ -505,7 +505,7 @@
                     <el-input
                       maxlength="4"
                       class="daohangInput"
-                      @change="daohangnameInputEvent(index)"
+                      v-on:input="daohangnameInputEvent(index)"
                       placeholder="四个字以内"
                       v-model="list.daohangnameInput"
                     >
@@ -544,7 +544,7 @@
                     <el-input
                       maxlength="4"
                       class="daohangInput"
-                      @change="daohangnameInputEvent(index)"
+                      v-on:input="daohangnameInputEvent1(index)"
                       placeholder="四个字以内"
                       v-model="list.daohangnameInput"
                     >
@@ -823,6 +823,8 @@
     name: "ordinaryConfig",
     data() {
       return {
+        informationData:'',
+        iconData:'',
         newID:'',
         onlyNewText:true,
         newXiaLaList:[],
@@ -961,10 +963,10 @@
           {
             icon:'',
             text:'空白',
-            isText:false,
+            isText:true,
             name:'导航1',
             functionValue:'',
-            daohangnameInput:'空白',
+            daohangnameInput:'',
             isIconImg:true,
             image:''
           },
@@ -974,7 +976,7 @@
             isText:true,
             name:'导航2',
             functionValue:'',
-            daohangnameInput:'空白',
+            daohangnameInput:'',
             isIconImg:true,
             image:''
 
@@ -1202,7 +1204,7 @@
         } else {
           this.ordinaryConfigTuichu = true
           this.config4 = false
-          this.exit_status=2
+          this.exit_status=0
         }
         this.verification()
       },
@@ -1627,8 +1629,8 @@
           this.footerText[i].isIconImg=true
           this.footerText[i].functionValue=''
           this.footerText[i].icon=''
-          this.footerText[i].daohangnameInput='空白'
-
+          this.footerText[i].daohangnameInput=''
+          this.footerText[i].isText=true
         }
         console.log(this.footerText)
       },
@@ -1646,15 +1648,12 @@
       newcustomOk(){
         console.log(this.footerText2)
         //this.modal10 = false
-<<<<<<< HEAD
 
 
 
-=======
-        this.footerswitch = true
-        this.ordinaryConfigFooter = false
-        this.config10 = true
->>>>>>> origin/master
+
+
+
         this.verification()
         this.bottom_nav_type=[]
         this.bottom_nav_name=[]
@@ -1671,12 +1670,10 @@
           }else{
             for(var i=0;i<this.footerText.length;i++){
               this.modal10=false
-<<<<<<< HEAD
+
               this.config10 = true
               this.footerswitch = true
               this.ordinaryConfigFooter = false
-=======
->>>>>>> origin/master
               this.bottom_nav_type.push(this.footerText[i].functionValue)
               this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
               this.bottom_nav_icon.push(this.footerText[i].image)
@@ -1701,12 +1698,10 @@
               this.bottom_nav_icon.push(this.footerText2[i].image)
             }
             this.modal10=false
-<<<<<<< HEAD
             this.config10 = true
             this.footerswitch = true
             this.ordinaryConfigFooter = false
-=======
->>>>>>> origin/master
+
           }
         }else if(this.footerText2.length==2){
           if(this.footerText2[0].functionValue=='' ||this.footerText2[1].functionValue==''){
@@ -1726,7 +1721,6 @@
               this.bottom_nav_name.push(this.footerText2[i].daohangnameInput)
               this.bottom_nav_icon.push(this.footerText2[i].image)
             }
-<<<<<<< HEAD
             this.modal10=false
             this.config10 = true
             this.footerswitch = true
@@ -1754,8 +1748,6 @@
             this.config10 = true
             this.footerswitch = true
             this.ordinaryConfigFooter = false
-=======
-            this.modal10=false
           }
         }else if(this.footerText2.length==3){
           if(this.footerText2[0].functionValue=='' ||this.footerText2[1].functionValue=='' ||this.footerText2[2].functionValue==''){
@@ -1776,7 +1768,6 @@
               this.bottom_nav_icon.push(this.footerText2[i].image)
             }
             this.modal10=false
->>>>>>> origin/master
           }
         }
 
@@ -1800,20 +1791,26 @@
       /*自定义底栏导航名称输入框*/
       daohangnameInputEvent(index){
         if(this.footerText[index].daohangnameInput==''){
-          // alert("22")
-          this.footerText[index].daohangnameInput='空白'
+          this.footerText[index].daohangnameInput=''
+          this.footerText[index].isText=true
         }else{
-          // this.footerText[index].daohangnameInput=this.footerText[index].daohangnameInput
+          this.footerText[index].isText=false
         }
-
-        //this.textOne=false
+      },
+      daohangnameInputEvent1(index){
+        if(this.footerText2[index].daohangnameInput==''){
+          this.footerText2[index].daohangnameInput=''
+          this.footerText2[index].isText=true
+        }else{
+          this.footerText2[index].isText=false
+        }
       },
       newAddTraddBtn(){
 
 
         console.log(this.footerText2)
         var i=Number(this.footerText2.length)+3 ;
-        this.footerText2.push({name: '导航'+i,daohangnameInput:'空白',functionValue:'',isText:true,delShow:false,isIconImg:true,icon:'',image:''});
+        this.footerText2.push({name: '导航'+i,daohangnameInput:'',functionValue:'',isText:true,delShow:false,isIconImg:true,icon:'',image:'',text:'空白'});
         console.log(this.footerText2)
         if(this.footerText2.length==3){
           this.kedian=false
@@ -1873,8 +1870,23 @@
 
 
       nextStep() {
-        // alert(this.app_name)
-        // alert(this.start_time)
+        this.informationData=JSON.parse(localStorage.getItem('informationData'));
+        this.iconData=JSON.parse(localStorage.getItem('iconData'));
+        console.log(this.informationData)
+        console.log(this.iconData)
+
+        this.icon=this.iconData.icon
+        this.start_img=this.iconData.start_img
+        this.start_time=this.iconData.start_time
+        this.website=this.informationData.website
+        this.app_name=this.informationData.app_name
+        this.platform=this.informationData.platform
+        this.screen=this.informationData.screen
+        this.version=this.informationData.version
+        this.bundle=this.informationData.bundle
+
+
+
         let data={
           loading_type:this.jiazaiValue,//加载动画类型
           loading_color:this.loading_color,//加载动画颜色
@@ -2001,15 +2013,7 @@
       }
     },
     mounted() {
-      this.icon=this.$route.params.icon
-      this.start_img=this.$route.params.start_img
-      this.start_time=this.$route.params.start_time
-      this.website=this.$route.params.website
-      this.app_name=this.$route.params.app_name
-      this.platform=this.$route.params.platform
-      this.screen=this.$route.params.screen
-      this.version=this.$route.params.version
-      this.bundle=this.$route.params.bundle
+
 
 
 

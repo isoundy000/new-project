@@ -252,19 +252,16 @@
           }
         },
         nextStep(){
+          let data={
+            icon:this.ordinaryIconLogoimg,
+            start_img:this.ordinaryIconStartgoimg,
+            start_time:this.ordinaryNum,
+          }
+          localStorage.setItem('iconData', JSON.stringify(data));
           this.$router.push({
             name:'ordinaryConfig',
             params:{
               active:2,
-              icon:this.ordinaryIconLogoimg,
-              start_img:this.ordinaryIconStartgoimg,
-              start_time:this.ordinaryNum,
-              app_name:this.$route.params.app_name,
-              website:this.$route.params.website,
-              platform:this.$route.params.platform,
-              screen:this.$route.params.screen,
-              version:this.$route.params.version,
-              bundle:this.$route.params.bundle,
             }
           })
         },

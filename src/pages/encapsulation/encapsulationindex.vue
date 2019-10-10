@@ -237,24 +237,24 @@
           })
         },
         daoTitleTwo(){
-          // this.isCo=false
-          // this.isCo1=false
-          // this.isCo2=true
-          // this.isApplist=false
-          // this.isApple=false
-          // this.isPutong=true
-          // this.$router.push({
-          //   path:'/ordinary'
-          // })
+          this.isCo=false
+          this.isCo1=false
+          this.isCo2=true
+          this.isApplist=false
+          this.isApple=false
+          this.isPutong=true
+          this.$router.push({
+            path:'/ordinary'
+          })
 
 
 
 
-          this.$alert('该模块正在开发中', '提示', {
-            confirmButtonText: '确定',
-            callback: action => {
-            }
-          });
+          // this.$alert('该模块正在开发中', '提示', {
+          //   confirmButtonText: '确定',
+          //   callback: action => {
+          //   }
+          // });
 
         },
         daoTitleThree(){
