@@ -1,5 +1,5 @@
 <template>
-  <div class="ordinaryConfig">
+  <div class="ordinaryConfig" v-loading="loading">
     <!--加载动画-->
     <Modal
       v-model="modal1"
@@ -213,7 +213,7 @@
               </div>
             </div>
             <!--手机尾部-->
-            <div class="custFooter">
+            <div class="newcustFooter">
               <div class="custFooterDiv">
                 <div class="custFooterDivCircular"></div>
                 <p>首页</p>
@@ -393,7 +393,7 @@
 
             <!--手机导航栏-->
             <div class="customIconDiv111" >
-              <div class="homepage daohangtextcolor">{{titleTextinput}}</div>
+              <div class="homepage ">{{titleTextinput}}</div>
             </div>
             <!--手机尾部-->
             <p v-html="footerstyleInner"></p>
@@ -407,17 +407,24 @@
                   </div>
                 </div>
 
+                <div v-show="onlyText">
+                  <p v-if="list.isText">{{list.text}}</p>
+                  <p v-else >{{list.daohangnameInput}}</p>
+                </div>
 
-                <p v-if="list.isText">{{list.text}}</p>
-                <p v-else >{{list.daohangnameInput}}</p>
               </div>
               <div class="custFooterDiv" v-for="(list,index)  in footerText2" :key="index+10">
-                <div   class="custFooterDivCircular" v-if="list.icon == ''"></div>
-                <div v-else style="width: 20px;height: 20px;display: flex;align-items: center;justify-content: center">
-                  <i v-show="onlyIcon" style="font-size: 18px"  class="iconfont" :class="list.icon"></i>
+                <div v-show="onlyIcon">
+                  <div class="custFooterDivCircular" v-if="list.icon == ''" ></div>
+                  <div v-else style="width: 20px;height: 20px;display: flex;align-items: center;justify-content: center">
+                    <i   style="font-size: 18px"  class="iconfont" :class="list.icon"></i>
+                  </div>
                 </div>
-                <p v-if="list.isText">{{list.text}}</p>
-                <p v-else >{{list.daohangnameInput}}</p>
+                <div v-show="onlyText">
+                  <p v-if="list.isText">{{list.text}}</p>
+                  <p v-else >{{list.daohangnameInput}}</p>
+                </div>
+
               </div>
 
 
@@ -540,7 +547,7 @@
                       </el-option>
                     </el-select>
                   </div>
-                  <div class="newAddTrThree">
+                  <div class="newAddTrThree" v-if="onlyText">
                     <el-input
                       maxlength="4"
                       class="daohangInput"
@@ -551,14 +558,19 @@
                     </el-input>
 
                   </div>
-                  <div class="newAddTrFour" @click="addIcon1(index)" v-if="list.isIconImg" >
-                    <img style="width: 38px;height: 38px;" src="../../../static/image/ordinary/tianjiatubiao@2x.png" alt="">
-                  </div>
-                  <div class="newAddTrFour" @click="addIcon1(index)" v-else>
-                    <div style="width: 38px;height: 38px;border: 1px solid #E5E5E5;display: flex;align-items: center;justify-content: center">
-                      <i style="font-size: 32px" class="iconfont " :class="list.icon"></i>
+                  <div v-if="onlyIcon" class="newAddTrFour">
+                    <div   @click="addIcon1(index)" v-if="list.isIconImg" >
+                      <img style="width: 38px;height: 38px;" src="../../../static/image/ordinary/tianjiatubiao@2x.png" alt="">
+                    </div>
+                    <div  @click="addIcon1(index)" v-else>
+                      <div style="width: 38px;height: 38px;border: 1px solid #E5E5E5;display: flex;align-items: center;justify-content: center">
+                        <i style="font-size: 32px" class="iconfont " :class="list.icon"></i>
+                      </div>
                     </div>
                   </div>
+
+
+
                   <div class="newAddTrFive" >
                     <div @click="newAddTrdel(index,list.name)" v-show="list.delShow">
                       <img src="../../../static/image/ordinary/del@2x.png" alt="">
@@ -804,8 +816,7 @@
     <div class="ordinaryConfigDivMain2">
       <div style="width:100%;margin-bottom: 50px;display: flex;margin-top: 90px;">
         <p style="width: 190px" class="gonextStep" @click="previousStep">上一步</p>
-        <p style="width: 190px;margin-left: 25px" v-show="isNext" class="huinextStep" >下一步</p>
-        <p style="width: 190px" v-show="isNext1" class="lvnextStep" @click="nextStep">下一步</p>
+        <p style="width: 190px;margin-left: 25px" v-show="isNext" class="lvnextStep" @click="nextStep">下一步</p>
         <p style="width: 190px"></p>
         <p style="width: 190px"></p>
         <p style="width: 190px"></p>
@@ -823,6 +834,7 @@
     name: "ordinaryConfig",
     data() {
       return {
+        loading: false,
         informationData:'',
         iconData:'',
         newID:'',
@@ -1111,6 +1123,7 @@
         this.jiazaiswitch = true
         this.ordinaryConfigJiazai = false
         this.config1 = true
+        this.loading_status=1
         this.verification()
       },
       /*加载效果模态框里面的左边*/
@@ -1234,6 +1247,7 @@
         this.tuichuswitch = true
         this.ordinaryConfigTuichu = false
         this.config4 = true
+        this.exit_status=1
         this.verification()
       },
       /*浏览器内核开关*/
@@ -1274,6 +1288,7 @@
         this.browserswitch = true
         this.ordinaryConfigBrowser = false
         this.config5 = true
+        this.browser_status=1
         this.verification()
       },
       browserClick() {
@@ -1314,6 +1329,7 @@
             this.shareswitch = true
             this.ordinaryConfigShare = false
             this.config6 = true
+            this.share_status=1
             this.verification()
           } else {
             this.$message.error('您输入的链接地址有误');
@@ -1532,6 +1548,7 @@
         this.customswitch = true
         this.ordinaryConfigCustom = false
         this.config9 = true
+        this.nav_status=1
         this.verification()
       },
       /*自定义底栏栏开关*/
@@ -1670,7 +1687,7 @@
           }else{
             for(var i=0;i<this.footerText.length;i++){
               this.modal10=false
-
+              this.bottom_status=1
               this.config10 = true
               this.footerswitch = true
               this.ordinaryConfigFooter = false
@@ -1701,7 +1718,7 @@
             this.config10 = true
             this.footerswitch = true
             this.ordinaryConfigFooter = false
-
+            this.bottom_status=1
           }
         }else if(this.footerText2.length==2){
           if(this.footerText2[0].functionValue=='' ||this.footerText2[1].functionValue==''){
@@ -1725,6 +1742,7 @@
             this.config10 = true
             this.footerswitch = true
             this.ordinaryConfigFooter = false
+            this.bottom_status=1
           }
         }else if(this.footerText2.length==3){
           if(this.footerText2[0].functionValue=='' ||this.footerText2[1].functionValue=='' ||this.footerText2[2].functionValue==''){
@@ -1748,6 +1766,7 @@
             this.config10 = true
             this.footerswitch = true
             this.ordinaryConfigFooter = false
+            this.bottom_status=1
           }
         }else if(this.footerText2.length==3){
           if(this.footerText2[0].functionValue=='' ||this.footerText2[1].functionValue=='' ||this.footerText2[2].functionValue==''){
@@ -1768,6 +1787,7 @@
               this.bottom_nav_icon.push(this.footerText2[i].image)
             }
             this.modal10=false
+            this.bottom_status=1
           }
         }
 
@@ -1883,17 +1903,18 @@
       },
       /*表单验证*/
       verification() {
-        if (this.jiazaiswitch == true || this.xialaswitch == true || this.qingliswitch == true || this.tuichuswitch == true || this.browserswitch == true || this.shareswitch == true || this.depositswitch == true || this.zoomswitch == true || this.customswitch == true || this.footerswitch == true) {
-          this.isNext = false
-          this.isNext1 = true
-        } else {
-          this.isNext = true
-          this.isNext1 = false
-        }
+        // if (this.jiazaiswitch == true || this.xialaswitch == true || this.qingliswitch == true || this.tuichuswitch == true || this.browserswitch == true || this.shareswitch == true || this.depositswitch == true || this.zoomswitch == true || this.customswitch == true || this.footerswitch == true) {
+        //   this.isNext = false
+        //   this.isNext1 = true
+        // } else {
+        //   this.isNext = true
+        //   this.isNext1 = false
+        // }
       },
 
 
       nextStep() {
+        this.loading=true
         this.informationData=JSON.parse(localStorage.getItem('informationData'));
         this.iconData=JSON.parse(localStorage.getItem('iconData'));
         // console.log(this.informationData)
@@ -1966,6 +1987,7 @@
           // console.log(res.data.data.id)
           this.newID=res.data.data.id
           if(res.data.code==200){
+            this.loading=false
             this.$router.push({
               name: 'ordinaryChoose',
               params: {
@@ -2053,7 +2075,7 @@
 
       /*获取自定义导航栏左右功能复选框集合*/
       axios.post(BASE_URL+'/api/encapsulation/getPackagePluginTitleNav').then(res => {
-        // console.log(res.data.data)
+        console.log(res.data.data.left)
         this.leftCheckboxList=res.data.data.left
         this.rightCheckboxList=res.data.data.right
         for(var i=0;i<this.leftCheckboxList.length;i++){
@@ -2089,7 +2111,7 @@
 
       /*获取自定义icon集合*/
       axios.post(BASE_URL+'/api/encapsulation/getPackagePluginIcon').then(res => {
-        // console.log(res.data.data)
+        console.log(res.data.data)
         this.iconList=res.data.data
         for(var i=0;i<this.iconList.length;i++){
           this.iconList[i].iconColor=false
@@ -2231,11 +2253,11 @@
     width: 800px !important;
   }
   .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner {
-    background-color: #02B2B5;
-    border-color: #02B2B5;
+    background-color: #02B2B5 !important;
+    border-color: #02B2B5 !important;
   }
   .el-checkbox__input.is-checked+.el-checkbox__label {
-    color: #02B2B5;
+    color: #02B2B5 !important;
   }
   .newAddTr .el-input{
     width: 150px;
@@ -2264,7 +2286,7 @@
 
   .ordinaryConfigDivMain2 {
     width: 87%;
-    margin: 20px auto;
+    margin: 20px auto 0 auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
@@ -2625,6 +2647,7 @@
     background-size: 266px 566px;
     background-position:center center;
     background-color: #EEEEEE;
+    position: relative;
   }
   .footerDivMainSmall1{
     width: 450px;
@@ -2814,13 +2837,24 @@
   .customDivMainselsectDiv11Check {
     width: auto;
   }
-
+.newcustFooter{
+  width:68.5%;
+  margin: 0 auto;
+  height: 50px;
+  display: flex;
+  justify-content: space-around;
+  position: absolute;
+  top: 77%;
+  background-color: #02B2B5;
+}
   .custFooter{
-    width: 98%;
-    margin: 340px auto 0 auto;
+    width:21.8%;
+    margin: 0 auto;
     height: 50px;
     display: flex;
     justify-content: space-around;
+    position: absolute;
+    top: 70%;
   }
   .custFooterDiv{
     display: flex;

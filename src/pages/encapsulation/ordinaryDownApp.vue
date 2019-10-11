@@ -59,7 +59,7 @@ border-radius:4px;">普通封装版</p>
         name: "ordinaryDownApp",
       data(){
         return{
-          countDown:80,
+          countDown:120,
           isDownSize:'',
           isDownUrl:'',
           newnewID:'',
@@ -122,7 +122,7 @@ border-radius:4px;">普通封装版</p>
                 headers: {'token': localStorage.getItem('Authorization')}
               };
               axios.post(BASE_URL + '/api/encapsulation/info',data, config).then(res => {
-                // console.log(res.data)
+                console.log(res.data)
                 if(res.data.code==200){
                   that.mobileconfig=res.data.data.mobileconfig
                   that.isDownSize = res.data.data.filesize   //
@@ -200,7 +200,7 @@ border-radius:4px;">普通封装版</p>
     margin-left: 10px;
   }
   .anzhuang{
-    height: 100px;
+    /*height: 100px;*/
     background-color: white;
   }
   .anzhuang div{

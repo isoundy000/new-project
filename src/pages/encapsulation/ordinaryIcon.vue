@@ -81,7 +81,7 @@
       <p class="selectFirstDiv_smallP">4秒</p>
     </div>
   </div>
-  <div class="ordinaryIconDiv" style="height: 150px;" >
+  <div class="ordinaryIconDiv"  >
     <p class="ordinaryIconDivP"></p>
     <div style="width: 492px;margin-bottom: 50px;display: flex;margin-top: 90px">
       <p  class="gonextStep" @click="previousStep" >上一步</p>
