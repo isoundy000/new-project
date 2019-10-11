@@ -23,7 +23,7 @@
       </el-dialog>
       <p style="width: 300px;font-size: 14px;font-weight: bold;margin-left: 15px">
         200*200尺寸，小于1M，
-        PNG、JPG格式
+        PNG格式
       </p>
     </div>
   </div>
@@ -130,12 +130,12 @@
       },
       methods:{
         beforeAvatarUpload(file) {
-          const isJPG = (file.type === 'image/jpeg'||file.type === 'image/png');
+          const isJPG = (file.type === 'image/png');
 
           const isLt2M = file.size / 1024 / 1024 < 1;
 
           if (!isJPG) {
-            this.$message.error('上传图标图片只能是 JPG和PNG格式!');
+            this.$message.error('上传图标图片只能是PNG格式!');
           }
 
           if (!isLt2M) {

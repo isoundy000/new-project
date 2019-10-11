@@ -337,7 +337,7 @@
           };
           axios.post(BASE_URL+'/api/encapsulation/info',qs.stringify(data),config).then(res => {
             if(res.data.code==200){
-              // console.log(res.data)
+              console.log(res.data.data)
               if(res.data.data.status== 1){
                 this.statusData='已完成'
               }else if(res.data.data.status== 0){
@@ -396,7 +396,7 @@
           };
           axios.post(BASE_URL+'/api/encapsulation/info',qs.stringify(data),config).then(res => {
             if(res.data.code==200){
-              // console.log(res.data)
+               console.log(res.data.data)
               if(res.data.data.status== 1){
                 this.statusData='已完成'
               }else if(res.data.data.status== 0){
@@ -404,6 +404,7 @@
               }else if(res.data.data.status== -1){
                 this.statusData='已删除'
               }
+              this.mobileConfig=res.data.data.mobileconfig
               this.iconData=res.data.data.icon
               this.appnameData=res.data.data.name
               this.versionData=res.data.data.version_code

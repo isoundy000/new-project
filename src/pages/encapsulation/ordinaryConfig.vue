@@ -640,7 +640,7 @@
     <div class="ordinaryConfigDiv">
       <p style="padding-left: 50px; margin: 0 auto;width: 87%;font-size: 14px;font-weight: bold">基础配件</p>
       <div class="ordinaryConfigDivMain">
-        <div @click="jiazanClick" class="ordinaryConfigDivMainSmall" :class="{ 'configColor': config1 }">
+        <div @click="jiazanClick" @mouseenter="jiazanenter()"  @mouseleave="jiazanleave()" class="ordinaryConfigDivMainSmall" :class="{ 'configColor': config1 }">
           <div class="ordinaryConfigDivMainSmallLeft">
             <img v-if="ordinaryConfigJiazai" src="../../../static/image/ordinary/jiazai_n.png" alt="">
             <img v-else src="../../../static/image/ordinary/jiazai_s.png" alt="">
@@ -656,7 +656,7 @@
             </el-switch>
           </div>
         </div>
-        <div @click="xialaClick" class="ordinaryConfigDivMainSmall "
+        <div @click="xialaClick" @mouseenter="xialaenter()"  @mouseleave="xialaleave()" class="ordinaryConfigDivMainSmall "
              :class="{ 'configColor': config2 }">
           <div class="ordinaryConfigDivMainSmallLeft">
             <img v-if="ordinaryConfigXiala" src="../../../static/image/ordinary/xiala_n.png" alt="">
@@ -673,7 +673,7 @@
             </el-switch>
           </div>
         </div>
-        <div @click="qingliClick" class="ordinaryConfigDivMainSmall "
+        <div @click="qingliClick" @mouseenter="qinglienter()"  @mouseleave="qinglileave()" class="ordinaryConfigDivMainSmall "
              :class="{ 'configColor': config3 }">
           <div class="ordinaryConfigDivMainSmallLeft">
             <img v-if="ordinaryConfigQingli" src="../../../static/image/ordinary/qingli_n.png" alt="">
@@ -690,7 +690,7 @@
             </el-switch>
           </div>
         </div>
-        <div @click="tuichuClick" class="ordinaryConfigDivMainSmall "
+        <div @click="tuichuClick" @mouseenter="tuichuenter()"  @mouseleave="tuichuleave()" class="ordinaryConfigDivMainSmall "
              :class="{ 'configColor': config4 }">
           <div class="ordinaryConfigDivMainSmallLeft">
             <img v-if="ordinaryConfigTuichu" src="../../../static/image/ordinary/tuichu_n.png" alt="">
@@ -707,7 +707,7 @@
             </el-switch>
           </div>
         </div>
-        <div @click="browserClick" class="ordinaryConfigDivMainSmall "
+        <div @click="browserClick" @mouseenter="browserenter()"  @mouseleave="browserleave()" class="ordinaryConfigDivMainSmall "
              :class="{ 'configColor': config5 }">
           <div class="ordinaryConfigDivMainSmallLeft">
             <img v-if="ordinaryConfigBrowser" src="../../../static/image/ordinary/liulanqi_n.png" alt="">
@@ -729,7 +729,7 @@
     <div class="ordinaryConfigDiv">
       <p style=" padding-left: 50px;margin: 0 auto;width: 87%;font-size: 14px;font-weight: bold">拓展配件</p>
       <div class="ordinaryConfigDivMain">
-        <div @click="shareClick" class="ordinaryConfigDivMainSmall" :class="{ 'configColor': config6 }">
+        <div @click="shareClick" @mouseenter="shareenter()"  @mouseleave="shareleave()" class="ordinaryConfigDivMainSmall" :class="{ 'configColor': config6 }">
           <div class="ordinaryConfigDivMainSmallLeft">
             <img v-if="ordinaryConfigShare" src="../../../static/image/ordinary/fenxiang_n.png" alt="">
             <img v-else src="../../../static/image/ordinary/fenxiang_s.png" alt="">
@@ -745,7 +745,7 @@
             </el-switch>
           </div>
         </div>
-        <div @click="depositClick" class="ordinaryConfigDivMainSmall "
+        <div @click="depositClick" @mouseenter="depositenter()"  @mouseleave="depositleave()" class="ordinaryConfigDivMainSmall "
              :class="{ 'configColor': config7}">
           <div class="ordinaryConfigDivMainSmallLeft">
             <img v-if="ordinaryConfigDeposit" src="../../../static/image/ordinary/zuntu_n.png" alt="">
@@ -762,7 +762,7 @@
             </el-switch>
           </div>
         </div>
-        <div @click="zoomClick" class="ordinaryConfigDivMainSmall "
+        <div @click="zoomClick" @mouseenter="zoomenter()"  @mouseleave="zoomleave()" class="ordinaryConfigDivMainSmall "
              :class="{ 'configColor': config8}">
           <div class="ordinaryConfigDivMainSmallLeft">
             <img v-if="ordinaryConfigZoom" src="../../../static/image/ordinary/suofang_n.png" alt="">
@@ -779,7 +779,7 @@
             </el-switch>
           </div>
         </div>
-        <div @click="customClick" class="ordinaryConfigDivMainSmall " :class="{ 'configColor': config9}">
+        <div @click="customClick" @mouseenter="customenter()"  @mouseleave="customleave()" class="ordinaryConfigDivMainSmall " :class="{ 'configColor': config9}">
           <div class="ordinaryConfigDivMainSmallLeft">
             <img v-if="ordinaryConfigCustom" src="../../../static/image/ordinary/daohang_n.png" alt="">
             <img v-else src="../../../static/image/ordinary/daohang_s.png" alt="">
@@ -795,7 +795,7 @@
             </el-switch>
           </div>
         </div>
-        <div @click="footerClick" class="ordinaryConfigDivMainSmall " :class="{ 'configColor': config10}">
+        <div @click="footerClick" @mouseenter="footerenter()"  @mouseleave="footerleave()" class="ordinaryConfigDivMainSmall " :class="{ 'configColor': config10}">
           <div class="ordinaryConfigDivMainSmallLeft">
             <img v-if="ordinaryConfigFooter" src="../../../static/image/ordinary/dilan_n.png" alt="">
             <img v-else src="../../../static/image/ordinary/dilan_s.png" alt="">
@@ -1100,6 +1100,66 @@
       }
     },
     methods: {
+      jiazanenter(){
+        this.config1=true
+      },
+      jiazanleave(){
+        this.config1=false
+      },
+      xialaenter(){
+        this.config2=true
+      },
+      xialaleave(){
+        this.config2=false
+      },
+      qinglienter(){
+        this.config3=true
+      },
+      qinglileave(){
+        this.config3=false
+      },
+      tuichuenter(){
+        this.config4=true
+      },
+      tuichuleave(){
+        this.config4=false
+      },
+      browserenter(){
+        this.config5=true
+      },
+      browserleave(){
+        this.config5=false
+      },
+      shareenter(){
+        this.config6=true
+      },
+      shareleave(){
+        this.config6=false
+      },
+      depositenter(){
+        this.config7=true
+      },
+      depositleave(){
+        this.config7=false
+      },
+      zoomenter(){
+        this.config8=true
+      },
+      zoomleave(){
+        this.config8=false
+      },
+      customenter(){
+        this.config9=true
+      },
+      customleave(){
+        this.config9=false
+      },
+      footerenter(){
+        this.config10=true
+      },
+      footerleave(){
+        this.config10=false
+      },
       /*加载效果开关*/
       jiazaiswichChange() {
         if (this.jiazaiswitch == true) {
@@ -2302,6 +2362,7 @@
     border: 1px solid #e1e1e1;
     position: relative;
     z-index: 1;
+    cursor: pointer;
   }
 
   .ordinaryConfigRight {
