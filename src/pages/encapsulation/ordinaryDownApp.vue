@@ -35,9 +35,26 @@ border-radius:4px;">普通封装版</p>
         <p class="downPFirstP">下载链接： </p>
         <p class="downPFirstUrl ">{{isDownUrl}}</p>
       </div>
+      <div class="tishiDIV" v-if="isQianming">
+        <img src="../../../static/image/encapsulation/tishi@2x.png" alt="">
+        <div>
+          <p>下载封装好的苹果APP安装后无法直接使用，必须使用超级签名或企业签名进行签名之后才能正常使用</p>
+          <p>
+            操作流程：①点击立即签名→②上传完成后，填写信息→③选择签名套餐→④签名完成后，下载签名包。</p>
+        </div>
+      </div>
+
+
+
+
+
       <div style="display: flex;justify-content: center">
         <div class="anzhuang" @click="xiazaiLoad" style="margin-right: 15px">
-          <div>下载封装包</div>
+
+          <div style="display: flex;align-items: center;justify-content: center">
+            <img style="width: 20px;height: 18px;margin-right: 5px" src="../../../static/image/encapsulation/xiazai@2x.png" alt="">
+            <p>下载封装包</p>
+          </div>
         </div>
         <div class="anzhuang" @click="qianming" v-if="isQianming">
           <div>立即签名</div>
@@ -64,14 +81,17 @@ border-radius:4px;">普通封装版</p>
           isDownUrl:'',
           newnewID:'',
           isQianming:false,
-          mobileconfig:''
+          mobileconfig:'',
+          status:''
         }
       },
       methods:{
         xiazaiLoad(){
-          if(this.mobileconfig==''){
+          if(this.status==0){
             this.$message.error('正在封装中，请稍等');
-          }else{
+          }else if(this.status==-1){
+            this.$message.error('已删除');
+          }else if(this.status==1){
             window.location.href=this.mobileconfig
             this.$router.push({
               name:'applist',
@@ -79,10 +99,58 @@ border-radius:4px;">普通封装版</p>
                 id:2
               }
             })
+          }else if(this.status==2){
+            this.$message.error('封装失败');
           }
+
+
+
 
         },
         qianming(){
+          if(this.status==0){
+            this.$message.error('正在封装中，请稍等');
+          }else if(this.status==-1){
+            this.$message.error('已删除');
+          }else if(this.status==1){
+            const h = this.$createElement;
+            this.$msgbox({
+              message: h('p', null, [
+                h('p', { style: ' text-align: center;font-weight:bold' }, '服务使用条款 '),
+                h('p', { style: 'color: grey;margin-top:30px' }, '请在使用iOS 超级签名服务前，仔细阅读并充分理解以下内容及条款：'),
+                h('p', { style: 'color: red;text-indent:2em;text-align:justify;text-justify:inter-ideograph;' }, '您知晓并同意，由我们提供软件签名的技术，您购买此服务是用于您的 App 的内部测试之用途，且需符合苹果iOS 超级签名的所有规定，否则，因此而产生的法律后果由您自行全部承担；'),
+                h('p', { style: 'color: red;text-indent:2em;text-align:justify;text-justify:inter-ideograph;' }, '您知晓并同意，苹果iOS 超级签名因受到苹果政策影响，在未来可能会存在被苹果撤销从而导致应用出现无法安装、或已经安装的应用无法打开等情况，您同意并愿意独立承担该风险以及该风险导致的后续一切损失，并接受我们在后续可能为此而做出任何补偿等措施；'),
+                h('p', { style: 'color: red;text-indent:2em;text-align:justify;text-justify:inter-ideograph;' }, '您知晓并同意，我们提供签名技术来供您下载您的应用，因您对外分发导致App被滥用、恶意下载、刷量而造成的损失，我们仅提供必要的数据支持和反作弊服务，您同意并愿意独立承担因对外分发和推广而导致的风险和风险后续的一切损失。'),
+                h('p', { style: 'color: grey' }, '您已仔细阅读并同意《超级签名服务协议》中的全部内容。'),
+                h('p', { style: 'color: grey' }, '点击“我同意”代表您已仔细阅读并同意以上所有内容'),
+              ]),
+              showCancelButton: true,
+              closeOnClickModal:false,
+              confirmButtonText: '我同意',
+              cancelButtonText: '不同意',
+              beforeClose: (action, instance, done) => {
+                if (action === 'confirm') {
+                  done();
+                  this.$router.push({
+                    name:'myApp',
+                    params: {
+                      newid: 1
+                    }
+                  })
+                } else {
+                  done();
+
+                }
+              }
+            })
+          }else if(this.status==2){
+            this.$message.error('封装失败');
+          }
+
+
+
+
+
 
         },
         // nextStep(){
@@ -124,6 +192,7 @@ border-radius:4px;">普通封装版</p>
               axios.post(BASE_URL + '/api/encapsulation/info',data, config).then(res => {
                 console.log(res.data)
                 if(res.data.code==200){
+                  that.status=res.data.data.status
                   that.mobileconfig=res.data.data.mobileconfig
                   that.isDownSize = res.data.data.filesize   //
                   that.isDownUrl = window.location.hostname + '/#/down?tag=' + res.data.data.tag
@@ -231,5 +300,19 @@ border-radius:4px;">普通封装版</p>
     position: absolute;
     right: 5%;
     cursor: pointer;
+  }
+  .tishiDIV{
+    width: 65%;
+    height: 90px;
+    margin: 40px auto 0 auto;
+    color: #333333;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border: 1px solid #E5E5E5;
+  }
+  .tishiDIV img{
+    width: 29px;
+    height: 29px;
   }
 </style>

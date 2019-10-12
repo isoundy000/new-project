@@ -302,7 +302,8 @@
             urlData:'',
             passData:'',
             downData:'',
-            mobileConfig:''
+            mobileConfig:'',
+            status:''
           }
       },
       components: {
@@ -382,9 +383,19 @@
 
         },
         downLOAD(){
+          if(this.status==0){
+            this.$message.error('正在封装中，请稍等');
+          }else if(this.status==-1){
+            this.$message.error('已删除');
+          }else if(this.status==1){
+            window.location.href=this.mobileConfig
+          }else if(this.status==2){
+            this.$message.error('封装失败');
+          }
 
-          // alert(this.mobileConfig)
-          window.location.href=this.mobileConfig
+
+
+
         },
         chakanClick(row,id){
           this.newid=row.id
@@ -404,6 +415,7 @@
               }else if(res.data.data.status== -1){
                 this.statusData='已删除'
               }
+              this.status=res.data.data.status
               this.mobileConfig=res.data.data.mobileconfig
               this.iconData=res.data.data.icon
               this.appnameData=res.data.data.name

@@ -1736,120 +1736,276 @@
         this.bottom_nav_name=[]
         this.bottom_nav_icon=[]
 
-        /*判断有没有新增的导航选项*/
-        if(this.footerText2.length==0){ //没有新增的选项只有前两个
-          if(this.footerText[0].functionValue==''||this.footerText[1].functionValue==''){
-            this.$message.error('请选择导航功能');
-          }else if(this.footerText[0].daohangnameInput=='空白'||this.footerText[1].daohangnameInput=='空白' ||this.footerText[0].daohangnameInput==''||this.footerText[1].daohangnameInput==''){
-            this.$message.error('请填写导航名称');
-          }else if(this.footerText[0].image==''||this.footerText[1].image==''){
-            this.$message.error('请选择导航图标');
-          }else{
-            for(var i=0;i<this.footerText.length;i++){
+        if(this.onlyText==true && this.onlyIcon==true){
+          /*判断有没有新增的导航选项*/
+          if(this.footerText2.length==0){ //没有新增的选项只有前两个
+            if(this.footerText[0].functionValue==''||this.footerText[1].functionValue==''){
+              this.$message.error('请选择导航功能');
+            }else if(this.footerText[0].daohangnameInput=='空白'||this.footerText[1].daohangnameInput=='空白' ||this.footerText[0].daohangnameInput==''||this.footerText[1].daohangnameInput==''){
+              this.$message.error('请填写导航名称');
+            }else if(this.footerText[0].image==''||this.footerText[1].image==''){
+              this.$message.error('请选择导航图标');
+            }else{
+              for(var i=0;i<this.footerText.length;i++){
+                this.modal10=false
+                this.bottom_status=1
+                this.config10 = true
+                this.footerswitch = true
+                this.ordinaryConfigFooter = false
+                this.bottom_nav_type.push(this.footerText[i].functionValue)
+                this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
+                this.bottom_nav_icon.push(this.footerText[i].image)
+              }
+            }
+          }else if(this.footerText2.length==1){
+            if(this.footerText2[0].functionValue==''){
+              this.$message.error('请选择导航功能');
+            }else if(this.footerText2[0].daohangnameInput=='空白' || this.footerText2[0].daohangnameInput==''){
+              this.$message.error('请填写导航名称');
+            }else if(this.footerText2[0].image==''){
+              this.$message.error('请选择导航图标');
+            }else{
+              for(var i=0;i<this.footerText.length;i++){
+                this.bottom_nav_type.push(this.footerText[i].functionValue)
+                this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
+                this.bottom_nav_icon.push(this.footerText[i].image)
+              }
+              for(var i=0;i<this.footerText2.length;i++){
+                this.bottom_nav_type.push(this.footerText2[i].functionValue)
+                this.bottom_nav_name.push(this.footerText2[i].daohangnameInput)
+                this.bottom_nav_icon.push(this.footerText2[i].image)
+              }
               this.modal10=false
-              this.bottom_status=1
               this.config10 = true
               this.footerswitch = true
               this.ordinaryConfigFooter = false
-              this.bottom_nav_type.push(this.footerText[i].functionValue)
-              this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
-              this.bottom_nav_icon.push(this.footerText[i].image)
+              this.bottom_status=1
+            }
+          }else if(this.footerText2.length==2){
+            if(this.footerText2[0].functionValue=='' ||this.footerText2[1].functionValue==''){
+              this.$message.error('请选择导航功能');
+            }else if(this.footerText2[0].daohangnameInput=='空白' || this.footerText2[0].daohangnameInput=='' || this.footerText2[1].daohangnameInput=='空白' || this.footerText2[1].daohangnameInput==''){
+              this.$message.error('请填写导航名称');
+            }else if(this.footerText2[0].image=='' || this.footerText2[1].image==''){
+              this.$message.error('请选择导航图标');
+            }else{
+              for(var i=0;i<this.footerText.length;i++){
+                this.bottom_nav_type.push(this.footerText[i].functionValue)
+                this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
+                this.bottom_nav_icon.push(this.footerText[i].image)
+              }
+              for(var i=0;i<this.footerText2.length;i++){
+                this.bottom_nav_type.push(this.footerText2[i].functionValue)
+                this.bottom_nav_name.push(this.footerText2[i].daohangnameInput)
+                this.bottom_nav_icon.push(this.footerText2[i].image)
+              }
+              this.modal10=false
+              this.config10 = true
+              this.footerswitch = true
+              this.ordinaryConfigFooter = false
+              this.bottom_status=1
+            }
+          }else if(this.footerText2.length==3){
+            if(this.footerText2[0].functionValue=='' ||this.footerText2[1].functionValue=='' ||this.footerText2[2].functionValue==''){
+              this.$message.error('请选择导航功能');
+            }else if(this.footerText2[0].daohangnameInput=='空白' || this.footerText2[0].daohangnameInput=='' || this.footerText2[1].daohangnameInput=='空白' || this.footerText2[1].daohangnameInput=='' || this.footerText2[2].daohangnameInput=='空白' || this.footerText2[2].daohangnameInput==''){
+              this.$message.error('请填写导航名称');
+            }else if(this.footerText2[0].image=='' || this.footerText2[1].image=='' || this.footerText2[2].image==''){
+              this.$message.error('请选择导航图标');
+            }else{
+              for(var i=0;i<this.footerText.length;i++){
+                this.bottom_nav_type.push(this.footerText[i].functionValue)
+                this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
+                this.bottom_nav_icon.push(this.footerText[i].image)
+              }
+              for(var i=0;i<this.footerText2.length;i++){
+                this.bottom_nav_type.push(this.footerText2[i].functionValue)
+                this.bottom_nav_name.push(this.footerText2[i].daohangnameInput)
+                this.bottom_nav_icon.push(this.footerText2[i].image)
+              }
+              this.modal10=false
+              this.config10 = true
+              this.footerswitch = true
+              this.ordinaryConfigFooter = false
+              this.bottom_status=1
             }
           }
-        }else if(this.footerText2.length==1){
-          if(this.footerText2[0].functionValue==''){
-            this.$message.error('请选择导航功能');
-          }else if(this.footerText2[0].daohangnameInput=='空白' || this.footerText2[0].daohangnameInput==''){
-            this.$message.error('请填写导航名称');
-          }else if(this.footerText2[0].image==''){
-            this.$message.error('请选择导航图标');
-          }else{
-            for(var i=0;i<this.footerText.length;i++){
-              this.bottom_nav_type.push(this.footerText[i].functionValue)
-              this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
-              this.bottom_nav_icon.push(this.footerText[i].image)
+        }else if(this.onlyText==true && this.onlyIcon==false){
+          if(this.footerText2.length==0){ //没有新增的选项只有前两个
+            if(this.footerText[0].functionValue==''||this.footerText[1].functionValue==''){
+              this.$message.error('请选择导航功能');
+            }else if(this.footerText[0].daohangnameInput=='空白'||this.footerText[1].daohangnameInput=='空白' ||this.footerText[0].daohangnameInput==''||this.footerText[1].daohangnameInput==''){
+              this.$message.error('请填写导航名称');
+            }else{
+              for(var i=0;i<this.footerText.length;i++){
+                this.modal10=false
+                this.bottom_status=1
+                this.config10 = true
+                this.footerswitch = true
+                this.ordinaryConfigFooter = false
+                this.bottom_nav_type.push(this.footerText[i].functionValue)
+                this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
+                this.bottom_nav_icon.push(this.footerText[i].image)
+              }
             }
-            for(var i=0;i<this.footerText2.length;i++){
-              this.bottom_nav_type.push(this.footerText2[i].functionValue)
-              this.bottom_nav_name.push(this.footerText2[i].daohangnameInput)
-              this.bottom_nav_icon.push(this.footerText2[i].image)
+          }else if(this.footerText2.length==1){
+            if(this.footerText2[0].functionValue==''){
+              this.$message.error('请选择导航功能');
+            }else if(this.footerText2[0].daohangnameInput=='空白' || this.footerText2[0].daohangnameInput==''){
+              this.$message.error('请填写导航名称');
+            }else{
+              for(var i=0;i<this.footerText.length;i++){
+                this.bottom_nav_type.push(this.footerText[i].functionValue)
+                this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
+                this.bottom_nav_icon.push(this.footerText[i].image)
+              }
+              for(var i=0;i<this.footerText2.length;i++){
+                this.bottom_nav_type.push(this.footerText2[i].functionValue)
+                this.bottom_nav_name.push(this.footerText2[i].daohangnameInput)
+                this.bottom_nav_icon.push(this.footerText2[i].image)
+              }
+              this.modal10=false
+              this.config10 = true
+              this.footerswitch = true
+              this.ordinaryConfigFooter = false
+              this.bottom_status=1
             }
-            this.modal10=false
-            this.config10 = true
-            this.footerswitch = true
-            this.ordinaryConfigFooter = false
-            this.bottom_status=1
+          }else if(this.footerText2.length==2){
+            if(this.footerText2[0].functionValue=='' ||this.footerText2[1].functionValue==''){
+              this.$message.error('请选择导航功能');
+            }else if(this.footerText2[0].daohangnameInput=='空白' || this.footerText2[0].daohangnameInput=='' || this.footerText2[1].daohangnameInput=='空白' || this.footerText2[1].daohangnameInput==''){
+              this.$message.error('请填写导航名称');
+            }else{
+              for(var i=0;i<this.footerText.length;i++){
+                this.bottom_nav_type.push(this.footerText[i].functionValue)
+                this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
+                this.bottom_nav_icon.push(this.footerText[i].image)
+              }
+              for(var i=0;i<this.footerText2.length;i++){
+                this.bottom_nav_type.push(this.footerText2[i].functionValue)
+                this.bottom_nav_name.push(this.footerText2[i].daohangnameInput)
+                this.bottom_nav_icon.push(this.footerText2[i].image)
+              }
+              this.modal10=false
+              this.config10 = true
+              this.footerswitch = true
+              this.ordinaryConfigFooter = false
+              this.bottom_status=1
+            }
+          }else if(this.footerText2.length==3){
+            if(this.footerText2[0].functionValue=='' ||this.footerText2[1].functionValue=='' ||this.footerText2[2].functionValue==''){
+              this.$message.error('请选择导航功能');
+            }else if(this.footerText2[0].daohangnameInput=='空白' || this.footerText2[0].daohangnameInput=='' || this.footerText2[1].daohangnameInput=='空白' || this.footerText2[1].daohangnameInput=='' || this.footerText2[2].daohangnameInput=='空白' || this.footerText2[2].daohangnameInput==''){
+              this.$message.error('请填写导航名称');
+            }else{
+              for(var i=0;i<this.footerText.length;i++){
+                this.bottom_nav_type.push(this.footerText[i].functionValue)
+                this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
+                this.bottom_nav_icon.push(this.footerText[i].image)
+              }
+              for(var i=0;i<this.footerText2.length;i++){
+                this.bottom_nav_type.push(this.footerText2[i].functionValue)
+                this.bottom_nav_name.push(this.footerText2[i].daohangnameInput)
+                this.bottom_nav_icon.push(this.footerText2[i].image)
+              }
+              this.modal10=false
+              this.config10 = true
+              this.footerswitch = true
+              this.ordinaryConfigFooter = false
+              this.bottom_status=1
+            }
           }
-        }else if(this.footerText2.length==2){
-          if(this.footerText2[0].functionValue=='' ||this.footerText2[1].functionValue==''){
-            this.$message.error('请选择导航功能');
-          }else if(this.footerText2[0].daohangnameInput=='空白' || this.footerText2[0].daohangnameInput=='' || this.footerText2[1].daohangnameInput=='空白' || this.footerText2[1].daohangnameInput==''){
-            this.$message.error('请填写导航名称');
-          }else if(this.footerText2[0].image=='' || this.footerText2[1].image==''){
-            this.$message.error('请选择导航图标');
-          }else{
-            for(var i=0;i<this.footerText.length;i++){
-              this.bottom_nav_type.push(this.footerText[i].functionValue)
-              this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
-              this.bottom_nav_icon.push(this.footerText[i].image)
+        }else if(this.onlyIcon==true && this.onlyText==false){
+          /*判断有没有新增的导航选项*/
+          if(this.footerText2.length==0){ //没有新增的选项只有前两个
+            if(this.footerText[0].functionValue==''||this.footerText[1].functionValue==''){
+              this.$message.error('请选择导航功能');
+            }else if(this.footerText[0].image==''||this.footerText[1].image==''){
+              this.$message.error('请选择导航图标');
+            }else{
+              for(var i=0;i<this.footerText.length;i++){
+                this.modal10=false
+                this.bottom_status=1
+                this.config10 = true
+                this.footerswitch = true
+                this.ordinaryConfigFooter = false
+                this.bottom_nav_type.push(this.footerText[i].functionValue)
+                this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
+                this.bottom_nav_icon.push(this.footerText[i].image)
+              }
             }
-            for(var i=0;i<this.footerText2.length;i++){
-              this.bottom_nav_type.push(this.footerText2[i].functionValue)
-              this.bottom_nav_name.push(this.footerText2[i].daohangnameInput)
-              this.bottom_nav_icon.push(this.footerText2[i].image)
+          }else if(this.footerText2.length==1){
+            if(this.footerText2[0].functionValue==''){
+              this.$message.error('请选择导航功能');
+            }else if(this.footerText2[0].image==''){
+              this.$message.error('请选择导航图标');
+            }else{
+              for(var i=0;i<this.footerText.length;i++){
+                this.bottom_nav_type.push(this.footerText[i].functionValue)
+                this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
+                this.bottom_nav_icon.push(this.footerText[i].image)
+              }
+              for(var i=0;i<this.footerText2.length;i++){
+                this.bottom_nav_type.push(this.footerText2[i].functionValue)
+                this.bottom_nav_name.push(this.footerText2[i].daohangnameInput)
+                this.bottom_nav_icon.push(this.footerText2[i].image)
+              }
+              this.modal10=false
+              this.config10 = true
+              this.footerswitch = true
+              this.ordinaryConfigFooter = false
+              this.bottom_status=1
             }
-            this.modal10=false
-            this.config10 = true
-            this.footerswitch = true
-            this.ordinaryConfigFooter = false
-            this.bottom_status=1
-          }
-        }else if(this.footerText2.length==3){
-          if(this.footerText2[0].functionValue=='' ||this.footerText2[1].functionValue=='' ||this.footerText2[2].functionValue==''){
-            this.$message.error('请选择导航功能');
-          }else if(this.footerText2[0].daohangnameInput=='空白' || this.footerText2[0].daohangnameInput=='' || this.footerText2[1].daohangnameInput=='空白' || this.footerText2[1].daohangnameInput=='' || this.footerText2[2].daohangnameInput=='空白' || this.footerText2[2].daohangnameInput==''){
-            this.$message.error('请填写导航名称');
-          }else if(this.footerText2[0].image=='' || this.footerText2[1].image=='' || this.footerText2[2].image==''){
-            this.$message.error('请选择导航图标');
-          }else{
-            for(var i=0;i<this.footerText.length;i++){
-              this.bottom_nav_type.push(this.footerText[i].functionValue)
-              this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
-              this.bottom_nav_icon.push(this.footerText[i].image)
+          }else if(this.footerText2.length==2){
+            if(this.footerText2[0].functionValue=='' ||this.footerText2[1].functionValue==''){
+              this.$message.error('请选择导航功能');
+            }else if(this.footerText2[0].image=='' || this.footerText2[1].image==''){
+              this.$message.error('请选择导航图标');
+            }else{
+              for(var i=0;i<this.footerText.length;i++){
+                this.bottom_nav_type.push(this.footerText[i].functionValue)
+                this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
+                this.bottom_nav_icon.push(this.footerText[i].image)
+              }
+              for(var i=0;i<this.footerText2.length;i++){
+                this.bottom_nav_type.push(this.footerText2[i].functionValue)
+                this.bottom_nav_name.push(this.footerText2[i].daohangnameInput)
+                this.bottom_nav_icon.push(this.footerText2[i].image)
+              }
+              this.modal10=false
+              this.config10 = true
+              this.footerswitch = true
+              this.ordinaryConfigFooter = false
+              this.bottom_status=1
             }
-            for(var i=0;i<this.footerText2.length;i++){
-              this.bottom_nav_type.push(this.footerText2[i].functionValue)
-              this.bottom_nav_name.push(this.footerText2[i].daohangnameInput)
-              this.bottom_nav_icon.push(this.footerText2[i].image)
+          }else if(this.footerText2.length==3){
+            if(this.footerText2[0].functionValue=='' ||this.footerText2[1].functionValue=='' ||this.footerText2[2].functionValue==''){
+              this.$message.error('请选择导航功能');
+            }else if(this.footerText2[0].image=='' || this.footerText2[1].image=='' || this.footerText2[2].image==''){
+              this.$message.error('请选择导航图标');
+            }else{
+              for(var i=0;i<this.footerText.length;i++){
+                this.bottom_nav_type.push(this.footerText[i].functionValue)
+                this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
+                this.bottom_nav_icon.push(this.footerText[i].image)
+              }
+              for(var i=0;i<this.footerText2.length;i++){
+                this.bottom_nav_type.push(this.footerText2[i].functionValue)
+                this.bottom_nav_name.push(this.footerText2[i].daohangnameInput)
+                this.bottom_nav_icon.push(this.footerText2[i].image)
+              }
+              this.modal10=false
+              this.config10 = true
+              this.footerswitch = true
+              this.ordinaryConfigFooter = false
+              this.bottom_status=1
             }
-            this.modal10=false
-            this.config10 = true
-            this.footerswitch = true
-            this.ordinaryConfigFooter = false
-            this.bottom_status=1
-          }
-        }else if(this.footerText2.length==3){
-          if(this.footerText2[0].functionValue=='' ||this.footerText2[1].functionValue=='' ||this.footerText2[2].functionValue==''){
-            this.$message.error('请选择导航功能');
-          }else if(this.footerText2[0].daohangnameInput=='空白' || this.footerText2[0].daohangnameInput=='' || this.footerText2[1].daohangnameInput=='空白' || this.footerText2[1].daohangnameInput=='' || this.footerText2[2].daohangnameInput=='空白' || this.footerText2[2].daohangnameInput==''){
-            this.$message.error('请填写导航名称');
-          }else if(this.footerText2[0].image=='' || this.footerText2[1].image=='' || this.footerText2[2].image==''){
-            this.$message.error('请选择导航图标');
-          }else{
-            for(var i=0;i<this.footerText.length;i++){
-              this.bottom_nav_type.push(this.footerText[i].functionValue)
-              this.bottom_nav_name.push(this.footerText[i].daohangnameInput)
-              this.bottom_nav_icon.push(this.footerText[i].image)
-            }
-            for(var i=0;i<this.footerText2.length;i++){
-              this.bottom_nav_type.push(this.footerText2[i].functionValue)
-              this.bottom_nav_name.push(this.footerText2[i].daohangnameInput)
-              this.bottom_nav_icon.push(this.footerText2[i].image)
-            }
-            this.modal10=false
-            this.bottom_status=1
           }
         }
+
+
+
+
 
 
 
@@ -2135,7 +2291,7 @@
 
       /*获取自定义导航栏左右功能复选框集合*/
       axios.post(BASE_URL+'/api/encapsulation/getPackagePluginTitleNav').then(res => {
-        console.log(res.data.data.left)
+        console.log(res.data.data.right)
         this.leftCheckboxList=res.data.data.left
         this.rightCheckboxList=res.data.data.right
         for(var i=0;i<this.leftCheckboxList.length;i++){

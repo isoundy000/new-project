@@ -22,7 +22,7 @@
         <img width="100%" :src="dialogImageUrl" alt="">
       </el-dialog>
       <p style="width: 300px;font-size: 14px;font-weight: bold;margin-left: 15px">
-        200*200尺寸，小于1M，
+        200*200尺寸，小于2M，
         PNG格式
       </p>
     </div>
@@ -32,6 +32,7 @@
     <div style="width: 592px;display: flex;align-items: center;margin-left: 3%">
       <el-upload
         class="ss"
+        :before-upload="beforeAvatarUpload"
         :limit='limitCount'
         :on-success="success1"
         :class="{hide:hideUpload1}"
@@ -48,8 +49,8 @@
         <img width="100%" :src="dialogImageUrl1" alt="">
       </el-dialog>
       <p style="width: 400px;font-size: 14px;font-weight: bold;margin-left: 15px">
-        1248*2208尺寸，小于1M，
-        PNG、JPG格式
+        1248*2208尺寸，小于2M，
+        PNG格式
       </p>
     </div>
   </div>
@@ -132,7 +133,7 @@
         beforeAvatarUpload(file) {
           const isJPG = (file.type === 'image/png');
 
-          const isLt2M = file.size / 1024 / 1024 < 1;
+          const isLt2M = file.size / 1024 / 1024 < 2;
 
           if (!isJPG) {
             this.$message.error('上传图标图片只能是PNG格式!');
