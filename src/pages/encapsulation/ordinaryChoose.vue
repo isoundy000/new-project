@@ -9,7 +9,7 @@
       <p style="display:flex;align-items:center ;height: 100px; font-size: 16px">请在新打开的页面中完成购买，购买完成后，请根据购买结果点击下面的按钮</p>
       <div @click="queok" class="queOk" slot="footer" >支付成功</div>
     </Modal>
-    <div>
+    <div v-loading="loading">
       <div class="selectFirst">
         <p class="selectFirstTitle">订单信息</p>
         <div class="selectFirstDiv">
@@ -67,6 +67,7 @@
       return {
         modal1:false,
         logoImg: '',
+        loading:false,
         timeSelect:[],
         money:0,
         selectId:'',
@@ -115,7 +116,7 @@
         })
       },
       pay() {
-
+        this.loading=true;
         let data = {
           id: this.$route.params.newID,
           price_id: this.selectId,
@@ -126,6 +127,7 @@
         };
         axios.post(BASE_URL + '/api/encapsulation/signature', qs.stringify(data), config).then(res => {
           if (res.data.code == 200) {
+            this.loading=false
             this.$message({
               message: '支付成功',
               type: 'success'

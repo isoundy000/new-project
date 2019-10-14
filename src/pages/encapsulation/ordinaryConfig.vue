@@ -1,5 +1,13 @@
 <template>
   <div class="ordinaryConfig" v-loading="loading">
+    <div class="mamma" v-if="isknow">
+      <img class="mammaimg" src="../../../static/image/encapsulation/tu2222.png" alt="">
+      <div style="width: 100%;display: flex;justify-content: center">
+        <img @click="iknow"  src="../../../static/image/encapsulation/zhidao.png" alt="">
+      </div>
+
+    </div>
+
     <!--加载动画-->
     <Modal
       v-model="modal1"
@@ -1096,10 +1104,13 @@
         screen:'',
         version:'',
         bundle:'',
-
+        isknow:true
       }
     },
     methods: {
+      iknow(){
+        this.isknow=false
+      },
       jiazanenter(){
         this.config1=true
       },
@@ -3219,5 +3230,18 @@
   }
   .isLike{
     color: #06B2B6 !important;
+  }
+  .mamma{
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+   position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999999999;
+  }
+  .mammaimg{
+    margin-top: 22.5%;
+    margin-left: 11%;
   }
 </style>

@@ -182,7 +182,7 @@
               </div>
               <div class="whiteDiv2First2Div">
                 <p class="whiteDiv2First2P">下载二维码：</p>
-                <div style="margin-left: 15px">
+                <div v-if="isErweima" style="margin-left: 15px">
                   <qrcode-vue :value="value" :size="size" level="H" className='qrcode' id="picture" ref="code"></qrcode-vue>
                 </div>
               </div>
@@ -252,6 +252,7 @@
         name: "applist",
       data(){
           return{
+            isErweima:'',
             downdownUrl:'',
             downShow:'',
             apptext:'',
@@ -341,11 +342,21 @@
               console.log(res.data.data)
               if(res.data.data.status== 1){
                 this.statusData='已完成'
+                this.isErweima=true
+                this.downData='https://'+window.location.hostname+'/#/down?tag='+res.data.data.tag
+                this.value='https://'+window.location.hostname+'/#/down?tag='+res.data.data.tag
               }else if(res.data.data.status== 0){
                 this.statusData='封装中'
+                this.downData=''
+                this.isErweima=false
               }else if(res.data.data.status== -1){
                 this.statusData='已删除'
+              }else if(res.data.data.status== -2){
+                this.statusData='封装失败'
+                this.downData=''
+                this.isErweima=false
               }
+              this.status=res.data.data.status
               this.mobileConfig=res.data.data.mobileconfig
               this.iconData=res.data.data.icon
               this.appnameData=res.data.data.name
@@ -358,8 +369,7 @@
               this.timeData=res.data.data.expire_time
               this.urlData=res.data.data.website
               this.passData=res.data.data.password
-              this.downData=window.location.hostname+'/#/down?tag='+res.data.data.tag
-              this.value=window.location.hostname+'/#/down?tag='+res.data.data.tag
+
               this.isApplist=false
               this.isDetail=true
               this.isXufei=false
@@ -389,7 +399,7 @@
             this.$message.error('已删除');
           }else if(this.status==1){
             window.location.href=this.mobileConfig
-          }else if(this.status==2){
+          }else if(this.status==-2){
             this.$message.error('封装失败');
           }
 
@@ -409,11 +419,22 @@
             if(res.data.code==200){
                console.log(res.data.data)
               if(res.data.data.status== 1){
+                this.isErweima=true
                 this.statusData='已完成'
+                this.downData='https://'+window.location.hostname+'/#/down?tag='+res.data.data.tag
+                this.value='https://'+window.location.hostname+'/#/down?tag='+res.data.data.tag
               }else if(res.data.data.status== 0){
+                this.isErweima=false
                 this.statusData='封装中'
+                this.downData=''
               }else if(res.data.data.status== -1){
                 this.statusData='已删除'
+                this.isErweima=false
+                this.downData=''
+              }else if(res.data.data.status== -2){
+                this.statusData='封装失败'
+                this.isErweima=false
+                this.downData=''
               }
               this.status=res.data.data.status
               this.mobileConfig=res.data.data.mobileconfig
@@ -427,8 +448,7 @@
               this.timeData=res.data.data.expire_time
               this.urlData=res.data.data.website
               this.passData=res.data.data.password
-              this.downData=window.location.hostname+'/#/down?tag='+res.data.data.tag
-              this.value=window.location.hostname+'/#/down?tag='+res.data.data.tag
+
               this.isApplist=false
               this.isDetail=true
               this.isXufei=false
@@ -713,8 +733,8 @@
                   this.total=res.data.data.total
                   this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
                   for(var i=0;i<res.data.data.list.length;i++){
-                    this.downData=window.location.hostname+'/#/down?tag='+res.data.data.list[i].tag
-                    this.value2=window.location.hostname+'/#/down?tag='+res.data.data.list[i].tag
+                    this.downData='https://'+window.location.hostname+'/#/down?tag='+res.data.data.list[i].tag
+                    this.value2='https://'+window.location.hostname+'/#/down?tag='+res.data.data.list[i].tag
                   }
                 }else if(res.data.code==0){
                   this.$message.error(res.data.msg);
@@ -754,10 +774,10 @@
             this.tableData=res.data.data.list
             this.total=res.data.data.total
             this.pageNumber=parseInt(Math.ceil(Number(this.total)/5))
-            this.downdownUrl=window.location.hostname+'/#/down?tag='
+            this.downdownUrl='https://'+window.location.hostname+'/#/down?tag='
             for(var i=0;i<res.data.data.list.length;i++){
-              this.downData=window.location.hostname+'/#/down?tag='+res.data.data.list[i].tag
-              this.value2=window.location.hostname+'/#/down?tag='+res.data.data.list[i].tag
+              this.downData='https://'+window.location.hostname+'/#/down?tag='+res.data.data.list[i].tag
+              this.value2='https://'+window.location.hostname+'/#/down?tag='+res.data.data.list[i].tag
             }
           }else if(res.data.code==0){
             this.$message.error(res.data.msg);

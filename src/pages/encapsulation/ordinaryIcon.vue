@@ -27,9 +27,9 @@
       </p>
     </div>
   </div>
-  <div class="ordinaryIconDiv start">
+  <div class="ordinaryIconDiv ">
     <p class="ordinaryIconDivP">启动图:</p>
-    <div style="width: 592px;display: flex;align-items: center;margin-left: 3%">
+    <div v-if="startIMG" class="shustart" style="width: auto;display: flex;align-items: center;margin-left: 4%;margin-top: 2%">
       <el-upload
         class="ss"
         :before-upload="beforeAvatarUpload"
@@ -49,7 +49,31 @@
         <img width="100%" :src="dialogImageUrl1" alt="">
       </el-dialog>
       <p style="width: 400px;font-size: 14px;font-weight: bold;margin-left: 15px">
-        1248*2208尺寸，小于2M，
+        1242*2208尺寸，小于2M，
+        PNG格式
+      </p>
+    </div>
+    <div v-else class="hengstart" style="width: auto;display: flex;align-items: center;margin-left: 4%;margin-top: 2%">
+      <el-upload
+        class="ss"
+        :before-upload="beforeAvatarUpload"
+        :limit='limitCount'
+        :on-success="success1"
+        :class="{hide:hideUpload1}"
+        :headers="headers"
+        :action="newdeUrl"
+        list-type="picture-card"
+        :file-list="imgList1"
+        :on-preview="handlePictureCardPreview1"
+        :on-remove="handleRemove1"
+        :on-change="deleteL1">
+        <i class="el-icon-plus"></i>
+      </el-upload>
+      <el-dialog :visible.sync="dialogVisible1">
+        <img width="100%" :src="dialogImageUrl1" alt="">
+      </el-dialog>
+      <p style="width: 400px;font-size: 14px;font-weight: bold;margin-left: 15px">
+        2208*1242尺寸，小于2M，
         PNG格式
       </p>
     </div>
@@ -102,6 +126,8 @@
         name: "ordinaryIcon",
       data(){
         return{
+          startIMG:'',
+          informationData:'',
           limitCount:1,//允许照片上传的个数
           headers:{
             "token":localStorage.getItem('Authorization') // 直接从本地获取token就行
@@ -277,9 +303,26 @@
       },
       mounted(){
         this.newdeUrl=BASE_URL+'/api/common/upload'
+        this.informationData=JSON.parse(localStorage.getItem('informationData'));
+        if(this.informationData.screen==1){
+          this.startIMG=true
+        }else{
+          this.startIMG=false
+        }
+
         // console.log('接受值：'+this.$route.params)
        // console.log('接受值：'+JSON.stringify(this.$route.params))
-      }
+      },
+      watch: {
+        '$route': function (to, from) {
+          this.informationData=JSON.parse(localStorage.getItem('informationData'));
+          if(this.informationData.screen==1){
+            this.startIMG=true
+          }else{
+            this.startIMG=false
+          }
+        }
+        }
     }
 </script>
 <style>
@@ -310,7 +353,7 @@
     margin: 0 8px 8px 0;
     display: inline-block;
   }
-  .start .el-upload-list--picture-card .el-upload-list__item{
+  .shustart .el-upload-list--picture-card .el-upload-list__item{
     overflow: hidden;
     background-color: #fff;
     border: 1px solid #c0ccda;
@@ -322,11 +365,11 @@
     margin: 0 8px 8px 0;
     display: inline-block;
   }
-  .start .el-upload-list--picture-card .el-upload-list__item-thumbnail {
+  .shustart .el-upload-list--picture-card .el-upload-list__item-thumbnail {
     max-width: 100%;
     max-height: 100%;
   }
-  .start .el-upload--picture-card {
+  .shustart .el-upload--picture-card {
     background-color: #fbfdff;
     border: 1px dashed #c0ccda;
     border-radius: 6px;
@@ -335,6 +378,34 @@
     width: 230px;
     height: 400px;
     line-height: 400px;
+    vertical-align: top;
+  }
+
+  .hengstart .el-upload-list--picture-card .el-upload-list__item{
+    overflow: hidden;
+    background-color: #fff;
+    border: 1px solid #c0ccda;
+    border-radius: 6px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 400px;
+    height: 230px;
+    margin: 0 8px 8px 0;
+    display: inline-block;
+  }
+  .hengstart .el-upload-list--picture-card .el-upload-list__item-thumbnail {
+    max-width: 100%;
+    max-height: 100%;
+  }
+  .hengstart .el-upload--picture-card {
+    background-color: #fbfdff;
+    border: 1px dashed #c0ccda;
+    border-radius: 6px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 400px;
+    height: 230px;
+    line-height: 230px;
     vertical-align: top;
   }
 </style>

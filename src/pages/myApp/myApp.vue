@@ -116,7 +116,21 @@
       if(this.$route.params.newid ==1){
         this.title[3].isclass=true
         this.title[0].isclass=false
-        this.$router.push('/publishingApplications')
+        this.$router.push({
+          name:'publishingApplications',
+          params: {
+            xianid: 1,
+            display_name:this.$route.params.display_name,
+            icon:this.$route.params.icon,
+            bundle_name:this.$route.params.bundle_name,
+            package_name:this.$route.params.package_name,
+            version_code:this.$route.params.version_code,
+            version_name:this.$route.params.version_name,
+            domain:this.$route.params.domain,
+            path:this.$route.params.path,
+            filesize:this.$route.params.filesize
+          }
+        })
       }else if(this.$route.params.newid ==0){
         this.title[2].isclass=true
         this.title[0].isclass=false

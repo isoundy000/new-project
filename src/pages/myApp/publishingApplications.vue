@@ -483,6 +483,7 @@
       },
       /*提交事件*/
       submission(){
+      //  alert(this.filesize)
         // this.active = 3
         const loading = this.$loading({
           lock: true,
@@ -547,10 +548,27 @@
     mounted(){
       // alert("4")
       this.upload_url=UPLOAD_BASE_URL
-    //  alert(this.upload_url)
+
       this.newdeUrl=BASE_URL+'/api/common/upload'
-      this.active=0
-      this.isSuper=true
+   //  alert(this.$route.params.filesize)
+      if(this.$route.params.xianid==1){
+        this.active=2
+        this.isSuper=false
+        this.isSupplement=true
+        this.package_name=this.$route.params.package_name
+        this.thirdInput1=this.$route.params.display_name
+        this.thirdInput2=this.$route.params.version_code
+        this.version_name=this.$route.params.version_name
+        this.path=this.$route.params.path
+        this.filesize=this.$route.params.filesize
+        this.bundle_name=this.$route.params.bundle_name
+        this.icon=this.$route.params.domain+this.$route.params.icon
+        this.icon1=this.$route.params.icon
+      }else{
+        this.active=0
+        this.isSuper=true
+      }
+
     }
   }
 </script>

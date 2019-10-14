@@ -243,7 +243,7 @@
             isclass: true
           },
           {
-            msg: '免签名封装',
+            msg: '网页封装',
             isclass: false
           },
           {
