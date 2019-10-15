@@ -141,7 +141,7 @@
             <div class="selectFirstDiv">
               <div class="selectFirstDiv_small " v-for="(list,index) in timeSelect" :key="index">
                 <img  v-if="list.status" src="../../../static/image/superSignature/danxuan.png" alt="">
-                <img  v-else @click="timeDan(list.id,list.price,list.status)"  src="../../../static/image/superSignature/danweixuan.png" alt="">
+                <img  v-else @click="timeDan(list.id,list.price,list.status,index)"  src="../../../static/image/superSignature/danweixuan.png" alt="">
                 <p>{{list.name}}</p>
               </div>
               <p class="selectFirstDiv_small ">(试用期为1天)</p>
@@ -413,27 +413,13 @@ border-radius:4px;">iOS无闪退版</p>
 
 
         },
-        timeDan(index,money,status){
-          this.timeSelect[0].status=false
-          this.timeSelect[1].status=false
-          this.timeSelect[2].status=false
-          this.timeSelect[3].status=false
-          this.selectId=this.timeSelect[index-1].id
-          if(index==1){
-            this.money=money
-            this.timeSelect[0].status=true
-          }else if(index==2){
-            this.money=money
-
-            this.timeSelect[index-1].status=true
-
-          }else if(index==3){
-            this.timeSelect[index-1].status=true
-            this.money=money
-          }else if(index==4){
-            this.money=money
-            this.timeSelect[index-1].status=true
+        timeDan(id,money,status,index){
+          for(var i=0;i<this.timeSelect.length;i++){
+            this.timeSelect[i].status=false
           }
+          this.selectId=id
+          this.money=money
+          this.timeSelect[index].status=true
         },
 
         seondGo(){
@@ -1016,4 +1002,5 @@ margin-top: 20px;
     right: 5%;
     cursor: pointer;
   }
+
 </style>

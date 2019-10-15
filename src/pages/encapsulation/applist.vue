@@ -218,7 +218,7 @@
               <div class="selectFirstDiv">
                 <div class="selectFirstDiv_small " v-for="(list,index) in timeSelect" :key="index">
                   <img  v-if="list.status" src="../../../static/image/superSignature/danxuan.png" alt="">
-                  <img  v-else @click="timeDan(list.id,list.price,list.status)"  src="../../../static/image/superSignature/danweixuan.png" alt="">
+                  <img  v-else @click="timeDan(list.id,list.price,list.status,index)"  src="../../../static/image/superSignature/danweixuan.png" alt="">
                   <p>{{list.name}}</p>
                 </div>
               </div>
@@ -304,7 +304,8 @@
             passData:'',
             downData:'',
             mobileConfig:'',
-            status:''
+            status:'',
+            newTag:''
           }
       },
       components: {
@@ -331,6 +332,7 @@
           // this.isCo2=false
         },
         tableTr(row){
+          this.newid=row.id
           let data={
             id:row.id
           }
@@ -356,6 +358,7 @@
                 this.downData=''
                 this.isErweima=false
               }
+              this.newTag=res.data.data.tag
               this.status=res.data.data.status
               this.mobileConfig=res.data.data.mobileconfig
               this.iconData=res.data.data.icon
@@ -398,7 +401,27 @@
           }else if(this.status==-1){
             this.$message.error('已删除');
           }else if(this.status==1){
-            window.location.href=this.mobileConfig
+            // alert(this.newTag)
+            let data={
+              tag:this.newTag
+            }
+            let config = {
+              headers:{'token':localStorage.getItem('Authorization')}
+            };
+            axios.post(BASE_URL+'/api/encapsulation/package_download',data,config).then(res => {
+              // console.log(res.data.data.download_url)
+              if(res.data.code==200){
+                window.location.href=res.data.data.download_url
+              }else if(res.data.code==0){
+                this.$message.error(res.data.msg);
+              }
+            }, err => {
+              this.$message.error('系统报错');
+            })
+
+
+
+
           }else if(this.status==-2){
             this.$message.error('封装失败');
           }
@@ -436,6 +459,7 @@
                 this.isErweima=false
                 this.downData=''
               }
+              this.newTag=res.data.data.tag
               this.status=res.data.data.status
               this.mobileConfig=res.data.data.mobileconfig
               this.iconData=res.data.data.icon
@@ -469,7 +493,7 @@
           })
         },
         xuBtn(){
-          this.newid=this.idData
+          // this.newid=this.idData
           this.isApplist=false
           this.isDetail=false
           this.isXufei=true
@@ -521,21 +545,13 @@
             // console.log(err)
           })
         },
-        timeDan(index,money,status){
-          this.timeSelect[0].status=false
-          this.timeSelect[1].status=false
-          this.timeSelect[2].status=false
-          this.selectId=this.timeSelect[index-2].id
-          if(index==2){
-            this.money=money
-            this.timeSelect[0].status=true
-          }else if(index==3){
-            this.money=money
-            this.timeSelect[index-2].status=true
-          }else if(index==4){
-            this.timeSelect[index-2].status=true
-            this.money=money
+        timeDan(id,money,status,index){
+          for(var i=0;i<this.timeSelect.length;i++){
+            this.timeSelect[i].status=false
           }
+          this.selectId=id
+          this.money=money
+          this.timeSelect[index].status=true
         },
         shanchuClick(row,id){
           this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {

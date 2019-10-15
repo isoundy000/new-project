@@ -28,7 +28,7 @@
         <div class="selectFirstDiv">
           <div class="selectFirstDiv_small " v-for="(list,index) in timeSelect" :key="index">
             <img v-if="list.status" src="../../../static/image/superSignature/danxuan.png" alt="">
-            <img v-else @click="timeDan(list.id,list.price,list.status)"
+            <img v-else @click="timeDan(list.id,list.price,list.status,index)"
                  src="../../../static/image/superSignature/danweixuan.png" alt="">
             <p>{{list.name}}</p>
           </div>
@@ -75,29 +75,13 @@
       }
     },
     methods: {
-      timeDan(index,money,status){
-       // alert(index+money)
-
-        this.timeSelect[0].status=false
-        this.timeSelect[1].status=false
-        this.timeSelect[2].status=false
-        this.timeSelect[3].status=false
-        this.selectId=this.timeSelect[index-5].id
-        if(index==5){
-          this.money=money
-          this.timeSelect[0].status=true
-        }else if(index==6){
-          this.money=money
-
-          this.timeSelect[index-5].status=true
-
-        }else if(index==7){
-          this.timeSelect[index-5].status=true
-          this.money=money
-        }else if(index==8){
-          this.money=money
-          this.timeSelect[index-5].status=true
+      timeDan(id,money,status,index){
+        for(var i=0;i<this.timeSelect.length;i++){
+          this.timeSelect[i].status=false
         }
+        this.selectId=id
+        this.money=money
+        this.timeSelect[index].status=true
       },
       nextStep() {
         this.$router.push({
@@ -183,8 +167,10 @@
               // console.log(err)
             })
           } else if (res.data.code == 0) {
+            this.loading=false
             this.$message.error(res.data.msg);
           } else {
+            this.loading=false
             this.modal1 = true
             let routerData = this.$router.resolve({path: '/pay', query: {htmls: res.data}})
             window.open(routerData.href, '_blank')
@@ -255,7 +241,7 @@
         headers: {'token': localStorage.getItem('Authorization')}
       };
       axios.post(BASE_URL + '/api/encapsulation/payConfig', data, config).then(res => {
-        // console.log(res.data.data)
+         console.log(res.data.data)
         if(res.data.code==200){
           this.timeSelect=res.data.data
           this.selectId=this.timeSelect[0].id

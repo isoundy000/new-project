@@ -2,7 +2,7 @@
   <div class="ordinaryConfig" v-loading="loading">
     <div class="mamma" v-if="isknow">
       <img class="mammaimg" src="../../../static/image/encapsulation/tu2222.png" alt="">
-      <div style="width: 100%;display: flex;justify-content: center">
+      <div style="width: 100%;display: flex;justify-content: center;margin-top: 10%">
         <img @click="iknow"  src="../../../static/image/encapsulation/zhidao.png" alt="">
       </div>
 
@@ -2497,6 +2497,7 @@
 <style scoped>
   .ordinaryConfig {
     margin-top: 30px;
+    position: relative;
   }
 
   .ordinaryConfigDiv {
@@ -3235,13 +3236,13 @@
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
-   position: fixed;
+   position: absolute;
     top: 0;
     left: 0;
     z-index: 9999999999;
   }
   .mammaimg{
-    margin-top: 22.5%;
-    margin-left: 11%;
+    margin-top: 4%;
+    margin-left: 2.5%;
   }
 </style>
