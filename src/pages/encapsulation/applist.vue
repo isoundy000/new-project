@@ -180,9 +180,9 @@
                 <p class="whiteDiv2First2P">下载链接：</p>
                 <p class="whiteDiv2First2P2">{{downData}}</p>
               </div>
-              <div class="whiteDiv2First2Div">
+              <div class="whiteDiv2First2Div" v-if="isErweima">
                 <p class="whiteDiv2First2P">下载二维码：</p>
-                <div v-if="isErweima" style="margin-left: 15px">
+                <div  style="margin-left: 15px">
                   <qrcode-vue :value="value" :size="size" level="H" className='qrcode' id="picture" ref="code"></qrcode-vue>
                 </div>
               </div>
@@ -344,19 +344,16 @@
               console.log(res.data.data)
               if(res.data.data.status== 1){
                 this.statusData='已完成'
-                this.isErweima=true
                 this.downData='https://'+window.location.hostname+'/#/down?tag='+res.data.data.tag
                 this.value='https://'+window.location.hostname+'/#/down?tag='+res.data.data.tag
               }else if(res.data.data.status== 0){
                 this.statusData='封装中'
                 this.downData=''
-                this.isErweima=false
               }else if(res.data.data.status== -1){
                 this.statusData='已删除'
               }else if(res.data.data.status== -2){
                 this.statusData='封装失败'
                 this.downData=''
-                this.isErweima=false
               }
               this.newTag=res.data.data.tag
               this.status=res.data.data.status
@@ -380,9 +377,11 @@
               if(res.data.data.type==2){//无包 无闪退封装
                 this.downShow=false
                 this.apptext='ios无闪退版'
+                this.isErweima=true
               }else if(res.data.data.type==1){ //有包 普通封装
                 this.downShow=true
                 this.apptext='普通封装'
+                this.isErweima=false
               }
 
 
@@ -442,21 +441,17 @@
             if(res.data.code==200){
                console.log(res.data.data)
               if(res.data.data.status== 1){
-                this.isErweima=true
                 this.statusData='已完成'
                 this.downData='https://'+window.location.hostname+'/#/down?tag='+res.data.data.tag
                 this.value='https://'+window.location.hostname+'/#/down?tag='+res.data.data.tag
               }else if(res.data.data.status== 0){
-                this.isErweima=false
                 this.statusData='封装中'
                 this.downData=''
               }else if(res.data.data.status== -1){
                 this.statusData='已删除'
-                this.isErweima=false
                 this.downData=''
               }else if(res.data.data.status== -2){
                 this.statusData='封装失败'
-                this.isErweima=false
                 this.downData=''
               }
               this.newTag=res.data.data.tag
@@ -480,9 +475,11 @@
               if(res.data.data.type==2){//无包 无闪退封装
                 this.downShow=false
                 this.apptext='ios无闪退版'
+                this.isErweima=true
               }else if(res.data.data.type==1){ //有包 普通封装
                 this.downShow=true
                 this.apptext='普通封装'
+                this.isErweima=false
               }
             }else if(res.data.code==0){
               this.$message.error(res.data.msg);

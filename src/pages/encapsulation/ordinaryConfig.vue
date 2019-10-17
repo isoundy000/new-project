@@ -2931,7 +2931,7 @@
   }
   .zhuangtai111 img{
     margin: 5px auto 0 auto;
-  }{
+
     display: flex;
     justify-content: center;
   }

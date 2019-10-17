@@ -257,7 +257,7 @@ border-radius:4px;">iOS无闪退版</p>
             ttimeChoose:false,//3天试用
             btimeChoose:false,//半年试用
             ytimeChoose:false,//一年试用
-            money:0,
+            money:'',
             storageImg:'',
             imgList:[],
             timeSelect:[],
@@ -592,6 +592,8 @@ border-radius:4px;">iOS无闪退版</p>
           // console.log(res.data.data)
           if(res.data.code==200){
             this.timeSelect=res.data.data
+            this.selectId=this.timeSelect[0].id
+            this.money=this.timeSelect[0].price
           }else if(res.data.code==0){
             this.$message.error(res.data.msg);
           }

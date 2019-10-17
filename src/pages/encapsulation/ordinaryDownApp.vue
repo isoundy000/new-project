@@ -215,6 +215,7 @@ border-radius:4px;">普通封装版</p>
           }else if(this.status==-1){
             this.$message.error('已删除');
           }else if(this.status==1){
+            console.log(this.mobileconfig)
             window.location.href=this.mobileconfig
             this.$router.push({
               name:'applist',
@@ -295,11 +296,24 @@ border-radius:4px;">普通封装版</p>
                     that.PTstatus='已删除'
                   }else if(that.status== 1){
                     that.PTstatus='封装成功'
+                    let data3 = {
+                      tag:that.tag
+                    }
+                    let config3 = {
+                      headers: {'token': localStorage.getItem('Authorization')}
+                    };
+                    axios.post(BASE_URL+'/api/encapsulation/package_download',data3,config3).then(res => {
+                      console.log(res.data.data)
+                      that.mobileconfig=res.data.data.download_url
+                    }, err => {
+                      // console.log(err)
+                    })
+
                   }else if(that.status== -2){
                     that.PTstatus='封装失败'
                   }
 
-                  that.mobileconfig=res.data.data.mobileconfig
+
                   that.isDownSize = res.data.data.filesize   //
                   that.isDownUrl = window.location.hostname + '/#/down?tag=' + res.data.data.tag
                 }else{

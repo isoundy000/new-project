@@ -69,7 +69,7 @@
         logoImg: '',
         loading:false,
         timeSelect:[],
-        money:0,
+        money:'',
         selectId:'',
         countDown:80
       }
@@ -245,6 +245,7 @@
         if(res.data.code==200){
           this.timeSelect=res.data.data
           this.selectId=this.timeSelect[0].id
+          this.money=this.timeSelect[0].price
         }else if(res.data.code==0){
           this.$message.error(res.data.msg);
         }

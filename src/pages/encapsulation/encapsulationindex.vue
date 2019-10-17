@@ -322,7 +322,7 @@
                   this.$router.push({
                     name:'myApp',
                     params: {
-                      newid: 1
+                      newid: 2
                     }
                   })
                 } else {
