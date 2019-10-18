@@ -1,5 +1,13 @@
 <template>
   <div class="login">
+    <div v-if="isTongGao">
+      <van-notice-bar
+        :text="tongText"
+        left-icon="volume-o"
+        mode="closeable"
+      />
+    </div>
+
     <Modal
       v-model="modal1"
       title="修改密码"
@@ -335,6 +343,8 @@
         name: "index",
         data() {
           return {
+            isTongGao:'',
+            tongText:'',
             usedPass:'',
             newPass:'',
             confirmPass:'',
@@ -412,6 +422,19 @@
               that.qqValue.push(obj)
             }
             // console.log(that.qqValue)
+          }, err => {
+            // console.log(err)
+          })
+          /*通告*/
+          axios.get(BASE_URL+'/api/index/getBulletin',config).then(res => {
+            if(res.data.data==null){
+              this.isTongGao=false
+            }else{
+              this.isTongGao=true
+              this.tongText=res.data.data
+            }
+            console.log(res.data)
+
           }, err => {
             // console.log(err)
           })

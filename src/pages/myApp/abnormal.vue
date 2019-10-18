@@ -124,7 +124,7 @@
           @change="swich">
         </el-switch>
       </div>
-      <div class="btn" @click="preservation4"><p>保存</p></div>
+      <div class="btn" @click="preservation5"><p>保存</p></div>
     </div>
 
 
@@ -219,7 +219,8 @@
             auto_times:this.input4,
             day_consume:this.input5,
             day_times:this.input6,
-            download_limit:this.input7
+            download_limit:this.input7,
+            is_vaptcha:this.switchNum
           }
           let config = {
             headers:{'token':localStorage.getItem('Authorization')}
@@ -253,6 +254,11 @@
             this.preservation1()
           })
         },
+        preservation5(){
+          this.$nextTick(function() {
+            this.preservation1()
+          })
+        },
       },
       mounted(){
           /*asas*/
@@ -263,7 +269,7 @@
           headers:{'token':localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL+'/api/app/appEarlyWarningInfo',qs.stringify(data),config).then(res => {
-          // console.log(res.data.data)
+           console.log(res.data.data)
           this.input=res.data.data.down_frequency
           this.input2=res.data.data.down_times
           this.input3=res.data.data.auto_close
@@ -271,6 +277,11 @@
           this.input5=res.data.data.day_consume
           this.input6=res.data.data.day_times
           this.input7=res.data.data.download_limit
+          if(res.data.data.is_vaptcha==1){
+             this.switchValue=true
+          }else{
+            this.switchValue=false
+          }
         }, err => {
           // console.log(err)
         })
