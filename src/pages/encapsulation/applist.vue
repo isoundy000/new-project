@@ -252,6 +252,7 @@
         name: "applist",
       data(){
           return{
+            moneyType:'',
             isErweima:'',
             downdownUrl:'',
             downShow:'',
@@ -373,15 +374,18 @@
               this.isApplist=false
               this.isDetail=true
               this.isXufei=false
+              this.moneyType=res.data.data.type
               // alert(res.data.data.type)
               if(res.data.data.type==2){//无包 无闪退封装
                 this.downShow=false
                 this.apptext='ios无闪退版'
                 this.isErweima=true
+                this.moneyType='ios'
               }else if(res.data.data.type==1){ //有包 普通封装
                 this.downShow=true
                 this.apptext='普通封装'
                 this.isErweima=false
+                this.moneyType='ordinary'
               }
 
 
@@ -476,10 +480,12 @@
                 this.downShow=false
                 this.apptext='ios无闪退版'
                 this.isErweima=true
+                this.moneyType='ios'
               }else if(res.data.data.type==1){ //有包 普通封装
                 this.downShow=true
                 this.apptext='普通封装'
                 this.isErweima=false
+                this.moneyType='ordinary'
               }
             }else if(res.data.code==0){
               this.$message.error(res.data.msg);
@@ -490,6 +496,8 @@
           })
         },
         xuBtn(){
+
+
           // this.newid=this.idData
           this.isApplist=false
           this.isDetail=false
@@ -497,9 +505,11 @@
           this.isSelectLogo=this.iconData
           this.isSelectAppname=this.appnameData
           this.isSelectVersion=this.versionData
+        //  alert(this.moneyType)
           /*获取钱*/
           let data2={
-            type:2
+            type:2,
+            cate:this.moneyType
           }
           axios.post(BASE_URL+'/api/encapsulation/payConfig',data2).then(res => {
             // console.log(res.data.data)
@@ -516,31 +526,58 @@
           })
         },
         xufeiClick(row,id){
-          // console.log(row)
-          this.newid=row.id
-          this.isApplist=false
-          this.isDetail=false
-          this.isXufei=true
-          this.isSelectLogo=row.icon
-          this.isSelectAppname=row.name
-          this.isSelectVersion=row.version_code
-          /*获取钱*/
-          let data2={
-            type:2
+          let data={
+            id:id
           }
-          axios.post(BASE_URL+'/api/encapsulation/payConfig',data2).then(res => {
-            // console.log(res.data.data)
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.post(BASE_URL+'/api/encapsulation/info',qs.stringify(data),config).then(res => {
             if(res.data.code==200){
-              this.timeSelect=res.data.data
-              this.money=this.timeSelect[0].price
-              this.selectId=this.timeSelect[0].id
+              console.log(res.data.data)
+              if(res.data.data.type==2){//无包 无闪退封装
+                this.moneyType='ios'
+              }else if(res.data.data.type==1){ //有包 普通封装
+                this.moneyType='ordinary'
+              }
+
+              // console.log(row)
+              this.newid=row.id
+              this.isApplist=false
+              this.isDetail=false
+              this.isXufei=true
+              this.isSelectLogo=row.icon
+              this.isSelectAppname=row.name
+              this.isSelectVersion=row.version_code
+
+             // alert(this.moneyType)
+              /*获取钱*/
+              let data2={
+                type:2,
+                cate:this.moneyType
+              }
+              axios.post(BASE_URL+'/api/encapsulation/payConfig',data2).then(res => {
+                // console.log(res.data.data)
+                if(res.data.code==200){
+                  this.timeSelect=res.data.data
+                  this.money=this.timeSelect[0].price
+                  this.selectId=this.timeSelect[0].id
+                }else if(res.data.code==0){
+                  this.$message.error(res.data.msg);
+                }
+              }, err => {
+                this.$message.error('系统报错');
+                // console.log(err)
+              })
             }else if(res.data.code==0){
               this.$message.error(res.data.msg);
             }
           }, err => {
             this.$message.error('系统报错');
-            // console.log(err)
+
           })
+
+
         },
         timeDan(id,money,status,index){
           for(var i=0;i<this.timeSelect.length;i++){

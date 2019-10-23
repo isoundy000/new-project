@@ -42,11 +42,13 @@
             filesize:'',
             time:'',
             miao:'',
-            value: '',
+            value: '',//13版本以下
+            value1: '',//13版本以上
             size: 300,
             text:'',
             jixing:'',
-            downvalue:''
+            downvalue:'',
+            newType:'',
           }
       },
       components: {
@@ -60,18 +62,22 @@
             if (ua.indexOf('android') > -1 || ua.indexOf('linux') > -1) {
               alert("安卓机不能下载")
             }else{
-              window.location.href=that.value
+
               var str = navigator.userAgent.toLowerCase();
               var ver = str.match(/cpu iphone os (.*?) like mac os/);
               var version = ver[1].replace(/_/g, ".");
               var vc = version.split('.');
+              if(vc[0]>=13&& that.value1!=''&&that.newType==2){
+                window.location.href=that.value1
+              }else{
+                window.location.href=that.value
+              }
               if (ver) {
                 if(vc[0]>=12){
                   if ((vc[0]==12 && vc[1]>1)||vc[0]>12) {
                     setTimeout(function () {
                       window.location.href='/embedded.mobileprovision'
                     },2000)
-
                   }
                 }
               }
@@ -102,7 +108,9 @@
             this.time=res.data.data.update_time
             this.downvalue=window.location.hostname+'/#/down?tag='+res.data.data.tag
             this.value=res.data.data.mobileconfig
+            this.value1=res.data.data.oss_path
             this.jixing=res.data.data.platform
+            this.newType=res.data.data.type
             //this.downUrl=window.location.hostname+'/#/down?tag='+res.data.data.tag
             if(res.data.data.platform==1){
               this.text='苹果机'

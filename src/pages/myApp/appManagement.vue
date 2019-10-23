@@ -121,6 +121,7 @@
           >
           <template slot-scope="scope">
             <span v-if="scope.row.status=== 1" style="color: #43A047">分发中</span>
+            <span v-if="scope.row.status=== -1" style="color: #999999">系统自动下架</span>
             <span v-else-if="scope.row.status=== 0" style="color: #999999">已下架</span>
             <span v-else-if="scope.row.status=== '已删除'" style="color: #FF0000">{{scope.row.state}}</span>
           </template>
@@ -333,22 +334,27 @@
             headers:{'token':localStorage.getItem('Authorization')}
           };
           axios.post(BASE_URL+'/api/app/appHandle',qs.stringify(data),config).then(res => {
-            let data={
-              keywords:this.input,
-              page:this.current,
-              page_size:10,
+            if(res.data.code==200){
+              let data={
+                keywords:this.input,
+                page:this.current,
+                page_size:10,
+              }
+              let config = {
+                headers:{'token':localStorage.getItem('Authorization')}
+              };
+              axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
+                this.total=res.data.data.total
+                this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
+                this.tableData=res.data.data.list
+                // console.log(res.data.data)
+              }, err => {
+                // console.log(err)
+              })
+            }else{
+              this.$message.error(res.data.msg);
             }
-            let config = {
-              headers:{'token':localStorage.getItem('Authorization')}
-            };
-            axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
-              // console.log(res.data.data)
-              this.total=res.data.data.total
-              this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
-              this.tableData=res.data.data.list
-            }, err => {
-              // console.log(err)
-            })
+
           }, err => {
             // console.log(err)
           })

@@ -220,6 +220,7 @@
               <template slot-scope="scope">
                 <span v-if="scope.row.status=== 1" style="color: #43A047">已推送</span>
                 <span v-else-if="scope.row.status=== 0" style="color: #999999">未推送</span>
+                <span v-else-if="scope.row.status=== -1" style="color: #999999">推送失败</span>
               </template>
             </el-table-column>
             <el-table-column
@@ -496,6 +497,7 @@
         },
         /*创建推送计划*/
         plan(){
+          this.typeState=1
           this.pushTitle=''
           this.fupushTitle=''
           this.pushContent=''
@@ -530,12 +532,14 @@
           this.choose1=true
           this.timeShow=false
           this.typeState=1
+         // alert(this.typeState)
         },
         dan3(){
           this.choose1=false
           this.choose=false
           this.timeShow=true
           this.typeState=0
+          // alert(this.typeState)
         },
         /*新增确定推送按钮*/
         ok(){

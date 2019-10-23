@@ -211,7 +211,7 @@
             <div class="liji">
               <img  v-if="newchoose" src="../../../static/image/superSignature/danxuan.png" alt="">
               <img @click="dan0" v-else src="../../../static/image/superSignature/danweixuan.png" alt="">
-              <p>不推送</p>
+              <p>自有推送（应用本身自带推送功能）</p>
             </div>
             <div class="liji">
               <img  v-if="choose" src="../../../static/image/superSignature/danxuan.png" alt="">

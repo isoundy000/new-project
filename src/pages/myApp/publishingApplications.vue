@@ -170,6 +170,21 @@
           <el-input :disabled="disInput" class="thirdInput" v-model="fourthInput" placeholder="请输入内容" onkeyup="this.value=this.value.replace(/\D/g,'')"
                     onafterpaste="this.value=this.value.replace(/\D/g,'')"></el-input>
         </div>
+        <!--<div class="supplementFourth">-->
+          <!--<div style="display: flex;align-items: center">-->
+            <!--<p style="width: 90px">主页地址 <span style="color: red">*</span></p>-->
+            <!--<img style="margin-left: 5px;width: 20px;height: 20px" @click="homeTip" @mouseleave="homeTipleave()" src="../../../static/image/superSignature/help.png" alt="">-->
+
+          <!--</div>-->
+
+          <!--<el-input @blur="homeInput" :class="{'borderColor':isHomeInput}" :disabled="disInput" class="thirdInput123" v-model="homevalue" placeholder="自定义主页地址"></el-input>-->
+          <!--<span style="font-size: 16px">.appstore.top</span>-->
+          <!--<div v-if="homeTishi"  class="homekuang1" style="background-image: url('../../../static/image/superSignature/kuang.png')">-->
+            <!--<p >-->
+              <!--您应用的下载地址，用户通过该链接下载您的应用-->
+            <!--</p>-->
+          <!--</div>-->
+        <!--</div>-->
         <div class="supplementsixth">
           <p>应用截图</p>
           <div class="thirdInput">
@@ -231,7 +246,7 @@
             <div class="liji">
               <img  v-if="newchoose" src="../../../static/image/superSignature/danxuan.png" alt="">
               <img @click="dan0" v-else src="../../../static/image/superSignature/danweixuan.png" alt="">
-              <p>不推送</p>
+              <p>自有推送（应用本身自带推送功能）</p>
             </div>
             <div class="liji">
               <img  v-if="choose" src="../../../static/image/superSignature/danxuan.png" alt="">
@@ -273,6 +288,8 @@
     name: "publishingApplications",
     data() {
       return {
+        homeTishi:false,
+        isHomeInput:false,
         newswitchValue:true,
         newswitchNum:1,
         upload_url:'',
@@ -310,6 +327,7 @@
         isDistribute: false,
         TenInput:'',
         EvenInput:'',
+        homevalue:'',
         headers:{
           "token":localStorage.getItem('Authorization') // 直接从本地获取token就行
 
@@ -336,6 +354,16 @@
 
     },
     methods: {
+      homeInput(){
+        this.isHomeInput=true
+        // alert("0303")
+      },
+      homeTip(){
+        this.homeTishi=true
+      },
+      homeTipleave(){
+        this.homeTishi=false
+      },
       help(){
         this.tishi=!this.tishi
       },
@@ -718,6 +746,10 @@
     margin-top: 10px;
 
   }
+  .thirdInput123{
+    width: 80%;
+    margin-top: 10px;
+  }
   .text{
     font-size: 14px;
   }
@@ -825,6 +857,29 @@
     margin: 50px auto 0 auto;
     text-align: justify !important;
     text-justify: inter-ideograph !important;
+  }
+  .homekuang1{
+    width: 254px;
+    height: 123px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 30%;
+    left: 6%;
+    z-index: 999;
+  }
+  .homekuang1 p{
+    width: 250px!important;
+    height: 90px;
+    font-size: 14px;
+    color: gray;
+    margin: 50px auto 0 auto;
+    text-align: justify !important;
+    text-justify: inter-ideograph !important;
+  }
+  .borderColor{
+    border: 1px solid red !important;
+    border-radius: 4px;
   }
 </style>
 <style>
