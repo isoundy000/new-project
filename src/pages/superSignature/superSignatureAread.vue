@@ -5,6 +5,8 @@
         :text="tongText"
         left-icon="volume-o"
         mode="closeable"
+        color="white"
+        background="red"
       />
     </div>
 

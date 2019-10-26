@@ -114,18 +114,18 @@
 
       <p>防盗刷人机验证 <span style="margin-left: 5px">(开启后用户必须滑动方块解锁后才能下载)</span></p>
     </div>
-    <div class="firstDiv" v-show="isOne4">
+    <!--<div class="firstDiv" v-show="isOne4">-->
 
-      <div class="firstDivTwo">
-        <el-switch
-          v-model="switchValue"
-          active-color="#06B2B6"
-          inactive-color="#999999"
-          @change="swich">
-        </el-switch>
-      </div>
-      <div class="btn" @click="preservation5"><p>保存</p></div>
-    </div>
+      <!--&lt;!&ndash;<div class="firstDivTwo">&ndash;&gt;-->
+        <!--&lt;!&ndash;<el-switch&ndash;&gt;-->
+          <!--&lt;!&ndash;v-model="switchValue"&ndash;&gt;-->
+          <!--&lt;!&ndash;active-color="#06B2B6"&ndash;&gt;-->
+          <!--&lt;!&ndash;inactive-color="#999999"&ndash;&gt;-->
+          <!--&lt;!&ndash;@change="swich">&ndash;&gt;-->
+        <!--&lt;!&ndash;</el-switch>&ndash;&gt;-->
+      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+      <!--<div class="btn" @click="preservation5"><p>保存</p></div>-->
+    <!--</div>-->
 
 
   </div>
@@ -170,44 +170,85 @@
           }
         },
         isNo(){
-          this.isChoose=!this.isChoose
           if(this.isChoose==false){
-            this.isOne=true
+            this.$confirm('此操作将删除所填内容, 是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              this.isOne=false
+              this.isChoose=true
+              this.input=0
+              this.input2=0
+            }).catch(() => {
+            });
           }else{
-            this.isOne=false
+            this.isChoose=true
+            this.isOne=true
           }
         },
         isNo1(){
-          this.isChoose1=!this.isChoose1
           if(this.isChoose1==false){
-            this.isOne1=true
+            this.$confirm('此操作将删除所填内容, 是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              this.isOne1=false
+              this.isChoose1=true
+              this.input3=0
+              this.input4=0
+            }).catch(() => {
+            });
           }else{
-            this.isOne1=false
+            this.isChoose1=true
+            this.isOne1=true
           }
         },
         isNo2(){
-          this.isChoose2=!this.isChoose2
           if(this.isChoose2==false){
-            this.isOne2=true
+            this.$confirm('此操作将删除所填内容, 是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              this.isOne2=false
+              this.isChoose2=true
+              this.input6=0
+            }).catch(() => {
+            });
           }else{
-            this.isOne2=false
+            this.isChoose2=true
+            this.isOne2=true
           }
         },
         isNo3(){
-          this.isChoose3=!this.isChoose3
           if(this.isChoose3==false){
-            this.isOne3=true
+            this.$confirm('此操作将删除所填内容, 是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              this.isOne3=false
+              this.isChoose3=true
+              this.input7=0
+            }).catch(() => {
+            });
           }else{
-            this.isOne3=false
+            this.isChoose3=true
+            this.isOne3=true
           }
         },
         isNo4(){
           this.isChoose4=!this.isChoose4
           if(this.isChoose4==false){
-            this.isOne4=true
+            this.switchNum=1
           }else{
-            this.isOne4=false
+            this.switchNum=0
           }
+          this.$nextTick(function() {
+            this.preservation1()
+          })
         },
         preservation1(){
 
@@ -228,6 +269,11 @@
           axios.post(BASE_URL+'/api/app/appEarlyWarning',qs.stringify(data),config).then(res => {
             // console.log(res.data)
             if(res.data.code==200){
+              if(this.input!=0 ||this.input2!=0){
+                this.isChoose=false
+              }else{
+                this.isChoose=true
+              }
               this.$message({
                 message: '保存成功',
                 type: 'success'
@@ -240,18 +286,106 @@
           })
         },
         preservation2(){
-          this.$nextTick(function() {
-            this.preservation1()
+          let data={
+            id:this.$route.query.id,
+            down_frequency:this.input,
+            down_times:this.input2,
+            auto_close:this.input3,
+            auto_times:this.input4,
+            day_consume:this.input5,
+            day_times:this.input6,
+            download_limit:this.input7,
+            is_vaptcha:this.switchNum
+          }
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.post(BASE_URL+'/api/app/appEarlyWarning',qs.stringify(data),config).then(res => {
+            // console.log(res.data)
+            if(res.data.code==200){
+              if(this.input3!=0 ||this.input4!=0){
+                this.isChoose1=false
+              }else{
+                this.isChoose1=true
+              }
+
+              this.$message({
+                message: '保存成功',
+                type: 'success'
+              });
+            }else if(res.data.code==0){
+              this.$message.error(res.data.msg);
+            }
+          }, err => {
+            // console.log(err)
           })
         },
         preservation3(){
-          this.$nextTick(function() {
-            this.preservation1()
+          let data={
+            id:this.$route.query.id,
+            down_frequency:this.input,
+            down_times:this.input2,
+            auto_close:this.input3,
+            auto_times:this.input4,
+            day_consume:this.input5,
+            day_times:this.input6,
+            download_limit:this.input7,
+            is_vaptcha:this.switchNum
+          }
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.post(BASE_URL+'/api/app/appEarlyWarning',qs.stringify(data),config).then(res => {
+            // console.log(res.data)
+            if(res.data.code==200){
+              if(this.input6!=0 ){
+                this.isChoose2=false
+              }else{
+                this.isChoose2=true
+              }
+              this.$message({
+                message: '保存成功',
+                type: 'success'
+              });
+            }else if(res.data.code==0){
+              this.$message.error(res.data.msg);
+            }
+          }, err => {
+            // console.log(err)
           })
         },
         preservation4(){
-          this.$nextTick(function() {
-            this.preservation1()
+          let data={
+            id:this.$route.query.id,
+            down_frequency:this.input,
+            down_times:this.input2,
+            auto_close:this.input3,
+            auto_times:this.input4,
+            day_consume:this.input5,
+            day_times:this.input6,
+            download_limit:this.input7,
+            is_vaptcha:this.switchNum
+          }
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.post(BASE_URL+'/api/app/appEarlyWarning',qs.stringify(data),config).then(res => {
+            // console.log(res.data)
+            if(res.data.code==200){
+              if(this.input7!=0 ){
+                this.isChoose3=false
+              }else{
+                this.isChoose3=true
+              }
+              this.$message({
+                message: '保存成功',
+                type: 'success'
+              });
+            }else if(res.data.code==0){
+              this.$message.error(res.data.msg);
+            }
+          }, err => {
+            // console.log(err)
           })
         },
         preservation5(){
@@ -277,10 +411,38 @@
           this.input5=res.data.data.day_consume
           this.input6=res.data.data.day_times
           this.input7=res.data.data.download_limit
-          if(res.data.data.is_vaptcha==1){
-             this.switchValue=true
+          if(res.data.data.down_frequency!=0|| res.data.data.down_times!=0){
+             this.isChoose=false
+            this.isOne=true
           }else{
-            this.switchValue=false
+            this.isChoose=true
+            this.isOne=false
+          }
+          if(res.data.data.auto_close!=0|| res.data.data.auto_times!=0){
+            this.isChoose1=false
+            this.isOne1=true
+          }else{
+            this.isChoose1=true
+            this.isOne1=false
+          }
+          if(res.data.data.day_times!=0){
+            this.isChoose2=false
+            this.isOne2=true
+          }else{
+            this.isChoose2=true
+            this.isOne2=false
+          }
+          if(res.data.data.download_limit!=0){
+            this.isChoose3=false
+            this.isOne3=true
+          }else{
+            this.isChoose3=true
+            this.isOne3=false
+          }
+          if(res.data.data.is_vaptcha==1){
+            this.isChoose4=false
+          }else{
+            this.isChoose4=true
           }
         }, err => {
           // console.log(err)

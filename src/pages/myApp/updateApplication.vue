@@ -32,12 +32,29 @@
             <div slot="tip" class="el-upload__tip">只能上传ipa文件</div>
           </el-upload>
         </div>
+
         <div class="supplementThird1">
           <p>应用名</p>
           <div style="margin-top: 10px">
             <el-input :disabled="disInput" class="thirdInput" v-model="thirdInput1" placeholder="请输入内容"></el-input>
           </div>
 
+        </div>
+        <div class="supplementThird2">
+          <div style="display: flex;align-items: center">
+            <p style="width: 120px">APP下载地址 <span style="color: red">*</span></p>
+            <!--<img style="margin-left: 5px;width: 20px;height: 20px" @click="homeTip" @mouseleave="homeTipleave()" src="../../../static/image/superSignature/help.png" alt="">-->
+
+          </div>
+
+          <el-input @blur="homeInput" :class="{'borderColor':isHomeInput}"  class="thirdInput123" v-model="homevalue" placeholder="自定义主页地址"></el-input>
+          <span style="font-size: 16px">.appstore.top</span>
+          <p style="font-size: 12px;margin-top: 10px">（您应用的下载地址，用户通过该链接下载您的应用,建议填写您的APP拼音缩写，有助于提高用户信任度，加强品牌化）</p>
+          <!--<div v-if="homeTishi"  class="homekuang1" style="background-image: url('../../../static/image/superSignature/kuang.png')">-->
+            <!--<p >-->
+              <!--您应用的下载地址，用户通过该链接下载您的应用-->
+            <!--</p>-->
+          <!--</div>-->
         </div>
         <div class="supplementThird2">
           <p>版本号</p>
@@ -50,6 +67,23 @@
           <div style="margin-top: 10px">
             <p>{{package_name}}</p>
           </div>
+
+        </div>
+        <div class="supplementThird2">
+          <p>app守护</p>
+          <div style="margin-top: 10px;display: flex">
+            <div class="liji">
+              <img  v-if="newappchoose1" src="../../../static/image/superSignature/danxuan.png" alt="">
+              <img @click="newapp1" v-else src="../../../static/image/superSignature/danweixuan.png" alt="">
+              <p>开启</p>
+            </div>
+            <div class="liji" style="margin-left: 20px">
+              <img  v-if="newappchoose2" src="../../../static/image/superSignature/danxuan.png" alt="">
+              <img @click="newapp2" v-else src="../../../static/image/superSignature/danweixuan.png" alt="">
+              <p>关闭</p>
+            </div>
+          </div>
+          <p style="margin-top: 10px">(免费试用，可防止账号被封等意外情况导致的应用掉签闪退,开启后打开应用需访问用户的vpn权限)</p>
 
         </div>
         <div class="supplementThird2">
@@ -141,6 +175,7 @@
           </div>
 
         </div>
+
 
         <div class="supplementThird2">
           <p>应用截图</p>
@@ -252,6 +287,12 @@
         name: "updateApplication",
       data(){
           return{
+            newappchoose1:false,
+            newappchoose2:false,
+            newappswitchValue:true,
+            homevalue:'',
+            homeTishi:false,
+            isHomeInput:false,
             newswitchValue:true,
             newswitchNum:'',
             upload_url:'',
@@ -311,9 +352,44 @@
             imgList:[],
             newState:0,
             gengxing:1,
+            sub_domain:'',
+            shouhuApp:'',
           }
       },
       methods:{
+        /*app守护*/
+        newapp1(){
+          this.newappchoose1=true
+          this.newappchoose2=false
+          this.shouhuApp=1
+        },
+        newapp2(){
+          this.newappchoose1=false
+          this.newappchoose2=true
+          this.shouhuApp=0
+        },
+        homeInput(){
+          let data = {
+            sub_domain: this.homevalue,
+            id:this.$route.query.id
+          }
+          axios.post(BASE_URL + '/api/index/checkSubDomain', data).then(res => {
+            if (res.data.code == 0) {
+              this.isHomeInput = true
+              this.$message.error(res.data.msg);
+            } else {
+              this.isHomeInput = false
+            }
+          }, err => {
+            // console.log(err)
+          })
+        },
+        homeTip(){
+          this.homeTishi=true
+        },
+        homeTipleave(){
+          this.homeTishi=false
+        },
         help(){
           this.tishi=!this.tishi
         },
@@ -486,7 +562,9 @@
             is_update:this.gengxing,
             download_money:this.fufeiInput,
             push_type:this.push_type,
-            is_vaptcha:this.newswitchNum
+            is_vaptcha:this.newswitchNum,
+            sub_domain:this.homevalue,
+            is_flashback:this.shouhuApp,
           }
           let config = {
             headers:{'token':localStorage.getItem('Authorization')}
@@ -534,6 +612,7 @@
           this.xianzhiInput=res.data.data.download_limit
           this.package_name=res.data.data.package_name
           this.push_type=res.data.data.push_type
+          this.homevalue=res.data.data.sub_domain
           if(res.data.data.download_money!=0){
             this.switchValue2=true
             this.fufei=true
@@ -545,6 +624,15 @@
           }else{
             this.newswitchValue=false
             this.newswitchNum=0
+          }
+          if(res.data.data.is_flashback==1){
+            this.newappchoose1=true
+            this.newappchoose2=false
+            this.shouhuApp=1
+          }else{
+            this.newappchoose1=false
+            this.newappchoose2=true
+            this.shouhuApp=0
           }
           for(var i=0;i<this.list.imgs.length;i++){
             var newobj={}
@@ -712,6 +800,10 @@
     width: 99%;
     /*margin-left: 20px;*/
   }
+  .thirdInput123{
+    width: 30%;
+    margin-top: 10px;
+  }
   .imgl{
     width: 600px;
   }
@@ -846,6 +938,29 @@
     margin: 50px auto 0 auto;
     text-align: justify !important;
     text-justify: inter-ideograph !important;
+  }
+  .homekuang1{
+    width: 254px;
+    height: 123px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 30%;
+    left: 6%;
+    z-index: 999;
+  }
+  .homekuang1 p{
+    width: 250px!important;
+    height: 90px;
+    font-size: 14px;
+    color: gray;
+    margin: 50px auto 0 auto;
+    text-align: justify !important;
+    text-justify: inter-ideograph !important;
+  }
+  .borderColor{
+    border: 1px solid red !important;
+    border-radius: 4px;
   }
 </style>
 <style>

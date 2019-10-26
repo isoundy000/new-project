@@ -100,7 +100,7 @@
           // console.log(res.data.data)
           this.list=res.data.data
           this.list.icon=this.list.icon
-          this.download_url='https://'+window.location.hostname+'/download/'+this.list.tag+'.html'
+          this.download_url=res.data.data.url
           for(var i=0;i<this.list.imgs.length;i++){
               this.imgList.push(this.list.imgs[i])
             }

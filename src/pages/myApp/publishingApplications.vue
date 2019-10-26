@@ -66,12 +66,29 @@
           </div>
 
         </div>
+
         <div class="supplementThird2">
           <p>应用名</p>
           <div>
             <el-input :disabled="false" class="thirdInput" v-model="thirdInput1" placeholder="请输入内容"></el-input>
           </div>
 
+        </div>
+        <div class="supplementFourth">
+          <div style="display: flex;align-items: center">
+            <p style="width: 900px">APP下载地址 <span style="color: red">*</span></p>
+            <!--<img style="margin-left: 5px;width: 20px;height: 20px" @click="homeTip" @mouseleave="homeTipleave()" src="../../../static/image/superSignature/help.png" alt="">-->
+
+          </div>
+
+          <el-input @blur="homeInput" :class="{'borderColor':isHomeInput}" :disabled="disInput" class="thirdInput123" v-model="homevalue" placeholder="自定义主页地址"></el-input>
+          <span style="font-size: 16px">.appstore.top</span>
+          <p style="font-size: 12px;margin-top: 10px">（您应用的下载地址，用户通过该链接下载您的应用,建议填写您的APP拼音缩写，有助于提高用户信任度，加强品牌化）</p>
+          <!--<div v-if="homeTishi"  class="homekuang1" style="background-image: url('../../../static/image/superSignature/kuang.png')">-->
+            <!--<p >-->
+              <!--您应用的下载地址，用户通过该链接下载您的应用-->
+            <!--</p>-->
+          <!--</div>-->
         </div>
         <div class="supplementThird2">
           <p>版本号</p>
@@ -97,8 +114,25 @@
               @change="swich">
             </el-switch>
           </div>
+        </div>
+        <div class="supplementThird2">
+          <p>app守护</p>
+          <div style="margin-top: 10px;display: flex">
+            <div class="liji">
+              <img  v-if="newappchoose1" src="../../../static/image/superSignature/danxuan.png" alt="">
+              <img @click="newapp1" v-else src="../../../static/image/superSignature/danweixuan.png" alt="">
+              <p>开启</p>
+            </div>
+            <div class="liji" style="margin-left: 20px">
+              <img  v-if="newappchoose2" src="../../../static/image/superSignature/danxuan.png" alt="">
+              <img @click="newapp2" v-else src="../../../static/image/superSignature/danweixuan.png" alt="">
+              <p>关闭</p>
+            </div>
+          </div>
+          <p style="margin-top: 10px">(免费试用，可防止账号被封等意外情况导致的应用掉签闪退,开启后打开应用需访问用户的vpn权限)</p>
 
         </div>
+
         <div class="supplementThird2">
           <p>更新功能</p>
           <div style="margin-top: 10px">
@@ -170,21 +204,6 @@
           <el-input :disabled="disInput" class="thirdInput" v-model="fourthInput" placeholder="请输入内容" onkeyup="this.value=this.value.replace(/\D/g,'')"
                     onafterpaste="this.value=this.value.replace(/\D/g,'')"></el-input>
         </div>
-        <!--<div class="supplementFourth">-->
-          <!--<div style="display: flex;align-items: center">-->
-            <!--<p style="width: 90px">主页地址 <span style="color: red">*</span></p>-->
-            <!--<img style="margin-left: 5px;width: 20px;height: 20px" @click="homeTip" @mouseleave="homeTipleave()" src="../../../static/image/superSignature/help.png" alt="">-->
-
-          <!--</div>-->
-
-          <!--<el-input @blur="homeInput" :class="{'borderColor':isHomeInput}" :disabled="disInput" class="thirdInput123" v-model="homevalue" placeholder="自定义主页地址"></el-input>-->
-          <!--<span style="font-size: 16px">.appstore.top</span>-->
-          <!--<div v-if="homeTishi"  class="homekuang1" style="background-image: url('../../../static/image/superSignature/kuang.png')">-->
-            <!--<p >-->
-              <!--您应用的下载地址，用户通过该链接下载您的应用-->
-            <!--</p>-->
-          <!--</div>-->
-        <!--</div>-->
         <div class="supplementsixth">
           <p>应用截图</p>
           <div class="thirdInput">
@@ -288,6 +307,9 @@
     name: "publishingApplications",
     data() {
       return {
+        newappchoose1:false,
+        newappchoose2:false,
+        newappswitchValue:true,
         homeTishi:false,
         isHomeInput:false,
         newswitchValue:true,
@@ -347,16 +369,39 @@
         judgeMoney:'',
         gengxing:1,
         newState:1,
-        type:1
+        type:1,
+        shouhuApp:'',
       }
     },
     computed: {
 
     },
     methods: {
+      /*app守护*/
+      newapp1(){
+        this.newappchoose1=true
+        this.newappchoose2=false
+        this.shouhuApp=1
+      },
+      newapp2(){
+        this.newappchoose1=false
+        this.newappchoose2=true
+        this.shouhuApp=0
+      },
       homeInput(){
-        this.isHomeInput=true
-        // alert("0303")
+        let data = {
+          sub_domain: this.homevalue
+        }
+        axios.post(BASE_URL + '/api/index/checkSubDomain', data).then(res => {
+          if (res.data.code == 0) {
+            this.isHomeInput = true
+            this.$message.error(res.data.msg);
+          } else {
+            this.isHomeInput = false
+          }
+        }, err => {
+          // console.log(err)
+        })
       },
       homeTip(){
         this.homeTishi=true
@@ -513,63 +558,70 @@
       submission(){
       //  alert(this.filesize)
         // this.active = 3
-        const loading = this.$loading({
-          lock: true,
-          text: '拼命签名中',
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)'
-        });
-        let f={
-          display_name:this.thirdInput1,
-          path:this.path,
-          icon:this.icon1,
-          push_type:1,
-          ipa_data_bak:this.ipa_data_bak,
-          package_name:this.package_name,
-          version_code:this.thirdInput2,
-          version_name:this.version_name,
-          bundle_name:this.bundle_name,
-          filesize:this.filesize,
-          desc:this.textarea,
-          score_num:this.fourthInput,
-          introduction:this.textarea1,
-          img:this.img,
-          // status:this.state,
-          download_code:this.TenInput,
-          apk_url:this.EvenInput,
-          download_limit:0,
-          remark:this.beiInput,
-          is_update:this.gengxing,
-          status:this.newState,
-          download_money:this.fufeiInput,
-          push_type:this.push_type,
-          type:1,
-          is_vaptcha:this.newswitchNum
-        }
-        let config = {
-          headers:{'token':localStorage.getItem('Authorization')}
-        };
-        axios.post(BASE_URL+'/api/app/add',qs.stringify(f),config).then(res => {
-          // console.log(res.data)
-          if(res.data.code==200){
-            loading.close();
-            this.$router.push({
-              path:'/appManagement'
-            })
-          }else if(res.data.code==0){
-            loading.close();
-            this.$message.error(res.data.msg);
+        if(this.newappchoose1==false && this.newappchoose2==false){
+          this.$message.error('请勾选app守护');
+        }else{
+          const loading = this.$loading({
+            lock: true,
+            text: '拼命签名中',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)'
+          });
+          let f={
+            display_name:this.thirdInput1,
+            path:this.path,
+            icon:this.icon1,
+            push_type:1,
+            ipa_data_bak:this.ipa_data_bak,
+            package_name:this.package_name,
+            version_code:this.thirdInput2,
+            version_name:this.version_name,
+            bundle_name:this.bundle_name,
+            filesize:this.filesize,
+            desc:this.textarea,
+            score_num:this.fourthInput,
+            introduction:this.textarea1,
+            img:this.img,
+            // status:this.state,
+            download_code:this.TenInput,
+            apk_url:this.EvenInput,
+            download_limit:0,
+            remark:this.beiInput,
+            is_update:this.gengxing,
+            status:this.newState,
+            download_money:this.fufeiInput,
+            push_type:this.push_type,
+            type:1,
+            is_vaptcha:this.newswitchNum,
+            sub_domain: this.homevalue,
+            is_flashback:this.shouhuApp
           }
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.post(BASE_URL+'/api/app/add',qs.stringify(f),config).then(res => {
+            // console.log(res.data)
+            if(res.data.code==200){
+              loading.close();
+              this.$router.push({
+                path:'/appManagement'
+              })
+            }else if(res.data.code==0){
+              loading.close();
+              this.$message.error(res.data.msg);
+            }
 
 
 
 
 
-        }, err => {
-          loading.close();
-          this.$message.error('系统报错');
-          // console.log(err)
-        })
+          }, err => {
+            loading.close();
+            this.$message.error('系统报错');
+            // console.log(err)
+          })
+        }
+
 
       }
     },
@@ -747,7 +799,7 @@
 
   }
   .thirdInput123{
-    width: 80%;
+    width: 30%;
     margin-top: 10px;
   }
   .text{
