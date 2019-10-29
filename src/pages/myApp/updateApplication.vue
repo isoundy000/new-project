@@ -436,30 +436,17 @@
         /*上传图片成功*/
         success2(response, file){
           var img=file.response.data.url
-          // console.log(img)
           this.img.push(img)
-          // console.log(this.img)
         },
         handleRemove(file, fileList) {
-          // console.log('file',file); //指的是删除的哪一张图片
-          // console.log('fileList',fileList);
           var newImg=[];
           for(var i=0;i<fileList.length;i++){
-            // console.log('file[i]',file[i]); //指的是删除的哪一张图片
-            // console.log('fileList[i]',fileList[i]);
-            // // console.log(fileList[i].response.data.url);
-            // console.log('fileList[i].url',fileList[i].url)
-            // console.log('fileList[i].url.substring(18)',fileList[i].url.substring(18))
             newImg.push(fileList[i].url)
             this.img=newImg
           }
-
-
           this.hideUpload = file.length >= this.limitCount;
-          // console.log(this.img)
         },
         handlePictureCardPreview(file) {
-          // console.log(file)
           this.dialogImageUrl = file.url;
           this.dialogVisible = true;
         },
@@ -617,6 +604,10 @@
             this.switchValue2=true
             this.fufei=true
             this.fufeiInput=res.data.data.download_money
+          }else{
+            this.switchValue2=false
+            this.fufei=false
+            this.fufeiInput=''
           }
           if(res.data.data.is_vaptcha==1){
             this.newswitchValue=true
@@ -633,6 +624,11 @@
             this.newappchoose1=false
             this.newappchoose2=true
             this.shouhuApp=0
+          }
+          if(this.list.imgs.length>=this.limitCount){
+            this.hideUpload=true
+          }else{
+            this.hideUpload=false
           }
           for(var i=0;i<this.list.imgs.length;i++){
             var newobj={}

@@ -286,7 +286,11 @@
       <div class="problemImg">
         <img src="../../../static/image/superSignature/wenti.png" alt="">
       </div>
+      <!--<div style="width: 100%;display: flex;justify-content: center;margin-top: 30px;color: white">-->
+        <!--<p>武汉软件开发公司|武汉软件定制|武汉APP开发|武汉APP定制|武汉微信公众号/小程序开发-麦诺软创</p>-->
+      <!--</div>-->
     </div>
+
     <!--<Bfooter></Bfooter>-->
   </div>
 </template>
@@ -303,7 +307,7 @@
       return {
         modal1:false,
         aUrl:'',
-        qqValue:'',
+        qqValue:[],
         asas:'',
         title: [
           // {
@@ -350,17 +354,16 @@
     mounted(){
       var that=this;
       /*客服qq*/
-      axios.get(BASE_URL+'/api/index/getConfig/name/kefu').then(res => {
-        // console.log(res.data.data)
+      let config1 = {
+        headers:{'token':localStorage.getItem('Authorization')}
+      };
+      axios.get(BASE_URL+'/api/index/getConfig/name/kefu',config1).then(res => {
         for(var i=0;i<res.data.data.length;i++){
           var obj={};
-          var aa=[]
           obj.newqq=res.data.data[i]
           obj.newurl='http://wpa.qq.com/msgrd?v=3&uin='+res.data.data[i]+'&site=qq&menu=yes'
-          aa.push(obj)
-          that.qqValue=aa
+          that.qqValue.push(obj)
         }
-        // console.log(that.qqValue)
       }, err => {
         // console.log(err)
       })
