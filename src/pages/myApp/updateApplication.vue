@@ -40,22 +40,22 @@
           </div>
 
         </div>
-        <div class="supplementThird2">
-          <div style="display: flex;align-items: center">
-            <p style="width: 120px">APP下载地址 <span style="color: red">*</span></p>
-            <!--<img style="margin-left: 5px;width: 20px;height: 20px" @click="homeTip" @mouseleave="homeTipleave()" src="../../../static/image/superSignature/help.png" alt="">-->
+        <!--<div class="supplementThird2">-->
+          <!--<div style="display: flex;align-items: center">-->
+            <!--<p style="width: 120px">辅助下载地址</p>-->
+            <!--&lt;!&ndash;<img style="margin-left: 5px;width: 20px;height: 20px" @click="homeTip" @mouseleave="homeTipleave()" src="../../../static/image/superSignature/help.png" alt="">&ndash;&gt;-->
 
-          </div>
-
-          <el-input @blur="homeInput" :class="{'borderColor':isHomeInput}"  class="thirdInput123" v-model="homevalue" placeholder="自定义主页地址"></el-input>
-          <span style="font-size: 16px">.appstore.top</span>
-          <p style="font-size: 12px;margin-top: 10px">（您应用的下载地址，用户通过该链接下载您的应用,建议填写您的APP拼音缩写，有助于提高用户信任度，加强品牌化）</p>
-          <!--<div v-if="homeTishi"  class="homekuang1" style="background-image: url('../../../static/image/superSignature/kuang.png')">-->
-            <!--<p >-->
-              <!--您应用的下载地址，用户通过该链接下载您的应用-->
-            <!--</p>-->
           <!--</div>-->
-        </div>
+
+          <!--<el-input @blur="homeInput" :class="{'borderColor':isHomeInput}"  class="thirdInput123" v-model="homevalue" placeholder="自定义主页地址"></el-input>-->
+          <!--<span style="font-size: 16px">.appstore.top</span>-->
+          <!--<p style="font-size: 12px;margin-top: 10px">（您应用的下载地址，用户通过该链接下载您的应用,建议填写您的APP拼音缩写，有助于提高用户信任度，加强品牌化）</p>-->
+          <!--&lt;!&ndash;<div v-if="homeTishi"  class="homekuang1" style="background-image: url('../../../static/image/superSignature/kuang.png')">&ndash;&gt;-->
+            <!--&lt;!&ndash;<p >&ndash;&gt;-->
+              <!--&lt;!&ndash;您应用的下载地址，用户通过该链接下载您的应用&ndash;&gt;-->
+            <!--&lt;!&ndash;</p>&ndash;&gt;-->
+          <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--</div>-->
         <div class="supplementThird2">
           <p>版本号</p>
           <div style="margin-top: 10px">
@@ -550,7 +550,7 @@
             download_money:this.fufeiInput,
             push_type:this.push_type,
             is_vaptcha:this.newswitchNum,
-            sub_domain:this.homevalue,
+            // sub_domain:this.homevalue,
             is_flashback:this.shouhuApp,
           }
           let config = {
