@@ -21,7 +21,7 @@
           <p>企业用户</p>
         </div>
       </div>
-      <Bfooter></Bfooter>
+      <!--<Bfooter></Bfooter>-->
     </div>
 </template>
 
@@ -40,12 +40,12 @@
       methods:{
         personal(){
           this.$router.push({
-            path:'/personal'
+            path:'/personAuthentication'
           })
         },
         enterprise(){
           this.$router.push({
-            path:'/enterprise'
+            path:'/enterpriseAuthentication'
           })
         }
       }

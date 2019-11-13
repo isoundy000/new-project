@@ -72,8 +72,7 @@
               <p class="accountNumber">{{userName}}</p>
             </span>
                 <el-dropdown-menu placement=top  class="xiala" slot="dropdown">
-                  <!--<el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>-->
-                  <!--<el-dropdown-item>实名认证</el-dropdown-item>-->
+                  <el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>
                   <el-dropdown-item @click.native="recharge">充值</el-dropdown-item>
                   <el-dropdown-item>我的余额:￥{{money}}</el-dropdown-item>
                   <el-dropdown-item @click.native="modify">修改密码</el-dropdown-item>
@@ -643,7 +642,6 @@
       },
       /*实名认证*/
       realName(){
-        alert("0.0.")
         this.$router.push({
           path:'/realName'
         })

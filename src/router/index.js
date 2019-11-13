@@ -25,8 +25,10 @@ import billConsumptionRecord from '@/pages/myApp/billConsumptionRecord'//我的�
 import billInvest from '@/pages/myApp/billInvest'//我的应用--账单管理--充值记录路由
 import publishingApplications from '@/pages/myApp/publishingApplications'//我的应用--发布路由
 import realName from '@/pages/myApp/realName'//我的应用--实名认证
-import personal from '@/pages/myApp/personal'//我的应用--实名认证--个人认证
+import personal from '@/pages/myApp/personal'
 
+import personAuthentication from '@/pages/myApp/personAuthentication'//我的应用--实名认证--个人认证
+import enterpriseAuthentication from '@/pages/myApp/enterpriseAuthentication'//我的应用--实名认证--企业认证
 import updateApplication from '@/pages/myApp/updateApplication'//我的应用--更新应用
 import enterprise from '@/pages/myApp/enterprise'//企业签名
 import enterprisePubish from '@/pages/myApp/enterprisePubish'//企业签名-发布应用
@@ -200,14 +202,7 @@ const router = new Router({
             requireAuth: true
           }
         },
-        {
-          path: '/realName',
-          name: 'realName',
-          component: realName,
-          meta: {
-            requireAuth: true
-          }
-        },
+
         {
           path: '/personal',
           name: 'personal',
@@ -217,6 +212,21 @@ const router = new Router({
           }
         },
       ]
+    },
+    {
+      path: '/realName',
+      name: 'realName',
+      component: realName,
+    },
+    {
+      path: '/enterpriseAuthentication',
+      name: 'enterpriseAuthentication',
+      component: enterpriseAuthentication,
+    },
+    {
+      path: '/personAuthentication',
+      name: 'personAuthentication',
+      component: personAuthentication,
     },
     {
       path: '/enterprise',
