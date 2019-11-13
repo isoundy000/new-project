@@ -129,6 +129,7 @@
       methods:{
         lastStep() {
           this.$router.push('/realName')
+
         },
         refer(formName) {
           this.$refs[formName].validate((valid) => {
