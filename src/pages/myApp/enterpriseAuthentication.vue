@@ -35,9 +35,9 @@
       <el-form-item label="手机号码" prop="mobile">
         <div class="phone-router">
           <div class="phone-color">{{phone}}</div>
-          <div class="phone-button">
-            <el-button @click="updateRouter">修改</el-button>
-          </div>
+          <!--<div class="phone-button">-->
+            <!--<el-button @click="updateRouter">修改</el-button>-->
+          <!--</div>-->
         </div>
       </el-form-item>
       <el-form-item label="邮箱地址" prop="email">
@@ -86,6 +86,9 @@
 </template>
 
 <script>
+  import {BASE_URL} from "../../api";
+  import  axios from 'axios'
+  import qs from 'qs'
   import {UPLOAD_BASE_URL} from '../../api/index'
     export default {
         name: "enterpriseAuthentication",
@@ -126,6 +129,9 @@
             scopeBoolean: false,
           }
       },
+      mounted(){
+          this.phone = localStorage.getItem('');
+      },
       methods:{
         lastStep() {
           this.$router.push('/realName')
@@ -153,13 +159,25 @@
                 captcha: this.form.captcha,
                 type: 2
               };
-              http('/api/user/authentication', 'post', json).then(() => {
+              let config = {
+                headers: {'token': localStorage.getItem('Authorization')}
+              };
+              axios.post(BASE_URL+'/api/user/authentication',qs.stringify(json),config).then(res => {
+                if(res.data.code === 0){
+                  this.$message({
+                    message: res.data.msg,
+                    type: 'warning',
+                    duration: 1500
+                  });
+                  return;
+                }
                 this.$message({
                   message: '提交成功',
                   type: 'success',
                   duration: 1500
                 });
-                this.$router.push('/realName/completeCertification')
+                // this.$router.push('/realName/completeCertification');
+                console.log(res.data)
               })
             } else {
               return false;

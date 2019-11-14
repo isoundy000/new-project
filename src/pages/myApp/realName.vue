@@ -16,10 +16,10 @@
           <img src="../../../static/image/survey/geren_iocn.png" alt="">
           <p>个人用户</p>
         </div>
-        <div @click="enterprise" class="secondDivTwo" style="background-image:url('../../../static/image/survey/qiye_bg.png') ">
-          <img src="../../../static/image/survey/qiye_icon.png" alt="">
-          <p>企业用户</p>
-        </div>
+        <!--<div @click="enterprise" class="secondDivTwo" style="background-image:url('../../../static/image/survey/qiye_bg.png') ">-->
+          <!--<img src="../../../static/image/survey/qiye_icon.png" alt="">-->
+          <!--<p>企业用户</p>-->
+        <!--</div>-->
       </div>
       <!--<Bfooter></Bfooter>-->
     </div>

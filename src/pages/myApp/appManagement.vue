@@ -1,6 +1,25 @@
 <template>
   <div class="appManagement">
-
+    <div class="mask" v-if="isRenZ">
+      <div class="conmask">
+          <div class="conmaskOne">
+            <p style="font-size: 16px">实名认证</p>
+            <img @click="renzColse" style="width: 12px;height: 12px" src="../../../static/image/survey/cha.png" alt="">
+          </div>
+          <div style="width: 95%;margin: 0 auto">
+            <p style="font-size: 19px;color: black;margin-top: 10px">根据国家相关法律和规定，上架应用前请先进行实名认证。</p>
+            <p style="font-size: 18px;font-weight: bold;color: black;margin-top: 15px">为什么要实名认证？</p>
+            <p style="font-size: 16px;color: black;margin-top: 8px">应主管部门和相关规定要求，应用分发平台需如实登记应用软件提供者的身份信息；超级签名仅会将您的信息用于身份认证，不会用作其他用途</p>
+            <p style="margin-top: 5px"><a href="http://www.cac.gov.cn/2016-06/28/c_1119123114.htm" target="_blank">国家网信办《移动互联网应用程序信息服务管理规定》</a></p>
+            <p style="margin-top: 5px"><a href="http://www.miit.gov.cn/n1146295/n1652858/n1652930/n3757020/c5436955/content.html" target="_blank">工业和信息化部《移动智能终端应用软件预置和分发管理暂行规定》</a></p>
+            <p style="color: black;margin-top: 10px">超级签名将会在 <span style="font-weight: bold">2019年11月30日</span>强制所有开发者进行实名认证，届时未实名认证的开发者将无法上架应用 </p>
+          </div>
+        <div style="display: flex;width: 95%;margin: 50px auto;justify-content: center">
+          <div @click="realName" style="width: 150px;height: 42px;background-color: #06B2B6;display: flex;align-items: center;justify-content: center;color: white;border-radius: 6px;margin-right: 20px;cursor: pointer;font-size: 16px"><p>实名认证</p></div>
+          <div @click="renzColse" style="width: 150px;height: 42px;background-color: #06B2B6;display: flex;align-items: center;justify-content: center;color: white;border-radius: 6px;margin-left: 20px;cursor: pointer;font-size: 16px"><p>稍后认证</p></div>
+        </div>
+      </div>
+    </div>
 <!--下载链接弹出层-->
     <div @click="mask" class="mask" v-if="isMask">
       <div class="maskDiv" @click.stop="ss">
@@ -90,7 +109,7 @@
 
          >
           <template slot-scope="scope">
-            <p style="color: #14BEC8;cursor: pointer" @click.stop="handleEdit(tableData[scope.$index].url)">点击下载</p>
+            <p style="color: #14BEC8;cursor: pointer" @click.stop="handleEdit(tableData[scope.$index].url,tableData[scope.$index].status)">点击下载</p>
             <!--<el-button size="small" >编辑          </el-button>-->
           </template>
         </el-table-column>
@@ -120,12 +139,22 @@
           label="状态"
           >
           <template slot-scope="scope">
-            <span v-if="scope.row.status=== 1" style="color: #43A047">分发中</span>
-            <span v-if="scope.row.status=== -1" style="color: #999999">系统自动下架</span>
-            <span v-else-if="scope.row.status=== 0" style="color: #999999">已下架</span>
-            <span v-else-if="scope.row.status=== '已删除'" style="color: #FF0000">{{scope.row.state}}</span>
+            <!--<span v-if="scope.row.status=== 1" style="color: #43A047">分发中</span>-->
+            <!--<span v-if="scope.row.status=== -1" style="color: #999999">系统自动下架</span>-->
+            <!--<span v-else-if="scope.row.status=== 0" style="color: #999999">已下架</span>-->
+            <!--<span v-else-if="scope.row.status=== '已删除'" style="color: #FF0000">{{scope.row.state}}</span>-->
+            <div style="display: flex;justify-content: center">
+              <el-switch
+                @click.stop.native
+                active-color="#06B2B6"
+                inactive-color="#DCDCDC"
+                v-model="scope.row.status==1? true:false "
+                @change="swich(scope.row)"
+              ></el-switch>
+            </div>
           </template>
         </el-table-column>
+
         <el-table-column
           prop="operation"
           label="操作"
@@ -166,6 +195,7 @@
     name: "appManagement",
     data() {
       return {
+        isRenZ:false,
         value: '',
         size: 150,
         input: '',
@@ -178,10 +208,6 @@
             value: '查看详情',
           }, {
             value: '更新应用',
-          },{
-            value: '上架',
-          },{
-            value: '下架',
           }, {
             value: '删除',
           }],
@@ -198,6 +224,164 @@
       QrcodeVue
     },
     methods: {
+      /*实名认证*/
+      realName(){
+        this.$router.push({
+          path:'/realName'
+        })
+      },
+      renzColse(){
+        this.isRenZ=false
+      },
+      swich(row){
+        let config = {
+          headers:{'token':localStorage.getItem('Authorization')}
+        };
+        axios.get(BASE_URL + '/api/user/checkAuthEntication',config).then(res => {
+          if(res.data.code==200){
+            row.status = !row.status
+            if (row.status == true) { //上架
+              let data={
+                id:row.id,
+                type:2
+              }
+              let config = {
+                headers:{'token':localStorage.getItem('Authorization')}
+              };
+              axios.post(BASE_URL+'/api/app/appHandle',qs.stringify(data),config).then(res => {
+                if(res.data.code==200){
+                  let data={
+                    keywords:this.input,
+                    page:this.current,
+                    page_size:10,
+                  }
+                  let config = {
+                    headers:{'token':localStorage.getItem('Authorization')}
+                  };
+                  axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
+                    this.total=res.data.data.total
+                    this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
+                    this.tableData=res.data.data.list
+                    // console.log(res.data.data)
+                  }, err => {
+                    // console.log(err)
+                  })
+                }else{
+                  this.$message.error(res.data.msg);
+                }
+
+              }, err => {
+                // console.log(err)
+              })
+            } else { //下架
+              let data={
+                id:row.id,
+                type:3
+              }
+              let config = {
+                headers:{'token':localStorage.getItem('Authorization')}
+              };
+              axios.post(BASE_URL+'/api/app/appHandle',qs.stringify(data),config).then(res => {
+                let data={
+                  keywords:this.input,
+                  page:this.current,
+                  page_size:10,
+                }
+                let config = {
+                  headers:{'token':localStorage.getItem('Authorization')}
+                };
+                axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
+                  // console.log(res.data.data)
+                  this.total=res.data.data.total
+                  this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
+                  this.tableData=res.data.data.list
+                }, err => {
+                  // console.log(err)
+                })
+              }, err => {
+                // console.log(err)
+              })
+            }
+          }else if(res.data.code==0){
+            /*this.$message.error(res.data.msg);*/
+            this.isRenZ=true
+          }else if(res.data.code==1){
+            this.$message.error(res.data.msg);
+          }else if(res.data.code==2){
+            this.$message.error(res.data.msg);
+          }else if(res.data.code==3){
+            this.isRenZ=true
+            row.status = !row.status
+            if (row.status == true) { //上架
+              let data={
+                id:row.id,
+                type:2
+              }
+              let config = {
+                headers:{'token':localStorage.getItem('Authorization')}
+              };
+              axios.post(BASE_URL+'/api/app/appHandle',qs.stringify(data),config).then(res => {
+                if(res.data.code==200){
+                  let data={
+                    keywords:this.input,
+                    page:this.current,
+                    page_size:10,
+                  }
+                  let config = {
+                    headers:{'token':localStorage.getItem('Authorization')}
+                  };
+                  axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
+                    this.total=res.data.data.total
+                    this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
+                    this.tableData=res.data.data.list
+                    // console.log(res.data.data)
+                  }, err => {
+                    // console.log(err)
+                  })
+                }else{
+                  this.$message.error(res.data.msg);
+                }
+
+              }, err => {
+                // console.log(err)
+              })
+            } else { //下架
+              let data={
+                id:row.id,
+                type:3
+              }
+              let config = {
+                headers:{'token':localStorage.getItem('Authorization')}
+              };
+              axios.post(BASE_URL+'/api/app/appHandle',qs.stringify(data),config).then(res => {
+                let data={
+                  keywords:this.input,
+                  page:this.current,
+                  page_size:10,
+                }
+                let config = {
+                  headers:{'token':localStorage.getItem('Authorization')}
+                };
+                axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
+                  // console.log(res.data.data)
+                  this.total=res.data.data.total
+                  this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
+                  this.tableData=res.data.data.list
+                }, err => {
+                  // console.log(err)
+                })
+              }, err => {
+                // console.log(err)
+              })
+            }
+          }
+        }, err => {
+          // console.log(err)
+        })
+
+
+
+      },
       tableTr(row){
         // console.log(row)
         // console.log(row)
@@ -213,10 +397,15 @@
           }
         })
       },
-      handleEdit(url){
-        this.isMask = true
-        this.value=url
-        this.urlAddress=url
+      handleEdit(url,status){
+        if(status==0){
+          this.$message.error('应用已下架');
+        }else{
+          this.isMask = true
+          this.value=url
+          this.urlAddress=url
+        }
+
       },
       seachInput(){
         let data={
@@ -642,6 +831,20 @@
     left: 0;
     opacity: 0;
     z-index: -10;
+  }
+  .conmask{
+    width: 800px;
+    height: auto;
+    border-radius: 8px;
+    background-color: white;
+  }
+  .conmaskOne{
+    width: 95%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
   }
 </style>
 <style>

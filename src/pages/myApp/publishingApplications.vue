@@ -104,17 +104,17 @@
           </div>
 
         </div>
-        <div class="supplementThird2">
-          <p>是否启用</p>
-          <div style="margin-top: 10px">
-            <el-switch
-              v-model="switchValue"
-              active-color="#06B2B6"
-              inactive-color="#999999"
-              @change="swich">
-            </el-switch>
-          </div>
-        </div>
+        <!--<div class="supplementThird2">-->
+          <!--<p>是否启用</p>-->
+          <!--<div style="margin-top: 10px">-->
+            <!--<el-switch-->
+              <!--v-model="switchValue"-->
+              <!--active-color="#06B2B6"-->
+              <!--inactive-color="#999999"-->
+              <!--@change="swich">-->
+            <!--</el-switch>-->
+          <!--</div>-->
+        <!--</div>-->
         <div class="supplementThird2">
           <p>app守护</p>
           <div style="margin-top: 10px;display: flex">
@@ -368,7 +368,7 @@
         icon1:'',
         judgeMoney:'',
         gengxing:1,
-        newState:1,
+        newState:0,
         type:1,
         shouhuApp:'',
       }

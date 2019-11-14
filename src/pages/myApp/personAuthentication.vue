@@ -7,22 +7,22 @@
       <el-form-item label="手机号码" prop="mobile">
         <div class="phone-router">
           <div class="phone-color">{{phone}}</div>
-          <div class="phone-button">
-            <el-button @click="updateRouter">修改</el-button>
-          </div>
+          <!--<div class="phone-button">-->
+            <!--<el-button @click="updateRouter">修改</el-button>-->
+          <!--</div>-->
         </div>
       </el-form-item>
-      <el-form-item label="邮箱地址" prop="email">
-        <el-input clearable v-model="form.email" placeholder="请输入邮箱地址"></el-input>
-      </el-form-item>
-      <el-form-item label="" prop="captcha">
-        <div class="email-code">
-          <el-input clearable v-model="form.captcha" placeholder="请填写邮箱验证码"></el-input>
-          <el-button plain :disabled="scopeBoolean" class="col-email-code-button" @click="emailCaptcha">
-            {{emailCapCode}}
-          </el-button>
-        </div>
-      </el-form-item>
+      <!--<el-form-item label="邮箱地址" prop="email">-->
+        <!--<el-input clearable v-model="form.email" placeholder="请输入邮箱地址"></el-input>-->
+      <!--</el-form-item>-->
+      <!--<el-form-item label="" prop="captcha">-->
+        <!--<div class="email-code">-->
+          <!--<el-input clearable v-model="form.captcha" placeholder="请填写邮箱验证码"></el-input>-->
+          <!--<el-button plain :disabled="scopeBoolean" class="col-email-code-button" @click="emailCaptcha">-->
+            <!--{{emailCapCode}}-->
+          <!--</el-button>-->
+        <!--</div>-->
+      <!--</el-form-item>-->
       <el-form-item label="身份证图片">
         <div class="card-img">
           <div class="card-text">{{text}}</div>
@@ -90,6 +90,9 @@
 </template>
 
 <script>
+  import {BASE_URL} from "../../api";
+  import  axios from 'axios'
+  import qs from 'qs'
   import {UPLOAD_BASE_URL} from '../../api/index'
     export default {
         name: "personAuthentication",
@@ -100,8 +103,8 @@
             text: '应监管部门要求，网上发布APP必须进行实名登记， 我们采用了高于行业标准的要求来保障您的信息安全，为了进一步的保护您的个人信息，建议您在上传的实名信息中添加水印文字-仅供木木云实名认证使用。',
             msg: '请使用与账号信息中的手机号码一致的身份证信息提交认证。',
             form: {
-              email: '',
-              captcha: '',
+              // email: '',
+              // captcha: '',
               identityfront: '',
               identityback: '',
               identityhold: '',
@@ -109,12 +112,12 @@
             scopeBoolean: false,
             offet: true,
             rules: {
-              email: [
-                {required: true, message: '请填写邮箱地址', trigger: 'blur'}
-              ],
-              captcha: [
-                {required: true, message: '请填写邮箱验证码', trigger: 'blur'}
-              ],
+              // email: [
+              //   {required: true, message: '请填写邮箱地址', trigger: 'blur'}
+              // ],
+              // captcha: [
+              //   {required: true, message: '请填写邮箱验证码', trigger: 'blur'}
+              // ],
             },
             phone: '',
             emailCapCode: '获取邮箱验证码',
@@ -123,6 +126,9 @@
             identityhold: '',
             timer: null,
           }
+      },
+      mounted(){
+          this.phone = localStorage.getItem('newmobile');
       },
       methods:{
         //验证码定时器
@@ -177,22 +183,35 @@
                 });
                 return false;
               }
-              json = {
+             json = {
                 identityfront: this.form.identityfront,
                 mobile: this.phone,
-                email: this.form.email,
                 identityback: this.form.identityback,
                 identityhold: this.form.identityhold,
                 captcha: this.form.captcha,
                 type: 1
               };
-              http('/api/user/authentication', 'post', json).then(res => {
+              let config = {
+                headers: {'token': localStorage.getItem('Authorization')}
+              };
+              axios.post(BASE_URL+'/api/user/authentication',qs.stringify(json),config).then(res => {
+                if(res.data.code === 0){
+                  this.$message({
+                    message: res.data.msg,
+                    type: 'warning',
+                    duration: 1500
+                  });
+                  return;
+                }
                 this.$message({
                   message: '提交成功',
                   type: 'success',
                   duration: 1500
                 });
-                this.$router.push('/realName/completeCertification');
+                // this.$router.push('/realName/completeCertification');
+                console.log(res.data)
+              }, err => {
+                console.log(err)
               })
             } else {
               return false;

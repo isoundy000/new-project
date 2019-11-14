@@ -5,6 +5,7 @@
 export default{
   balance:"",
   userName:'',
+  newmobile:'',
   count:0,
   Authorization: localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : ''
 }

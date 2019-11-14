@@ -16,6 +16,10 @@ export default {
     state.userName=userName
     localStorage.setItem('userName', userName);
   },
+  set_newmobile(state,newmobile){
+    state.newmobile=newmobile
+    localStorage.setItem('newmobile', newmobile);
+  },
   del_token(state) {
     state.Authorization = null
     state.userName=''

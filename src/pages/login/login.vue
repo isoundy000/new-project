@@ -320,6 +320,7 @@
               _this.userToken =  res.data.data.userinfo.token;
               var balance= res.data.data.userinfo.money
               var username= res.data.data.userinfo.username
+              var newmobile= res.data.data.userinfo.mobile
               this.$Modal.success({
                 title: '成功',
                 content: '登录成功',
@@ -327,6 +328,7 @@
                   _this.changeLogin({ Authorization: _this.userToken });
                   this.$store.commit('set_money',balance)
                   this.$store.commit('set_userName',username)
+                  this.$store.commit('set_newmobile',newmobile)
                   this.$router.push({
                     path:'/superSignatureAread'
                   })
@@ -372,6 +374,7 @@
             this.userToken =  res.data.data.token;
             var balance= res.data.data.money
             var username= res.data.data.mobile
+            var newmobile= res.data.data.mobile
             this.$Modal.success({
               title: '成功',
               content: '登录成功',
@@ -380,6 +383,7 @@
                 this.$store.commit('set_count',100)
                 this.$store.commit('set_money',balance)
                 this.$store.commit('set_userName',username)
+                this.$store.commit('set_newmobile',newmobile)
                 this.$router.push({
                   path:'/superSignatureAread'
                 })
