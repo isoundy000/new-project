@@ -69,7 +69,7 @@
           </div>
 
         </div>
-        <div class="supplementThird2">
+        <!--<div class="supplementThird2">
           <p>app守护</p>
           <div style="margin-top: 10px;display: flex">
             <div class="liji">
@@ -85,7 +85,7 @@
           </div>
           <p style="margin-top: 10px">(免费试用，可防止账号被封等意外情况导致的应用掉签闪退,开启后打开应用需访问用户的vpn权限)</p>
 
-        </div>
+        </div>-->
         <div class="supplementThird2">
           <p>更新功能</p>
           <div style="margin-top: 10px">
@@ -353,7 +353,7 @@
             newState:0,
             gengxing:1,
             sub_domain:'',
-            shouhuApp:'',
+            shouhuApp:0,
           }
       },
       methods:{

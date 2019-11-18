@@ -26,6 +26,9 @@
 </template>
 
 <script>
+  import {BASE_URL} from "../../api";
+  import  axios from 'axios'
+  import qs from 'qs'
   import Bfooter from '../component/footer'
     export default {
         name: "realName",
@@ -39,9 +42,39 @@
       },
       methods:{
         personal(){
-          this.$router.push({
-            path:'/personAuthentication'
+          let data={
+            type:2
+          }
+          let config = {
+            headers: {'token': localStorage.getItem('Authorization')}
+          };
+          axios.post(BASE_URL + '/api/user/checkAuthEntication',data,config).then(res => {
+            if(res.data.code==200){
+              this.$router.push({
+                path:'/examine'
+              })
+            }else if(res.data.code==0){
+              this.$router.push({
+                path:'/personAuthentication'
+              })
+            }else if(res.data.code==1){
+               this.$message.error(res.data.msg);
+            }else if(res.data.code==2){
+              this.$message.error(res.data.msg);
+              this.$router.push({
+                path:'/personAuthentication'
+              })
+            }else if(res.data.code==3){
+              this.$message.error('审核中');
+            }
+          }, err => {
+            this.$message.error('系统报错');
+            console.log(err)
           })
+
+
+
+
         },
         enterprise(){
           this.$router.push({

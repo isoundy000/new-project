@@ -329,7 +329,9 @@
         <div class="problemImg">
         <img src="../../../static/image/superSignature/wenti.png" alt="">
         </div>
-
+          <!--<div style="width: 100%;display: flex;justify-content: center;margin-top: 30px;color: black">-->
+            <!--<p>平顶山市鑫达科技有限公司</p>-->
+          <!--</div>-->
         </div>
         <!--<Bfooter></Bfooter>-->
         </div>

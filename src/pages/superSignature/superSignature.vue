@@ -286,8 +286,8 @@
       <div class="problemImg">
         <img src="../../../static/image/superSignature/wenti.png" alt="">
       </div>
-      <!--<div style="width: 100%;display: flex;justify-content: center;margin-top: 30px;color: white">-->
-        <!--<p>武汉软件开发公司|武汉软件定制|武汉APP开发|武汉APP定制|武汉微信公众号/小程序开发-麦诺软创</p>-->
+      <!--<div style="width: 100%;display: flex;justify-content: center;margin-top: 30px;color: black">-->
+        <!--<p>平顶山市鑫达科技有限公司</p>-->
       <!--</div>-->
     </div>
 

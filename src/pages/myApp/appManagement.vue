@@ -136,7 +136,7 @@
         </el-table-column>
         <el-table-column
           prop="status"
-          label="状态"
+          label="上下架状态"
           >
           <template slot-scope="scope">
             <!--<span v-if="scope.row.status=== 1" style="color: #43A047">分发中</span>-->

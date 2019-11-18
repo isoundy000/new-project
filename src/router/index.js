@@ -26,6 +26,7 @@ import billInvest from '@/pages/myApp/billInvest'//我的应用--账单管理--�
 import publishingApplications from '@/pages/myApp/publishingApplications'//我的应用--发布路由
 import realName from '@/pages/myApp/realName'//我的应用--实名认证
 import personal from '@/pages/myApp/personal'
+import examine from '@/pages/myApp/examine'
 
 import personAuthentication from '@/pages/myApp/personAuthentication'//我的应用--实名认证--个人认证
 import enterpriseAuthentication from '@/pages/myApp/enterpriseAuthentication'//我的应用--实名认证--企业认证
@@ -320,6 +321,12 @@ const router = new Router({
       name: 'down',
       component: down,
     },
+    {
+      path: '/examine',
+      name: 'examine',
+      component: examine,
+    },
+
     {
       path: '/pay',
       name: 'pay',

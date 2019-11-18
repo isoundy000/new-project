@@ -1,17 +1,27 @@
 <template>
   <div class="personalCertificate">
+    <div class="firstDiv">
+      <div class="firstDiv_small">
+        <img src="../../../static/image/survey/shouye@2x.png" alt="">
+        <p>您当前位置：</p>
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item :to="{ path: '/superSignatureAread' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/survey' }">实名认证</el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
+    </div>
     <div class="promptMessage">
-      <p><i class="el-icon-warning"></i>{{msg}}</p>
+      <!--<p><i class="el-icon-warning"></i>{{msg}}</p>-->
     </div>
     <el-form :rules="rules" ref="form" label-width="134px" :model="form" class="demo-form form-message">
-      <el-form-item label="手机号码" prop="mobile">
-        <div class="phone-router">
-          <div class="phone-color">{{phone}}</div>
+      <!--<el-form-item label="手机号码" prop="mobile">-->
+        <!--<div class="phone-router">-->
+          <!--<div class="phone-color">{{phone}}</div>-->
           <!--<div class="phone-button">-->
             <!--<el-button @click="updateRouter">修改</el-button>-->
           <!--</div>-->
-        </div>
-      </el-form-item>
+        <!--</div>-->
+      <!--</el-form-item>-->
       <!--<el-form-item label="邮箱地址" prop="email">-->
         <!--<el-input clearable v-model="form.email" placeholder="请输入邮箱地址"></el-input>-->
       <!--</el-form-item>-->
@@ -93,15 +103,15 @@
   import {BASE_URL} from "../../api";
   import  axios from 'axios'
   import qs from 'qs'
-  import {UPLOAD_BASE_URL} from '../../api/index'
+  import {REN_BASE_URL} from '../../api/index'
     export default {
         name: "personAuthentication",
       data(){
           return{
-            action: `${UPLOAD_BASE_URL}`,
+            action: `${REN_BASE_URL}`,
             active: 1,
             text: '应监管部门要求，网上发布APP必须进行实名登记， 我们采用了高于行业标准的要求来保障您的信息安全，为了进一步的保护您的个人信息，建议您在上传的实名信息中添加水印文字-仅供木木云实名认证使用。',
-            msg: '请使用与账号信息中的手机号码一致的身份证信息提交认证。',
+            // msg: '请使用与账号信息中的手机号码一致的身份证信息提交认证。',
             form: {
               // email: '',
               // captcha: '',
@@ -119,7 +129,7 @@
               //   {required: true, message: '请填写邮箱验证码', trigger: 'blur'}
               // ],
             },
-            phone: '',
+            // phone: '',
             emailCapCode: '获取邮箱验证码',
             identityfront: '',
             identityback: '',
@@ -128,7 +138,7 @@
           }
       },
       mounted(){
-          this.phone = localStorage.getItem('newmobile');
+          // this.phone = localStorage.getItem('newmobile');
       },
       methods:{
         //验证码定时器
@@ -173,6 +183,12 @@
         refer(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
+              const loading = this.$loading({
+                lock: true,
+                text: '拼命认证中',
+                spinner: 'el-icon-loading',
+                background: 'rgba(0, 0, 0, 0.7)'
+              });
               let json,
                 imgMsg = this.form.identityfront == '' && '请上传身份证正面照片' || this.form.identityback == '' && '请上传身份证反面照片' || this.form.identityhold == '' && '请上传手持身份证照片';
               if (imgMsg.length > 0) {
@@ -185,10 +201,8 @@
               }
              json = {
                 identityfront: this.form.identityfront,
-                mobile: this.phone,
                 identityback: this.form.identityback,
                 identityhold: this.form.identityhold,
-                captcha: this.form.captcha,
                 type: 1
               };
               let config = {
@@ -208,7 +222,8 @@
                   type: 'success',
                   duration: 1500
                 });
-                // this.$router.push('/realName/completeCertification');
+                loading.close();
+                this.$router.push('/examine');
                 console.log(res.data)
               }, err => {
                 console.log(err)
@@ -335,7 +350,8 @@
 </style>
 <style lang="less" scoped>
   .form-message {
-    margin-top: 35px;
+    width: 1200px;
+    margin: 35px auto 0 auto;
     padding: 0 104px 0 75px;
   }
 
@@ -414,6 +430,7 @@
     flex-direction: row;
     text-align: center;
     padding-left: 50px;
+    justify-content: space-around;
   .contact-hold {
   p {
     padding: 20px 0 40px 0;
@@ -446,10 +463,44 @@
   }
 
   .enterprise-refer {
-    background: rgba(88, 118, 240, 1);
-    border: 1px solid rgba(88, 118, 240, 1);
+    background-color: #06B2B6;
+    border: 1px solid #06B2B6;
     color: #ffffff;
   }
 
+  }
+  .firstDiv {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .firstDiv_small {
+    width: 78%;
+    height: 30px;
+    margin-top: 30px;
+    border-bottom: 1px solid #06B2B6;
+    display: flex;
+    align-items: center;
+    color: #999999;
+  }
+
+  .firstDiv_small img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .firstDiv_small p {
+    margin-left: 21px;
+  }
+  .secondDiv{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 150px;
+    margin-bottom: 150px;
+  }
+  .secondDiv p{
+    margin-top: 25px;
   }
 </style>
