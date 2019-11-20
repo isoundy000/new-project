@@ -1,55 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import superSignature from '@/pages/superSignature/superSignature'
-import superSignatureAread from '@/pages/superSignature/superSignatureAread'
-import login from '@/pages/login/login'//登录路由
-import register from '@/pages/register/register'//注册路由
-import forget from '@/pages/forget/forget'//忘记密码路由
-import myApp from '@/pages/myApp/myApp'//我的应用
-import survey from '@/pages/myApp/survey'//我的应用--概况路由
-import appManagement from '@/pages/myApp/appManagement'//我的应用--应用管理路由
-import appManagementDetail from '@/pages/myApp/appManagementDetail'//我的应用--应用管理查看详情路由
-import applicationProfile from '@/pages/myApp/applicationProfile'//我的应用--应用管理--应用简介路由
-import versionRecord from '@/pages/myApp/versionRecord'//我的应用--应用管理--版本记录路由
-import downLoadRecord from '@/pages/myApp/downLoadRecord'//我的应用--应用管理--下载记录路由
-import consumptionRecord from '@/pages/myApp/consumptionRecord'//我的应用--应用管理--消费记录路由
-import buqianRecord from '@/pages/myApp/buqianRecord'//我的应用--应用管理--补签消费记录路由
-import abnormal from '@/pages/myApp/abnormal'//我的应用--应用管理--异常报警路由
-import applicationMerge from '@/pages/myApp/applicationMerge'//我的应用--应用管理--应用合并路由
-import messagePush from '@/pages/myApp/messagePush'//我的应用--应用管理--消息推送路由
-
-import statistics from '@/pages/myApp/statistics'//我的应用--应用管理--统计路由
-import billManagement from '@/pages/myApp/billManagement'//我的应用--账单管理路由
-import billConsumptionRecord from '@/pages/myApp/billConsumptionRecord'//我的应用--账单管理--消费记录路由
-import billInvest from '@/pages/myApp/billInvest'//我的应用--账单管理--充值记录路由
-import publishingApplications from '@/pages/myApp/publishingApplications'//我的应用--发布路由
-import realName from '@/pages/myApp/realName'//我的应用--实名认证
-import personal from '@/pages/myApp/personal'
-import examine from '@/pages/myApp/examine'
-
-import personAuthentication from '@/pages/myApp/personAuthentication'//我的应用--实名认证--个人认证
-import enterpriseAuthentication from '@/pages/myApp/enterpriseAuthentication'//我的应用--实名认证--企业认证
-import updateApplication from '@/pages/myApp/updateApplication'//我的应用--更新应用
-import enterprise from '@/pages/myApp/enterprise'//企业签名
-import enterprisePubish from '@/pages/myApp/enterprisePubish'//企业签名-发布应用
-import encapsulationindex from '@/pages/encapsulation/encapsulationindex'//应用封装
-import applist from '@/pages/encapsulation/applist'//应用封装-列表
-import noFlash from '@/pages/encapsulation/noFlash'//应用封装-苹果无闪退
-import ordinary from '@/pages/encapsulation/ordinary'//应用封装-普通封装
-import ordinaryInformation from '@/pages/encapsulation/ordinaryInformation'//应用封装-普通封装-基本信息
-import ordinaryIcon from '@/pages/encapsulation/ordinaryIcon'//应用封装-普通封装-上传图标
-import ordinaryConfig from '@/pages/encapsulation/ordinaryConfig'//应用封装-普通封装-配置插件
-import ordinaryChoose from '@/pages/encapsulation/ordinaryChoose'//应用封装-普通封装-选择套餐
-import ordinaryDownApp from '@/pages/encapsulation/ordinaryDownApp'//应用封装-普通封装-下载应用
-
-
-
-
-import down from '@/pages/down/down'//下载页面
-import pay from '@/pages/pay/pay'//支付页面
-
-
 
 Vue.use(Router)
 
@@ -59,7 +9,7 @@ const router = new Router({
     {
       path: '/',
       name: 'superSignature',
-      component: superSignature,  //没登录进来的页面
+      component: () => import('@/pages/superSignature/superSignature'), //登录
       meta: {
         requireAuth: false
       }
@@ -67,7 +17,7 @@ const router = new Router({
     {
       path: '/superSignatureAread',
       name: 'superSignatureAread',
-      component: superSignatureAread, //登录成功后看到的页面
+      component: () => import('@/pages/superSignature/superSignatureAread'), //登录
       meta: {
         requireAuth: true
       }
@@ -75,22 +25,22 @@ const router = new Router({
     {
       path: '/login',
       name: 'login',
-      component: login
+      component: () => import('@/pages/login/login'), //登录
     },
     {
       path: '/register',
       name: 'register',
-      component: register
+      component: () => import('@/pages/register/register'),
     },
     {
       path: '/forget',
       name: 'forget',
-      component: forget
+      component: () => import('@/pages/forget/forget'),
     },
     {
       path: '/myApp',
       name: 'myApp',
-      component: myApp,
+      component: () => import('@/pages/myApp/myApp'),
       meta: {
         requireAuth: true
       },
@@ -98,17 +48,17 @@ const router = new Router({
         {
           path: '/survey',
           name: 'survey',
-          component: survey
+          component: () => import('@/pages/myApp/survey'),
         },
         {
           path: '/appManagement',
           name: 'appManagement',
-          component: appManagement
+          component: () => import('@/pages/myApp/appManagement'),
         },
         {
           path: '/appManagementDetail',
           name: 'appManagementDetail',
-          component: appManagementDetail,
+          component: () => import('@/pages/myApp/appManagementDetail'),
           meta: {
             requireAuth: true
           },
@@ -116,61 +66,61 @@ const router = new Router({
             {
               path: '/',
               name: 'applicationProfile',
-              component: applicationProfile
+              component: () => import('@/pages/myApp/applicationProfile'),
 
             },
             {
               path: '/versionRecord',
               name: 'versionRecord',
-              component: versionRecord
+              component: () => import('@/pages/myApp/versionRecord'),
 
             },
             {
               path: '/downLoadRecord',
               name: 'downLoadRecord',
-              component: downLoadRecord
+              component: () => import('@/pages/myApp/downLoadRecord'),
 
             },
             {
               path: '/consumptionRecord',
               name: 'consumptionRecord',
-              component: consumptionRecord
+              component: () => import('@/pages/myApp/consumptionRecord'),
 
             },
             {
               path: '/buqianRecord',
               name: 'buqianRecord',
-              component: buqianRecord
+              component: () => import('@/pages/myApp/buqianRecord'),
 
             },
             {
               path: '/statistics',
               name: 'statistics',
-              component: statistics
+              component: () => import('@/pages/myApp/statistics'),
 
             },
             {
               path: '/abnormal',
               name: 'abnormal',
-              component: abnormal
+              component: () => import('@/pages/myApp/abnormal'),
 
             },
             {
               path: '/applicationMerge',
               name: 'applicationMerge',
-              component: applicationMerge
+              component: () => import('@/pages/myApp/applicationMerge'),
             },
             {
               path: '/messagePush',
               name: 'messagePush',
-              component: messagePush
+              component: () => import('@/pages/myApp/messagePush'),
             },
           ]
         },
         {
           path: '/updateApplication',
           name: 'updateApplication',
-          component: updateApplication,
+          component: () => import('@/pages/myApp/updateApplication'),
           meta: {
             requireAuth: true
           }
@@ -178,7 +128,7 @@ const router = new Router({
         {
           path: '/billManagement',
           name: 'billManagement',
-          component: billManagement,
+          component: () => import('@/pages/myApp/billManagement'),
           meta: {
             requireAuth: true
           },
@@ -186,19 +136,19 @@ const router = new Router({
             {
               path: '/',
               name: 'billManagement',
-              component: billConsumptionRecord,
+              component: () => import('@/pages/myApp/billConsumptionRecord'),
             },
             {
               path: '/billInvest',
               name: 'billInvest',
-              component: billInvest,
+              component: () => import('@/pages/myApp/billInvest'),
             }
           ]
         },
         {
           path: '/publishingApplications',
           name: 'publishingApplications',
-          component: publishingApplications,
+          component: () => import('@/pages/myApp/publishingApplications'),
           meta: {
             requireAuth: true
           }
@@ -207,7 +157,7 @@ const router = new Router({
         {
           path: '/personal',
           name: 'personal',
-          component: personal,
+          component: () => import('@/pages/myApp/personal'),
           meta: {
             requireAuth: true
           }
@@ -217,22 +167,22 @@ const router = new Router({
     {
       path: '/realName',
       name: 'realName',
-      component: realName,
+      component: () => import('@/pages/myApp/realName'),
     },
     {
       path: '/enterpriseAuthentication',
       name: 'enterpriseAuthentication',
-      component: enterpriseAuthentication,
+      component: () => import('@/pages/myApp/enterpriseAuthentication'),
     },
     {
       path: '/personAuthentication',
       name: 'personAuthentication',
-      component: personAuthentication,
+      component: () => import('@/pages/myApp/personAuthentication'),
     },
     {
       path: '/enterprise',
       name: 'enterprise',
-      component: enterprise,
+      component: () => import('@/pages/myApp/enterprise'),
       meta: {
         requireAuth: true
       }
@@ -240,7 +190,7 @@ const router = new Router({
     {
       path: '/enterprisePubish',
       name: 'enterprisePubish',
-      component: enterprisePubish,
+      component: () => import('@/pages/myApp/enterprisePubish'),
       meta: {
         requireAuth: true
       }
@@ -248,7 +198,7 @@ const router = new Router({
     {
       path: '/encapsulationindex',
       name: 'encapsulationindex',
-      component: encapsulationindex,
+      component: () => import('@/pages/encapsulation/encapsulationindex'),
       meta: {
         requireAuth: true
       },
@@ -256,22 +206,22 @@ const router = new Router({
         {
           path: '/',
           name: 'applist',
-          component: applist,
+          component: () => import('@/pages/encapsulation/applist'),
         },
         {
           path: '/noFlash',
           name: 'noFlash',
-          component: noFlash,
+          component: () => import('@/pages/encapsulation/noFlash'),
         },
         {
           path: '/ordinary',
           name: 'ordinary',
-          component: ordinary,
+          component: () => import('@/pages/encapsulation/ordinary'),
           children:[
             {
               path: '/',
               name: 'ordinaryInformation',
-              component: ordinaryInformation,
+              component: () => import('@/pages/encapsulation/ordinaryInformation'),
               meta: {
                 keepAlive: true
               }
@@ -279,7 +229,7 @@ const router = new Router({
             {
               path: '/ordinaryIcon',
               name: 'ordinaryIcon',
-              component: ordinaryIcon,
+              component: () => import('@/pages/encapsulation/ordinaryIcon'),
               meta: {
                 keepAlive: true
               }
@@ -287,7 +237,7 @@ const router = new Router({
             {
               path: '/ordinaryConfig',
               name: 'ordinaryConfig',
-              component: ordinaryConfig,
+              component: () => import('@/pages/encapsulation/ordinaryConfig'),
               meta: {
                 keepAlive: true
               }
@@ -295,7 +245,7 @@ const router = new Router({
             {
               path: '/ordinaryChoose',
               name: 'ordinaryChoose',
-              component: ordinaryChoose,
+              component: () => import('@/pages/encapsulation/ordinaryChoose'),
               meta: {
                 keepAlive: true
               }
@@ -303,7 +253,7 @@ const router = new Router({
             {
               path: '/ordinaryDownApp',
               name: 'ordinaryDownApp',
-              component: ordinaryDownApp,
+              component: () => import('@/pages/encapsulation/ordinaryDownApp'),
               meta: {
                 keepAlive: true
               }
@@ -319,18 +269,18 @@ const router = new Router({
     {
       path: '/down',
       name: 'down',
-      component: down,
+      component: () => import('@/pages/down/down'),
     },
     {
       path: '/examine',
       name: 'examine',
-      component: examine,
+      component: () => import('@/pages/myApp/examine'),
     },
 
     {
       path: '/pay',
       name: 'pay',
-      component: pay,
+      component: () => import('@/pages/pay/pay'),
     },
 
 

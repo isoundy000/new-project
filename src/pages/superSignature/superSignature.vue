@@ -150,7 +150,7 @@
             <p>1、因机制与企业签名不同，告别掉签</p>
             <p>2、告别掉签风险，只需支付一次获客成本即可</p>
             <p>3、同一台设备下载安装该应用不限制下载次数</p>
-            <p>4、按设备数量收费，仅需<span>￥15.00</span>/每台</p>
+            <p>4、按设备数量收费，仅需<span>￥20.00</span>/每台</p>
           </div>
           <div>
             <img src="../../../static/image/superSignature/tu@2x.png" alt="">
@@ -189,7 +189,7 @@
             </div>
             <div class="serviceSmall">
               <div></div>
-              <p>每台设备<span>￥15.00</span>/每台</p>
+              <p>每台设备<span>￥20.00</span>/每台</p>
             </div>
           </div>
         </div>
@@ -367,6 +367,12 @@
       }, err => {
         // console.log(err)
       })
+      /*jiage*/
+      /*axios.get(BASE_URL+'/api/index/getConfig/name/rate',config1).then(res => {
+        console.log(res.data)
+      }, err => {
+        // console.log(err)
+      })*/
     },
     methods: {
       ok(){

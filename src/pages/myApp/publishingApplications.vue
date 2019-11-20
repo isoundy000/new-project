@@ -558,9 +558,7 @@
       submission(){
       //  alert(this.filesize)
         // this.active = 3
-        if(this.newappchoose1==false && this.newappchoose2==false){
-          this.$message.error('请勾选app守护');
-        }else{
+
           const loading = this.$loading({
             lock: true,
             text: '拼命签名中',
@@ -620,7 +618,7 @@
             this.$message.error('系统报错');
             // console.log(err)
           })
-        }
+
 
 
       }
