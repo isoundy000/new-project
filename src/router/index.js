@@ -282,6 +282,12 @@ const router = new Router({
       name: 'pay',
       component: () => import('@/pages/pay/pay'),
     },
+    {
+      path: '/privatePool',
+      name: 'privatePool',
+      component: () => import('@/pages/privatePool/privatePool'),
+
+    }
 
 
 

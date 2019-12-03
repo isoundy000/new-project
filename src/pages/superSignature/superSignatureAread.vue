@@ -31,6 +31,9 @@
 
       <div @click="ok" class="queOk" slot="footer" >确认</div>
     </Modal>
+    <div class="shougou">
+      <img src="../../../static/image/superSignature/shougou.png" alt="">
+    </div>
     <div class="qqBig">
       <div class="qq">
         <img class="qqtouxiang" src="../../../static/image/superSignature/ren.png" alt="">
@@ -365,6 +368,10 @@
                 isclass: true
               },
               {
+                msg: '私有池',
+                isclass: false
+              },
+              {
                 msg: '专属签名',
                 isclass: false
               },
@@ -524,18 +531,22 @@
        if (index == 0) {
           // alert("点击了超级签名")
         } else if (index == 1) {
+         this.$router.push({
+           name:'privatePool'
+         })
+       } else if (index == 2) {
           // alert("点击了专属签名")
-        } else if (index == 2) {
+        } else if (index == 3) {
           // alert("点击了企业签名")
          this.$router.push({
            name:'enterprise'
          })
-        } else if (index == 3) {
+        } else if (index == 4) {
         // alert("点击了应用封装")
          this.$router.push({
            name:'applist'
          })
-       } else if (index == 4) {
+       } else if (index == 5) {
            // alert("点击了购买服务")
          this.$router.push({
            name:'myApp',
@@ -543,7 +554,7 @@
              newid: 0
            }
          })
-        } else if (index ==5) {
+        } else if (index ==6) {
          const h = this.$createElement;
          this.$msgbox({
            message: h('p', null, [
@@ -1510,6 +1521,15 @@
     border-radius: 10px;
     margin-top: 35px;
     cursor: pointer;
+  }
+  .shougou{
+    position: absolute;
+    top: 25%;
+    right: 1.6%;
+    z-index: 9999;
+  }
+  .shougou img{
+    width: 120px;
   }
   .qqBig{
     position: absolute;

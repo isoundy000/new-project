@@ -104,6 +104,32 @@
           </div>
 
         </div>
+        <div class="supplementThird2 zhanghaochi">
+          <div style="display: flex;align-items: center">
+            <p style="width: 70px">账号池</p>
+            <img style="margin-left: 2px;width: 20px;height: 20px" @click="help3" @mouseleave="helpleave3()" src="../../../static/image/superSignature/help.png" alt="">
+          </div>
+          <div>
+            <div style="margin-top: 15px;display: flex">
+              <div class="liji">
+                <img  v-if="zhanghchoose1" src="../../../static/image/superSignature/danxuan.png" alt="">
+                <img @click="zhang1" v-else src="../../../static/image/superSignature/danweixuan.png" alt="">
+                <p>公有池</p>
+              </div>
+              <div class="liji" style="margin-left: 20px">
+                <img  v-if="zhanghchoose2" src="../../../static/image/superSignature/danxuan.png" alt="">
+                <img @click="zhang2" v-else src="../../../static/image/superSignature/danweixuan.png" alt="">
+                <p>私有池</p>
+              </div>
+            </div>
+          </div>
+          <div v-if="tishi3" class="kuang3" style="background-image: url('../../../static/image/superSignature/tishikuang.png')">
+            <span style="width: 285px;margin-left: 36px">
+              选择[公有账号池]将使用本站提供的苹果个人开发者账号用于签名，无需自行提供个人开发者账号。选择[私有账号池]，需自行提供个人开发者账号。
+            </span>
+          </div>
+
+        </div>
         <!--<div class="supplementThird2">-->
           <!--<p>是否启用</p>-->
           <!--<div style="margin-top: 10px">-->
@@ -307,6 +333,8 @@
     name: "publishingApplications",
     data() {
       return {
+        zhanghchoose1:true,
+        zhanghchoose2:false,
         newappchoose1:false,
         newappchoose2:false,
         newappswitchValue:true,
@@ -317,6 +345,7 @@
         upload_url:'',
         tishi:false,
         tishi1:false,
+        tishi3:false,
         push_type:0,
         choose:false,
         choose1:false,
@@ -330,7 +359,7 @@
         thirdInput2:'',
         textarea:'',
         textarea1:'',
-        limitCount:2,
+        limitCount:4,
         disInput:false,
         hideUpload: false,
         dialogImageUrl: '',
@@ -377,6 +406,14 @@
 
     },
     methods: {
+      zhang1(){
+        this.zhanghchoose1=true
+        this.zhanghchoose2=false
+      },
+      zhang2(){
+        this.zhanghchoose1=false
+        this.zhanghchoose2=true
+      },
       /*app守护*/
       newapp1(){
         this.newappchoose1=true
@@ -412,11 +449,17 @@
       help(){
         this.tishi=!this.tishi
       },
+      help3(){
+        this.tishi3=!this.tishi3
+      },
       help1(){
         this.tishi1=!this.tishi1
       },
       helpleave1(){
         this.tishi1=false
+      },
+      helpleave3(){
+        this.tishi3=false
       },
       helpleave(){
         this.tishi=false
@@ -673,7 +716,21 @@
     align-items: center;
     color: #999999;
   }
-
+  .zhanghaochi{
+    height: 80px;
+    position: relative;
+  }
+.kuang3{
+  width: 359px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: -37%;
+  left: 9%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
   .firstDiv_small img {
     width: 18px;
     height: 18px;

@@ -141,7 +141,7 @@
           this.filesize = res.data.data.filesize
           this.version = res.data.data.version_code
           this.time = res.data.data.update_time
-          this.downvalue = window.location.hostname + '/#/down?tag=' + res.data.data.tag
+          this.downvalue ='https://'+ window.location.hostname + '/#/down?tag=' + res.data.data.tag
           this.value = res.data.data.mobileconfig
           this.value1 = res.data.data.oss_path
           this.jixing = res.data.data.platform

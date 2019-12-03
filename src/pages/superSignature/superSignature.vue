@@ -10,7 +10,9 @@
       <div @click="ok" class="queOk" slot="footer" >确认</div>
     </Modal>
 
-
+    <div class="shougou">
+      <img src="../../../static/image/superSignature/shougou.png" alt="">
+    </div>
     <div class="qqBig">
       <div class="qq">
         <img class="qqtouxiang" src="../../../static/image/superSignature/ren.png" alt="">
@@ -317,6 +319,10 @@
           {
             msg: '超级签名',
             isclass: true
+          },
+          {
+            msg: '私有池',
+            isclass: false
           },
           {
             msg: '专属签名',
@@ -1327,6 +1333,15 @@ align-items: center;
     border-radius: 10px;
     margin-top: 35px;
     cursor: pointer;
+  }
+  .shougou{
+    position: absolute;
+    top: 25%;
+    right: 1.6%;
+    z-index: 9999;
+  }
+  .shougou img{
+    width: 120px;
   }
   .qqBig{
     position: absolute;

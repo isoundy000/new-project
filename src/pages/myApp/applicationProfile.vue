@@ -105,7 +105,7 @@
               this.imgList.push(this.list.imgs[i])
             }
           if(this.list.status==0){
-                  this.state='已下架'
+                  this.state='未上架'
                   this.enable='否'
             }else{
               this.state='已上架'
