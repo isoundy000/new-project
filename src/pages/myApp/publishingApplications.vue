@@ -141,23 +141,23 @@
             <!--</el-switch>-->
           <!--</div>-->
         <!--</div>-->
-        <!--<div class="supplementThird2">
-          <p>app守护</p>
-          <div style="margin-top: 10px;display: flex">
-            <div class="liji">
-              <img  v-if="newappchoose1" src="../../../static/image/superSignature/danxuan.png" alt="">
-              <img @click="newapp1" v-else src="../../../static/image/superSignature/danweixuan.png" alt="">
-              <p>开启</p>
-            </div>
-            <div class="liji" style="margin-left: 20px">
-              <img  v-if="newappchoose2" src="../../../static/image/superSignature/danxuan.png" alt="">
-              <img @click="newapp2" v-else src="../../../static/image/superSignature/danweixuan.png" alt="">
-              <p>关闭</p>
-            </div>
-          </div>
-          <p style="margin-top: 10px">(免费试用，可防止账号被封等意外情况导致的应用掉签闪退,开启后打开应用需访问用户的vpn权限)</p>
+      <!--<div class="supplementThird2">-->
+          <!--<p>app守护</p>-->
+          <!--<div style="margin-top: 10px;display: flex">-->
+            <!--<div class="liji">-->
+              <!--<img  v-if="newappchoose1" src="../../../static/image/superSignature/danxuan.png" alt="">-->
+              <!--<img @click="newapp1" v-else src="../../../static/image/superSignature/danweixuan.png" alt="">-->
+              <!--<p>开启</p>-->
+            <!--</div>-->
+            <!--<div class="liji" style="margin-left: 20px">-->
+              <!--<img  v-if="newappchoose2" src="../../../static/image/superSignature/danxuan.png" alt="">-->
+              <!--<img @click="newapp2" v-else src="../../../static/image/superSignature/danweixuan.png" alt="">-->
+              <!--<p>关闭</p>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<p style="margin-top: 10px">(免费试用，可防止账号被封等意外情况导致的应用掉签闪退,开启后打开应用需访问用户的vpn权限)</p>-->
 
-        </div>-->
+        <!--</div>-->
 
         <div class="supplementThird2">
           <p>更新功能</p>
@@ -399,7 +399,7 @@
         gengxing:1,
         newState:0,
         type:1,
-        shouhuApp:0,
+        shouhuApp:'',
       }
     },
     computed: {
@@ -648,7 +648,7 @@
                 path:'/appManagement'
               })
             }else if(res.data.code==0){
-              loading
+              loading.close();
               this.$message.error(res.data.msg);
             }
 

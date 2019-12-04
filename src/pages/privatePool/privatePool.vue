@@ -10,7 +10,7 @@
       <div @click="queren" class="queOk" slot="footer" >支付成功</div>
     </Modal>
     <div class="mask" v-if="isAdd">
-      <div class="maskOne">
+      <div class="maskOne" v-loading="loading">
         <div class="closeDiv">
           <img @click="close" class="guanbi" src="../../../static/image/supersignature/newguanbi.png" alt="">
         </div>
@@ -39,6 +39,35 @@
 
           </div>
           <div class="maskOneSecondMain">
+            <p>备注</p>
+            <el-input
+              class="maskOneSecondInput"
+              placeholder="请输入您的备注"
+              v-model="inputBei"
+            >
+            </el-input>
+
+          </div>
+          <div class="maskOneSecondMain">
+            <p></p>
+            <el-button style="border: 1px solid #06B2B6;color: #06B2B6;margin-left: 15px;width: 136px" :disabled="as" @click="addAccount" :loading="load"  :class="{ backg: isAddAccount }"  >
+              {{buttonValue}}
+            </el-button>
+
+          </div>
+          <div class="maskOneSecondMain" v-if="isPhone">
+            <p>手机号</p>
+            <el-select class="maskOneSecondInput" @change="chooseApp()" value-key="id" v-model="appValue" placeholder="选择手机号">
+              <el-option
+                v-for="item in chooseAppOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+
+          </div>
+          <div class="maskOneSecondMain">
             <p>验证码</p>
             <el-input
               class="maskOneSecondInput1"
@@ -46,24 +75,13 @@
               v-model="inputYan"
             >
             </el-input>
-            <el-button style="border: 1px solid #06B2B6;color: #06B2B6;margin-left: 10px;width: 108px" @click="sendMsg">
+            <el-button style="border: 1px solid #06B2B6;color: #06B2B6;margin-left: 10px;width: 136px" @click="sendMsg" :loading="load1"   v-if="isBtn">
               {{buttonName}}
             </el-button>
           </div>
-          <div class="maskOneSecondMain" v-if="isPhone">
-            <p>手机号</p>
-            <el-select class="maskOneSecondInput" @change="chooseApp()" v-model="appValue" placeholder="选择应用">
-              <el-option
-                v-for="item in chooseAppOptions"
-                :key="item.id"
-                :label="item.value"
-                :value="item.id">
-              </el-option>
-            </el-select>
 
-          </div>
         </div>
-        <div class="submission"><p>提交</p></div>
+        <div class="submission" @click="submission"><p>提交</p></div>
       </div>
     </div>
     <div class="mask" v-if="isRecharge">
@@ -178,7 +196,7 @@
         <div class="secondFooter">
           <div style="display: flex;align-items: center;width: 250px">
             <p style="font-weight: bold">私有池设备量：<span
-              style="display: inline-block;width: 90px;text-align: center">1</span></p>
+              style="display: inline-block;width: 90px;text-align: center">{{private_num}}</span></p>
             <div class="chonghzi" @click="chonghzi">
               <p>充值</p>
             </div>
@@ -193,32 +211,31 @@
           align="center"
           :header-cell-style="{background:'#e0f2fd'}"
         >
-          <el-table-column prop="name" label="Apple ID" align="center">
+          <el-table-column prop="account" label="Apple ID" align="center">
 
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="team_id"
             label="团队ID"
             align="center"
           >
           </el-table-column>
           <el-table-column
-            prop="version_code"
+            prop="cert_id"
             label="证书ID"
             align="center"
           >
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="udid_num"
             label="已用设备"
             align="center"
           >
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="status"
             label="使用状态"
             align="center"
-
           >
             <template slot-scope="scope">
               <div style="display: flex;justify-content: center">
@@ -235,18 +252,22 @@
 
 
           <el-table-column
-            prop="name"
+            prop="cert_status"
             label="证书状态"
             align="center"
           >
+            <template slot-scope="scope">
+              <span v-if="scope.row.cert_status===1" style="color: #06B2B6">启用</span>
+              <span v-if="scope.row.cert_status===0" style="color: #999999">禁用</span>
+            </template>
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="create_time"
             align="center"
             label="添加时间">
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="remark"
             label="备注"
             align="center"
           >
@@ -259,7 +280,7 @@
           >
             <template slot-scope="scope">
               <el-select class="downSum"
-                         @change="allApp(scope.$index,tableData[scope.$index].operation,tableData[scope.$index].id,tableData,tableData[scope.$index].url,tableData[scope.$index].name,tableData[scope.$index].apk_url,tableData[scope.$index].push_type)"
+                         @change="allApp(scope.$index,tableData[scope.$index].id,tableData[scope.$index].operation)"
                          v-model="tableData[scope.$index].operation" placeholder="请选择">
                 <el-option
                   v-for="item in downSumOptions"
@@ -290,6 +311,21 @@
     name: 'privatePool',
     data() {
       return {
+        loading:false,
+        inputBei:'',
+        isAddAccount:false,
+        isBtn:true,
+        as:false,
+        mode:'',
+        mobile_id:"",
+        mobile:'',
+        cookie:'',
+        session_id:'',
+        scnt:'',
+        newdisabled:false,
+        load:false,
+        load1:false,
+        private_num:'',
         order_id:"",
         id:'',
         num:'',
@@ -300,6 +336,7 @@
         inputSheBei: '',
         moneyList: [],
         isRecharge: false,
+        buttonValue:'添加账号',
         buttonName: "获取验证码",
         isDisabled: false,
         time: 10,
@@ -348,17 +385,18 @@
             isclass: false
           }
         ],
-        chooseAppOptions: [],
+        chooseAppOptions:[
+        ],
         downSumOptions: [
           {
             value: '删除',
           }],
         tableData: [
-          {
-            name: '1258dfd6655',
-            version_code: 'dsadasdasd'
-          }
-        ]
+
+        ],
+        yancookie:'',
+        yansession_id:'',
+        yanscnt:'',
       }
     },
     mounted() {
@@ -370,6 +408,7 @@
       axios.get(BASE_URL + '/api/user/index', config).then(res => {
         this.money = res.data.data.money
         this.userName = res.data.data.username
+        this.private_num= res.data.data.private_num
         // console.log(res.data.data)
         localStorage.setItem('balance', res.data.data.money);
         localStorage.setItem('userName', res.data.data.username);
@@ -387,7 +426,7 @@
         this.total_price=res.data.data.total_price
         this.price=res.data.data.price
         this.id=res.data.data.list[0].id
-        console.log(this.moneyList)
+        // console.log(this.moneyList)
       }, err => {
         // console.log(err)
       })
@@ -400,12 +439,100 @@
       }
 
       axios.post(BASE_URL + '/api/account/accountList', data, config).then(res => {
-        console.log(res.data)
+        // console.log(res.data)
+        this.tableData=res.data.data.list
+        this.total=res.data.data.total
+        this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
       }, err => {
         // console.log(err)
       })
     },
     methods: {
+      allApp(index,id,nameValue){
+        if (nameValue == '删除') {
+          this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            let data={
+              id:id,
+              type:1
+            }
+            let config = {
+              headers:{'token':localStorage.getItem('Authorization')}
+            };
+            axios.post(BASE_URL+'/api/account/accountHandle',qs.stringify(data),config).then(res => {
+              let data={
+                keywords:this.input,
+                page:1,
+                page_size:10,
+              }
+              let config = {
+                headers:{'token':localStorage.getItem('Authorization')}
+              };
+              axios.post(BASE_URL+'/api/account/accountList',qs.stringify(data),config).then(res => {
+                this.total=res.data.data.total
+                this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
+                this.tableData=res.data.data.list
+              }, err => {
+                // console.log(err)
+              })
+            }, err => {
+              // console.log(err)
+            })
+          }).catch(() => {
+
+          });
+        }
+        this.tableData[index].operation=''
+      },
+      submission(){
+        this.loading=true
+        let config = {
+          headers: {'token': localStorage.getItem('Authorization')}
+        };
+        let data = {
+          account: this.inputAppId,
+          password: this.inputPass,
+          mobile_id:this.mobile_id,
+          code:this.inputYan,
+          mode:this.mode,
+          mobile:this.mobile,
+          cookie:this.cookie,
+          session_id:this.session_id,
+          scnt:this.scnt,
+          remark:this.inputBei,
+        }
+        axios.post(BASE_URL + '/api/account/add', data, config).then(res => {
+          if(res.data.code==200){
+            this.loading=false
+            this.isAdd=false
+            let data={
+              keywords:this.input,
+              page:1,
+              page_size:10,
+            }
+            let config = {
+              headers:{'token':localStorage.getItem('Authorization')}
+            };
+            axios.post(BASE_URL+'/api/account/accountList',qs.stringify(data),config).then(res => {
+              this.total=res.data.data.total
+              this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
+              this.tableData=res.data.data.list
+            }, err => {
+              // console.log(err)
+            })
+            this.$message.success(res.data.msg);
+          }else{
+            this.loading=false
+            this.isAdd=false
+            this.$message.error(res.data.msg);
+          }
+        }, err => {
+          // console.log(err)
+        })
+      },
       queren(){
         let config = {
           headers: {'token': localStorage.getItem('Authorization')}
@@ -417,6 +544,19 @@
           if(res.data.code==200){
             this.modal=false
             this.$message.success(res.data.msg);
+            let config = {
+              headers: {'token': localStorage.getItem('Authorization')}
+            };
+            axios.get(BASE_URL + '/api/user/index', config).then(res => {
+              this.money = res.data.data.money
+              this.userName = res.data.data.username
+              this.private_num= res.data.data.private_num
+              // console.log(res.data.data)
+              localStorage.setItem('balance', res.data.data.money);
+              localStorage.setItem('userName', res.data.data.username);
+            }, err => {
+              // console.log(err)
+            })
           }else{
             this.modal=false
             this.$message.error(res.data.msg);
@@ -466,7 +606,7 @@
             this.price=res.data.data.price
             this.id=res.data.data.list[0].id
             this.num=''
-            console.log(this.moneyList)
+            // console.log(this.moneyList)
           }, err => {
             // console.log(err)
           })
@@ -490,7 +630,7 @@
             this.price=res.data.data.price
             this.num=this.inputSheBei
             this.id=''
-            console.log(this.moneyList)
+            // console.log(this.moneyList)
           }, err => {
             // console.log(err)
           })
@@ -500,6 +640,8 @@
       },
       chonghzi() {
         this.isRecharge = true
+        this.inputSheBei=''
+        this.moneyList[0].status=true
       },
       xuan(index, status,id) {
         this.moneyList.forEach((item) => {
@@ -519,14 +661,15 @@
           this.price=res.data.data.price
           this.id=res.data.data.list[0].id
           this.num=''
-          console.log(this.moneyList)
+          // console.log(this.moneyList)
         }, err => {
           // console.log(err)
         })
       },
-      sendMsg() {
-        let me = this;
-        // me.isDisabled = true;
+      addAccount() {
+        this.as=true
+        this.load=true
+
         let data = {
           account: this.inputAppId,
           password: this.inputPass,
@@ -535,37 +678,212 @@
           headers: {'token': localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL + '/api/account/sendSms', data, config).then(res => {
-          console.log(res.data)
+          // console.log(res.data)
+          if(res.data.code==0){
+            this.$message.error(res.data.msg)
+            this.as=false
+            this.load=false
+          }else if(res.data.code==1){
+            this.$message.success(res.data.msg)
+            this.as=false
+            this.load=false
+            this.isPhone=true
+            this.buttonValue='重新发送'
+            this.isBtn=false
+            this.mobile=res.data.data.trustedPhoneNumbers[0].numberWithDialCode
+            this.mobile_id=res.data.data.trustedPhoneNumbers[0].id
+            this.cookie=res.data.data.cookie
+            this.scnt=res.data.data.scnt
+            this.session_id=res.data.data.session_id
+            this.mode=res.data.data.mode
+            this.appValue=res.data.data.trustedPhoneNumbers[0].numberWithDialCode
+          }else if(res.data.code==3){
+            this.isPhone=true
+            this.isAddAccount=true
+            this.cookie=res.data.data.cookie
+            this.scnt=res.data.data.scnt
+            this.session_id=res.data.data.session_id
+            this.mode=res.data.data.mode
+            for(var i=0;i<res.data.data.trustedPhoneNumbers.length;i++){
+              var newobj={}
+              newobj.value=res.data.data.trustedPhoneNumbers[i].numberWithDialCode
+              newobj.id=res.data.data.trustedPhoneNumbers[i].id
+              this.chooseAppOptions.push(newobj)
+              // console.log(this.chooseAppOptions)
+            }
+
+            this.load=false
+          }else if(res.data.code==2){
+            this.as=false
+            this.load=false
+            this.isBtn=false
+            this.buttonValue='重新发送'
+            this.mobile=res.data.data.trustedPhoneNumbers[0].numberWithDialCode
+            this.mobile_id=res.data.data.trustedPhoneNumbers[0].id
+            this.cookie=res.data.data.cookie
+            this.scnt=res.data.data.scnt
+            this.session_id=res.data.data.session_id
+            this.mode=res.data.data.mode
+            this.appValue=res.data.data.trustedPhoneNumbers[0].numberWithDialCode
+            this.$message.error(res.data.msg)
+          }
+
+
         }, err => {
           // console.log(err)
         })
-        // let interval = window.setInterval(function() {
-        //   me.buttonName =  me.time + '秒';
-        //   --me.time;
-        //   if(me.time < 0) {
-        //     me.buttonName = "重新发送";
-        //     me.time = 10;
-        //     me.isDisabled = false;
-        //     window.clearInterval(interval);
-        //   }
-        // }, 1000);
+
 
       },
-      chooseApp() {
+      sendMsg(){
+        this.load1=true
+        let data = {
+          mobile_id: this.mobile_id,
+          cookie:this.cookie,
+         scnt:this.scnt,
+         session_id:this.session_id,
+        }
+        let config = {
+          headers: {'token': localStorage.getItem('Authorization')}
+        };
+        axios.post(BASE_URL + '/api/account/sendCode', qs.stringify(data), config).then(res => {
+          // console.log(res.data)
+          if(res.data.code==0){
+            this.load1=false
+            this.$message.error(res.data.msg)
+            this.newdisabled=false
+            this.load=false
+          }else if(res.data.code==1){
+            this.load1=false
+            this.$message.success(res.data.msg)
+            this.yancookie=res.data.data.cookie
+            this.yansession_id=res.data.data.session_id
+            this.yanscnt=res.data.data.scnt
+          }else if(res.data.code==2){
+            this.load1=false
+            this.yancookie=res.data.data.cookie
+            this.yansession_id=res.data.data.session_id
+            this.yanscnt=res.data.data.scnt
+            this.$message.error(res.data.msg)
+          }
 
+
+        }, err => {
+          // console.log(err)
+        })
+      },
+      chooseApp() {
+        let obj = {};
+        obj = this.chooseAppOptions.find((item)=>{//这里的userList就是上面遍历的数据源
+          return item.value === this.appValue;//筛选出匹配数据
+        });
+        this.mobile_id=obj.id
+        this.mobile=this.appValue
       },
       add() {
         this.isAdd = true
+        this.inputAppId=''
+        this.inputPass=''
+        this.inputBei=''
+        this.isPhone=false
+        this.inputYan=''
+        this.buttonValue='添加账号'
+        this.isBtn=true
+        this.as=false
       },
       close() {
         this.isAdd = false
         this.isRecharge = false
       },
-      swich() {
+      swich(row) {
+        row.status=!row.status
+        if(row.status==true){
+          let config = {
+            headers: {'token': localStorage.getItem('Authorization')}
+          };
+          let data = {
+            id: row.id,
+            type: 2,
+          }
+          axios.post(BASE_URL + '/api/account/accountHandle', data, config).then(res => {
+            if(res.data.code==200){
+              let data={
+                keywords:this.input,
+                page:1,
+                page_size:10,
+              }
+              let config = {
+                headers:{'token':localStorage.getItem('Authorization')}
+              };
+              axios.post(BASE_URL+'/api/account/accountList',qs.stringify(data),config).then(res => {
+                this.total=res.data.data.total
+                this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
+                this.tableData=res.data.data.list
+              }, err => {
+                // console.log(err)
+              })
+            }else{
+              this.$message.error(res.data.msg);
+            }
+          }, err => {
+            // console.log(err)
+          })
+        }else{
+          let config = {
+            headers: {'token': localStorage.getItem('Authorization')}
+          };
+          let data = {
+            id: row.id,
+            type: 3,
+          }
+          axios.post(BASE_URL + '/api/account/accountHandle', data, config).then(res => {
+            if(res.data.code==200){
+              let data={
+                keywords:this.input,
+                page:1,
+                page_size:10,
+              }
+              let config = {
+                headers:{'token':localStorage.getItem('Authorization')}
+              };
+              axios.post(BASE_URL+'/api/account/accountList',qs.stringify(data),config).then(res => {
+                this.total=res.data.data.total
+                this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
+                this.tableData=res.data.data.list
+              }, err => {
+                // console.log(err)
+              })
+            }else{
+              this.$message.error(res.data.msg);
+            }
+          }, err => {
+            // console.log(err)
+          })
+        }
+
+
 
       },
       seachInput() {
-
+        let config = {
+          headers: {'token': localStorage.getItem('Authorization')}
+        };
+        let data = {
+          keywords: this.input,
+          page: 1,
+          page_size:10
+        }
+        axios.post(BASE_URL + '/api/account/accountList', data, config).then(res => {
+          if(res.data.code==200){
+            this.tableData=res.data.data.list
+            this.total=res.data.data.total
+            this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
+          }else{
+            this.$message.error(res.data.msg);
+          }
+        }, err => {
+          // console.log(err)
+        })
       },
       /*顶部标题点击事件*/
       titleName(index) {
@@ -668,14 +986,13 @@
           keywords: this.input,
           page: i,
           page_size: 10,
-          type: 2
+
         }
         let config = {
           headers: {'token': localStorage.getItem('Authorization')}
         };
-        axios.post(BASE_URL + '/api/app/appList', qs.stringify(data), config).then(res => {
-          // console.log(res.data)
-          // console.log(res.data.data.list)
+        axios.post(BASE_URL + '/api/account/accountList', qs.stringify(data), config).then(res => {
+
           this.total = res.data.data.total
           this.pageNumber = parseInt(Math.ceil(Number(this.total) / 10))
           this.tableData = res.data.data.list
@@ -814,7 +1131,7 @@
   }
 
   .maskOneSecondInput1 {
-    width: 268px;
+    width: 241px;
     margin-left: 15px;
   }
 
@@ -877,11 +1194,11 @@
     cursor: pointer;
   }
 
-  .el-select-dropdown__item {
+  .thirdDiv .el-select-dropdown__item {
     color: #14BEC8;
   }
 
-  .el-select-dropdown__item.selected {
+  .thirdDiv .el-select-dropdown__item.selected {
     color: #14BEC8;
   }
 
@@ -1118,7 +1435,7 @@
     justify-content: center;
     position: fixed;
     background: rgba(2, 2, 2, 0.5);
-    z-index: 9999999;
+    z-index: 999;
     top: 0;
     left: 0;
   }
@@ -1126,7 +1443,7 @@
   .maskOne {
     width: 100%;
     max-width: 674px;
-    height: 500px;
+    height: 628px;
     border-radius: 4px;
     background-color: white;
     position: relative;
@@ -1177,6 +1494,9 @@
     right: 5%;
     cursor: pointer;
   }
+  /*.backg{*/
+    /*background-color: gray;*/
+  /*}*/
 </style>
 <style>
   .motai .ivu-modal-content {

@@ -233,10 +233,10 @@
             msg: '超级签名',
             isclass: false
           },
-          {
-            msg: '私有池',
-            isclass: false
-          },
+          // {
+          //   msg: '私有池',
+          //   isclass: false
+          // },
           {
             msg: '专属签名',
             isclass: false
@@ -300,22 +300,22 @@
           this.$router.push({
             name:'superSignatureAread'
           })
-        }else if (index == 1) {
-          this.$router.push({
-            name:'privatePool'
-          })
-        } else if (index == 2) {
+        }else if (index == 99) {
+          // this.$router.push({
+          //   name:'privatePool'
+          // })
+        } else if (index == 1) {
           // alert("点击了专属签名")
-        } else if (index == 3) {
+        } else if (index == 2) {
           //alert("点击了企业签名")
           this.$router.push({
             name:'enterprise'
           })
-        } else if (index == 4) {
+        } else if (index == 3) {
           this.$router.push({
             path:'/encapsulationindex'
           })
-        }else if (index == 5) {
+        }else if (index == 4) {
           // alert("点击了购买服务")
           this.$router.push({
             name:'myApp',
@@ -323,7 +323,7 @@
               newid: 0
             }
           })
-        } else if (index == 6) {
+        } else if (index == 5) {
           const h = this.$createElement;
           this.$msgbox({
             message: h('p', null, [
@@ -607,7 +607,7 @@
         for(var i=0;i<this.title.length;i++){
           this.title[i].isclass=false
         }
-        this.title[3].isclass=true
+        this.title[2].isclass=true
       },
       myappBtn(){
         this.$router.push({
