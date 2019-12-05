@@ -257,8 +257,8 @@
             align="center"
           >
             <template slot-scope="scope">
-              <span v-if="scope.row.cert_status===1" style="color: #06B2B6">启用</span>
-              <span v-if="scope.row.cert_status===0" style="color: #999999">禁用</span>
+              <span v-if="scope.row.cert_status===1" style="color: #06B2B6">有效</span>
+              <span v-if="scope.row.cert_status===0" style="color: #999999">无效</span>
             </template>
           </el-table-column>
           <el-table-column
@@ -669,7 +669,7 @@
       addAccount() {
         this.as=true
         this.load=true
-
+        this.chooseAppOptions=[]
         let data = {
           account: this.inputAppId,
           password: this.inputPass,

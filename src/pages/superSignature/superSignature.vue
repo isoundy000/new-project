@@ -320,10 +320,10 @@
             msg: '超级签名',
             isclass: true
           },
-          // {
-          //   msg: '私有池',
-          //   isclass: false
-          // },
+          {
+            msg: '私有池',
+            isclass: false
+          },
           {
             msg: '专属签名',
             isclass: false

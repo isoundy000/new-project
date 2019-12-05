@@ -399,7 +399,8 @@
         gengxing:1,
         newState:0,
         type:1,
-        shouhuApp:'',
+        shouhuApp:0,
+        account_type:1,
       }
     },
     computed: {
@@ -409,10 +410,12 @@
       zhang1(){
         this.zhanghchoose1=true
         this.zhanghchoose2=false
+        this.account_type=1
       },
       zhang2(){
         this.zhanghchoose1=false
         this.zhanghchoose2=true
+        this.account_type=2
       },
       /*app守护*/
       newapp1(){
@@ -635,7 +638,8 @@
             type:1,
             is_vaptcha:this.newswitchNum,
             // sub_domain: this.homevalue,
-            is_flashback:this.shouhuApp
+            is_flashback:this.shouhuApp,
+            account_type:this.account_type
           }
           let config = {
             headers:{'token':localStorage.getItem('Authorization')}

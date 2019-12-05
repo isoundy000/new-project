@@ -71,6 +71,16 @@
         v-model="input"
       @change="seachInput">
       </el-input>
+      <el-select class="downSum" @change="zhanghao()"
+                 v-model="zhanghaoValue" placeholder="账号池">
+        <el-option
+          v-for="item in downSumOptions2"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+
       <!--<div class="export" style="background-image: url('../../../static/image/appManagement/anniu@2x (1).png')">-->
         <!--<img src="../../../static/image/survey/daochuicon@2x.png" alt="">-->
         <!--<p>上次/更新应用</p>-->
@@ -128,6 +138,14 @@
         <el-table-column
           prop="download_num"
           label="下载量">
+        </el-table-column>
+        <el-table-column
+          prop="account_type"
+          label="账号池">
+          <template slot-scope="scope">
+            <span v-if="scope.row.account_type===1" style="color: #06B2B6">公有</span>
+            <span v-if="scope.row.account_type===2" style="color: #999999">私有</span>
+          </template>
         </el-table-column>
         <el-table-column
           prop="create_time"
@@ -195,12 +213,20 @@
     name: "appManagement",
     data() {
       return {
+        zhanghaoValue:'',
         isRenZ:false,
         value: '',
         size: 150,
         input: '',
         downSumValue: '',
         isMask: false,
+        downSumOptions2:[
+          {
+            value: '公有',
+          }, {
+            value: '私有',
+          },
+        ],
         downSumOptions: [
           {
             value: '下载链接',
@@ -216,7 +242,8 @@
         pageNumber:'',
         current:1,
         urlAddress:'',
-        base_url:''
+        base_url:'',
+        account_type:"",
       }
     },
     components: {
@@ -419,6 +446,28 @@
         axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
           // console.log(res.data)
           // console.log(res.data.data.list)
+          this.total=res.data.data.total
+          this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
+          this.tableData=res.data.data.list
+        }, err => {
+          // console.log(err)
+        })
+      },
+      zhanghao(){
+        if(this.zhanghaoValue=='公有'){
+            this.account_type=1
+        }else{
+          this.account_type=2
+        }
+        let data={
+          account_type:this.account_type,
+          page:this.current,
+          page_size:10,
+        }
+        let config = {
+          headers:{'token':localStorage.getItem('Authorization')}
+        };
+        axios.post(BASE_URL+'/api/app/appList',qs.stringify(data),config).then(res => {
           this.total=res.data.data.total
           this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
           this.tableData=res.data.data.list
@@ -689,7 +738,9 @@
   .seachInput {
     width: 306px;
   }
-
+.zhanghInput{
+  width: 200px;
+}
   .export {
     width: 142px;
     height: 40px;
@@ -819,10 +870,10 @@
     color: #999999;
     margin-top: 18px;
   }
-  .el-select-dropdown__item{
+  .thirdDiv .el-select-dropdown__item{
     color:#14BEC8 ;
   }
-  .el-select-dropdown__item.selected{
+  .thirdDiv .el-select-dropdown__item.selected{
     color:#14BEC8 ;
   }
   #input {
