@@ -23,26 +23,27 @@
         <a :href="list.newurl" target="_blank">{{list.newqq}}</a>
       </div>
     </div>
-    <div class="Bheader">
-      <div class="login_title">
-        <div class="login_title_first">
-          <img class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">
-        </div>
+    <Bheader></Bheader>
+    <!--<div class="Bheader">-->
+      <!--<div class="login_title">-->
+        <!--<div class="login_title_first">-->
+          <!--<img class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">-->
+        <!--</div>-->
 
-        <div class="title login_title_second">
-          <p @click="titleName(index)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass}"
-             @mouseenter="enter(index)"
-             @mouseleave="leave(index)">{{list.msg}}</p>
-        </div>
+        <!--<div class="title login_title_second">-->
+          <!--<p @click="titleName(index)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass}"-->
+             <!--@mouseenter="enter(index)"-->
+             <!--@mouseleave="leave(index)">{{list.msg}}</p>-->
+        <!--</div>-->
 
-        <div  class="login_title_div login_title_third">
-          <p @click="loginBtn">登录</p>
-          <p @click="registerBtn">注册</p>
-        </div>
+        <!--<div  class="login_title_div login_title_third">-->
+          <!--<p @click="loginBtn">登录</p>-->
+          <!--<p @click="registerBtn">注册</p>-->
+        <!--</div>-->
 
 
-      </div>
-    </div>
+      <!--</div>-->
+    <!--</div>-->
 
     <div class="banner" style="background-image: url('../../../static/image/superSignature/newbg.png')">
 
@@ -1403,12 +1404,14 @@ align-items: center;
     display: flex;
     align-items: center;
     position: relative;
+
   }
   .login_title_second{
     width: 55%;
     height: 80px;
     display: flex;
     align-items: center;
+
   }
   .login_title_third{
     width: 25%;
@@ -1416,5 +1419,6 @@ align-items: center;
     display: flex;
     align-items: center;
     justify-content: center;
+
   }
 </style>

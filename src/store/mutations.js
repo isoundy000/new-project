@@ -8,6 +8,10 @@ export default {
     state.count = count;
     localStorage.setItem('count',count);
   },
+  set_clickIndex(state,clickIndex){
+    state.clickIndex = clickIndex;
+    localStorage.setItem('clickIndex',clickIndex);
+  },
   set_money(state,balance){
     state.balance=balance
     localStorage.setItem('balance', balance);
@@ -25,6 +29,7 @@ export default {
     state.userName=''
     state.balance=null
     state.count=0
+    state.clickIndex=0
     localStorage.removeItem('Authorization')
     localStorage.removeItem('balance')
     localStorage.removeItem('userName')

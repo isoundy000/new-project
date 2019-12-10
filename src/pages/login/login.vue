@@ -329,6 +329,7 @@
                   this.$store.commit('set_money',balance)
                   this.$store.commit('set_userName',username)
                   this.$store.commit('set_newmobile',newmobile)
+                  this.$store.commit('set_clickIndex',0)
                   this.$router.push({
                     path:'/superSignatureAread'
                   })
@@ -384,6 +385,7 @@
                 this.$store.commit('set_money',balance)
                 this.$store.commit('set_userName',username)
                 this.$store.commit('set_newmobile',newmobile)
+                this.$store.commit('set_clickIndex',0)
                 this.$router.push({
                   path:'/superSignatureAread'
                 })

@@ -53,52 +53,53 @@
       </div>
 
     </div>
-    <div class="Bheader">
-      <div class="login_title">
-        <div class="login_title_first">
-          <img @click="logoHome" class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">
-        </div>
+    <Bheader></Bheader>
+    <!--<div class="Bheader">-->
+      <!--<div class="login_title">-->
+        <!--<div class="login_title_first">-->
+          <!--<img @click="logoHome" class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">-->
+        <!--</div>-->
 
-        <div class="title login_title_second">
-          <p @click="titleName(index)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass}"
-             @mouseenter="enter(index)"
-             @mouseleave="leave(index)">{{list.msg}}</p>
-        </div>
-
-
-
-
-        <div class="alreadyLogin login_title_third">
-
-          <div @click="myappBtn" class="myappBtn" >
-            <p>我的应用</p>
-          </div>
-
-          <!--<el-badge :value="3" class="item">-->
-          <!--<img class="tixingBtn" src="../../../static/image/superSignature/tixing@2x.png" alt="">-->
-          <!--</el-badge>-->
-          <div style="width: 100px">
-            <el-dropdown placement=top>
-            <span class="el-dropdown-link">
-              <p class="accountNumber">{{userName}}</p>
-            </span>
-              <el-dropdown-menu placement=top  class="xiala" slot="dropdown">
-                <el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>
-                <el-dropdown-item @click.native="recharge">充值</el-dropdown-item>
-                <el-dropdown-item>我的余额:￥{{money}}</el-dropdown-item>
-                <el-dropdown-item @click.native="modify">修改密码</el-dropdown-item>
-                <el-dropdown-item @click.native="signOut">退出</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </div>
+        <!--<div class="title login_title_second">-->
+          <!--<p @click="titleName(index)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass}"-->
+             <!--@mouseenter="enter(index)"-->
+             <!--@mouseleave="leave(index)">{{list.msg}}</p>-->
+        <!--</div>-->
 
 
-          <img class="headUrl" src="../../../static/image/superSignature/touxiang@2x.png" alt="">
 
-        </div>
 
-      </div>
-    </div>
+        <!--<div class="alreadyLogin login_title_third">-->
+
+          <!--<div @click="myappBtn" class="myappBtn" >-->
+            <!--<p>我的应用</p>-->
+          <!--</div>-->
+
+          <!--&lt;!&ndash;<el-badge :value="3" class="item">&ndash;&gt;-->
+          <!--&lt;!&ndash;<img class="tixingBtn" src="../../../static/image/superSignature/tixing@2x.png" alt="">&ndash;&gt;-->
+          <!--&lt;!&ndash;</el-badge>&ndash;&gt;-->
+          <!--<div style="width: 100px">-->
+            <!--<el-dropdown placement=top>-->
+            <!--<span class="el-dropdown-link">-->
+              <!--<p class="accountNumber">{{userName}}</p>-->
+            <!--</span>-->
+              <!--<el-dropdown-menu placement=top  class="xiala" slot="dropdown">-->
+                <!--<el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>-->
+                <!--<el-dropdown-item @click.native="recharge">充值</el-dropdown-item>-->
+                <!--<el-dropdown-item>我的余额:￥{{money}}</el-dropdown-item>-->
+                <!--<el-dropdown-item @click.native="modify">修改密码</el-dropdown-item>-->
+                <!--<el-dropdown-item @click.native="signOut">退出</el-dropdown-item>-->
+              <!--</el-dropdown-menu>-->
+            <!--</el-dropdown>-->
+          <!--</div>-->
+
+
+          <!--<img class="headUrl" src="../../../static/image/superSignature/touxiang@2x.png" alt="">-->
+
+        <!--</div>-->
+
+      <!--</div>-->
+    <!--</div>-->
     <div class="newsecondDiv">
       <img style="width: 100%" src="../../../static/image/superSignature/guanggao.jpg" alt="">
     </div>
@@ -213,7 +214,7 @@
   import qs from 'qs'
   import {BASE_URL} from "../../api";
   import surveyHeader from '../component/surveyHeader'
-
+  import Bheader from '../component/header'
   export default {
     name: "enterprise",
     data() {
@@ -281,7 +282,8 @@
     },
     components: {
       surveyHeader,
-      QrcodeVue
+      QrcodeVue,
+      Bheader
     },
     methods: {
       logoHome(){

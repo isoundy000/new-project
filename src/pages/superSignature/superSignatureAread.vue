@@ -1,15 +1,24 @@
 <template>
   <div class="login">
-    <div v-if="isTongGao">
-      <van-notice-bar
-        :text="tongText"
-        left-icon="volume-o"
-        mode="closeable"
-        color="white"
-        background="red"
-      />
-    </div>
-
+    <!--<div v-if="isTongGao">-->
+      <!--<van-notice-bar-->
+        <!--:text="tongText"-->
+        <!--left-icon="volume-o"-->
+        <!--mode="closeable"-->
+        <!--color="white"-->
+        <!--background="red"-->
+        <!--height="200px"-->
+      <!--/>-->
+    <!--</div>-->
+    <Modal
+      v-model="modalnew"
+      title="站内通告"
+      :mask-closable="false"
+      class="motain"
+      >
+      <p style="font-size: 19px">{{tongText}}</p>
+      <div @click="zhanOk" class="zhanOk" slot="footer" >确认</div>
+    </Modal>
     <Modal
       v-model="modal1"
       title="修改密码"
@@ -44,53 +53,49 @@
         <a :href="list.newurl" target="_blank">{{list.newqq}}</a>
       </div>
     </div>
+    <Bheader></Bheader>
+    <!--<div class="Bheader">-->
+      <!--<div class="login_title">-->
+        <!--<div class="login_title_first">-->
+          <!--<img class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">-->
+        <!--</div>-->
 
-    <div class="Bheader">
-      <div class="login_title">
-        <div class="login_title_first">
-          <img class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">
-        </div>
-
-        <div class="title login_title_second">
-          <p @click="titleName(index)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass}"
-             @mouseenter="enter(index)"
-             @mouseleave="leave(index)">{{list.msg}}</p>
-        </div>
-
-
+        <!--<div class="title login_title_second">-->
+          <!--<p @click="titleName(index)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass}"-->
+             <!--@mouseenter="enter(index)"-->
+             <!--@mouseleave="leave(index)">{{list.msg}}</p>-->
+        <!--</div>-->
 
 
-          <div class="alreadyLogin login_title_third">
-
-            <div @click="myappBtn" class="myappBtn" >
-              <p>我的应用</p>
-            </div>
-
-            <!--<el-badge :value="3" class="item">-->
-              <!--<img class="tixingBtn" src="../../../static/image/superSignature/tixing@2x.png" alt="">-->
-            <!--</el-badge>-->
-            <div style="width: 100px">
-              <el-dropdown placement=top>
-            <span class="el-dropdown-link">
-              <p class="accountNumber">{{userName}}</p>
-            </span>
-                <el-dropdown-menu placement=top  class="xiala" slot="dropdown">
-                  <el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>
-                  <el-dropdown-item @click.native="recharge">充值</el-dropdown-item>
-                  <el-dropdown-item>我的余额:￥{{money}}</el-dropdown-item>
-                  <el-dropdown-item @click.native="modify">修改密码</el-dropdown-item>
-                  <el-dropdown-item @click.native="signOut">退出</el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
-            </div>
 
 
-            <img class="headUrl" src="../../../static/image/superSignature/touxiang@2x.png" alt="">
+          <!--<div class="alreadyLogin login_title_third">-->
 
-          </div>
+            <!--<div @click="myappBtn" class="myappBtn" >-->
+              <!--<p>我的应用</p>-->
+            <!--</div>-->
+            <!--<div style="width: 100px">-->
+              <!--<el-dropdown placement=top>-->
+            <!--<span class="el-dropdown-link">-->
+              <!--<p class="accountNumber">{{userName}}</p>-->
+            <!--</span>-->
+                <!--<el-dropdown-menu placement=top  class="xiala" slot="dropdown">-->
+                  <!--<el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>-->
+                  <!--<el-dropdown-item @click.native="recharge">充值</el-dropdown-item>-->
+                  <!--<el-dropdown-item>我的余额:￥{{money}}</el-dropdown-item>-->
+                  <!--<el-dropdown-item @click.native="modify">修改密码</el-dropdown-item>-->
+                  <!--<el-dropdown-item @click.native="signOut">退出</el-dropdown-item>-->
+                <!--</el-dropdown-menu>-->
+              <!--</el-dropdown>-->
+            <!--</div>-->
 
-      </div>
-    </div>
+
+            <!--<img class="headUrl" src="../../../static/image/superSignature/touxiang@2x.png" alt="">-->
+
+          <!--</div>-->
+
+      <!--</div>-->
+    <!--</div>-->
     <div class="banner" style="background-image: url('../../../static/image/superSignature/newbg.png')">
       <div class="bannerDiv">
         <p class="bannerDivone">超级签名一次  安装永不受影响</p>
@@ -350,6 +355,7 @@
         name: "index",
         data() {
           return {
+            modalnew:false,
             isTongGao:'',
             tongText:'',
             usedPass:'',
@@ -406,6 +412,7 @@
           Bheader
         },
         mounted(){
+          // this.$store.commit('set_clickIndex',0)
           var that=this
           let config = {
             headers:{'token':localStorage.getItem('Authorization')}
@@ -447,9 +454,9 @@
           /*通告*/
           axios.get(BASE_URL+'/api/index/getBulletin',config).then(res => {
             if(res.data.data==null){
-              this.isTongGao=false
+              this.modalnew=false
             }else{
-              this.isTongGao=true
+              this.modalnew=true
               this.tongText=res.data.data
             }
             console.log(res.data)
@@ -459,6 +466,9 @@
           })
     },
     methods: {
+      zhanOk(){
+        this.modalnew=false
+      },
       play(){
         $(".mask").show()
       },
@@ -730,6 +740,13 @@
 
   }
   .motai .ivu-modal-footer{
+    height: 60px !important;
+  }
+  .motain .ivu-modal-content{
+    position: relative;
+
+  }
+  .motain .ivu-modal-footer{
     height: 60px !important;
   }
 </style>
@@ -1589,7 +1606,7 @@
     width: 50%;
   }
 
-  .queOk{
+  .queOk,.zhanOk{
     width: 60px;
     background-color: #06B2B6;
     height: 30px;
@@ -1607,17 +1624,20 @@
     display: flex;
     align-items: center;
     position: relative;
+    border: 1px solid black;
   }
   .login_title_second{
     width: 55%;
     height: 80px;
     display: flex;
     align-items: center;
+    border: 1px solid red;
   }
   .login_title_third{
     width: 25%;
     height: 80px;
     display: flex;
     justify-content: space-between;
+    border: 1px solid blue;
   }
 </style>

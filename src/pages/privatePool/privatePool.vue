@@ -137,50 +137,51 @@
         </div>
       </div>
     </div>
-    <div class="Bheader">
-      <div class="login_title">
-        <div class="login_title_first">
-          <img class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">
-        </div>
+    <Bheader></Bheader>
+    <!--<div class="Bheader">-->
+      <!--<div class="login_title">-->
+        <!--<div class="login_title_first">-->
+          <!--<img class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">-->
+        <!--</div>-->
 
-        <div class="title login_title_second">
-          <p @click="titleName(index)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass}"
-             @mouseenter="enter(index)"
-             @mouseleave="leave(index)">{{list.msg}}</p>
-        </div>
-
-
-        <div class="alreadyLogin login_title_third">
-
-          <div @click="myappBtn" class="myappBtn">
-            <p>我的应用</p>
-          </div>
-
-          <!--<el-badge :value="3" class="item">-->
-          <!--<img class="tixingBtn" src="../../../static/image/superSignature/tixing@2x.png" alt="">-->
-          <!--</el-badge>-->
-          <div style="width: 100px">
-            <el-dropdown placement=top>
-            <span class="el-dropdown-link">
-              <p class="accountNumber">{{userName}}</p>
-            </span>
-              <el-dropdown-menu placement=top class="xiala" slot="dropdown">
-                <el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>
-                <el-dropdown-item @click.native="recharge">充值</el-dropdown-item>
-                <el-dropdown-item>我的余额:￥{{money}}</el-dropdown-item>
-                <el-dropdown-item @click.native="modify">修改密码</el-dropdown-item>
-                <el-dropdown-item @click.native="signOut">退出</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </div>
+        <!--<div class="title login_title_second">-->
+          <!--<p @click="titleName(index)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass}"-->
+             <!--@mouseenter="enter(index)"-->
+             <!--@mouseleave="leave(index)">{{list.msg}}</p>-->
+        <!--</div>-->
 
 
-          <img class="headUrl" src="../../../static/image/superSignature/touxiang@2x.png" alt="">
+        <!--<div class="alreadyLogin login_title_third">-->
 
-        </div>
+          <!--<div @click="myappBtn" class="myappBtn">-->
+            <!--<p>我的应用</p>-->
+          <!--</div>-->
 
-      </div>
-    </div>
+          <!--&lt;!&ndash;<el-badge :value="3" class="item">&ndash;&gt;-->
+          <!--&lt;!&ndash;<img class="tixingBtn" src="../../../static/image/superSignature/tixing@2x.png" alt="">&ndash;&gt;-->
+          <!--&lt;!&ndash;</el-badge>&ndash;&gt;-->
+          <!--<div style="width: 100px">-->
+            <!--<el-dropdown placement=top>-->
+            <!--<span class="el-dropdown-link">-->
+              <!--<p class="accountNumber">{{userName}}</p>-->
+            <!--</span>-->
+              <!--<el-dropdown-menu placement=top class="xiala" slot="dropdown">-->
+                <!--<el-dropdown-item @click.native="realName">实名认证</el-dropdown-item>-->
+                <!--<el-dropdown-item @click.native="recharge">充值</el-dropdown-item>-->
+                <!--<el-dropdown-item>我的余额:￥{{money}}</el-dropdown-item>-->
+                <!--<el-dropdown-item @click.native="modify">修改密码</el-dropdown-item>-->
+                <!--<el-dropdown-item @click.native="signOut">退出</el-dropdown-item>-->
+              <!--</el-dropdown-menu>-->
+            <!--</el-dropdown>-->
+          <!--</div>-->
+
+
+          <!--<img class="headUrl" src="../../../static/image/superSignature/touxiang@2x.png" alt="">-->
+
+        <!--</div>-->
+
+      <!--</div>-->
+    <!--</div>-->
     <div class="second">
       <div class="secondDiv">
         <el-input
@@ -306,7 +307,7 @@
   import {BASE_URL} from "../../api";
   import axios from 'axios'
   import qs from 'qs'
-
+  import Bheader from '../component/header'
   export default {
     name: 'privatePool',
     data() {
@@ -398,6 +399,9 @@
         yansession_id:'',
         yanscnt:'',
       }
+    },
+    components: {
+      Bheader
     },
     mounted() {
       var that = this
@@ -604,7 +608,7 @@
             this.moneyList = res.data.data.list
             this.total_price=res.data.data.total_price
             this.price=res.data.data.price
-            this.id=res.data.data.list[0].id
+            this.id=''
             this.num=''
             // console.log(this.moneyList)
           }, err => {
@@ -641,7 +645,26 @@
       chonghzi() {
         this.isRecharge = true
         this.inputSheBei=''
-        this.moneyList[0].status=true
+        let data1 = {
+          id: '',
+          num: '',
+        }
+        let config = {
+          headers: {'token': localStorage.getItem('Authorization')}
+        };
+        axios.post(BASE_URL + '/api/account/orderPage', data1, config).then(res => {
+          this.moneyList = res.data.data.list
+          this.moneyList.forEach((item) => {
+            item.status = false
+          })
+          this.moneyList[0].status=true
+          this.total_price=res.data.data.total_price
+          this.price=res.data.data.price
+          this.id=res.data.data.list[0].id
+          // console.log(this.moneyList)
+        }, err => {
+          // console.log(err)
+        })
       },
       xuan(index, status,id) {
         this.moneyList.forEach((item) => {
@@ -659,7 +682,7 @@
           this.moneyList = res.data.data.list
           this.total_price=res.data.data.total_price
           this.price=res.data.data.price
-          this.id=res.data.data.list[0].id
+          this.id=id
           this.num=''
           // console.log(this.moneyList)
         }, err => {
@@ -885,89 +908,89 @@
           // console.log(err)
         })
       },
-      /*顶部标题点击事件*/
-      titleName(index) {
-        if (index == 0) {
-          this.$router.push({
-            name: 'superSignatureAread'
-          })
-        } else if (index == 1) {
-          this.$router.push({
-            name: 'privatePool'
-          })
-        } else if (index == 2) {
-          // alert("点击了专属签名")
-        } else if (index == 3) {
-          // alert("点击了企业签名")
-          this.$router.push({
-            name: 'enterprise'
-          })
-        } else if (index == 4) {
-          // alert("点击了应用封装")
-          this.$router.push({
-            name: 'applist'
-          })
-        } else if (index == 5) {
-          // alert("点击了购买服务")
-          this.$router.push({
-            name: 'myApp',
-            params: {
-              newid: 0
-            }
-          })
-        } else if (index == 6) {
-          const h = this.$createElement;
-          this.$msgbox({
-            message: h('p', null, [
-              h('p', {style: ' text-align: center;font-weight:bold'}, '服务使用条款 '),
-              h('p', {style: 'color: grey;margin-top:30px'}, '请在使用iOS 超级签名服务前，仔细阅读并充分理解以下内容及条款：'),
-              h('p', {style: 'color: red;text-indent:2em;text-align:justify;text-justify:inter-ideograph;'}, '您知晓并同意，由我们提供软件签名的技术，您购买此服务是用于您的 App 的内部测试之用途，且需符合苹果iOS 超级签名的所有规定，否则，因此而产生的法律后果由您自行全部承担；'),
-              h('p', {style: 'color: red;text-indent:2em;text-align:justify;text-justify:inter-ideograph;'}, '您知晓并同意，苹果iOS 超级签名因受到苹果政策影响，在未来可能会存在被苹果撤销从而导致应用出现无法安装、或已经安装的应用无法打开等情况，您同意并愿意独立承担该风险以及该风险导致的后续一切损失，并接受我们在后续可能为此而做出任何补偿等措施；'),
-              h('p', {style: 'color: red;text-indent:2em;text-align:justify;text-justify:inter-ideograph;'}, '您知晓并同意，我们提供签名技术来供您下载您的应用，因您对外分发导致App被滥用、恶意下载、刷量而造成的损失，我们仅提供必要的数据支持和反作弊服务，您同意并愿意独立承担因对外分发和推广而导致的风险和风险后续的一切损失。'),
-              h('p', {style: 'color: grey'}, '您已仔细阅读并同意《超级签名服务协议》中的全部内容。'),
-              h('p', {style: 'color: grey'}, '点击“我同意”代表您已仔细阅读并同意以上所有内容'),
-            ]),
-            showCancelButton: true,
-            closeOnClickModal: false,
-            confirmButtonText: '我同意',
-            cancelButtonText: '不同意',
-            beforeClose: (action, instance, done) => {
-              if (action === 'confirm') {
-                done();
-                this.title[index].isclass = true
-                this.$router.push({
-                  name: 'myApp',
-                  params: {
-                    newid: 2
-                  }
-                })
-              } else {
-                done();
-                this.title[0].isclass = true
-                this.$router.push({
-                  path: '/superSignatureAread'
-                })
-              }
-            }
-          })
-
-
-        }
-      },
-      /*顶部标题移入效果*/
-      enter(index) {
-        for (var i = 0; i < this.title.length; i++) {
-          this.title[i].isclass = false
-        }
-        this.title[index].isclass = true
-      },
-      /*顶部标题移出效果*/
-      leave() {
-        for (var i = 0; i < this.title.length; i++) {
-          this.title[i].isclass = false
-        }
-        this.title[1].isclass = true
-      },
+      // /*顶部标题点击事件*/
+      // titleName(index) {
+      //   if (index == 0) {
+      //     this.$router.push({
+      //       name: 'superSignatureAread'
+      //     })
+      //   } else if (index == 1) {
+      //     this.$router.push({
+      //       name: 'privatePool'
+      //     })
+      //   } else if (index == 2) {
+      //     // alert("点击了专属签名")
+      //   } else if (index == 3) {
+      //     // alert("点击了企业签名")
+      //     this.$router.push({
+      //       name: 'enterprise'
+      //     })
+      //   } else if (index == 4) {
+      //     // alert("点击了应用封装")
+      //     this.$router.push({
+      //       name: 'applist'
+      //     })
+      //   } else if (index == 5) {
+      //     // alert("点击了购买服务")
+      //     this.$router.push({
+      //       name: 'myApp',
+      //       params: {
+      //         newid: 0
+      //       }
+      //     })
+      //   } else if (index == 6) {
+      //     const h = this.$createElement;
+      //     this.$msgbox({
+      //       message: h('p', null, [
+      //         h('p', {style: ' text-align: center;font-weight:bold'}, '服务使用条款 '),
+      //         h('p', {style: 'color: grey;margin-top:30px'}, '请在使用iOS 超级签名服务前，仔细阅读并充分理解以下内容及条款：'),
+      //         h('p', {style: 'color: red;text-indent:2em;text-align:justify;text-justify:inter-ideograph;'}, '您知晓并同意，由我们提供软件签名的技术，您购买此服务是用于您的 App 的内部测试之用途，且需符合苹果iOS 超级签名的所有规定，否则，因此而产生的法律后果由您自行全部承担；'),
+      //         h('p', {style: 'color: red;text-indent:2em;text-align:justify;text-justify:inter-ideograph;'}, '您知晓并同意，苹果iOS 超级签名因受到苹果政策影响，在未来可能会存在被苹果撤销从而导致应用出现无法安装、或已经安装的应用无法打开等情况，您同意并愿意独立承担该风险以及该风险导致的后续一切损失，并接受我们在后续可能为此而做出任何补偿等措施；'),
+      //         h('p', {style: 'color: red;text-indent:2em;text-align:justify;text-justify:inter-ideograph;'}, '您知晓并同意，我们提供签名技术来供您下载您的应用，因您对外分发导致App被滥用、恶意下载、刷量而造成的损失，我们仅提供必要的数据支持和反作弊服务，您同意并愿意独立承担因对外分发和推广而导致的风险和风险后续的一切损失。'),
+      //         h('p', {style: 'color: grey'}, '您已仔细阅读并同意《超级签名服务协议》中的全部内容。'),
+      //         h('p', {style: 'color: grey'}, '点击“我同意”代表您已仔细阅读并同意以上所有内容'),
+      //       ]),
+      //       showCancelButton: true,
+      //       closeOnClickModal: false,
+      //       confirmButtonText: '我同意',
+      //       cancelButtonText: '不同意',
+      //       beforeClose: (action, instance, done) => {
+      //         if (action === 'confirm') {
+      //           done();
+      //           this.title[index].isclass = true
+      //           this.$router.push({
+      //             name: 'myApp',
+      //             params: {
+      //               newid: 2
+      //             }
+      //           })
+      //         } else {
+      //           done();
+      //           this.title[0].isclass = true
+      //           this.$router.push({
+      //             path: '/superSignatureAread'
+      //           })
+      //         }
+      //       }
+      //     })
+      //
+      //
+      //   }
+      // },
+      // /*顶部标题移入效果*/
+      // enter(index) {
+      //   for (var i = 0; i < this.title.length; i++) {
+      //     this.title[i].isclass = false
+      //   }
+      //   this.title[index].isclass = true
+      // },
+      // /*顶部标题移出效果*/
+      // leave() {
+      //   for (var i = 0; i < this.title.length; i++) {
+      //     this.title[i].isclass = false
+      //   }
+      //   this.title[1].isclass = true
+      // },
       myappBtn() {
         this.$router.push({
           path: '/myApp'
