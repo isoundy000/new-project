@@ -269,7 +269,7 @@
       // alert("3")
       this.newmoney=localStorage.getItem('balance');
       this.shoyiMoney=localStorage.getItem('shoyiMoney');
-
+      console.log(localStorage.getItem('shoyiMoney'))
     }
 
   }
