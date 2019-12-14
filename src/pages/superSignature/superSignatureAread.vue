@@ -1,22 +1,22 @@
 <template>
   <div class="login">
-    <!--<div v-if="isTongGao">-->
-      <!--<van-notice-bar-->
-        <!--:text="tongText"-->
-        <!--left-icon="volume-o"-->
-        <!--mode="closeable"-->
-        <!--color="white"-->
-        <!--background="red"-->
-        <!--height="200px"-->
-      <!--/>-->
-    <!--</div>-->
+    <div v-if="isTongGao">
+      <van-notice-bar
+        :text="bulletin"
+        left-icon="volume-o"
+        mode="closeable"
+        color="white"
+        background="red"
+        height="200px"
+      />
+    </div>
     <Modal
       v-model="modalnew"
       title="站内通告"
       :mask-closable="false"
       class="motain"
       >
-      <p style="font-size: 19px">{{tongText}}</p>
+      <p style="font-size: 19px">{{crash}}</p>
       <div @click="zhanOk" class="zhanOk" slot="footer" >确认</div>
     </Modal>
     <Modal
@@ -40,9 +40,7 @@
 
       <div @click="ok" class="queOk" slot="footer" >确认</div>
     </Modal>
-    <div class="shougou">
-      <img src="../../../static/image/superSignature/shougou.png" alt="">
-    </div>
+
     <div class="qqBig">
       <div class="qq">
         <img class="qqtouxiang" src="../../../static/image/superSignature/ren.png" alt="">
@@ -52,6 +50,9 @@
         <img src="../../../static/image/superSignature/qqt.png" alt="">
         <a :href="list.newurl" target="_blank">{{list.newqq}}</a>
       </div>
+    </div>
+    <div class="shougou">
+      <img src="../../../static/image/superSignature/shougou.png" alt="">
     </div>
     <Bheader></Bheader>
     <!--<div class="Bheader">-->
@@ -201,7 +202,7 @@
       <p>1、因机制与企业签名不同，告别掉签</p>
       <p>2、告别掉签风险，只需支付一次获客成本即可</p>
       <p>3、同一台设备下载安装该应用不限制下载次数</p>
-      <p>4、按设备数量收费，仅需<span>￥20.00</span>/每台</p>
+      <p>4、按设备数量收费，仅需<span>￥35.00</span>/每台</p>
       </div>
       <div>
       <img src="../../../static/image/superSignature/tu@2x.png" alt="">
@@ -240,7 +241,7 @@
         </div>
         <div class="serviceSmall">
         <div></div>
-        <p>每台设备<span>￥20.00</span>/每台</p>
+        <p>每台设备<span>￥35.00</span>/每台</p>
       </div>
       </div>
       </div>
@@ -357,7 +358,8 @@
           return {
             modalnew:false,
             isTongGao:'',
-            tongText:'',
+            crash:'',
+            bulletin:'',
             usedPass:'',
             newPass:'',
             confirmPass:'',
@@ -453,11 +455,18 @@
 
           /*通告*/
           axios.get(BASE_URL+'/api/index/getBulletin',config).then(res => {
-            if(res.data.data==null){
+            if(res.data.data.crash ==null){
               this.modalnew=false
             }else{
               this.modalnew=true
-              this.tongText=res.data.data
+              this.crash=res.data.data.crash
+            }
+
+            if(res.data.data.bulletin  ==null){
+              this.isTongGao=false
+            }else{
+              this.isTongGao=true
+              this.bulletin =res.data.data.bulletin
             }
             console.log(res.data)
 
@@ -1541,7 +1550,7 @@
   }
   .shougou{
     position: absolute;
-    top: 25%;
+    top: 60%;
     right: 1.6%;
     z-index: 9999;
   }
@@ -1550,7 +1559,7 @@
   }
   .qqBig{
     position: absolute;
-    top: 50%;
+    top: 25%;
     right: 1.05%;
     z-index: 9999;
   }

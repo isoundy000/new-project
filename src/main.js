@@ -34,11 +34,22 @@ Vue.config.productionTip = false
 
 
 router.beforeEach((to, from, next) => {
-  // console.log(to.path)
+  /*判断导航title下划线位置*/
+if(to.path=='/superSignatureAread'){
+  localStorage.setItem('clickIndex',0);
+}else if(to.path=='/privatePool'){
+  localStorage.setItem('clickIndex',1);
+}else if(to.path=='/enterprise'){
+  localStorage.setItem('clickIndex',3);
+}else if(to.path=='/encapsulationindex'){
+  localStorage.setItem('clickIndex',4);
+}
+
   if(to.path=='/' && localStorage.getItem('Authorization')){
     next({
       path: '/superSignatureAread'
     })
+    localStorage.setItem('clickIndex',0);
   }else{
 
   }

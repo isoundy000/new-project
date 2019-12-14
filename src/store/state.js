@@ -7,6 +7,6 @@ export default{
   userName:'',
   newmobile:'',
   count:0,
-  clickIndex:'',
+  clickIndex:localStorage.getItem('clickIndex') ? localStorage.getItem('clickIndex') : '',
   Authorization: localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : ''
 }

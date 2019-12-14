@@ -137,6 +137,16 @@
         </div>
       </div>
     </div>
+    <Modal
+      v-model="modalnew"
+      title="提示"
+      :mask-closable="false"
+      class="motain"
+    >
+      <p style="font-size: 19px">添加账号前请确认你所添加的为苹果开发者账号，请先前往苹果开发者中心同意并接受最新的开发协议：<a href="https://developer.apple.com/">https://developer.apple.com/</a>，为方便您顺利添加账号请前往苹果官网（<a
+        href="https://appleid.apple.com/#!&page=signin">https://appleid.apple.com/#!&page=signin</a>）移除你信任的设备，只保留手机号码。添加完账号后请一定不要移除账号中新添加的证书和描述文件，不然会导致账号证书无效无法签名应用，也不要在其他平台登录账号避免账号登录信息失效。</p>
+      <div @click="zhanOk" class="zhanOk" slot="footer" >确认</div>
+    </Modal>
     <Bheader></Bheader>
     <!--<div class="Bheader">-->
       <!--<div class="login_title">-->
@@ -312,6 +322,7 @@
     name: 'privatePool',
     data() {
       return {
+        modalnew:false,
         loading:false,
         inputBei:'',
         isAddAccount:false,
@@ -452,6 +463,18 @@
       })
     },
     methods: {
+      zhanOk(){
+        this.modalnew=false
+        this.isAdd = true
+        this.inputAppId=''
+        this.inputPass=''
+        this.inputBei=''
+        this.isPhone=false
+        this.inputYan=''
+        this.buttonValue='添加账号'
+        this.isBtn=true
+        this.as=false
+      },
       allApp(index,id,nameValue){
         if (nameValue == '删除') {
           this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -804,15 +827,7 @@
         this.mobile=this.appValue
       },
       add() {
-        this.isAdd = true
-        this.inputAppId=''
-        this.inputPass=''
-        this.inputBei=''
-        this.isPhone=false
-        this.inputYan=''
-        this.buttonValue='添加账号'
-        this.isBtn=true
-        this.as=false
+        this.modalnew=true
       },
       close() {
         this.isAdd = false
@@ -1517,6 +1532,18 @@
     right: 5%;
     cursor: pointer;
   }
+  .zhanOk{
+    width: 60px;
+    background-color: #06B2B6;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    border-radius: 10px;
+    position: absolute;
+    right: 10%;
+    cursor: pointer;
+  }
   /*.backg{*/
     /*background-color: gray;*/
   /*}*/
@@ -1532,5 +1559,12 @@
 
   .motai .ivu-modal {
     width: 700px !important;
+  }
+  .motain .ivu-modal-content{
+    position: relative;
+
+  }
+  .motain .ivu-modal-footer{
+    height: 60px !important;
   }
 </style>

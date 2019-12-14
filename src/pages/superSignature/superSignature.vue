@@ -10,9 +10,7 @@
       <div @click="ok" class="queOk" slot="footer" >确认</div>
     </Modal>
 
-    <div class="shougou">
-      <img src="../../../static/image/superSignature/shougou.png" alt="">
-    </div>
+
     <div class="qqBig">
       <div class="qq">
         <img class="qqtouxiang" src="../../../static/image/superSignature/ren.png" alt="">
@@ -22,6 +20,9 @@
         <img src="../../../static/image/superSignature/qqt.png" alt="">
         <a :href="list.newurl" target="_blank">{{list.newqq}}</a>
       </div>
+    </div>
+    <div class="shougou">
+      <img src="../../../static/image/superSignature/shougou.png" alt="">
     </div>
     <Bheader></Bheader>
     <!--<div class="Bheader">-->
@@ -153,7 +154,7 @@
             <p>1、因机制与企业签名不同，告别掉签</p>
             <p>2、告别掉签风险，只需支付一次获客成本即可</p>
             <p>3、同一台设备下载安装该应用不限制下载次数</p>
-            <p>4、按设备数量收费，仅需<span>￥20.00</span>/每台</p>
+            <p>4、按设备数量收费，仅需<span>￥35.00</span>/每台</p>
           </div>
           <div>
             <img src="../../../static/image/superSignature/tu@2x.png" alt="">
@@ -192,7 +193,7 @@
             </div>
             <div class="serviceSmall">
               <div></div>
-              <p>每台设备<span>￥20.00</span>/每台</p>
+              <p>每台设备<span>￥35.00</span>/每台</p>
             </div>
           </div>
         </div>
@@ -1337,7 +1338,7 @@ align-items: center;
   }
   .shougou{
     position: absolute;
-    top: 25%;
+    top: 60%;
     right: 1.6%;
     z-index: 9999;
   }
@@ -1346,7 +1347,7 @@ align-items: center;
   }
   .qqBig{
     position: absolute;
-    top: 50%;
+    top: 25%;
     right: 1.05%;
     z-index: 9999;
   }
