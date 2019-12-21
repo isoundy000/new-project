@@ -74,7 +74,7 @@
             align="center"
            >
             <template slot-scope="scope">
-              <span v-if="scope.row.status=== 1" style="color: #43A047">已完成</span>
+              <span v-if="scope.row.status=== 1" style="color: #2F82FF">已完成</span>
               <span v-else-if="scope.row.status===2" style="color: #999999">补签</span>
             </template>
           </el-table-column>

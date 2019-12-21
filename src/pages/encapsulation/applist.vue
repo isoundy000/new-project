@@ -881,20 +881,20 @@
     width:56px;
     height:28px;
     /*background:rgba(2,178,181,1);*/
-    border:1px solid rgba(2,178,181,1);
+    border:1px solid rgba(47,130,255,1);
     border-radius:2px;
     line-height: 28px;
-    color: #02B2B5;
+    color: #2F82FF;
     cursor: pointer;
   }
   .xufei{
     width:56px;
     height:28px;
     /*background:rgba(2,178,181,1);*/
-    border:1px solid #02B2B5;
+    border:1px solid #2F82FF;
     border-radius:2px;
     line-height: 28px;
-    color: #02B2B5;
+    color: #2F82FF;
     cursor: pointer;
   }
   .shanchu{
@@ -1048,7 +1048,7 @@
     margin: 50px auto 30px auto;
   }
   .greenColor{
-    background-color:#02B2B5 ;
+    background-color:#2F82FF;
   }
   .redColor1{
     background-color:#FF0000 ;
@@ -1144,7 +1144,7 @@
   .seondNext{
     width:167px;
     height:50px;
-    background:rgba(2,178,181,1);
+    background:rgba(47,130,255,1);
     border-radius:2px;
     text-align: center;
     line-height: 50px;
@@ -1175,7 +1175,7 @@
   }
   .queOk{
     width: 80px;
-    background-color: #06B2B6;
+    background-color: #2F82FF;
     height: 38px;
     text-align: center;
     line-height: 38px;

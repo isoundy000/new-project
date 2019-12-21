@@ -2,7 +2,7 @@
     <div class="updateApplication">
       <div class="firstDiv">
         <div class="firstDiv_small">
-          <img src="../../../static/image/survey/shouye@2x.png" alt="">
+          <img src="../../../static/image/survey/hpshouye.png" alt="">
           <p>您当前位置：</p>
           <el-breadcrumb separator="/">
             <el-breadcrumb-item :to="{ path: '/superSignatureAread' }">首页</el-breadcrumb-item>
@@ -91,7 +91,7 @@
           <div style="margin-top: 10px">
             <el-switch
               v-model="switchValue"
-              active-color="#06B2B6"
+              active-color="#2F82FF"
               inactive-color="#999999"
               @change="swich">
             </el-switch>
@@ -103,7 +103,7 @@
           <div style="margin-top: 10px">
             <el-switch
               v-model="switchValue1"
-              active-color="#06B2B6"
+              active-color="#2F82FF"
               inactive-color="#999999"
               @change="swich1">
             </el-switch>
@@ -115,7 +115,7 @@
           <div style="margin-top: 10px">
             <el-switch
               v-model="switchValue2"
-              active-color="#06B2B6"
+              active-color="#2F82FF"
               inactive-color="#999999"
               @change="swich2">
             </el-switch>
@@ -130,7 +130,7 @@
           <div style="margin-top: 10px">
             <el-switch
               v-model="newswitchValue"
-              active-color="#06B2B6"
+              active-color="#2F82FF"
               inactive-color="#999999"
               @change="newswich2">
             </el-switch>
@@ -662,7 +662,7 @@
     width: 78%;
     height: 30px;
     margin-top: 30px;
-    border-bottom: 1px solid #06B2B6;
+    border-bottom: 1px solid #2F82FF;
     display: flex;
     align-items: center;
     color: #999999;
@@ -737,7 +737,7 @@
     font-size: 18px;
     border-radius: 6px;
     color: white;
-    background-color: #14BEC8;
+    background-color: #2F82FF;
     margin: 20px auto 80px auto;
     cursor: pointer;
   }
@@ -847,7 +847,7 @@
   .uploadBtn {
     width: 190px;
     height: 50px;
-    background-color: #14BEC8;
+    background-color: #2F82FF;
     border-radius: 6px;
     align-items: center;
     justify-content: center;
@@ -975,8 +975,8 @@
   }
   .el-button--primary{
     color: #FFF;
-    background-color: #14BEC8;
-    border-color: #14BEC8;
+    background-color: #2F82FF;
+    border-color: #2F82FF;
   }
   .el-button{
     width: 100px;

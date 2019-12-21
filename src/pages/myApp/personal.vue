@@ -2,7 +2,7 @@
    <div>
      <div class="firstDiv">
        <div class="firstDiv_small">
-         <img src="../../../static/image/survey/shouye@2x.png" alt="">
+         <img src="../../../static/image/survey/hpshouye.png" alt="">
          <p>您当前位置：</p>
          <el-breadcrumb separator="/">
            <el-breadcrumb-item :to="{ path: '/superSignatureAread' }">首页</el-breadcrumb-item>
@@ -150,7 +150,7 @@
     width: 78%;
     height: 30px;
     margin-top: 30px;
-    border-bottom: 1px solid #06B2B6;
+    border-bottom: 1px solid #2F82FF;
     display: flex;
     align-items: center;
     color: #999999;

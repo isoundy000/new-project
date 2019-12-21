@@ -1,15 +1,18 @@
 <template>
   <div class="register">
     <div class="login_title">
-      <img src="../../../static/image/superSignature/mlogo.png" alt="">
+      <img src="../../../static/image/superSignature/hplogo@2x.png" alt="">
 
       <div class="login_title_div">
-        <router-link to="/" tag="p">首页</router-link>
+        <router-link to="/" tag="p">返回首页</router-link>
         <!--<p>关于我们</p>-->
       </div>
     </div>
-    <div class="banner" style="background-image: url('../../../static/image/login/dengluditu.png')">
+    <div class="banner" style="background-image: url('../../../static/image/login/hpdenglu_bg.png')">
       <div class="loginDiv" style="background-image: url('../../../static/image/login/denglukuang.png')">
+        <div class="loginDiv_One">
+          <p class="msg_login">注册</p>
+        </div>
         <div v-show="xianshi"
              style="width:100%;display:flex;align-items:center;position: absolute;padding-left: 20px;font-size: 13px;color: red;margin-top: 0.5vw">
           <img src="../../../static/image/login/tishi.png" alt="">
@@ -48,14 +51,14 @@
             <div class="login_state_div">
               <div class="login_state_small">
                 <img @click="checklist" v-if="isCheck" src="../../../static/image/login/gouxuan1.png" alt="">
-                <img v-else @click="noChecklist" src="../../../static/image/login/gouxuan2.png" alt="">
+                <img v-else @click="noChecklist" src="../../../static/image/login/hpxuan.png" alt="">
                 <p>勾选同意</p>
               </div>
               <p class="agreement">《用户服务协议》</p>
             </div>
           </div>
           <div class="loginBtn" @click="registerBtn">
-            <div style="background-image: url('../../../static/image/login/dengluanniu.png')">
+            <div style="background-image: url('../../../static/image/login/hpanniu.png')">
               <p>注册</p>
             </div>
           </div>
@@ -299,21 +302,26 @@
 
   .banner {
     width: 100%;
-    height: 75%;
-    position: relative;
+    max-width: 1468px;
+    height: 750px;
     background-size: 100% 100%;
     background-repeat: no-repeat;
     display: flex;
     align-items: center;
+    position: relative;
+    margin: 0 auto;
   }
 
   .loginDiv {
     width: 334px;
-    height: 417px;
+    height: 460px;
     position: absolute;
-    right: 20%;
+    right: 15%;
     background-size: 100% 100%;
     background-repeat: no-repeat;
+    background:rgba(255,255,255,1);
+    box-shadow:0px 0px 18px 0px rgba(5,151,248,0.2);
+    border-radius:10px;
   }
 
   .loginDiv_One div {
@@ -326,7 +334,7 @@
     display: flex;
     justify-content: center;
     flex-flow: column;
-    margin-top: 40px;
+    margin-top: 30px;
   }
 
   .user_div {
@@ -530,15 +538,25 @@
   }
 
   .login_footer span {
-    color: #06B2B6;
+    color: #278DFE;
   }
 
   .isColor {
-    color: #06B2B6;
+    color: #278DFE;
 
   }
 
   .borderColor {
-    border: 1px solid #06B2B6;
+    border: 1px solid #278DFE;
+  }
+  .loginDiv_One {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 17px;
+
+    border-bottom: 1px solid #DCDCDC;
   }
 </style>

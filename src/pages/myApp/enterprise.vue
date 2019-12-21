@@ -111,7 +111,7 @@
         v-model="input"
         @change="seachInput">
       </el-input>
-      <div class="export" @click="enterpriseUpload" style="background-image: url('../../../static/image/appManagement/anniu@2x (1).png')">
+      <div class="export" @click="enterpriseUpload" style="background-image: url('../../../static/image/appManagement/hps_anniu.png')">
       <img src="../../../static/image/survey/daochuicon@2x.png" alt="">
       <p>上传应用</p>
       </div>
@@ -148,7 +148,7 @@
 
         >
           <template slot-scope="scope">
-            <p style="color: #14BEC8;cursor: pointer" @click.stop="handleEdit(tableData[scope.$index].tag)">点击下载</p>
+            <p style="color: #2F82FF;cursor: pointer" @click.stop="handleEdit(tableData[scope.$index].tag)">点击下载</p>
             <!--<el-button size="small" >编辑          </el-button>-->
           </template>
         </el-table-column>
@@ -174,7 +174,7 @@
           label="状态"
           >
           <template slot-scope="scope">
-            <span v-if="scope.row.status=== 1" style="color: #43A047">分发中</span>
+            <span v-if="scope.row.status=== 1" style="color: #2F82FF">分发中</span>
             <span v-else-if="scope.row.status=== 0" style="color: #999999">已下架</span>
             <span v-else-if="scope.row.status=== '已删除'" style="color: #FF0000">{{scope.row.state}}</span>
           </template>
@@ -766,8 +766,8 @@
   }
 
   .isColor {
-    color: #06B2B6;
-    border-bottom: 2px solid #06B2B6;
+    color: #2F82FF;
+    border-bottom: 2px solid #2F82FF;
   }
 
   .login_title_div {
@@ -780,7 +780,7 @@
   .login_title_div p:nth-child(1) {
     width: 56px;
     height: 30px;
-    background-color: #06B2B6;
+    background-color: #2F82FF;
     font-size: 14px;
     color: white;
     line-height: 30px;
@@ -816,7 +816,7 @@
   .myappBtn {
     width: 118px;
     height: 34px;
-    background-color:#06B2B6 ;
+    background-color:#2F82FF ;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -871,7 +871,7 @@
     width: 78%;
     height: 30px;
     margin-top: 30px;
-    border-bottom: 1px solid #06B2B6;
+    border-bottom: 1px solid #2F82FF;
     display: flex;
     align-items: center;
     color: #999999;
@@ -960,7 +960,7 @@
     height: 40px;
     margin: 20px auto 0 auto;
     line-height: 40px;
-    border-bottom: 1.5px solid #06B2B6;
+    border-bottom: 1.5px solid #2F82FF;
     font-size: 16px;
     color: #333333;
     font-family: "Microsoft YaHei UI";
@@ -997,7 +997,7 @@
   }
   .appManagementSmallOne p {
     margin-top: 5px;
-    color: #14BEC8;
+    color: #2F82FF;
     font-size: 16px;
     cursor: pointer;
   }
@@ -1032,10 +1032,10 @@
     margin-top: 18px;
   }
   .el-select-dropdown__item{
-    color:#14BEC8 ;
+    color:#2F82FF ;
   }
   .el-select-dropdown__item.selected{
-    color:#14BEC8 ;
+    color:#2F82FF ;
   }
   #input {
     position: absolute;
@@ -1061,7 +1061,7 @@
 
   .queOk{
     width: 60px;
-    background-color: #06B2B6;
+    background-color: #2F82FF;
     height: 30px;
     text-align: center;
     line-height: 30px;

@@ -50,7 +50,7 @@
           </div>
           <div class="maskOneSecondMain">
             <p></p>
-            <el-button style="border: 1px solid #06B2B6;color: #06B2B6;margin-left: 15px;width: 136px" :disabled="as" @click="addAccount" :loading="load"  :class="{ backg: isAddAccount }"  >
+            <el-button style="border: 1px solid #2F82FF;color: #2F82FF;margin-left: 15px;width: 136px" :disabled="as" @click="addAccount" :loading="load"  :class="{ backg: isAddAccount }"  >
               {{buttonValue}}
             </el-button>
 
@@ -75,7 +75,7 @@
               v-model="inputYan"
             >
             </el-input>
-            <el-button style="border: 1px solid #06B2B6;color: #06B2B6;margin-left: 10px;width: 136px" @click="sendMsg" :loading="load1"   v-if="isBtn">
+            <el-button style="border: 1px solid #2F82FF;color: #2F82FF;margin-left: 10px;width: 136px" @click="sendMsg" :loading="load1"   v-if="isBtn">
               {{buttonName}}
             </el-button>
           </div>
@@ -1053,7 +1053,7 @@
     line-height: 36px;
     color: white;
     font-size: 14px;
-    background: rgba(6, 178, 182, 1);
+    background: rgba(47, 130, 255, 1);
     border-radius: 4px;
     cursor: pointer;
   }
@@ -1137,15 +1137,15 @@
     line-height: 36px;
     color: white;
     font-size: 16px;
-    background: rgba(6, 178, 182, 1);
+    background: rgba(47, 130, 255, 1);
     border-radius: 4px;
     margin: 40px auto;
     cursor: pointer;
   }
 
   .isColor {
-    color: #06B2B6;
-    border-bottom: 2px solid #06B2B6;
+    color: #2F82FF;
+    border-bottom: 2px solid #2F82FF;
   }
 
   .login_title_div {
@@ -1226,18 +1226,18 @@
     margin-left: 10px;
     font-size: 14px;
     background: rgba(255, 255, 255, 1);
-    border: 1px solid rgba(6, 178, 182, 1);
+    border: 1px solid rgba(47 ,130, 255, 1);
     border-radius: 4px;
-    color: #06B2B6;
+    color: #2F82FF;
     cursor: pointer;
   }
 
   .thirdDiv .el-select-dropdown__item {
-    color: #14BEC8;
+    color: #2F82FF;
   }
 
   .thirdDiv .el-select-dropdown__item.selected {
-    color: #14BEC8;
+    color: #2F82FF;
   }
 
   .secondFooter {
@@ -1307,7 +1307,7 @@
   .login_title_div p:nth-child(1) {
     width: 56px;
     height: 30px;
-    background-color: #06B2B6;
+    background-color: #2F82FF;
     font-size: 14px;
     color: white;
     line-height: 30px;
@@ -1343,7 +1343,7 @@
   .myappBtn {
     width: 118px;
     height: 34px;
-    background-color: #06B2B6;
+    background-color: #2F82FF;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1449,7 +1449,7 @@
 
   .appManagementSmallOne p {
     margin-top: 5px;
-    color: #14BEC8;
+    color: #2F82FF;
     font-size: 16px;
     cursor: pointer;
   }
@@ -1521,7 +1521,7 @@
   }
   .queOk{
     width: 80px;
-    background-color: #14BEC8;
+    background-color: #2F82FF;
     height: 38px;
     text-align: center;
     line-height: 38px;
@@ -1534,7 +1534,7 @@
   }
   .zhanOk{
     width: 60px;
-    background-color: #06B2B6;
+    background-color: #2F82FF;
     height: 30px;
     text-align: center;
     line-height: 30px;

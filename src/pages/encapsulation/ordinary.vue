@@ -81,13 +81,13 @@
   }
 
   .is-success div:nth-child(2) {
-    background-color: #06B2B6 !important;
+    background-color: #2F82FF !important;
     border: 0;
     color: white;
   }
 
   .is-process div:nth-child(2) {
-    background-color: #06B2B6 !important;
+    background-color: #2F82FF !important;
     border: 0;
     color: white;
   }
@@ -110,15 +110,15 @@
   /*background-color: #DCDCDC !important;*/
   /*}*/
   .is-success div:nth-child(1) {
-    background-color: #06B2B6 !important;
+    background-color: #2F82FF !important;
   }
 
   /*.is-wait div:nth-child(1){*/
   /*background-color: #DCDCDC !important;*/
   /*}*/
   .el-step__head.is-success {
-    color: #06B2B6 !important;
-    border-color: #06B2B6 !important;
+    color: #2F82FF !important;
+    border-color: #2F82FF !important;
 
   }
 

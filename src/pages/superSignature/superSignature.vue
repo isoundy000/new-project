@@ -21,123 +21,73 @@
         <a :href="list.newurl" target="_blank">{{list.newqq}}</a>
       </div>
     </div>
-    <div class="shougou">
-      <img src="../../../static/image/superSignature/shougou.png" alt="">
-    </div>
-    <Bheader></Bheader>
-    <!--<div class="Bheader">-->
-      <!--<div class="login_title">-->
-        <!--<div class="login_title_first">-->
-          <!--<img class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">-->
-        <!--</div>-->
-
-        <!--<div class="title login_title_second">-->
-          <!--<p @click="titleName(index)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass}"-->
-             <!--@mouseenter="enter(index)"-->
-             <!--@mouseleave="leave(index)">{{list.msg}}</p>-->
-        <!--</div>-->
-
-        <!--<div  class="login_title_div login_title_third">-->
-          <!--<p @click="loginBtn">登录</p>-->
-          <!--<p @click="registerBtn">注册</p>-->
-        <!--</div>-->
-
-
-      <!--</div>-->
+    <!--<div class="shougou">-->
+      <!--<img src="../../../static/image/superSignature/shougou.png" alt="">-->
     <!--</div>-->
-
-    <div class="banner" style="background-image: url('../../../static/image/superSignature/newbg.png')">
-
-
-     <div class="bannerDiv">
-       <p class="bannerDivone">超级签名一次  安装永不受影响</p>
-       <img src="../../../static/image/superSignature/zi.png" alt="">
-
+    <Bheader></Bheader>
+    <div class="banner" style="background-image: url('../../../static/image/superSignature/hpbanner.png')">
+      <div class="bannerDiv">
+        <p class="bannerDivone">超级签名一次 安装永不受影响</p>
+        <p class="bannerDivNew">ios App超级签名</p>
         <p class="bannerDivtwo">国内ios应用商店，申请账号、上传应用费时费力？</p>
-       <p class="bannerDivthree">不一样的ios签名。让你告别掉签烦恼，提高您的应用分发效率，节省大量时间，帮您轻松节省大量获客成本</p>
-       <div @click="rightnow" class="rightnow">立即签名</div>
-     </div>
+        <p class="bannerDivthree">不一样的ios签名。让你告别掉签烦恼，提高您的应用分发效率，节省大量时间，帮您轻松节省大量获客成本</p>
+        <div @click="rightnow" class="rightnow">立即签名</div>
+      </div>
       <div class="bannerDivsmall">
-        <img src="../../../static/image/superSignature/newtu.png" alt="">
+        <img src="../../../static/image/superSignature/hptu.png" alt="">
       </div>
 
     </div>
-    <!--样例展示-->
-    <div class="example">
-      <img src="../../../static/image/superSignature/yangli@2x.png" alt="">
-    </div>
-    <!--video-->
-    <div id="video" class="videoDiv" style="background-image: url(../../../static/image/superSignature/videoBg.png);">
-      <img @click="play" class="play" src="../../../static/image/superSignature/Play_anniu@2x.png" alt="" />
+    <div id="video" class="videoDiv" style="background-image: url(../../../static/image/superSignature/hpbg.png);">
+      <img @click="play" class="play" src="../../../static/image/superSignature/Play_anniu@2x.png" alt=""/>
     </div>
     <div class="mask" @click="mask" style="display: none">
-      <video   class="video-js vjs-default-skin vjs-big-play-centered" controls
-             style="object-fit:fill" >
-        <source src="../../../static/image/superSignature/ios.mp4"  />
+      <video class="video-js vjs-default-skin vjs-big-play-centered" controls
+             style="object-fit:fill">
+        <source src="../../../static/image/superSignature/ios.mp4" type="video/mp4"/>
         您的浏览器不支持 video 标签。
       </video>
     </div>
-
     <!--我们的优势-->
     <div class="advantage">
       <div class="advantageImg">
-        <img src="../../../static/image/superSignature/youshi@2x.png" alt="">
+        <img src="../../../static/image/superSignature/hpyoushi.png" alt="">
       </div>
       <div class="advantageBig">
-        <div @mouseenter="advantageEnterOne()" @mouseleave="advantageLeaveOne()" class="advantageOne advantageBig_div"
-             style="background-image: url('../../../static/image/superSignature/bg.png')">
-          <div class="advantageOneBig" v-if="isAdvantageOne">
+        <div class="advantageOne advantageBig_div">
+          <div class="advantageOneBig">
             <img src="../../../static/image/superSignature/qianming@2x.png" alt="">
+          </div>
+          <div class="advantageOneBigP">
             <p class="LaBel">自动化签名 方便快捷</p>
+            <p>根据自身需要，选择服务类型，上传IPA包，快速分发，10分钟内完成所有流程，全程自动化，操作简单</p>
           </div>
-          <div v-else class="advantageOneSmall">
-            <div>
-              <p>自动化签名、方便快捷</p>
-              <p>根据自身需要，选择服务类型，上传IPA包，快速分发,10分钟内完成所有流程，全程自动化，操作简单</p>
-            </div>
-          </div>
-
         </div>
-        <div @mouseenter="advantageEnterTwo()" @mouseleave="advantageLeaveTwo()" class="advantageTwo advantageBig_div"
-             style="background-image: url('../../../static/image/superSignature/bg.png')">
-          <div class="advantageTwoBig" v-if="isAdvantageTwo">
+        <div class="advantageOne advantageBig_div">
+          <div class="advantageOneBig">
             <img src="../../../static/image/superSignature/anquan@2x.png" alt="">
+          </div>
+          <div class="advantageOneBigP">
             <p class="LaBel">特有机制 告别掉签</p>
+            <p>蒲公英采取的iOS超级签名和企业签名机制不同，掉签概率远低于传统企业签名</p>
           </div>
-          <div v-else class="advantageTwoSmall">
-            <div>
-              <p>特有机制、告别掉签</p>
-              <p>蒲公英采取的iOS超级签名和企业签名机制不同，掉签概率远低于传统企业签名</p>
-            </div>
-          </div>
-
         </div>
-        <div @mouseenter="advantageEnterThree()" @mouseleave="advantageLeaveThree()"
-             class="advantageThree advantageBig_div"
-             style="background-image: url('../../../static/image/superSignature/bg.png')">
-          <div class="advantageTwoBig" v-if="isAdvantageThree">
+        <div class="advantageOne advantageBig_div">
+          <div class="advantageOneBig">
             <img src="../../../static/image/superSignature/anzhuang@2x.png" alt="">
-            <p class="LaBel">无需越狱 安装即用</p>
           </div>
-          <div v-else class="advantageThreeSmall">
-            <div>
-              <p>无需越狱、安装即用</p>
-              <p>无需企业签名，无需越狱，无需苹果审核，无需上架App Store，下载后安装即用</p>
-            </div>
+          <div class="advantageOneBigP">
+            <p class="LaBel">无需越狱 安装即用</p>
+            <p>无需企业签名，无需越狱，无需苹果审核，无需上架App Store，下载后安装即用</p>
           </div>
         </div>
-        <div @mouseenter="advantageEnterFourth()" @mouseleave="advantageLeaveFourth()"
-             class="advantageFourth advantageBig_div"
-             style="background-image: url('../../../static/image/superSignature/bg.png')">
-          <div class="advantageFourthBig" v-if="isAdvantageFourth">
+        <div class="advantageOne advantageBig_div">
+          <div class="advantageOneBig">
             <img src="../../../static/image/superSignature/goumai@2x.png" alt="">
-            <p class="LaBel">按需购买 性价比高</p>
           </div>
-          <div v-else class="advantageFourthSmall">
-            <div>
-              <p>自动化签名、快速高效</p>
-              <p>按需购买，未使用设备不过期同设备多次下载，或下载多款应用下载，只收费一次</p>
-            </div>
+          <div class="advantageOneBigP">
+            <p class="LaBel">按需购买 性价比高</p>
+            <p>按需购买，未使用设备不过期同设备多次下载，或下载多款应用下载，只收费一次</p>
           </div>
         </div>
       </div>
@@ -145,19 +95,16 @@
     <!--超低价格-->
     <div class="lowprize">
       <div class="lowprizeImg">
-        <img src="../../../static/image/superSignature/zhaodijiage@2x.png" alt="">
+        <img src="../../../static/image/superSignature/hpzhaodijiage.png" alt="">
       </div>
       <div class="lowprizeDiv">
-        <div class="lowprizeDiv_one">
+        <div class="lowprizeDiv_one" style="background-image: url('../../../static/image/superSignature/hpjiage.png')">
           <div>
             <p>同样的iOS签名、超低的价格 </p>
             <p>1、因机制与企业签名不同，告别掉签</p>
             <p>2、告别掉签风险，只需支付一次获客成本即可</p>
             <p>3、同一台设备下载安装该应用不限制下载次数</p>
-            <p>4、按设备数量收费，仅需<span>￥35.00</span>/每台</p>
-          </div>
-          <div>
-            <img src="../../../static/image/superSignature/tu@2x.png" alt="">
+            <!--<p>4、按设备数量收费，仅需<span>￥35.00</span>/每台</p>-->
           </div>
         </div>
       </div>
@@ -167,58 +114,48 @@
     <!--服务对比-->
     <div class="service">
       <div class="serviceImg">
-        <img src="../../../static/image/superSignature/fuwu@2x.png" alt="">
+        <img src="../../../static/image/superSignature/hpfuwu.png" alt="">
       </div>
       <div class="serviceDiv">
-        <div class="serviceDivOne" @mouseenter="serviceDivOne()"
-             style="background-image: url('../../../static/image/superSignature/lansejianbianditu.png')">
-          <p class="serviceDivOneTitle">IOS专属签名</p>
+        <div class="serviceDivOne"
+             style="background-image: url('../../../static/image/superSignature/hpchaoji.png')">
+          <p class="serviceDivOneTitle">iOS超级签名</p>
           <div class="hr"></div>
           <div class="flex_service">
             <div class="serviceSmall">
-              <div></div>
               <p>因机制与企业签名不同，告别掉签</p>
             </div>
             <div class="serviceSmall">
-              <div></div>
               <p>告别掉签风险,只需支付一次即可</p>
             </div>
             <div class="serviceSmall">
-              <div></div>
               <p>同一台设备下载安装该应用不限制下载次数</p>
             </div>
             <div class="serviceSmall">
-              <div></div>
               <p>按设备数量收费</p>
             </div>
             <div class="serviceSmall">
-              <div></div>
-              <p>每台设备<span>￥35.00</span>/每台</p>
+              <!--<p>每台设备<span>￥35.00</span>/每台</p>-->
             </div>
           </div>
         </div>
-        <div class="serviceDivTwo" @mouseenter="serviceDivTwo()">
+        <div class="serviceDivTwo"  style="background-image: url('../../../static/image/superSignature/hpqiye.png')">
           <p class="serviceDivTwoTitle">企业签</p>
           <div class="hr1"></div>
           <div class="flex_service">
             <div class="serviceSmall">
-              <div></div>
               <p>稳定性差</p>
             </div>
             <div class="serviceSmall">
-              <div></div>
               <p>无法推送</p>
             </div>
             <div class="serviceSmall">
-              <div></div>
               <p>不可设置</p>
             </div>
             <div class="serviceSmall">
-              <div></div>
               <p>需打开页面重新下载</p>
             </div>
             <div class="serviceSmall">
-              <div></div>
               <p>包月收费</p>
             </div>
           </div>
@@ -230,7 +167,7 @@
     <!--操作流程简单解析-->
     <div class="operation">
       <div class="operationDiv">
-        <img src="../../../static/image/superSignature/caozuoliuchengjianbiaoti.png" alt="">
+        <img src="../../../static/image/superSignature/hpchaozuoliucheng.png" alt="">
       </div>
       <div class="operationSmall">
         <div class="operationDL">
@@ -285,13 +222,85 @@
     <!--常见问题-->
     <div class="problem">
       <div class="problemDiv">
-        <img src="../../../static/image/superSignature/changjianwentibiaoti.png" alt="">
+        <img src="../../../static/image/superSignature/hpwenti.png" alt="">
       </div>
-      <div class="problemImg">
-        <img src="../../../static/image/superSignature/wenti.png" alt="">
+      <div class="textMain">
+        <div class="textMainTop">
+          <div class="textfooter">
+            <p class="textQ">Q</p>
+            <p class="textOne">需要提供 App 的源码吗?</p>
+          </div>
+          <div class="textfooter">
+            <p class="textA">A</p>
+            <p class="textTwo">不需要提供，仅需要提供adhoc版本的ipa格式的安装包即可。</p>
+          </div>
+        </div>
+        <div class="textMainTop">
+          <div class="textfooter">
+            <p class="textQ">Q</p>
+            <p class="textOne">对安装包的大小是否有限制？</p>
+          </div>
+          <div class="textfooter">
+            <p class="textA">A</p>
+            <p class="textTwo">应用包大小最高不超过2048M。</p>
+          </div>
+        </div>
+        <div class="textMainTop">
+          <div class="textfooter">
+            <p class="textQ">Q</p>
+            <p class="textOne">付款方式有哪些？</p>
+          </div>
+          <div class="textfooter">
+            <p class="textA">A</p>
+            <p class="textTwo">支持支付宝、微信支付。</p>
+          </div>
+        </div>
+        <div class="textMainTop">
+          <div class="textfooter">
+            <p class="textQ">Q</p>
+            <p class="textOne">充值后如何上传IPA安装包？</p>
+          </div>
+          <div class="textfooter">
+            <p class="textA">A</p>
+            <p class="textTwo">
+              进入后台系统“应用管理”页面，点击“新增应用”，按流程进行操作即可上传成功。若未登录，可点击页面中“登录”或banner中“立即签名”进入后台登录页面，
+              输入账号密码登录后再进行上传。
+            </p>
+          </div>
+        </div>
+        <div class="textMainTop">
+          <div class="textfooter">
+            <p class="textQ">Q</p>
+            <p class="textOne">签名的 App 可以在商店搜索到吗?</p>
+          </div>
+          <div class="textfooter">
+            <p class="textA">A</p>
+            <p class="textTwo">不能，超级签名后的 App 可以直接将链接发给用户安装，无需越狱，无需账号，无需审核。</p>
+          </div>
+        </div>
+        <div class="textMainTop">
+          <div class="textfooter">
+            <p class="textQ">Q</p>
+            <p class="textOne">如果同一台设备安装应用后卸载，再重新安装，计费时算一台设备还是两台？</p>
+          </div>
+          <div class="textfooter">
+            <p class="textA">A</p>
+            <p class="textTwo">按照真实设备数量计算，只计算一台设备。</p>
+          </div>
+        </div>
+        <div class="textMainTop">
+          <div class="textfooter">
+            <p class="textQ">Q</p>
+            <p class="textOne">什么是真机测试？</p>
+          </div>
+          <div class="textfooter">
+            <p class="textA">A</p>
+            <p class="textTwo">APP签名完成后，将会用主流苹果机型进行测试安装，安装无误后进行发出。</p>
+          </div>
+        </div>
       </div>
       <!--<div style="width: 100%;display: flex;justify-content: center;margin-top: 30px;color: black">-->
-        <!--<p>平顶山市鑫达科技有限公司</p>-->
+      <!--<p>平顶山市鑫达科技有限公司</p>-->
       <!--</div>-->
     </div>
 
@@ -545,73 +554,73 @@
 <style scoped>
   .login {
     /*width: 100%;*/
-    /*!*height: 100%;*!*/
+    /*height: 100%;*/
     /*position: relative;*/
-    /*overflow: hidden;*/
+    background-color: white;
   }
-.Bheader{
-  width: 100%;
-}
-
 
   .banner {
     width: 100%;
 
-    height: 550px;
+    height: 450px;
     position: relative;
     background-repeat: no-repeat;
-    background-size: 100% 550px;
+    background-size: 100% 450px;
     display: flex;
-   justify-content: center;
-align-items: center;
-
+    justify-content: center;
+    align-items: center;
     /*height: 368px;*/
   }
-  .bannerDiv{
-    /*width: 1000px;*/
+
+  .bannerDiv {
     height: 400px;
     margin-top: 100px;
     margin-left: 3vw;
   }
-  .bannerDiv img{
+
+  .bannerDiv img {
     width: 602px;
     height: 82px;
     margin-top: 15px;
-
   }
-  .bannerDivone{
+
+  .bannerDivone {
     font-size: 1.8vw;
     color: #fff;
     width: 44vw;
     letter-spacing: 18px;
-
   }
-  .bannerDivtwo{
+
+  .bannerDivNew {
+    font-size: 3.8vw;
+    font-weight: bold;
+    color: #fff;
+    width: 44vw;
+  }
+
+  .bannerDivtwo {
     font-size: 19px;
     color: #fff;
     margin-top: 28px;
-    width: 23vw;
+    width: 30vw;
   }
-  .bannerDivthree{
+
+  .bannerDivthree {
     font-size: 19px;
     color: #fff;
     margin-top: 5px;
     width: 50vw;
   }
-  .bannerDivsmall{
-    margin-right: 10px;
 
+  .bannerDivsmall {
+    margin-right: 10px;
   }
-  .bannerDivsmall img{
+
+  .bannerDivsmall img {
     width: 350px;
     height: 326px;
   }
-/*.banner img{*/
-  /*width:1920px;!*图片宽度*!*/
-  /*position:absolute;*/
-  /*left:50%;*/
-  /*margin-left:-960px;!*图片宽度的一半*!*/
-/*}*/
+
   .example {
     width: 100%;
     display: flex;
@@ -625,26 +634,17 @@ align-items: center;
   }
 
   .videoDiv {
-    width:70%;
-    height: 350px;
-    background-size: 100% 350px;
-    background-repeat: no-repeat;
-    border-radius: 5px;
+    width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin: 61px auto;
-  }
-  .videoDiv img{
-    width: 115px;
-    height: 115px;
+    margin-top: 20px;
   }
 
   .advantage {
     width: 100%;
-    height: 520px;
+    height: 620px;
     margin-top: 50px;
-    background-color: #F7F7F7;
+    background-color: #fcfcfc;
   }
 
   .advantageImg {
@@ -661,24 +661,25 @@ align-items: center;
 
   .advantageBig {
     width: 100%;
+    max-width: 1025px;
     display: flex;
-    margin-top: 30px;
-    justify-content: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 30px auto 0 auto;
   }
 
   .advantageBig_div {
-    width: 300px;
-    height: 320px;
-    background-size: 300px 320px;
+    width: 480px;
+    height: 186px;
+    background-size: 480px 186px;
     display: flex;
-    flex-flow: column;
-    justify-content: center;
     align-items: center;
-    margin: 20px 5px 0 5px;
+    margin: 30px 5px 0 5px;
     border-radius: 10px;
-    background-repeat: no-repeat;
     cursor: pointer;
     font-size: 16px;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 10px;
   }
 
   .advantageOneBig {
@@ -686,43 +687,35 @@ align-items: center;
     flex-flow: column;
     justify-content: center;
     align-items: center;
+    margin-left: 28px;
   }
 
-  .advantageTwoBig {
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    align-items: center;
-  }
 
-  .advantageThreeBig {
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .advantageFourthBig {
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    align-items: center;
-  }
 
   .advantageBig_div img {
     width: 85px;
     height: 85px;
   }
+  .advantageOneBigP{
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    margin-left: 29px;
+  }
+  .advantageOneBigP p:nth-child(2){
+    margin-top: 10px;
+    font-size: 14px;
+    width: 295px;
+    text-align:justify
+  }
 
   .advantageBig_div .LaBel {
     margin-top: 45px;
+    color: #333333;
+    font-weight: bold;
   }
 
-  .advantageOneSmall, .advantageTwoSmall, .advantageThreeSmall, .advantageFourthSmall {
-    width: 75%;
-    color: white;
 
-  }
 
   .advantageOneSmall p:nth-child(1), .advantageTwoSmall p:nth-child(1), .advantageThreeSmall p:nth-child(1), .advantageFourthSmall p:nth-child(1) {
     text-align: center;
@@ -738,30 +731,11 @@ align-items: center;
 
   }
 
-  /*.advantageTwoSmall {*/
-  /*width: 75%;*/
-  /*color: white;*/
 
-  /*}*/
-
-  /*.advantageTwoSmall p:nth-child(1) {*/
-  /*text-align: center;*/
-  /*font-size: 15px;*/
-  /*}*/
-
-  /*.advantageTwoSmall p:nth-child(2) {*/
-  /*width: 100%;*/
-  /*font-size: 12px;*/
-  /*margin-top: 25px;*/
-  /*text-align: justify;*/
-  /*text-justify: inter-ideograph;*/
-
-  /*}*/
 
   .lowprize {
     width: 100%;
-    height: 570px;
-    background-color: white;
+    height: 620px;
   }
 
   .lowprizeImg {
@@ -786,18 +760,20 @@ align-items: center;
   .lowprizeDiv_one {
     width: 1200px;
     height: 460px;
-    background-color: rgba(232,252,252,0.4);
+    /*background-color: #E8FCFC;*/
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
     display: flex;
-    justify-content: center;
     align-items: center;
   }
 
   .lowprizeDiv_one div:nth-child(1) {
     width: 500px;
+    margin-left: 9vw;
   }
 
   .lowprizeDiv_one div:nth-child(1) p:nth-child(1) {
-    color: #06B2B6;
+    color: #2F82FF;
     font-size: 28px;
 
   }
@@ -838,14 +814,12 @@ align-items: center;
   .service {
     width: 100%;
     height: 660px;
-    background-color: #F5F5F5;
   }
 
   .serviceImg {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 60px;
   }
 
   .serviceImg img {
@@ -858,30 +832,27 @@ align-items: center;
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 30px;
+    background-image: url("../../../static/image/superSignature/hpfw_bg.png");
+    background-repeat: no-repeat;
+    background-size: 1536px 214px;
   }
 
   .serviceDivOne {
-    width: 350px;
-    height: 450px;
-    text-align: center;
-    background-size: 350px 450px;
-    border: 1px solid #EAEAEA;
-    margin: 20px;
+    width: 418px;
+    height: 478px;
+    background-size: 418px 478px;
+    margin: 40px;
+    color: #666666;
     border-radius: 20px;
-    background-color: white;
     cursor: pointer;
   }
 
   .serviceDivTwo {
-    width: 350px;
-    height: 450px;
-    text-align: center;
-    background-size: 350px 450px;
-    border: 1px solid #EAEAEA;
-    margin: 20px;
+    width: 418px;
+    height: 478px;
+    background-size: 418px 478px;
+    margin: 40px;
     border-radius: 20px;
-    background-color: white;
     cursor: pointer;
   }
 
@@ -898,15 +869,21 @@ align-items: center;
   }
 
   .serviceDivOneTitle {
+    width: 80%;
     font-size: 24px;
-    color: white;
-    margin-top: 33px;
+    color: #333333;
+    margin-top: 74px;
+    margin-left: 43px;
+
   }
 
   .serviceDivTwoTitle {
+    width: 80%;
     font-size: 24px;
-    color: black;
-    margin-top: 33px;
+    color: #333333;
+    margin-top: 74px;
+    margin-left: 43px;
+
   }
 
   .serviceDivThreeTitle {
@@ -916,33 +893,34 @@ align-items: center;
   }
 
   .flex_service {
-    margin-top: 70px;
+
   }
 
   .hr {
     width: 52px;
     height: 3px;
-    margin: 45px auto 0 auto;
-    background-color: white;
+    margin-left: 43px;
+    margin-top: 30px;
+    background-color: #2F82FF;
   }
 
   .hr1 {
     width: 52px;
     height: 3px;
-    margin: 45px auto 0 auto;
-    background-color: #06B2B6;
+    margin-left: 43px;
+    margin-top: 30px;
+    background-color: #2F82FF;
   }
 
   .serviceDivOne .serviceSmall {
-    width: 100%;
+    width: 80%;
     display: flex;
     align-items: center;
     font-size: 16px;
-    color: white;
+    color: #666666;
     text-align: center;
-    margin-left: 24px;
+    margin-left: 43px;
     margin-top: 20px;
-
   }
 
   .serviceDivOne .serviceSmall div {
@@ -968,17 +946,16 @@ align-items: center;
     width: 6px;
     height: 6px;
     border-radius: 10px;
-    background-color: black;
   }
 
   .serviceDivTwo .serviceSmall {
-    width: 100%;
+    width: 80%;
     display: flex;
     align-items: center;
     font-size: 16px;
-    color: black;
+    color: #666666;
     text-align: center;
-    margin-left: 24px;
+    margin-left: 43px;
     margin-top: 20px;
 
   }
@@ -990,14 +967,11 @@ align-items: center;
     background-color: black;
   }
 
-  .serviceSmall p {
-    margin-left: 7px;
-  }
+
 
   .operation {
     width: 100%;
     height: 300px;
-    background-color: white;
   }
 
   .operationDiv {
@@ -1143,8 +1117,8 @@ align-items: center;
 
   .problem {
     width: 100%;
-    height: 1650px;
-    background-color: #F5F5F5;
+    height: auto;
+    background-color: white;
   }
 
   .problemDiv {
@@ -1170,13 +1144,14 @@ align-items: center;
     width: 800px;
     height: 1410px;
   }
+
   .login_title {
     width: 80%;
     height: 80px;
     display: flex;
-    margin: 0 auto;
     /*justify-content: space-around;*/
     align-items: center;
+    margin: 0 auto;
   }
 
   .login_title .login_title_img {
@@ -1214,21 +1189,21 @@ align-items: center;
   }
 
   .isColor {
-    color: #06B2B6;
-    border-bottom: 2px solid #06B2B6;
+    color: #2F82FF;
+    border-bottom: 2px solid #2F82FF;
   }
 
   .login_title_div {
     display: flex;
     font-size: 16px;
     color: #323232;
-    /*margin-left: 6vw;*/
+    margin-left: 6vw;
   }
 
   .login_title_div p:nth-child(1) {
     width: 56px;
     height: 30px;
-    background-color: #06B2B6;
+    background-color: #2F82FF;
     font-size: 14px;
     color: white;
     line-height: 30px;
@@ -1250,26 +1225,12 @@ align-items: center;
     border-radius: 5px;
     cursor: pointer;
   }
-.mask{
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  background: rgba(2, 2, 2, 0.4);
-  z-index: 1000000;
-  top: 0;
-}
-.mask video{
-  width: 375px;
-  height: 600px;
-}
+
   .alreadyLogin {
     width: 300px;
     height: 30px;
     margin-top: -5px;
-    margin-left: 20px;
+    /*margin-left: 20px;*/
     display: flex;
     align-items: center;
 
@@ -1278,7 +1239,7 @@ align-items: center;
   .myappBtn {
     width: 118px;
     height: 34px;
-    background-color:#06B2B6 ;
+    background-color: #2F82FF;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1305,7 +1266,6 @@ align-items: center;
   .headUrl {
     width: 50px;
     height: 50px;
-    margin-left: 20px;
     cursor: pointer;
   }
 
@@ -1320,38 +1280,78 @@ align-items: center;
     justify-content: center;
     align-items: center;
   }
-  .xiala{
-    width: 150px;
+
+  .xiala {
+    width: 180px;
     margin-left: 30px;
   }
-  .rightnow{
-    width: 180px;
-    height: 50px;
-    background-color: white;
+
+  .mask {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    background: rgba(2, 2, 2, 0.4);
+    z-index: 1000000;
+    top: 0;
+  }
+
+  .mask video {
+    width: 375px;
+    height: 600px;
+  }
+
+  .videoDiv {
+    width: 650px;
+    height: 350px;
+    background-size: 650px 350px;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 61px auto;
+  }
+
+  .videoDiv img {
+    width: 115px;
+    height: 115px;
+  }
+
+  .rightnow {
+    width: 160px;
+    height: 46px;
+    border: 1px solid white;
     font-size: 18px;
-    color: #06B2B6;
+    color: white;
     text-align: center;
-    line-height: 50px;
-    border-radius: 10px;
+    line-height: 46px;
+    border-radius: 23px;
     margin-top: 35px;
     cursor: pointer;
   }
-  .shougou{
+
+  .shougou {
     position: absolute;
     top: 60%;
     right: 1.6%;
     z-index: 9999;
   }
-  .shougou img{
+
+  .shougou img {
     width: 120px;
   }
-  .qqBig{
+
+  .qqBig {
     position: absolute;
     top: 25%;
     right: 1.05%;
     z-index: 9999;
   }
-  .qq{
+
+  .qq {
     width: 120px;
     height: 140px;
     border: 1px solid red;
@@ -1363,15 +1363,17 @@ align-items: center;
     background-color: white;
     border: 1px solid #d0d0d0;
   }
-  .qqtouxiang{
+
+  .qqtouxiang {
     width: 90px;
     height: 80px;
   }
-  .qqtuiguang{
+
+  .qqtuiguang {
     width: 120px;
     height: 30px;
     border-radius: 5px;
-    background-color: #06B2B6;
+    background-color: #2F82FF;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1379,47 +1381,115 @@ align-items: center;
     font-size: 15px;
     margin-top: 13px;
   }
-  .qqtuiguang a{
+
+  .qqtuiguang a {
     color: white;
     font-size: 15px;
   }
-  .qqtuiguang img{
+
+  .qqtuiguang img {
     width: 20px;
     height: 20px;
   }
-  .queOk{
+
+  .demo-input-suffix {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .demo-input-suffix p {
+    width: 85px;
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .demo-input-suffix .el-input {
+    width: 50%;
+  }
+
+  .queOk, .zhanOk {
     width: 60px;
-    background-color: #06B2B6;
+    background-color: #2F82FF;
     height: 30px;
     text-align: center;
     line-height: 30px;
     color: white;
     border-radius: 10px;
     position: absolute;
-    right: 5%;
+    right: 10%;
     cursor: pointer;
   }
-  .login_title_first{
+
+  .login_title_first {
     width: 20%;
     height: 80px;
     display: flex;
     align-items: center;
     position: relative;
-
+    border: 1px solid black;
   }
-  .login_title_second{
+
+  .login_title_second {
     width: 55%;
     height: 80px;
     display: flex;
     align-items: center;
-
+    border: 1px solid red;
   }
-  .login_title_third{
+
+  .login_title_third {
     width: 25%;
     height: 80px;
     display: flex;
+    justify-content: space-between;
+    border: 1px solid blue;
+  }
+  .textfooter{
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+  }
+  .textQ{
+    width: 20px;
+    height: 20px;
+    color: white;
+    border-radius: 2px;
+    display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #2F82FF;
+  }
+  .textA{
+    width: 20px;
+    height: 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    background-color: #FFA405;
+  }
+  .textTwo,.textOne{
+    margin-left: 10px;
+  }
+  .textOne{
+    color: #333333;
+    font-size: 15px;
+    font-weight: bold;
+  }
+  .textTwo{
+    color: #333333;
+    font-size: 15px;
+  }
+  .textMain{
+    width: 100%;
+    max-width: 1200px;
 
+    margin: 53px auto 60px auto;
+  }
+  .textMainTop{
+    margin-top: 26px;
   }
 </style>

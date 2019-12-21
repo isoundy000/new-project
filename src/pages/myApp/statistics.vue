@@ -3,7 +3,7 @@
     <div class="statisticsDiv">
       <div class="secondDiv">
         <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
-          <img class="jineIcon" src="../../../static/image/survey/jine@2x.png" alt="">
+          <img class="jineIcon" src="../../../static/image/survey/hpxiaofei.png" alt="">
           <div class="secondDivText">
             <p>总消费金额</p>
             <div class="newAdd">
@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
-          <img class="liulanIcon" src="../../../static/image/survey/liulan@2x.png" alt="">
+          <img class="liulanIcon" src="../../../static/image/survey/hpliulan.png" alt="">
           <div class="secondDivText">
             <p>页面总浏览量</p>
             <div class="newAdd">
@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
-          <img class="xiazaiIcon" src="../../../static/image/survey/xiazai@2x.png" alt="">
+          <img class="xiazaiIcon" src="../../../static/image/survey/hpxiazai.png" alt="">
           <div class="secondDivText">
             <p>总下载量</p>
             <div class="newAdd">
@@ -36,7 +36,7 @@
           </div>
         </div>
         <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
-          <img class="shebeiIcon" src="../../../static/image/survey/shebei@2x.png" alt="">
+          <img class="shebeiIcon" src="../../../static/image/survey/hpshebei.png" alt="">
           <div class="secondDivText">
             <p>下载设备总数</p>
             <div class="newAdd">
@@ -47,7 +47,7 @@
           </div>
         </div>
         <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
-          <img class="shebeiIcon" src="../../../static/image/survey/shebei@2x.png" alt="">
+          <img class="shebeiIcon" src="../../../static/image/survey/hpshebei.png" alt="">
           <div class="secondDivText">
             <p>补签</p>
             <div class="newAdd">
@@ -359,9 +359,9 @@
         })
 
 
-        $(".recently1").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#06B2B6'})
+        $(".recently1").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#2F82FF'})
         $(".recently7").css({"background-image":'url(../../../static/image/survey/anniu_s@2x.png)',"color":'white'})
-        $(".recently3").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#06B2B6'})
+        $(".recently3").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#2F82FF'})
 
 
       },
@@ -370,18 +370,18 @@
           this.newF(29)
         })
         //this.$options.methods.newF(29);
-        $(".recently7").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#06B2B6'})
+        $(".recently7").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#2F82FF'})
         $(".recently1").css({"background-image":'url(../../../static/image/survey/anniu_s@2x.png)',"color":'white'})
-        $(".recently3").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#06B2B6'})
+        $(".recently3").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#2F82FF'})
 
       },
       recently3(){
         this.$nextTick(function() {
           this.newF(89)
         })
-        $(".recently1").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#06B2B6'})
+        $(".recently1").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#2F82FF'})
         $(".recently3").css({"background-image":'url(../../../static/image/survey/anniu_s@2x.png)',"color":'white'})
-        $(".recently7").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#06B2B6'})
+        $(".recently7").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#2F82FF'})
 
       },
       /*日历查询*/
@@ -759,7 +759,7 @@ position: relative;
     height: 40px;
     background-size: 120px 40px;
     background-repeat: no-repeat;
-    color: #06B2B6;
+    color: #2F82FF;
     line-height: 40px;
     text-align: center;
     margin-left: 19px;
@@ -772,7 +772,7 @@ position: relative;
     height: 40px;
     background-size: 120px 40px;
     background-repeat: no-repeat;
-    color: #06B2B6;
+    color: #2F82FF;
     line-height: 40px;
     text-align: center;
     margin-left: 18px;
@@ -816,7 +816,7 @@ position: relative;
     background-color: #EEEEEE;
     display: flex;
     align-items: center;
-    color: #06B2B6;
+    color: #2F82FF;
     font-size: 18px;
     padding-left: 17px;
     border-radius: 4px 4px 0px 0px;

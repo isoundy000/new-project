@@ -367,7 +367,7 @@
     line-height: 50px;
     text-align: center;
     cursor: pointer;
-    background:rgba(2,178,181,1);
+    background:rgba(47,130,255,1);
     color: white;
   }
 </style>

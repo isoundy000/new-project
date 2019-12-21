@@ -2,7 +2,7 @@
 <div class="appManagementDetail">
   <div class="firstDiv">
     <div class="firstDiv_small">
-      <img src="../../../static/image/survey/shouye@2x.png" alt="">
+      <img src="../../../static/image/survey/hpshouye.png" alt="">
       <p>您当前位置：</p>
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/superSignatureAread' }">首页</el-breadcrumb-item>
@@ -73,6 +73,11 @@
               },
               {
                 msg: '应用合并',
+                isclass: false,
+                isHide:false
+              },
+              {
+                msg: '下载码',
                 isclass: false,
                 isHide:false
               },
@@ -152,6 +157,13 @@
             })
           }else if(index==8){
             this.$router.push({
+              path:'/downloadCode',
+              query:{
+                id:this.$route.query.id
+              }
+            })
+          }else if(index==9){
+            this.$router.push({
               path:'/messagePush',
               query:{
                 id:this.$route.query.id,
@@ -166,9 +178,9 @@
       mounted(){
         // alert(this.$route.query.cert_path)
         if(this.$route.query.push_type==0){
-          this.title[8].isHide=true
+          this.title[9].isHide=true
         }else{
-          this.title[8].isHide=false
+          this.title[9].isHide=false
         }
 
 
@@ -193,7 +205,7 @@
   width: 78%;
   height: 30px;
   margin-top: 30px;
-  border-bottom: 1px solid #06B2B6;
+  border-bottom: 1px solid #2F82FF;
   display: flex;
   align-items: center;
   color: #999999;
@@ -229,9 +241,9 @@
     cursor: pointer;
   }
   .isColor{
-    color: #06B2B6;
+    color: #2F82FF;
     background-color: white;
-    border-top: 2px solid #06B2B6;
+    border-top: 2px solid #2F82FF;
   }
   .ishide{
     display: none;

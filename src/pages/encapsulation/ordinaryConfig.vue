@@ -464,7 +464,7 @@
                   @change="footerSelectColorRinow1"
                   :predefine="predefineColors">
                 </el-color-picker>
-                <p style="color: #02B2B5;margin-left: 15px;cursor: pointer" @mouseenter="chakanEnter()" @mouseleave="chakanLeave()">查看案例</p>
+                <p style="color: #2F82FF;margin-left: 15px;cursor: pointer" @mouseenter="chakanEnter()" @mouseleave="chakanLeave()">查看案例</p>
                 <img v-show="chakan" src="../../../static/image/ordinary/anli1@2x.png" alt="">
               </div>
             </div>
@@ -492,7 +492,7 @@
             <div class="newcustomDivMainselsectDiv" >
               <div style="display: flex;justify-content: space-between;width: 85%">
                 <p class="daoHangTitle" style="width: 200px">导航配置 <span style="color: #999999">（支持2-5个）</span></p>
-                <p @click="delAll" style="color:#02B2B5;font-size: 14px;cursor: pointer ">清空导航配置</p>
+                <p @click="delAll" style="color:#2F82FF;font-size: 14px;cursor: pointer ">清空导航配置</p>
               </div>
               <div class="addDanhang">
                 <div class="addDanhangTitle">
@@ -651,14 +651,14 @@
         <div @click="jiazanClick" @mouseenter="jiazanenter()"  @mouseleave="jiazanleave()" class="ordinaryConfigDivMainSmall" :class="{ 'configColor': config1 }">
           <div class="ordinaryConfigDivMainSmallLeft">
             <img v-if="ordinaryConfigJiazai" src="../../../static/image/ordinary/jiazai_n.png" alt="">
-            <img v-else src="../../../static/image/ordinary/jiazai_s.png" alt="">
+            <img v-else src="../../../static/image/ordinary/hpjiazai.png" alt="">
             <p>加载效果</p>
           </div>
           <div class="ordinaryConfigDivMainSmallRight">
             <el-switch
               @click.stop.native
               v-model="jiazaiswitch"
-              active-color="#06B2B6"
+              active-color="#2F82FF"
               inactive-color="#999999"
               @change="jiazaiswichChange">
             </el-switch>
@@ -668,14 +668,14 @@
              :class="{ 'configColor': config2 }">
           <div class="ordinaryConfigDivMainSmallLeft">
             <img v-if="ordinaryConfigXiala" src="../../../static/image/ordinary/xiala_n.png" alt="">
-            <img v-else src="../../../static/image/ordinary/xiala_s.png" alt="">
+            <img v-else src="../../../static/image/ordinary/hpxiala.png" alt="">
             <p>下拉刷新</p>
           </div>
           <div class="ordinaryConfigDivMainSmallRight">
             <el-switch
               @click.stop.native
               v-model="xialaswitch"
-              active-color="#06B2B6"
+              active-color="#2F82FF"
               inactive-color="#999999"
               @change="xialaswichChange">
             </el-switch>
@@ -685,14 +685,14 @@
              :class="{ 'configColor': config3 }">
           <div class="ordinaryConfigDivMainSmallLeft">
             <img v-if="ordinaryConfigQingli" src="../../../static/image/ordinary/qingli_n.png" alt="">
-            <img v-else src="../../../static/image/ordinary/qingli_s.png" alt="">
+            <img v-else src="../../../static/image/ordinary/hpqingli.png" alt="">
             <p>清理缓存</p>
           </div>
           <div class="ordinaryConfigDivMainSmallRight">
             <el-switch
               @click.stop.native
               v-model="qingliswitch"
-              active-color="#06B2B6"
+              active-color="#2F82FF"
               inactive-color="#999999"
               @change="qingliswichChange">
             </el-switch>
@@ -702,14 +702,14 @@
              :class="{ 'configColor': config4 }">
           <div class="ordinaryConfigDivMainSmallLeft">
             <img v-if="ordinaryConfigTuichu" src="../../../static/image/ordinary/tuichu_n.png" alt="">
-            <img v-else src="../../../static/image/ordinary/tuichu_s.png" alt="">
+            <img v-else src="../../../static/image/ordinary/hptuichu.png" alt="">
             <p>退出提示</p>
           </div>
           <div class="ordinaryConfigDivMainSmallRight">
             <el-switch
               @click.stop.native
               v-model="tuichuswitch"
-              active-color="#06B2B6"
+              active-color="#2F82FF"
               inactive-color="#999999"
               @change="tuichuswichChange">
             </el-switch>
@@ -719,14 +719,14 @@
              :class="{ 'configColor': config5 }">
           <div class="ordinaryConfigDivMainSmallLeft">
             <img v-if="ordinaryConfigBrowser" src="../../../static/image/ordinary/liulanqi_n.png" alt="">
-            <img v-else src="../../../static/image/ordinary/liulanqi_s.png" alt="">
+            <img v-else src="../../../static/image/ordinary/hpliulanqi.png" alt="">
             <p>浏览器内核</p>
           </div>
           <div class="ordinaryConfigDivMainSmallRight">
             <el-switch
               @click.stop.native
               v-model="browserswitch"
-              active-color="#06B2B6"
+              active-color="#2F82FF"
               inactive-color="#999999"
               @change="browserswichChange">
             </el-switch>
@@ -740,14 +740,14 @@
         <div @click="shareClick" @mouseenter="shareenter()"  @mouseleave="shareleave()" class="ordinaryConfigDivMainSmall" :class="{ 'configColor': config6 }">
           <div class="ordinaryConfigDivMainSmallLeft">
             <img v-if="ordinaryConfigShare" src="../../../static/image/ordinary/fenxiang_n.png" alt="">
-            <img v-else src="../../../static/image/ordinary/fenxiang_s.png" alt="">
+            <img v-else src="../../../static/image/ordinary/hpfenx.png" alt="">
             <p>分享</p>
           </div>
           <div class="ordinaryConfigDivMainSmallRight">
             <el-switch
               @click.stop.native
               v-model="shareswitch"
-              active-color="#06B2B6"
+              active-color="#2F82FF"
               inactive-color="#999999"
               @change="shareswichChange">
             </el-switch>
@@ -757,14 +757,14 @@
              :class="{ 'configColor': config7}">
           <div class="ordinaryConfigDivMainSmallLeft">
             <img v-if="ordinaryConfigDeposit" src="../../../static/image/ordinary/zuntu_n.png" alt="">
-            <img v-else src="../../../static/image/ordinary/zuntu_s.png" alt="">
+            <img v-else src="../../../static/image/ordinary/hpzhuntu.png" alt="">
             <p>长按存图</p>
           </div>
           <div class="ordinaryConfigDivMainSmallRight">
             <el-switch
               @click.stop.native
               v-model="depositswitch"
-              active-color="#06B2B6"
+              active-color="#2F82FF"
               inactive-color="#999999"
               @change="depositswichChange">
             </el-switch>
@@ -774,14 +774,14 @@
              :class="{ 'configColor': config8}">
           <div class="ordinaryConfigDivMainSmallLeft">
             <img v-if="ordinaryConfigZoom" src="../../../static/image/ordinary/suofang_n.png" alt="">
-            <img v-else src="../../../static/image/ordinary/suofang_s.png" alt="">
+            <img v-else src="../../../static/image/ordinary/hpsuof.png" alt="">
             <p>网页缩放</p>
           </div>
           <div class="ordinaryConfigDivMainSmallRight">
             <el-switch
               @click.stop.native
               v-model="zoomswitch"
-              active-color="#06B2B6"
+              active-color="#2F82FF"
               inactive-color="#999999"
               @change="zoomswichChange">
             </el-switch>
@@ -790,14 +790,14 @@
         <div @click="customClick" @mouseenter="customenter()"  @mouseleave="customleave()" class="ordinaryConfigDivMainSmall " :class="{ 'configColor': config9}">
           <div class="ordinaryConfigDivMainSmallLeft">
             <img v-if="ordinaryConfigCustom" src="../../../static/image/ordinary/daohang_n.png" alt="">
-            <img v-else src="../../../static/image/ordinary/daohang_s.png" alt="">
+            <img v-else src="../../../static/image/ordinary/hpdaoh.png" alt="">
             <p>自定义导航栏</p>
           </div>
           <div class="ordinaryConfigDivMainSmallRight">
             <el-switch
               @click.stop.native
               v-model="customswitch"
-              active-color="#06B2B6"
+              active-color="#2F82FF"
               inactive-color="#999999"
               @change="customswichChange">
             </el-switch>
@@ -806,14 +806,14 @@
         <div @click="footerClick" @mouseenter="footerenter()"  @mouseleave="footerleave()" class="ordinaryConfigDivMainSmall " :class="{ 'configColor': config10}">
           <div class="ordinaryConfigDivMainSmallLeft">
             <img v-if="ordinaryConfigFooter" src="../../../static/image/ordinary/dilan_n.png" alt="">
-            <img v-else src="../../../static/image/ordinary/dilan_s.png" alt="">
+            <img v-else src="../../../static/image/ordinary/hpdilan.png" alt="">
             <p>自定义底栏</p>
           </div>
           <div class="ordinaryConfigDivMainSmallRight">
             <el-switch
               @click.stop.native
               v-model="footerswitch"
-              active-color="#06B2B6"
+              active-color="#2F82FF"
               inactive-color="#999999"
               @change="footerswichChange">
             </el-switch>
@@ -866,8 +866,8 @@
         jiazaiTextBorder1: true,//加载效果模态框border颜色
         jiazaiTextBorder2: false,//加载效果模态框border颜色
         jiaziastyleInner: '',
-        jiazaicolor: 'rgba(2,178,181,1)',
-        loading_color:'#06B2B6',//加载选择颜色16精制(传给后台)
+        jiazaicolor: 'rgba(47,130,255,1)',
+        loading_color:'#2F82FF',//加载选择颜色16精制(传给后台)
         jiazaiValue: 1,//选择的是左边还是右边(默认加载进度条)
         loading_status:0,//加载动画开关(默认关闭0，开启1)
         xialaswitch: false,//下拉刷新开关布尔值
@@ -921,8 +921,8 @@
         nav_status:0,//(自定义导航开关，传给后台)
         customShowStateOne:true,
         customShowStateTwo:false,
-        nav_bar_bgcolor:'#06B2B6',//导航状态栏背景颜色16精制(传给后台)
-        nav_title_bgcolor:'#06B2B6',//导航标题栏背景颜色
+        nav_bar_bgcolor:'#2F82FF',//导航状态栏背景颜色16精制(传给后台)
+        nav_title_bgcolor:'#2F82FF',//导航标题栏背景颜色
         nav_title_text_icon_color:'#FFFFFF',
         customState:1,//状态栏显示值(传给后台的值，默认为1)
         customShowCssOne:true,
@@ -937,8 +937,8 @@
         customShowTitleTwo:false,
         customTitle:1,//状态栏样式值(传给后台的值，默认为1)
         titleTextinput:'首页',
-        beijingcolor: 'rgba(2,178,181,1)', //状态栏背景色默认值
-        beijingcolor2:'rgba(2,178,181,1)',//标题栏背景色默认值
+        beijingcolor: 'rgba(47,130,255,1)', //状态栏背景色默认值
+        beijingcolor2:'rgba(47,130,255,1)',//标题栏背景色默认值
         beijingcolor3:'rgba(255,255,255,1)',//标题栏背景色默认值
         beijingstyleInner: ' ',//状态栏颜色选择
         beijingstyleInner2:'',//标题栏颜色选择
@@ -955,7 +955,7 @@
         config10: false,//自定义底栏border颜色布尔值
         modal10: false,//自定义底栏模态框
         bottom_status:0,//(自定义底栏开关，传给后台)
-        bottom_bgcolor:'#06B2B6',//底部导航栏背景颜色
+        bottom_bgcolor:'#2F82FF',//底部导航栏背景颜色
         bottom_default_color:'#FFFFFF',//底部导航栏文字和图标默认颜色
         bottom_nav_type:[],//底部导航type_id
         bottom_nav_name:[],//底部导航名称
@@ -969,7 +969,7 @@
         footerShowTextTwo:false,
         footerShowTextThree:false,
         footerShowValue:1,//显示值(传给后台的值，默认为1)
-        footercolor:'rgba(2,178,181,1)', //状态栏背景色默认值
+        footercolor:'rgba(47,130,255,1)', //状态栏背景色默认值
         footercolor1:'rgba(255,255,255,1)', //状态栏背景色默认值
         chakan:false,
         chakan1:false,
@@ -2480,11 +2480,11 @@
     width: 800px !important;
   }
   .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner {
-    background-color: #02B2B5 !important;
-    border-color: #02B2B5 !important;
+    background-color: #2F82FF !important;
+    border-color: #2F82FF !important;
   }
   .el-checkbox__input.is-checked+.el-checkbox__label {
-    color: #02B2B5 !important;
+    color: #2F82FF !important;
   }
   .newAddTr .el-input{
     width: 150px;
@@ -2566,7 +2566,7 @@
   }
 
   .configColor {
-    border: 1px solid #02B2B5;
+    border: 1px solid #2F82FF;
   }
 
   .gonextStep {
@@ -2604,14 +2604,14 @@
     line-height: 50px;
     text-align: center;
     cursor: pointer;
-    background: rgba(2, 178, 181, 1);
+    background: rgba(47, 130, 255, 1);
     color: white;
 
   }
 
   .queOk {
     width: 90px;
-    background-color: #06B2B6;
+    background-color: #2F82FF;
     height: 38px;
     text-align: center;
     line-height: 38px;
@@ -2671,11 +2671,11 @@
     width: 220px;
     margin: 10px auto 0 auto;
     font-size: 14px;
-    color: #02B2B5;
+    color: #2F82FF;
   }
 
   .textColorBorder {
-    border: 1px solid #02B2B5;
+    border: 1px solid #2F82FF;
   }
 
   .mobileMotaiImg {
@@ -2694,7 +2694,7 @@
     height: 30px;
     line-height: 30px;
     font-size: 14px;
-    color: #02B2B5;
+    color: #2F82FF;
     text-align: center;
     border-bottom: 1px solid #E5E5E5;
   }
@@ -2703,7 +2703,7 @@
     height: 30px;
     line-height: 30px;
     font-size: 14px;
-    color: #02B2B5;
+    color: #2F82FF;
     text-align: center;
     border-bottom: 1px solid #E5E5E5;
   }
@@ -2778,7 +2778,7 @@
     background-repeat: no-repeat;
     background-size: 168px 46px;
     border-radius: 6px;
-    color: #02B2B5;
+    color: #2F82FF;
     border: 0;
   }
 
@@ -3074,7 +3074,7 @@
   justify-content: space-around;
   position: absolute;
   top: 77%;
-  background-color: #02B2B5;
+  background-color: #2F82FF;
 }
   .custFooter{
     width:21.8%;
@@ -3161,7 +3161,7 @@
     font-size: 14px;
     margin-top: 30px;
     margin-bottom: 20px;
-    background:rgba(2,178,181,1);
+    background:rgba(47,130,255,1);
     border-radius:2px;
     cursor: pointer;
   }
@@ -3230,7 +3230,7 @@
     font-size: 14px;
   }
   .isLike{
-    color: #06B2B6 !important;
+    color: #2F82FF !important;
   }
   .mamma{
     width: 100%;

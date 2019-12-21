@@ -58,7 +58,7 @@
 
     <div class="firstDiv">
       <div class="firstDiv_small">
-        <img src="../../../static/image/survey/shouye@2x.png" alt="">
+        <img src="../../../static/image/survey/hpshouye.png" alt="">
         <p>您当前位置：</p>
         <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/superSignatureAread' }">首页</el-breadcrumb-item>
@@ -292,7 +292,7 @@
     width: 78%;
     height: 30px;
     margin-top: 30px;
-    border-bottom: 1px solid #06B2B6;
+    border-bottom: 1px solid #2F82FF;
     display: flex;
     align-items: center;
     color: #999999;
@@ -334,7 +334,7 @@
     height: 38px;
     text-align: center;
     line-height: 38px;
-    background-color: #14BEC8;
+    background-color: #2F82FF;
     border-radius: 5px;
     font-size: 16px;
     color: #FFFFFF;
@@ -368,9 +368,9 @@
   }
 
   .isColor {
-    color: #06B2B6;
+    color: #2F82FF;
     background-color: white;
-    border-top: 2px solid #06B2B6;
+    border-top: 2px solid #2F82FF;
     border-bottom: 0;
   }
 
@@ -437,7 +437,7 @@ border-radius: 5px;
     background-image: url("../../../static/image/survey/xuanzhong.png");
     background-size:99px 47px ;
     background-repeat: no-repeat;
-    color: #06B2B6;
+    color: #2F82FF;
   }
   .maskDivThird{
     display: flex;
@@ -460,7 +460,7 @@ margin-top: 30px;
     text-align: center;
     line-height: 40px;
     border-radius: 4px;
-    background-color: #14BEC8;
+    background-color: #2F82FF;
     margin-left: 47px;
     margin-top: 20px;
     cursor: pointer;

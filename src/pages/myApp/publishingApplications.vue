@@ -2,7 +2,7 @@
   <div class="publishingApplications">
     <div class="firstDiv">
       <div class="firstDiv_small">
-        <img src="../../../static/image/survey/shouye@2x.png" alt="">
+        <img src="../../../static/image/survey/hpshouye.png" alt="">
         <p>您当前位置：</p>
         <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/superSignatureAread' }">首页</el-breadcrumb-item>
@@ -164,7 +164,7 @@
           <div style="margin-top: 10px">
             <el-switch
               v-model="switchValue1"
-              active-color="#06B2B6"
+              active-color="#2F82FF"
               inactive-color="#999999"
               @change="swich1">
             </el-switch>
@@ -176,7 +176,7 @@
           <div style="margin-top: 10px">
             <el-switch
               v-model="switchValue2"
-              active-color="#06B2B6"
+              active-color="#2F82FF"
               inactive-color="#999999"
               @change="swich2">
             </el-switch>
@@ -193,7 +193,7 @@
           <div style="margin-top: 10px">
             <el-switch
               v-model="newswitchValue"
-              active-color="#06B2B6"
+              active-color="#2F82FF"
               inactive-color="#999999"
               @change="newswich2">
             </el-switch>
@@ -201,11 +201,11 @@
           </div>
 
         </div>
-        <div class="supplementTen">
-          <p>下载码</p>
-          <el-input :disabled="disInput" class="thirdInput" v-model="TenInput" placeholder="请输入内容" onkeyup="this.value=this.value.replace(/\D/g,'')"
-                    onafterpaste="this.value=this.value.replace(/\D/g,'')"></el-input>
-        </div>
+        <!--<div class="supplementTen">-->
+          <!--<p>下载码</p>-->
+          <!--<el-input :disabled="disInput" class="thirdInput" v-model="TenInput" placeholder="请输入内容" onkeyup="this.value=this.value.replace(/\D/g,'')"-->
+                    <!--onafterpaste="this.value=this.value.replace(/\D/g,'')"></el-input>-->
+        <!--</div>-->
         <div class="supplementTen">
           <p>安卓下载地址</p>
           <div style="margin-top: 10px">
@@ -627,7 +627,7 @@
             introduction:this.textarea1,
             img:this.img,
             // status:this.state,
-            download_code:this.TenInput,
+            // download_code:this.TenInput,
             apk_url:this.EvenInput,
             download_limit:0,
             remark:this.beiInput,
@@ -715,7 +715,7 @@
     width: 78%;
     height: 30px;
     margin-top: 30px;
-    border-bottom: 1px solid #06B2B6;
+    border-bottom: 1px solid #2F82FF;
     display: flex;
     align-items: center;
     color: #999999;
@@ -766,7 +766,7 @@
   .uploadBtn {
     width: 190px;
     height: 50px;
-    background-color: #14BEC8;
+    background-color: #2F82FF;
     border-radius: 6px;
     align-items: center;
     justify-content: center;
@@ -875,7 +875,7 @@
     font-size: 18px;
     border-radius: 6px;
     color: white;
-    background-color: #14BEC8;
+    background-color: #2F82FF;
     margin: 20px auto 80px auto;
     cursor: pointer;
   }
@@ -896,7 +896,7 @@
     height: 10px;
     border-radius: 50%;
     margin-right: 10px;
-    background-color:#14BEC8 ;
+    background-color:#2F82FF ;
   }
   .fufei{
     width: 70px;
@@ -1017,13 +1017,13 @@
   }
 
   .is-success div:nth-child(2) {
-    background-color: #06B2B6 !important;
+    background-color: #2F82FF !important;
     border: 0;
     color: white;
   }
 
   .is-process div:nth-child(2) {
-    background-color: #06B2B6 !important;
+    background-color: #2F82FF !important;
     border: 0;
     color: white;
   }
@@ -1046,15 +1046,15 @@
   /*background-color: #DCDCDC !important;*/
   /*}*/
   .is-success div:nth-child(1) {
-    background-color: #06B2B6 !important;
+    background-color: #2F82FF !important;
   }
 
   /*.is-wait div:nth-child(1){*/
   /*background-color: #DCDCDC !important;*/
   /*}*/
   .el-step__head.is-success {
-    color: #06B2B6 !important;
-    border-color: #06B2B6 !important;
+    color: #2F82FF !important;
+    border-color: #2F82FF !important;
 
   }
 

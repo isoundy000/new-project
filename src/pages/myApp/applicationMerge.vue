@@ -171,7 +171,7 @@
   .preservation {
     width: 135px;
     height: 40px;
-    background-color: #06B2B6;
+    background-color: #2F82FF;
     border-radius: 2px;
     text-align: center;
     line-height: 40px;

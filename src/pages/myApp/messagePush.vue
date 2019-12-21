@@ -694,7 +694,7 @@
   .btn{
     width: 160px;
     height: 48px;
-    background-color: #06B2B6;
+    background-color: #2F82FF;
     border-radius: 4px;
     color: white;
     text-align: center;
@@ -858,7 +858,7 @@
   .ok{
     width: 144px;
     height: 50px;
-    background-color: #06B2B6;
+    background-color: #2F82FF;
     border-radius: 2px;
     text-align: center;
     line-height: 50px;
@@ -945,8 +945,8 @@
     width:160px;
     height:50px;
     line-height: 50px;
-    background:rgba(6,178,182,1);
-    border:1px solid rgba(6,178,182,1);
+    background:rgba(47,130,255,1);
+    border:1px solid rgba(47,130,255,1);
     border-radius:4px;
     font-size: 18px;
     text-align: center;
@@ -990,7 +990,7 @@
 .uploadBtn {
   width: 100px;
   height: 30px;
-  background-color: #14BEC8;
+  background-color: #2F82FF;
   border-radius: 6px;
   align-items: center;
   justify-content: center;
@@ -1014,7 +1014,7 @@
     height:50px;
     line-height: 50px;
     text-align: center;
-    background:rgba(20,190,200,1);
+    background:rgba(47,130,255,1);
     border-radius:6px;
     font-size: 18px;
     color: white;

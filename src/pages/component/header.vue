@@ -24,7 +24,7 @@
     <div class="Bheader">
       <div class="login_title">
         <div class="login_title_first">
-          <img class="login_title_img" src="../../../static/image/superSignature/mlogo.png" alt="">
+          <img class="login_title_img" src="../../../static/image/superSignature/hplogo@2x.png" alt="">
         </div>
         <div class="title login_title_second">
           <p @click="titleName(index)" v-for="(list,index) in title" :key="index" :class="{'isColor':list.isclass}"
@@ -329,8 +329,8 @@
 
 
   .isColor {
-    color: #06B2B6;
-    border-bottom: 2px solid #06B2B6;
+    color: #2F82FF;
+    border-bottom: 2px solid #2F82FF;
   }
 
   .login_title_div {
@@ -343,7 +343,7 @@
   .login_title_div p:nth-child(1) {
     width: 56px;
     height: 30px;
-    background-color: #06B2B6;
+    background-color: #2F82FF;
     font-size: 14px;
     color: white;
     line-height: 30px;
@@ -379,7 +379,7 @@
   .myappBtn {
     width: 118px;
     height: 34px;
-    background-color:#06B2B6 ;
+    background-color:#2F82FF ;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -468,8 +468,8 @@
   }
 
   .isColor {
-    color: #06B2B6;
-    border-bottom: 2px solid #06B2B6;
+    color: #2F82FF;
+    border-bottom: 2px solid #2F82FF;
   }
 
   .login_title_div {
@@ -482,7 +482,7 @@
   .login_title_div p:nth-child(1) {
     width: 56px;
     height: 30px;
-    background-color: #06B2B6;
+    background-color: #2F82FF;
     font-size: 14px;
     color: white;
     line-height: 30px;
@@ -525,7 +525,7 @@
   }
   .queOk{
     width: 60px;
-    background-color: #06B2B6;
+    background-color: #2F82FF;
     height: 30px;
     text-align: center;
     line-height: 30px;

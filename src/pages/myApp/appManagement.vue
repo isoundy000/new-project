@@ -54,7 +54,7 @@
     </div>
     <div class="firstDiv">
       <div class="firstDiv_small">
-        <img src="../../../static/image/survey/shouye@2x.png" alt="">
+        <img src="../../../static/image/survey/hpshouye.png" alt="">
         <p>您当前位置：</p>
         <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/superSignatureAread' }">首页</el-breadcrumb-item>
@@ -119,7 +119,7 @@
 
          >
           <template slot-scope="scope">
-            <p style="color: #14BEC8;cursor: pointer" @click.stop="handleEdit(tableData[scope.$index].url,tableData[scope.$index].status)">点击下载</p>
+            <p style="color: #2F82FF;cursor: pointer" @click.stop="handleEdit(tableData[scope.$index].url,tableData[scope.$index].status)">点击下载</p>
             <!--<el-button size="small" >编辑          </el-button>-->
           </template>
         </el-table-column>
@@ -143,7 +143,7 @@
           prop="account_type"
           label="账号池">
           <template slot-scope="scope">
-            <span v-if="scope.row.account_type===1" style="color: #06B2B6">公有</span>
+            <span v-if="scope.row.account_type===1" style="color: #2F82FF">公有</span>
             <span v-if="scope.row.account_type===2" style="color: #999999">私有</span>
           </template>
         </el-table-column>
@@ -164,7 +164,7 @@
             <div style="display: flex;justify-content: center">
               <el-switch
                 @click.stop.native
-                active-color="#06B2B6"
+                active-color="#2F82FF"
                 inactive-color="#DCDCDC"
                 v-model="scope.row.status==1? true:false "
                 @change="swich(scope.row)"
@@ -713,7 +713,7 @@
     width: 78%;
     height: 30px;
     margin-top: 30px;
-    border-bottom: 1px solid #06B2B6;
+    border-bottom: 1px solid #2F82FF;
     display: flex;
     align-items: center;
     color: #999999;
@@ -799,7 +799,7 @@
     height: 40px;
     margin: 20px auto 0 auto;
     line-height: 40px;
-    border-bottom: 1.5px solid #06B2B6;
+    border-bottom: 1.5px solid #2F82FF;
     font-size: 16px;
     color: #333333;
     font-family: "Microsoft YaHei UI";
@@ -836,7 +836,7 @@
   }
   .appManagementSmallOne p {
     margin-top: 5px;
-    color: #14BEC8;
+    color: #2F82FF;
     font-size: 16px;
     cursor: pointer;
   }
@@ -871,10 +871,10 @@
     margin-top: 18px;
   }
   .thirdDiv .el-select-dropdown__item{
-    color:#14BEC8 ;
+    color:#2F82FF ;
   }
   .thirdDiv .el-select-dropdown__item.selected{
-    color:#14BEC8 ;
+    color:#2F82FF ;
   }
   #input {
     position: absolute;

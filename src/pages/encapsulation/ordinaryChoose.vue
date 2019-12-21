@@ -354,7 +354,7 @@
   .seondNext {
     width: 167px;
     height: 50px;
-    background: rgba(2, 178, 181, 1);
+    background: rgba(47, 130, 255, 1);
     border-radius: 2px;
     text-align: center;
     line-height: 50px;
@@ -438,7 +438,7 @@
   .anzhuang div {
     width: 167px;
     height: 50px;
-    background: rgba(2, 178, 181, 1);
+    background: rgba(47, 130, 255, 1);
     border-radius: 2px;
     text-align: center;
     line-height: 50px;
@@ -455,7 +455,7 @@
 
   .queOk {
     width: 80px;
-    background-color: #06B2B6;
+    background-color: #2F82FF;
     height: 38px;
     text-align: center;
     line-height: 38px;

@@ -548,7 +548,7 @@
   .btn{
     width: 120px;
     height: 45px;
-    background-color: #06B2B6;
+    background-color: #2F82FF;
     border-radius: 2px;
     color: white;
     text-align: center;

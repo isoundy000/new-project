@@ -1,14 +1,14 @@
 <template>
   <div class="login">
     <div class="login_title">
-      <img src="../../../static/image/superSignature/mlogo.png" alt="">
+      <img src="../../../static/image/superSignature/hplogo@2x.png" alt="">
 
       <div class="login_title_div">
-        <router-link to="/" tag="p">首页 </router-link>
+        <router-link to="/" tag="p">返回首页</router-link>
         <!--<p>关于我们</p>-->
       </div>
     </div>
-    <div class="banner" style="background-image: url('../../../static/image/login/dengluditu.png')">
+    <div class="banner" style="background-image: url('../../../static/image/login/hpdenglu_bg.png')">
       <div class="loginDiv" style="background-image: url('../../../static/image/login/denglukuang.png')">
         <div class="loginDiv_One">
           <p @click="accountLogin"  :class="{'isColor':isA}" class="msg_login">账号登录</p>
@@ -52,7 +52,7 @@
             </div>
           </div>
           <div @click="login" class="loginBtn">
-            <div style="background-image: url('../../../static/image/login/dengluanniu.png')">
+            <div style="background-image: url('../../../static/image/login/hpanniu.png')">
               <p>登录</p>
             </div>
           </div>
@@ -88,14 +88,14 @@
             <div class="login_state_div">
               <div class="login_state_small">
                 <img @click="checklist" v-if="isCheck" src="../../../static/image/login/gouxuan1.png" alt="">
-                <img v-else @click="noChecklist" src="../../../static/image/login/gouxuan2.png" alt="">
+                <img v-else @click="noChecklist" src="../../../static/image/login/hpxuan.png" alt="">
                 <p>记住登录状态</p>
               </div>
               <p class="forget" @click="forget">忘记密码？</p>
             </div>
           </div>
           <div class="loginBtn" @click="accountLoginBtn">
-            <div style="background-image: url('../../../static/image/login/dengluanniu.png')">
+            <div style="background-image: url('../../../static/image/login/hpanniu.png')">
               <p>登录</p>
             </div>
           </div>
@@ -515,21 +515,26 @@
 
   .banner {
     width: 100%;
-    height: 75%;
+    max-width: 1468px;
+    height: 750px;
     background-size: 100% 100%;
     background-repeat: no-repeat;
     display: flex;
     align-items: center;
     position: relative;
+    margin: 0 auto;
   }
 
   .loginDiv {
     width: 334px;
     height: 417px;
     position: absolute;
-    right: 20%;
+    right: 15%;
     background-size: 100% 100%;
     background-repeat: no-repeat;
+    background:rgba(255,255,255,1);
+    box-shadow:0px 0px 18px 0px rgba(5,151,248,0.2);
+    border-radius:10px;
   }
 
   .loginDiv_One {
@@ -763,14 +768,14 @@
   }
 
   .login_footer span {
-    color: #06B2B6;
+    color: #2F82FF;
   }
   .isColor {
-    color: #06B2B6;
+    color: #2F82FF;
 
   }
   .borderColor{
-    border: 1px solid #06B2B6;
+    border: 1px solid #2F82FF;
   }
 
 </style>

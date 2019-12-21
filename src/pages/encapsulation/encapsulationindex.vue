@@ -479,7 +479,7 @@
     cursor: pointer;
   }
   .color{
-    background-color: #29D2D3;
+    background-color: #2F82FF;
     color: white;
   }
   .login_title {
@@ -526,8 +526,8 @@
   }
 
   .isColor {
-    color: #06B2B6;
-    border-bottom: 2px solid #06B2B6;
+    color: #2F82FF;
+    border-bottom: 2px solid #2F82FF;
   }
 
   .login_title_div {
@@ -540,7 +540,7 @@
   .login_title_div p:nth-child(1) {
     width: 56px;
     height: 30px;
-    background-color: #06B2B6;
+    background-color: #2F82FF;
     font-size: 14px;
     color: white;
     line-height: 30px;
@@ -576,7 +576,7 @@
   .myappBtn {
     width: 118px;
     height: 34px;
-    background-color:#06B2B6 ;
+    background-color:#2F82FF ;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -634,7 +634,7 @@
 
   .queOk{
     width: 60px;
-    background-color: #06B2B6;
+    background-color: #2F82FF;
     height: 30px;
     text-align: center;
     line-height: 30px;

@@ -111,6 +111,11 @@ const router = new Router({
               component: () => import('@/pages/myApp/applicationMerge'),
             },
             {
+              path: '/downloadCode',
+              name: 'downloadCode',
+              component: () => import('@/pages/myApp/downloadCode'),
+            },
+            {
               path: '/messagePush',
               name: 'messagePush',
               component: () => import('@/pages/myApp/messagePush'),

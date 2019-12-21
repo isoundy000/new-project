@@ -631,13 +631,13 @@ border-radius:4px;">iOS无闪退版</p>
   }
 
   .is-success div:nth-child(2) {
-    background-color: #06B2B6 !important;
+    background-color: #2F82FF !important;
     border: 0;
     color: white;
   }
 
   .is-process div:nth-child(2) {
-    background-color: #06B2B6 !important;
+    background-color: #2F82FF !important;
     border: 0;
     color: white;
   }
@@ -660,15 +660,15 @@ border-radius:4px;">iOS无闪退版</p>
   /*background-color: #DCDCDC !important;*/
   /*}*/
   .is-success div:nth-child(1) {
-    background-color: #06B2B6 !important;
+    background-color: #2F82FF !important;
   }
 
   /*.is-wait div:nth-child(1){*/
   /*background-color: #DCDCDC !important;*/
   /*}*/
   .el-step__head.is-success {
-    color: #06B2B6 !important;
-    border-color: #06B2B6 !important;
+    color: #2F82FF !important;
+    border-color: #2F82FF !important;
 
   }
 
@@ -763,7 +763,7 @@ border-radius:4px;">iOS无闪退版</p>
     line-height: 50px;
     text-align: center;
     cursor: pointer;
-    background:rgba(2,178,181,1);
+    background:rgba(47,130,255,1);
     color: white;
 
   }
@@ -806,7 +806,7 @@ border-radius:4px;">iOS无闪退版</p>
   .footerDIV p{
     width:118px;
     height:46px;
-    background:rgba(6,178,182,1);
+    background:rgba(47,130,255,1);
     border-radius:8px;
     text-align: center;
     line-height: 46px;
@@ -906,7 +906,7 @@ margin-top: 15px;
   .seondNext{
     width:167px;
     height:50px;
-    background:rgba(2,178,181,1);
+    background:rgba(47,130,255,1);
     border-radius:2px;
     text-align: center;
     line-height: 50px;
@@ -978,7 +978,7 @@ margin-top: 20px;
   .anzhuang div{
     width:167px;
     height:50px;
-    background:rgba(2,178,181,1);
+    background:rgba(47,130,255,1);
     border-radius:2px;
     text-align: center;
     line-height: 50px;
@@ -993,7 +993,7 @@ margin-top: 20px;
   }
   .queOk{
     width: 80px;
-    background-color: #06B2B6;
+    background-color: #2F82FF;
     height: 38px;
     text-align: center;
     line-height: 38px;
