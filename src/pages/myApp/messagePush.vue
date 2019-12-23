@@ -2,7 +2,7 @@
     <div class="messagePush">
       <!--新增-->
       <div class="mask" v-show="mask">
-        <div class="maskTitle" style="background-image: url('../../../static/image/superSignature/tuisongbg.png')">
+        <div class="maskTitle">
             <p>新增</p>
             <img @click="close" class="guanbi" src="../../../static/image/superSignature/guan.png" alt="">
         </div>
@@ -82,7 +82,7 @@
       </div>
       <!--查看-->
       <div class="mask" v-show="mask1">
-        <div class="maskTitle newmaskTitle" style="background-image: url('../../../static/image/superSignature/tuisongbg.png')">
+        <div class="maskTitle newmaskTitle">
           <p>查看</p>
           <img @click="close" class="guanbi" src="../../../static/image/superSignature/guan.png" alt="">
         </div>
@@ -126,7 +126,7 @@
       </div>
       <!--推送方式配置-->
       <div class="mask" v-show="mask4">
-        <div class="maskTitle newmask4Title" style="background-image: url('../../../static/image/superSignature/tuisongbg.png')">
+        <div class="maskTitle newmask4Title">
           <p>推送方式配置</p>
           <img @click="close" class="guanbi" src="../../../static/image/superSignature/guan.png" alt="">
         </div>
@@ -761,6 +761,7 @@
   .maskTitle{
     width: 750px;
     height: 46px;
+    background-image: url('../../../static/image/superSignature/tuisongbg.png');
     background-size: 750px 46px;
     background-repeat: no-repeat;
     text-align: center;

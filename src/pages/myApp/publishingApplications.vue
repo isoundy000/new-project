@@ -123,7 +123,7 @@
               </div>
             </div>
           </div>
-          <div v-if="tishi3" class="kuang3" style="background-image: url('../../../static/image/superSignature/tishikuang.png')">
+          <div v-if="tishi3" class="kuang3">
             <span style="width: 285px;margin-left: 36px">
               选择[公有账号池]将使用本站提供的苹果个人开发者账号用于签名，无需自行提供个人开发者账号。选择[私有账号池]，需自行提供个人开发者账号。
             </span>
@@ -282,7 +282,7 @@
             <img style="margin-left: 5px;width: 20px;height: 20px" @click="help" @mouseleave="helpleave()" src="../../../static/image/superSignature/help.png" alt="">
           </div>
 
-          <div v-if="tishi" class="kuang" style="background-image: url('../../../static/image/superSignature/kuang.png')">
+          <div v-if="tishi" class="kuang">
             <p>
               消息推送可提高用户活跃度及应用留存率，但会影响第三方(微信、QQ等)登录。
             </p>
@@ -306,7 +306,7 @@
             <div class="please">
               <p class="pleaseText">请谨慎选择！</p>
               <img style="margin-left: 5px;width: 20px;height: 20px" @click="help1" @mouseleave="helpleave1()" src="../../../static/image/superSignature/help.png" alt="">
-              <div v-if="tishi1" class="kuang1" style="background-image: url('../../../static/image/superSignature/kuang.png')">
+              <div v-if="tishi1" class="kuang1">
                 <p>
                   已上传的应用再修改消息提醒方式，可能会导致已安装用户无法正常使用。需要重新上传应用包，选择消息推送后让用户重新下载
                 </p>
@@ -732,6 +732,7 @@
   position: absolute;
   top: -37%;
   left: 9%;
+  background-image: url('../../../static/image/superSignature/tishikuang.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
@@ -926,6 +927,7 @@
   .kuang {
     width: 254px;
     height: 163px;
+    background-image: url('../../../static/image/superSignature/kuang.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     position: absolute;
@@ -952,6 +954,7 @@
   .kuang1 {
     width: 254px;
     height: 163px;
+    background-image: url('../../../static/image/superSignature/kuang.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     position: absolute;

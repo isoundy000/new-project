@@ -194,7 +194,7 @@
     >
       <!--自定义导航栏左边-->
       <div class="customDivMain" >
-        <div class="customDivMainSmall1" style="background-image: url('../../../static/image/ordinary/shouji.png')">
+        <div class="customDivMainSmall1">
           <p v-html="beijingstyleInner"></p>
           <div class="customDivMainSmall1Div" v-show="customDivMainSmall1DivShow">
 
@@ -240,7 +240,7 @@
               </div>
             </div>
           </div>
-          <div class="customDivMainSmall1Div22" v-show="customDivMainSmall1Div22Show" style="background-image: url('../../../static/image/ordinary/bg@2x.png')">
+          <div class="customDivMainSmall1Div22" v-show="customDivMainSmall1Div22Show">
             <div class="zhuangtai12" v-show="zhuangtai1Show">
               <img v-if="imgShow"  src="../../../static/image/ordinary/zhuangtai1.png" alt="">
               <img v-else src="../../../static/image/ordinary/ztl_hei.png" alt="">
@@ -391,7 +391,7 @@
     >
       <!--自定义底栏左边-->
       <div class="customDivMain" >
-        <div class="footerDivMainSmall1" style="background-image: url('../../../static/image/ordinary/shouji.png')">
+        <div class="footerDivMainSmall1">
 
           <div class="customDivMainSmall1Div" >
 
@@ -2872,6 +2872,7 @@
   .customDivMainSmall1{
     width: 350px;
     height: 596px;
+    background-image: url('../../../static/image/ordinary/shouji.png');
     background-repeat: no-repeat;
     background-size: 266px 566px;
     background-position:center center;
@@ -2881,6 +2882,7 @@
   .footerDivMainSmall1{
     width: 450px;
     height: 596px;
+    background-image: url('../../../static/image/ordinary/shouji.png');
     background-repeat: no-repeat;
     background-size: 266px 566px;
     background-position:center center;
@@ -2941,6 +2943,7 @@
   .customDivMainSmall1Div22{
     width: 240px;
     height: 108px;
+    background-image: url('../../../static/image/ordinary/bg@2x.png');
     background-repeat: no-repeat;
     background-size: 240px 108px;
     margin: 70px auto 0 auto;

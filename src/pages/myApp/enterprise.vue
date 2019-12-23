@@ -111,7 +111,7 @@
         v-model="input"
         @change="seachInput">
       </el-input>
-      <div class="export" @click="enterpriseUpload" style="background-image: url('../../../static/image/appManagement/hps_anniu.png')">
+      <div class="export" @click="enterpriseUpload">
       <img src="../../../static/image/survey/daochuicon@2x.png" alt="">
       <p>上传应用</p>
       </div>
@@ -905,6 +905,7 @@
   .export {
     width: 142px;
     height: 40px;
+    background-image: url('../../../static/image/appManagement/hps_anniu.png');
     background-size: 142px 40px;
     background-repeat: no-repeat;
     display: flex;

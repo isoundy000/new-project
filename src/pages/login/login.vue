@@ -8,8 +8,8 @@
         <!--<p>关于我们</p>-->
       </div>
     </div>
-    <div class="banner" style="background-image: url('../../../static/image/login/hpdenglu_bg.png')">
-      <div class="loginDiv" style="background-image: url('../../../static/image/login/denglukuang.png')">
+    <div class="banner">
+      <div class="loginDiv">
         <div class="loginDiv_One">
           <p @click="accountLogin"  :class="{'isColor':isA}" class="msg_login">账号登录</p>
           <div></div>
@@ -52,7 +52,7 @@
             </div>
           </div>
           <div @click="login" class="loginBtn">
-            <div style="background-image: url('../../../static/image/login/hpanniu.png')">
+            <div>
               <p>登录</p>
             </div>
           </div>
@@ -95,7 +95,7 @@
             </div>
           </div>
           <div class="loginBtn" @click="accountLoginBtn">
-            <div style="background-image: url('../../../static/image/login/hpanniu.png')">
+            <div>
               <p>登录</p>
             </div>
           </div>
@@ -517,6 +517,7 @@
     width: 100%;
     max-width: 1468px;
     height: 750px;
+    background-image: url('../../../static/image/login/hpdenglu_bg.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     display: flex;
@@ -530,6 +531,7 @@
     height: 417px;
     position: absolute;
     right: 15%;
+    background-image: url('../../../static/image/login/denglukuang.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background:rgba(255,255,255,1);
@@ -750,6 +752,7 @@
   .loginBtn div {
     width: 300px;
     height: 50px;
+    background-image: url('../../../static/image/login/hpanniu.png');
     background-size: 100% 50px;
     background-repeat: no-repeat;
     text-align: center;

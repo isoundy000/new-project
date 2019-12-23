@@ -116,8 +116,7 @@
           </div>
           <div class="maskOneSecond1Div">
             <p>支付方式</p>
-            <div class="selectThirdDiv"
-                 style="width: 150px;height: 44px; background-repeat: no-repeat;  background-image: url('../../../static/image/encapsulation/xuanzhong@2x.png')">
+            <div class="selectThirdDiv">
               <img src="../../../static/image/encapsulation/zfbicon@2x.png" alt="">
             </div>
           </div>
@@ -1067,6 +1066,10 @@
   }
 
   .selectThirdDiv {
+    width: 150px;
+    height: 44px;
+    background-repeat: no-repeat;
+    background-image: url('../../../static/image/encapsulation/xuanzhong@2x.png');
     display: flex;
     align-items: center;
     justify-content: center;

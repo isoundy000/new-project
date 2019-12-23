@@ -25,7 +25,7 @@
       <!--<img src="../../../static/image/superSignature/shougou.png" alt="">-->
     <!--</div>-->
     <Bheader></Bheader>
-    <div class="banner" style="background-image: url('../../../static/image/superSignature/hpbanner.png')">
+    <div class="banner">
       <div class="bannerDiv">
         <p class="bannerDivone">超级签名一次 安装永不受影响</p>
         <p class="bannerDivNew">ios App超级签名</p>
@@ -38,7 +38,7 @@
       </div>
 
     </div>
-    <div id="video" class="videoDiv" style="background-image: url(../../../static/image/superSignature/hpbg.png);">
+    <div id="video" class="videoDiv" >
       <img @click="play" class="play" src="../../../static/image/superSignature/Play_anniu@2x.png" alt=""/>
     </div>
     <div class="mask" @click="mask" style="display: none">
@@ -98,7 +98,7 @@
         <img src="../../../static/image/superSignature/hpzhaodijiage.png" alt="">
       </div>
       <div class="lowprizeDiv">
-        <div class="lowprizeDiv_one" style="background-image: url('../../../static/image/superSignature/hpjiage.png')">
+        <div class="lowprizeDiv_one" >
           <div>
             <p>同样的iOS签名、超低的价格 </p>
             <p>1、因机制与企业签名不同，告别掉签</p>
@@ -117,8 +117,7 @@
         <img src="../../../static/image/superSignature/hpfuwu.png" alt="">
       </div>
       <div class="serviceDiv">
-        <div class="serviceDivOne"
-             style="background-image: url('../../../static/image/superSignature/hpchaoji.png')">
+        <div class="serviceDivOne">
           <p class="serviceDivOneTitle">iOS超级签名</p>
           <div class="hr"></div>
           <div class="flex_service">
@@ -139,7 +138,7 @@
             </div>
           </div>
         </div>
-        <div class="serviceDivTwo"  style="background-image: url('../../../static/image/superSignature/hpqiye.png')">
+        <div class="serviceDivTwo" >
           <p class="serviceDivTwoTitle">企业签</p>
           <div class="hr1"></div>
           <div class="flex_service">
@@ -564,6 +563,7 @@
 
     height: 450px;
     position: relative;
+    background-image: url('../../../static/image/superSignature/hpbanner.png');
     background-repeat: no-repeat;
     background-size: 100% 450px;
     display: flex;
@@ -761,6 +761,7 @@
     width: 1200px;
     height: 460px;
     /*background-color: #E8FCFC;*/
+    background-image: url('../../../static/image/superSignature/hpjiage.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     display: flex;
@@ -840,6 +841,7 @@
   .serviceDivOne {
     width: 418px;
     height: 478px;
+    background-image: url('../../../static/image/superSignature/hpchaoji.png');
     background-size: 418px 478px;
     margin: 40px;
     color: #666666;
@@ -850,6 +852,7 @@
   .serviceDivTwo {
     width: 418px;
     height: 478px;
+    background-image: url('../../../static/image/superSignature/hpqiye.png');
     background-size: 418px 478px;
     margin: 40px;
     border-radius: 20px;
@@ -1306,6 +1309,7 @@
   .videoDiv {
     width: 650px;
     height: 350px;
+    background-image: url('../../../static/image/superSignature/hpbg.png');
     background-size: 650px 350px;
     background-repeat: no-repeat;
     border-radius: 5px;

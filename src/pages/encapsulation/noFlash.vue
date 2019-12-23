@@ -149,7 +149,7 @@
           </div>
           <div class="selectFirst selectThird">
             <p class="selectFirstTitle">选择支付方式</p>
-            <div class="selectThirdDiv" style="width: 150px;height: 44px; background-repeat: no-repeat;  background-image: url('../../../static/image/encapsulation/xuanzhong@2x.png')">
+            <div class="selectThirdDiv">
               <img src="../../../static/image/encapsulation/zfbicon@2x.png" alt="">
             </div>
           </div>
@@ -883,6 +883,8 @@ margin-top: 15px;
     width:150px;
     height:44px;
     margin-top: 15px;
+    background-repeat: no-repeat;
+    background-image: url('../../../static/image/encapsulation/xuanzhong@2x.png');
     display: flex;
     align-items: center;
     justify-content: center;

@@ -2,7 +2,7 @@
   <div class="statistics">
     <div class="statisticsDiv">
       <div class="secondDiv">
-        <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
+        <div class="secondDivBg">
           <img class="jineIcon" src="../../../static/image/survey/hpxiaofei.png" alt="">
           <div class="secondDivText">
             <p>总消费金额</p>
@@ -13,7 +13,7 @@
             </div>
           </div>
         </div>
-        <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
+        <div class="secondDivBg">
           <img class="liulanIcon" src="../../../static/image/survey/hpliulan.png" alt="">
           <div class="secondDivText">
             <p>页面总浏览量</p>
@@ -24,7 +24,7 @@
             </div>
           </div>
         </div>
-        <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
+        <div class="secondDivBg">
           <img class="xiazaiIcon" src="../../../static/image/survey/hpxiazai.png" alt="">
           <div class="secondDivText">
             <p>总下载量</p>
@@ -35,7 +35,7 @@
             </div>
           </div>
         </div>
-        <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
+        <div class="secondDivBg" >
           <img class="shebeiIcon" src="../../../static/image/survey/hpshebei.png" alt="">
           <div class="secondDivText">
             <p>下载设备总数</p>
@@ -46,7 +46,7 @@
             </div>
           </div>
         </div>
-        <div class="secondDivBg" style="background-image:url('../../../static/image/survey/bg@2x.png') ">
+        <div class="secondDivBg">
           <img class="shebeiIcon" src="../../../static/image/survey/hpshebei.png" alt="">
           <div class="secondDivText">
             <p>补签</p>
@@ -59,14 +59,13 @@
         </div>
       </div>
       <div class="thirdDiv">
-        <div @click="recently7" class="recently7"
-             style="background-image: url('../../../static/image/survey/anniu_s@2x.png')">
+        <div @click="recently7" class="recently7" :class="{ 'recentlyImg': isrecently7 }">
           <p>最近7天</p>
         </div>
-        <div @click="recently1" class="recently1" style="background-image: url('../../../static/image/survey/anniu_n@2x.png')">
+        <div @click="recently1" class="recently1" :class="{ 'recentlyImg': isrecently1 }">
           <p>最近1月</p>
         </div>
-        <div @click="recently3" class="recently3" style="background-image: url('../../../static/image/survey/anniu_n@2x.png')">
+        <div @click="recently3" class="recently3" :class="{ 'recentlyImg': isrecently3 }">
           <p>最近3月</p>
         </div>
         <DatePicker size="large" @on-change="firstTime(value=$event)" v-model="value" format="yyyy-MM-dd"
@@ -106,6 +105,9 @@
     name: "statistics",
     data() {
       return {
+        isrecently7:true,
+        isrecently1:false,
+        isrecently3:false,
         loading:false,
         id:'',
         starTime:'',
@@ -178,23 +180,23 @@
             data: [
               {
                 name: '总消费金额',
-                icon: 'image://../../../static/image/survey/yingyong_jie@2x.png'
+                icon: '//static.iosapp88.com/static/image/survey/yingyong_jie@2x.png'
               },
               {
                 name: '页面总浏览量',
-                icon: 'image://../../../static/image/survey/yingyong_liulan@2x.png'//格式为'image://+icon文件地址'，其中image::后的//不能省略
+                icon: '//static.iosapp88.com/static/image/survey/yingyong_liulan@2x.png'//格式为'image://+icon文件地址'，其中image::后的//不能省略
               },
               {
                 name: '总下载量',
-                icon: 'image://../../../static/image/survey/yingyong_xiazhai@2x.png'
+                icon: '//static.iosapp88.com/static/image/survey/yingyong_xiazhai@2x.png'
               },
               {
                 name: '下载设备总数',
-                icon: 'image://../../../static/image/survey/yingyong_xiazai@2x.png'
+                icon: '//static.iosapp88.com/static/image/survey/yingyong_xiazai@2x.png'
               },
               {
                 name: '新增人数',
-                icon: 'image://../../../static/image/survey/yingyong_xinzeng@2x (1).png'
+                icon: '//static.iosapp88.com/static/image/survey/yingyong_xinzeng@2x (1).png'
               }
             ]
           },
@@ -357,11 +359,11 @@
         this.$nextTick(function() {
           this.newF(6)
         })
+        this.isrecently1=false
+        this.isrecently7=true
+        this.isrecently3=false
 
 
-        $(".recently1").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#2F82FF'})
-        $(".recently7").css({"background-image":'url(../../../static/image/survey/anniu_s@2x.png)',"color":'white'})
-        $(".recently3").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#2F82FF'})
 
 
       },
@@ -370,18 +372,18 @@
           this.newF(29)
         })
         //this.$options.methods.newF(29);
-        $(".recently7").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#2F82FF'})
-        $(".recently1").css({"background-image":'url(../../../static/image/survey/anniu_s@2x.png)',"color":'white'})
-        $(".recently3").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#2F82FF'})
+        this.isrecently1=true
+        this.isrecently7=false
+        this.isrecently3=false
 
       },
       recently3(){
         this.$nextTick(function() {
           this.newF(89)
         })
-        $(".recently1").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#2F82FF'})
-        $(".recently3").css({"background-image":'url(../../../static/image/survey/anniu_s@2x.png)',"color":'white'})
-        $(".recently7").css({"background-image":'url(../../../static/image/survey/anniu_n@2x.png)',"color":'#2F82FF'})
+        this.isrecently1=false
+        this.isrecently7=false
+        this.isrecently3=true
 
       },
       /*日历查询*/
@@ -435,23 +437,23 @@
                 data: [
                   {
                     name: '总消费金额',
-                    icon: 'image://../../../static/image/survey/yingyong_jie@2x.png'
+                    icon: '//static.iosapp88.com/static/image/survey/yingyong_jie@2x.png'
                   },
                   {
                     name: '页面总浏览量',
-                    icon: 'image://../../../static/image/survey/yingyong_liulan@2x.png'//格式为'image://+icon文件地址'，其中image::后的//不能省略
+                    icon: '//static.iosapp88.com/static/image/survey/yingyong_liulan@2x.png'//格式为'image://+icon文件地址'，其中image::后的//不能省略
                   },
                   {
                     name: '总下载量',
-                    icon: 'image://../../../static/image/survey/yingyong_xiazhai@2x.png'
+                    icon: '//static.iosapp88.com/static/image/survey/yingyong_xiazhai@2x.png'
                   },
                   {
                     name: '下载设备总数',
-                    icon: 'image://../../../static/image/survey/yingyong_xiazai@2x.png'
+                    icon: '//static.iosapp88.com/static/image/survey/yingyong_xiazai@2x.png'
                   },
                   {
                     name: '新增人数',
-                    icon: 'image://../../../static/image/survey/yingyong_xinzeng@2x (1).png'
+                    icon: '//static.iosapp88.com/static/image/survey/yingyong_xinzeng@2x (1).png'
                   }
                 ]
               },
@@ -577,23 +579,23 @@
               data: [
                 {
                   name: '总消费金额',
-                  icon: 'image://../../../static/image/survey/yingyong_jie@2x.png'
+                  icon: '//static.iosapp88.com/static/image/survey/yingyong_jie@2x.png'
                 },
                 {
                   name: '页面总浏览量',
-                  icon: 'image://../../../static/image/survey/yingyong_liulan@2x.png'//格式为'image://+icon文件地址'，其中image::后的//不能省略
+                  icon: '//static.iosapp88.com/static/image/survey/yingyong_liulan@2x.png'//格式为'image://+icon文件地址'，其中image::后的//不能省略
                 },
                 {
                   name: '总下载量',
-                  icon: 'image://../../../static/image/survey/yingyong_xiazhai@2x.png'
+                  icon: '//static.iosapp88.com/static/image/survey/yingyong_xiazhai@2x.png'
                 },
                 {
                   name: '下载设备总数',
-                  icon: 'image://../../../static/image/survey/yingyong_xiazai@2x.png'
+                  icon: '//static.iosapp88.com/static/image/survey/yingyong_xiazai@2x.png'
                 },
                 {
                   name: '新增人数',
-                  icon: 'image://../../../static/image/survey/yingyong_xinzeng@2x (1).png'
+                  icon: '//static.iosapp88.com/static/image/survey/yingyong_xinzeng@2x (1).png'
                 }
               ]
             },
@@ -687,6 +689,7 @@
   .secondDivBg {
     width: 19%;
     height: 100px;
+    background-image:url('../../../static/image/survey/bg@2x.png');
     background-size: 100% 100px;
     background-repeat: no-repeat;
     display: flex;
@@ -744,9 +747,10 @@ position: relative;
   .recently7 {
     width: 120px;
     height: 40px;
+    background-image: url('../../../static/image/survey/anniu_n@2x.png');
     background-size: 120px 40px;
     background-repeat: no-repeat;
-    color: white;
+    color: #2F82FF;
     line-height: 40px;
     text-align: center;
     margin-left: 17px;
@@ -757,6 +761,7 @@ position: relative;
   .recently1 {
     width: 120px;
     height: 40px;
+    background-image: url('../../../static/image/survey/anniu_n@2x.png');
     background-size: 120px 40px;
     background-repeat: no-repeat;
     color: #2F82FF;
@@ -770,6 +775,7 @@ position: relative;
   .recently3 {
     width: 120px;
     height: 40px;
+    background-image: url('../../../static/image/survey/anniu_n@2x.png');
     background-size: 120px 40px;
     background-repeat: no-repeat;
     color: #2F82FF;
@@ -847,5 +853,18 @@ position: relative;
 
   .newAddP {
     margin-left: 5px;
+  }
+  .recentlyImg{
+    width: 120px;
+    height: 40px;
+    background-image:url('../../../static/image/survey/anniu_s@2x.png');
+    background-size: 120px 40px;
+    background-repeat: no-repeat;
+    color: white;
+    line-height: 40px;
+    text-align: center;
+    margin-left: 19px;
+    font-size: 16px;
+    cursor: pointer;
   }
 </style>

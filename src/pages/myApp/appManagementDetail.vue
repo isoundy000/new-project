@@ -76,11 +76,11 @@
                 isclass: false,
                 isHide:false
               },
-              {
-                msg: '下载码',
-                isclass: false,
-                isHide:false
-              },
+              // {
+              //   msg: '下载码',
+              //   isclass: false,
+              //   isHide:false
+              // },
               {
                 msg: '消息推送',
                 isclass: false,
@@ -155,14 +155,14 @@
                 apk_url:this.$route.query.apk_url
               }
             })
-          }else if(index==8){
+          }else if(index==999){
             this.$router.push({
               path:'/downloadCode',
               query:{
                 id:this.$route.query.id
               }
             })
-          }else if(index==9){
+          }else if(index==8){
             this.$router.push({
               path:'/messagePush',
               query:{
@@ -178,9 +178,9 @@
       mounted(){
         // alert(this.$route.query.cert_path)
         if(this.$route.query.push_type==0){
-          this.title[9].isHide=true
+          this.title[8].isHide=true
         }else{
-          this.title[9].isHide=false
+          this.title[8].isHide=false
         }
 
 

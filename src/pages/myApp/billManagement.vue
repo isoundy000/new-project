@@ -1,7 +1,7 @@
 <template>
   <div class="billManagement">
     <div class="mask" v-if="isMaskRecharge">
-      <div class="maskDiv" style="background-image: url('../../../static/image/survey/zhiuf_bg.png')">
+      <div class="maskDiv">
         <div class="maskDivOne">
           <p>充值</p>
           <img @click="close" src="../../../static/image/survey/guanbi@2x.png" alt="">
@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="mask" v-if="isMaskPayment">
-      <div class="maskDiv" style="background-image: url('../../../static/image/survey/zhiuf_bg.png')">
+      <div class="maskDiv">
         <div class="maskDivOne">
           <p>支付</p>
           <img @click="close" src="../../../static/image/survey/guanbi@2x.png" alt="">
@@ -40,7 +40,7 @@
             <!--<qrcode-vue :value="weixinvalue" :size="size" level="H" className='qrcode' id="picture" ref="code"></qrcode-vue>-->
             <!--<img class="weixinImg" src="../../../static/image/survey/weixin.png" alt="">-->
           <!--</div>-->
-          <div class="zhifubao" style="background-image: url('../../../static/image/survey/zhifubaobg.png')">
+          <div class="zhifubao">
             <p>￥{{chongValue}}</p>
             <qrcode-vue :value="zhifubaovalue" :size="size" level="H" className='qrcode' id="picture" ref="code"></qrcode-vue>
             <img class="zhifubaoImg" src="../../../static/image/survey/zhifubao.png" alt="">
@@ -389,6 +389,7 @@
   .maskDiv {
     width: 525px;
     height: 339px;
+    background-image: url('../../../static/image/survey/zhiuf_bg.png');
     background-size: 525px 339px;
   }
 
@@ -495,6 +496,7 @@ margin-top: 30px;
   .zhifubao{
     width: 160px;
     height: 220px;
+    background-image: url('../../../static/image/survey/zhifubaobg.png');
     background-size: 160px 220px;
     background-repeat: no-repeat;
     display: flex;

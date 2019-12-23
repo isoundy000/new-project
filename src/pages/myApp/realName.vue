@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="secondDiv">
-        <div @click="personal" class="secondDivOne" style="background-image:url('../../../static/image/survey/geren_bg.png') ">
+        <div @click="personal" class="secondDivOne">
           <img src="../../../static/image/survey/geren_iocn.png" alt="">
           <p>个人用户</p>
         </div>
@@ -123,6 +123,7 @@
   .secondDivOne{
     width: 350px;
     height: 240px;
+    background-image:url('../../../static/image/survey/geren_bg.png');
     background-size: 350px 240px;
     background-repeat: no-repeat;
     display: -webkit-box;

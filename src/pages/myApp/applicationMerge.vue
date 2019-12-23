@@ -3,7 +3,7 @@
     <div class="applicationMergeOne">
       <p>Andriod下载地址</p>
       <img @click="bangzhu" @mouseleave="helpleave()" class="bangzhu" src="../../../static/image/superSignature/bangzhu.png" alt="">
-      <div v-if="tishi" class="kuang" style="background-image: url('../../../static/image/superSignature/kuang.png')">
+      <div v-if="tishi" class="kuang">
         <p>
           Andriod手机打开您的下载地址
           并点击安装时，会自动使用该地
@@ -136,6 +136,7 @@
   .applicationMergeOne .kuang {
     width: 254px;
     height: 163px;
+    background-image: url('../../../static/image/superSignature/kuang.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     position: absolute;

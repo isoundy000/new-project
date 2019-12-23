@@ -56,7 +56,7 @@
              :on-preview="handlePictureCardPreview"
              :on-remove="handleRemove"
              :on-change="deleteL">
-             <div class="zhengmian" style="background-image: url('../../../static/image/survey/zhengmian.png')">
+             <div class="zhengmian">
                <img src="../../../static/image/survey/tianjia.png" alt="">
              </div>
            </el-upload>
@@ -199,6 +199,7 @@
   .zhengmian{
     width: 280px;
     height: 150px;
+    background-image: url('../../../static/image/survey/zhengmian.png');
     background-size: 280px 150px ;
     background-repeat: no-repeat;
     display: flex;

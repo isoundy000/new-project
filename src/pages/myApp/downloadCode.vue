@@ -25,7 +25,7 @@
       <!--创建弹窗-->
       <div class="mask" v-if="isMask2">
         <div class="maskDiv" >
-          <div class="maskDivOne" style="background-image: url('../../../static/image/superSignature/chuangjian_bg.png')">
+          <div class="maskDivOne">
             <p>创建下载码</p>
             <img @click="close" src="../../../static/image/survey/guanbi@2x.png" alt="">
           </div>
@@ -526,6 +526,7 @@
   .maskDiv {
     width: 525px;
     height: 339px;
+    background-image: url('../../../static/image/superSignature/chuangjian_bg.png');
     background-size: 525px 339px;
     background-color: white;
   }
