@@ -38,7 +38,7 @@
             </el-input>
           </div>
           <div class="maskDivThird">
-            <p>可使用次数  <span style="color: red">*</span></p>
+            <p>单个使用次数  <span style="color: red">*</span></p>
             <el-input
               v-on:input="inputTwo"
               class="seachInput2"
@@ -76,10 +76,13 @@
          <div class="end" @click="end">
            <p>批量禁用</p>
          </div>
+         <div class="export" @click="exportBtn">
+           <p>一键导出</p>
+         </div>
        </div>
      </div>
       <div class="downLoadRecordDiv">
-        <div class="secondDiv">
+        <div class="secondDiv01">
           <el-table
             :data="tableData"
             stripe
@@ -96,35 +99,35 @@
               width="55">
             </el-table-column>
             <el-table-column
-              prop="codema"
+              prop="code"
               align="center"
               label="下载码"
               sortable="custom"
             >
             </el-table-column>
             <el-table-column
-              prop="ke"
+              prop="num"
               align="center"
               sortable="custom"
               label="可使用次数"
             >
             </el-table-column>
             <el-table-column
-              prop="name"
+              prop="used"
               align="center"
               sortable="custom"
               label="已使用次数"
             >
             </el-table-column>
             <el-table-column
-              prop="num"
+              prop="surplus"
               align="center"
               sortable="custom"
               label="剩余使用次数"
             >
             </el-table-column>
             <el-table-column
-              prop="date"
+              prop="create_time"
               align="center"
               sortable="custom"
               label="创建时间"
@@ -133,7 +136,7 @@
             <el-table-column
               prop="status"
               align="center"
-              label="操作"
+              label="状态"
             >
               <template slot-scope="scope">
                 <div style="display: flex;justify-content: center">
@@ -147,12 +150,21 @@
                 </div>
               </template>
             </el-table-column>
+            <el-table-column
+              prop="operation"
+              label="操作"
+              align="center"
+              >
+              <template slot-scope="scope" class="caozuo">
+                <div class="shanchu" @click.stop="shanchuClick(tableData[scope.$index].id)">删除</div>
+              </template>
+            </el-table-column>
           </el-table>
 
         </div>
         <div class="thirdDiv">
           <p>共<span style="color: red">{{pageNumber}}</span> 页/ <span style="color: red">{{total}}</span>条记录</p>
-          <Page @on-change="indexChange" @on-page-size-change="pageChange" :page-size="10" :current="current" :total=total />
+          <Page @on-change="indexChange" @on-page-size-change="pageChange" :page-size="10" :current.sync="current" :total=total />
         </div>
       </div>
     </div>
@@ -160,12 +172,16 @@
 
 <script>
   import  axios from 'axios'
-  import {BASE_URL} from "../../api";
+  import {BASE_URL,exportMethod} from "../../api";
   import qs from 'qs'
     export default {
         name: 'downloadCode',
       data(){
           return{
+            downSumOptions: [
+              {
+                value: '删除',
+              }],
             input:'',
             input2:'',
             input3:'',
@@ -174,79 +190,120 @@
             total:0,
             pageNumber:'',
             current:1,
-            tableData: [{
-              id:3,
-              codema:'333codema',
-              ke:'333',
-              date: '2016-05-03',
-              name: '90',
-              num:'200',
-              address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-              id:4,
-              codema:'666codema',
-              ke:'666',
-              date: '2016-05-02',
-              name: '60',
-              num:'60',
-              address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-              id:5,
-              codema:'777codema',
-              ke:'777',
-              date: '2016-05-04',
-              name: '130',
-              num:'300',
-              address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-              id:6,
-              codema:'888codema',
-              ke:'888',
-              date: '2016-05-01',
-              name: '30',
-              num:'600',
-              address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-              id:7,
-              codema:'999codema',
-              ke:'999',
-              date: '2016-05-08',
-              name: '165',
-              num:'9',
-              address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-              id:8,
-              codema:'123codema',
-              ke:'123',
-              date: '2016-05-06',
-              name: '2',
-              num:'3',
-              address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-              id:9,
-              codema:'345codema',
-              ke:'345',
-              date: '2016-05-07',
-              name: '3',
-              num:'100',
-              address: '上海市普陀区金沙江路 1518 弄'
-            }],
+            tableData: [],
             multipleSelection: [],
             newArry:[],
           }
       },
       methods:{
+        shanchuClick(id){
+          let data={
+            id:id,
+            type:4,
+          }
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.post(BASE_URL+'/api/app/downloadCodeHandle',qs.stringify(data),config).then(res => {
+            let data={
+              app_id:this.$route.query.id,
+              page:1,
+              page_size:10,
+            }
+            let config = {
+              headers:{'token':localStorage.getItem('Authorization')}
+            };
+            axios.post(BASE_URL+'/api/app/downloadCodeList',qs.stringify(data),config).then(res => {
+              this.tableData=res.data.data.list
+              this.total=res.data.data.total
+              this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
+              this.current=1
+            }, err => {
+              // console.log(err)
+            })
+          }, err => {
+            // console.log(err)
+          })
+        },
+        exportBtn(){
+          let data={
+            app_id:this.$route.query.id
+          }
+          axios.post(BASE_URL+'/api/app/export', qs.stringify(data), {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded', //请求的数据类型为form data格式
+              'token':localStorage.getItem('Authorization')
+            },
+            'responseType': 'blob'  //设置响应的数据类型为一个包含二进制数据的 Blob 对象，必须设置！！！
+          }).then(function (response) {
+            const blob = new Blob([response.data]);
+            const fileName = '下载码.xlsx';
+            const linkNode = document.createElement('a');
+            linkNode.download = fileName; //a标签的download属性规定下载文件的名称
+            linkNode.style.display = 'none';
+            linkNode.href = URL.createObjectURL(blob); //生成一个Blob URL
+            document.body.appendChild(linkNode);
+            linkNode.click();  //模拟在按钮上的一次鼠标单击
+            URL.revokeObjectURL(linkNode.href); // 释放URL 对象
+            document.body.removeChild(linkNode);
+          }).catch(function (error) {
+            console.log(error);
+          });
+        },
         changeSort(val){
-          console.log(val)
+          let data={
+            app_id:this.$route.query.id,
+            page:1,
+            page_size:10,
+            order:val.prop,
+            sort:val.order
+          }
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.post(BASE_URL+'/api/app/downloadCodeList',qs.stringify(data),config).then(res => {
+            this.tableData=res.data.data.list
+            this.total=res.data.data.total
+            this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
+            this.current=1
+          }, err => {
+            // console.log(err)
+          })
         },
         inputOne(){
-
+          if(this.input2!=''){
+            var max=100
+            var regex = /^\d+$/;
+            if(regex.test(this.input2)){
+              if(this.input2>max){
+                this.$message.error('不能大于100');
+                this.input2=''
+              }
+            }else{
+              this.$message.error('只能输入整数');
+              this.input2=''
+            }
+          }
         },
         inputTwo(){
-
+          if(this.input3!=''){
+            var max=10000
+            var regex = /^\d+$/;
+            if(regex.test(this.input3)){
+              if(this.input3>max){
+                this.$message.error('不能大于10000');
+                this.input3=''
+              }
+            }else{
+              this.$message.error('只能输入整数');
+              this.input3=''
+            }
+          }
         },
         chuangjian(){
           this.isMask2=true
+          this.input2=''
+          this.input3=''
         },
         seachInput(){
           let data={
@@ -259,7 +316,6 @@
             headers:{'token':localStorage.getItem('Authorization')}
           };
           axios.post(BASE_URL+'/api/app/downloadCodeList',qs.stringify(data),config).then(res => {
-            console.log(res.data.data.list)
             this.tableData=res.data.data.list
             this.total=res.data.data.total
             this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
@@ -279,7 +335,7 @@
           let data={
             app_id:this.$route.query.id,
             page:i,
-            page_size:8,
+            page_size:10,
           }
           let config = {
             headers:{'token':localStorage.getItem('Authorization')}
@@ -308,11 +364,9 @@
             this.multipleSelection=[]
             this.newArry=[]
             this.multipleSelection=val
-            console.log(this.multipleSelection)
             this.multipleSelection.forEach((item)=>{
               this.newArry.push(item.id)
             })
-            console.log(this.newArry.toString())
 
 
         },
@@ -334,10 +388,10 @@
               headers:{'token':localStorage.getItem('Authorization')}
             };
             axios.post(BASE_URL+'/api/app/downloadCodeList',qs.stringify(data),config).then(res => {
-              console.log(res.data.data.list)
               this.tableData=res.data.data.list
               this.total=res.data.data.total
               this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
+              this.current=1
             }, err => {
               // console.log(err)
             })
@@ -363,10 +417,10 @@
               headers:{'token':localStorage.getItem('Authorization')}
             };
             axios.post(BASE_URL+'/api/app/downloadCodeList',qs.stringify(data),config).then(res => {
-              console.log(res.data.data.list)
               this.tableData=res.data.data.list
               this.total=res.data.data.total
               this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
+              this.current=1
             }, err => {
               // console.log(err)
             })
@@ -374,11 +428,107 @@
             // console.log(err)
           })
         },
-        swich(){
-
+        swich(row){
+          if(row.status==1){
+            let data={
+              id:row.id,
+              type:2,
+            }
+            let config = {
+              headers:{'token':localStorage.getItem('Authorization')}
+            };
+            axios.post(BASE_URL+'/api/app/downloadCodeHandle',qs.stringify(data),config).then(res => {
+              let data={
+                app_id:this.$route.query.id,
+                page:1,
+                page_size:10,
+              }
+              let config = {
+                headers:{'token':localStorage.getItem('Authorization')}
+              };
+              axios.post(BASE_URL+'/api/app/downloadCodeList',qs.stringify(data),config).then(res => {
+                this.tableData=res.data.data.list
+                this.total=res.data.data.total
+                this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
+                this.current=1
+              }, err => {
+                // console.log(err)
+              })
+            }, err => {
+              // console.log(err)
+            })
+          }else{
+            let data={
+              id:row.id,
+              type:1,
+            }
+            let config = {
+              headers:{'token':localStorage.getItem('Authorization')}
+            };
+            axios.post(BASE_URL+'/api/app/downloadCodeHandle',qs.stringify(data),config).then(res => {
+              let data={
+                app_id:this.$route.query.id,
+                page:1,
+                page_size:10,
+              }
+              let config = {
+                headers:{'token':localStorage.getItem('Authorization')}
+              };
+              axios.post(BASE_URL+'/api/app/downloadCodeList',qs.stringify(data),config).then(res => {
+                this.tableData=res.data.data.list
+                this.total=res.data.data.total
+                this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
+                this.current=1
+              }, err => {
+                // console.log(err)
+              })
+            }, err => {
+              // console.log(err)
+            })
+          }
         },
         okBtn(){
+          let data={
+            app_id:this.$route.query.id,
+            number:this.input2,
+            num:this.input3,
+          }
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.post(BASE_URL+'/api/app/addDownloadCode',qs.stringify(data),config).then(res => {
+            if(res.data.code==200){
+              this.$message.success(res.data.msg);
+              let data={
+                app_id:this.$route.query.id,
+                page:1,
+                page_size:10,
+              }
+              let config = {
+                headers:{'token':localStorage.getItem('Authorization')}
+              };
+              axios.post(BASE_URL+'/api/app/downloadCodeList',qs.stringify(data),config).then(res => {
+                this.tableData=res.data.data.list
+                this.total=res.data.data.total
+                this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
+                this.current=1
+              }, err => {
+                // console.log(err)
+              })
+            }else{
+              this.$message.error(res.data.msg);
+            }
+          }, err => {
+            // console.log(err)
+          })
+
+
+
+
           this.isMask2=false
+
+
+
         },
         cancelBtn(){
           this.isMask2=false
@@ -394,10 +544,9 @@
           headers:{'token':localStorage.getItem('Authorization')}
         };
         axios.post(BASE_URL+'/api/app/downloadCodeList',qs.stringify(data),config).then(res => {
-           console.log(res.data.data.list)
           this.tableData=res.data.data.list
           this.total=res.data.data.total
-          this.pageNumber=parseInt(Math.ceil(Number(this.total)/8))
+          this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
         }, err => {
           // console.log(err)
         })
@@ -437,7 +586,7 @@
     cursor: pointer;
   }
   .downloadCodeMainSmall{
-    width: 500px;
+    width: 600px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -471,6 +620,19 @@
     background-color: #2F82FF;
     cursor: pointer;
   }
+  .export{
+    width: 100%;
+    max-width: 116px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: 4px;
+    font-size: 15px;
+    background-color: #2F82FF;
+    cursor: pointer;
+  }
 .mask {
   width: 100%;
   height: 100%;
@@ -479,7 +641,7 @@
   align-items: center;
   position: fixed;
   background: rgba(2, 2, 2, 0.4);
-  z-index: 1000000;
+  z-index: 999;
   top: 0;
   left: 0;
 
@@ -526,14 +688,16 @@
   .maskDiv {
     width: 525px;
     height: 339px;
-    background-image: url('../../../static/image/superSignature/chuangjian_bg.png');
-    background-size: 525px 339px;
     background-color: white;
+
   }
 
   .maskDivOne {
     width: 100%;
     height: 47px;
+    background-size: 100% 47px;
+
+    background-image: url('../../../static/image/superSignature/chuangjian_bg.png');
     display: flex;
     align-items: center;
     position: relative;
@@ -558,12 +722,12 @@
     margin-top: 30px;
   }
   .maskDivThird p{
-    width: 92px;
+    width: 122px;
     font-size: 16px;
-    margin-left: 47px;
+    margin-left: 37px;
   }
   .seachInput2{
-    width: 350px;
+    width: 330px;
     margin-left: 10px;
   }
   .fourthDiv{
@@ -594,5 +758,19 @@
     background-color:#EEEEEE ;
     border-radius: 4px;
     cursor: pointer;
+  }
+  .shanchu{
+    width:56px;
+    height:28px;
+    /*background:rgba(2,178,181,1);*/
+    border:1px solid #FF0000;
+    border-radius:2px;
+    line-height: 28px;
+    color: #FF0000;
+    cursor: pointer;
+    margin: 0 auto;
+  }
+  .caozuo{
+    display: flex;
   }
 </style>

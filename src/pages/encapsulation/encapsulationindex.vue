@@ -433,16 +433,16 @@
     }
 </script>
 <style>
-  .el-table .cell {
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    white-space: normal;
-    word-break: break-all;
-    line-height: 23px;
-    margin-left: 10px;
-    display: flex !important;
-    justify-content: space-evenly !important;
-  }
+  /*.el-table .cell {*/
+    /*-webkit-box-sizing: border-box;*/
+    /*box-sizing: border-box;*/
+    /*white-space: normal;*/
+    /*word-break: break-all;*/
+    /*line-height: 23px;*/
+    /*margin-left: 10px;*/
+    /*display: flex !important;*/
+    /*justify-content: space-evenly !important;*/
+  /*}*/
   .motai .ivu-modal-content{
     position: relative;
 
