@@ -90,7 +90,7 @@
           <img @click="close" class="guanbi" src="../../../static/image/supersignature/newguanbi.png" alt="">
         </div>
         <div class="maskOneFirst">
-          <p>购买私有池设备量</p>
+          <p>购买私有池次数</p>
         </div>
         <div class="maskOneSecond1">
           <div @click="xuan(index,list.status,list.id)" class="rechargeDiv" v-for="(list,index) in moneyList" :key="index"
@@ -108,7 +108,7 @@
             <p>自定义</p>
             <el-input
               class="maskOneSecond1Input"
-              placeholder="请填写设备台数"
+              placeholder="请填写次数"
               v-model="inputSheBei"
               v-on:input="sheBei"
             >
@@ -131,7 +131,7 @@
             <div class="goPay" @click="goPay">
               <span>去支付</span>
             </div>
-            <p style="margin-left: 30px;width: 600px;text-align: left">每台设备约<span style="color: #FA5558">¥{{price}}</span></p>
+            <p style="margin-left: 30px;width: 600px;text-align: left">每台次数约<span style="color: #FA5558">¥{{price}}</span></p>
           </div>
         </div>
       </div>
@@ -205,7 +205,7 @@
         </div>
         <div class="secondFooter">
           <div style="display: flex;align-items: center;width: 250px">
-            <p style="font-weight: bold">私有池设备量：<span
+            <p style="font-weight: bold">私有池次数：<span
               style="display: inline-block;width: 90px;text-align: center">{{private_num}}</span></p>
             <div class="chonghzi" @click="chonghzi">
               <p>充值</p>

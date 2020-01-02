@@ -121,6 +121,7 @@
             xianid: 1,
             display_name:this.$route.params.display_name,
             icon:this.$route.params.icon,
+            ipa_data_bak:this.$route.params.ipa_data_bak,
             bundle_name:this.$route.params.bundle_name,
             package_name:this.$route.params.package_name,
             version_code:this.$route.params.version_code,
@@ -137,6 +138,7 @@
           name:'publishingApplications',
           params: {
             xianid: 2,
+            ipa_data_bak:this.$route.params.ipa_data_bak,
             display_name:this.$route.params.display_name,
             icon:this.$route.params.icon,
             bundle_name:this.$route.params.bundle_name,

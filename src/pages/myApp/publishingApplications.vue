@@ -401,6 +401,7 @@
         type:1,
         shouhuApp:0,
         account_type:1,
+        newbaseurl:'',
       }
     },
     computed: {
@@ -506,6 +507,17 @@
             this.active = 1
             this.isSuper = false
             this.isUpload = true
+          axios.get(BASE_URL+'/api/app/init',config).then(res => {
+            console.log(res.data.data)
+            this.upload_url=res.data.data.upload
+            this.newdeUrl=res.data.data.upload
+            this.newbaseurl=res.data.data.add
+          }, err => {
+            // console.log(err)
+          })
+
+
+
           // }
         }, err => {
           // console.log(err)
@@ -644,7 +656,7 @@
           let config = {
             headers:{'token':localStorage.getItem('Authorization')}
           };
-          axios.post(BASE_URL+'/api/app/add',qs.stringify(f),config).then(res => {
+          axios.post(this.newbaseurl,qs.stringify(f),config).then(res => {
             // console.log(res.data)
             if(res.data.code==200){
               loading.close();
@@ -672,14 +684,14 @@
     },
     mounted(){
       // alert("4")
-      this.upload_url=UPLOAD_BASE_URL
 
-      this.newdeUrl=BASE_URL+'/api/common/upload'
    //  alert(this.$route.params.filesize)
       if(this.$route.params.xianid==1){
+        console.log(this.$route.params)
         this.active=2
         this.isSuper=false
         this.isSupplement=true
+        this.ipa_data_bak=this.$route.params.ipa_data_bak
         this.package_name=this.$route.params.package_name
         this.thirdInput1=this.$route.params.display_name
         this.thirdInput2=this.$route.params.version_code
@@ -689,6 +701,7 @@
         this.bundle_name=this.$route.params.bundle_name
         this.icon=this.$route.params.domain+this.$route.params.icon
         this.icon1=this.$route.params.icon
+        this.newbaseurl=BASE_URL+'/api/app/add'
       }else{
         this.active=0
         this.isSuper=true

@@ -287,6 +287,7 @@
         name: "updateApplication",
       data(){
           return{
+            newbaseurl:'',
             newappchoose1:false,
             newappchoose2:false,
             newappswitchValue:true,
@@ -556,7 +557,7 @@
           let config = {
             headers:{'token':localStorage.getItem('Authorization')}
           };
-          axios.post(BASE_URL+'/api/app/update',qs.stringify(data),config).then(res => {
+          axios.post(this.newbaseurl,qs.stringify(data),config).then(res => {
             // console.log(res.data.data)
             loading.close();
             if(res.data.code==0){
@@ -575,8 +576,19 @@
       },
       mounted(){
           this.ss=BASE_URL
-        this.newdeUrl=BASE_URL+'/api/common/upload'
-        this.upload_url=UPLOAD_BASE_URL
+        let config88 = {
+          headers:{'token':localStorage.getItem('Authorization')}
+        };
+        axios.get(BASE_URL+'/api/app/init',config88).then(res => {
+          console.log(res.data.data)
+          this.upload_url=res.data.data.upload
+          this.newdeUrl=res.data.data.upload
+          this.newbaseurl=res.data.data.update
+        }, err => {
+          // console.log(err)
+        })
+        // this.newdeUrl=BASE_URL+'/api/common/upload'
+        // this.upload_url=UPLOAD_BASE_URL
         let data={
           id:this.$route.query.id
         }

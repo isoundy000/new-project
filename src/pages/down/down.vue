@@ -186,8 +186,11 @@
   }
 
   .logo img {
-    max-width: 100%;
-    max-height: 100%;
+    /*max-width: 100%;*/
+    /*max-height: 100%;*/
+    width: 360px;
+    height: 360px;
+    border-radius: 30px;
   }
 
   .name {

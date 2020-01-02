@@ -387,6 +387,7 @@
         this.bundle_name=this.$route.params.bundle_name
         this.icon=this.$route.params.domain+this.$route.params.icon
         this.icon1=this.$route.params.icon
+        this.ipa_data_bak=this.$route.params.ipa_data_bak
       }else{
         this.active=0
         this.isSuper=true

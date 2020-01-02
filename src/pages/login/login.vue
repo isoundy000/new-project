@@ -315,7 +315,7 @@
 
             if(res.data.code==0){
               this.isTishi=true
-              this.tishi='验证码不正确'
+              this.tishi=res.data.msg
             }else{
               _this.userToken =  res.data.data.userinfo.token;
               var balance= res.data.data.userinfo.money
@@ -361,16 +361,8 @@
           .then(res => {
           console.log(res.data)
           if(res.data.code==0){
-            if(res.data.msg=='账户不正确'){
-              this.isTishi1=true
-              this.tishi1='账户不正确'
-            }else if(res.data.msg=='验证码错误'){
-              this.isTishi1=true
-              this.tishi1='验证码不正确'
-            }else if(res.data.msg=='密码不正确'){
-              this.isTishi1=true
-              this.tishi1='密码不正确'
-            }
+            this.isTishi1=true
+            this.tishi1=res.data.msg
           }else{
             this.userToken =  res.data.data.token;
             var balance= res.data.data.money
