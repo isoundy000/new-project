@@ -277,6 +277,11 @@ const router = new Router({
       component: () => import('@/pages/down/down'),
     },
     {
+      path: '/superDown',
+      name: 'superDown',
+      component: () => import('@/pages/down/superDown'),
+    },
+    {
       path: '/examine',
       name: 'examine',
       component: () => import('@/pages/myApp/examine'),
@@ -291,6 +296,12 @@ const router = new Router({
       path: '/privatePool',
       name: 'privatePool',
       component: () => import('@/pages/privatePool/privatePool'),
+
+    },
+    {
+      path: '/tf',
+      name: 'tf',
+      component: () => import('@/pages/TF/tf'),
 
     }
 

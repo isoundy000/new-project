@@ -90,9 +90,13 @@
             isclass: false
           },
           {
-            msg: '专属签名',
+            msg: 'TF签名',
             isclass: false
           },
+          // {
+          //   msg: '专属签名',
+          //   isclass: false
+          // },
           {
             msg: '企业签名',
             isclass: false
@@ -144,11 +148,11 @@
         this.title.forEach((item)=>{
           item.isclass=false
         })
-        this.title[index].isclass=true
+        // this.title[index].isclass=true
         this.clickIndex=index
         this.$store.commit('set_clickIndex',this.clickIndex)
         // alert(index)
-        // alert(this.clickIndex)
+       //  alert(this.clickIndex)
         if(this.$store.state.Authorization=='' || this.$store.state.Authorization==null){
           this.$router.push({
             path:'/login'
@@ -163,16 +167,19 @@
               name:'privatePool'
             })
           } else if (index == 2) {
+            this.$router.push({
+              name:'tf'
+            })
           } else if (index == 3) {
             this.$router.push({
               name:'enterprise'
             })
-            // this.$store.commit('set_clickIndex',0)
+              // this.$store.commit('set_clickIndex',4)
           } else if (index == 4) {
             this.$router.push({
               path:'/encapsulationindex'
             })
-            // this.$store.commit('set_clickIndex',0)
+             // this.$store.commit('set_clickIndex',5)
           }else if (index == 5) {
             // alert("点击了购买服务")
             this.$router.push({

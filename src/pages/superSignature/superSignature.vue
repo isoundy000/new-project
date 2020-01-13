@@ -69,7 +69,7 @@
           </div>
           <div class="advantageOneBigP">
             <p class="LaBel">特有机制 告别掉签</p>
-            <p>蒲公英采取的iOS超级签名和企业签名机制不同，掉签概率远低于传统企业签名</p>
+            <p>我们采取的iOS超级签名和企业签名机制不同，掉签概率远低于传统企业签名</p>
           </div>
         </div>
         <div class="advantageOne advantageBig_div">

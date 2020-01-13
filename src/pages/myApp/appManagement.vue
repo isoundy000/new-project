@@ -426,7 +426,7 @@
       },
       handleEdit(url,status){
         if(status==0){
-          this.$message.error('应用已下架');
+          this.$message.error('应用未上架');
         }else{
           this.isMask = true
           this.value=url

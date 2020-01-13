@@ -19,10 +19,10 @@
         </div>
         <div class="supplementThird13">
           <el-upload
-            :on-success="success"
             class="upload-demo"
             accept=".ipa"
-            :action="upload_url"
+            action="string"
+            :http-request="newuploadipa"
             :on-change="handleChange"
             >
             <div @click="upload" class="uploadBtn">
@@ -111,16 +111,31 @@
 
         </div>
         <div class="supplementThird2">
-          <p>付费下载</p>
+        <p>付费下载</p>
+        <div style="margin-top: 10px">
+          <el-switch
+            v-model="switchValue2"
+            active-color="#2F82FF"
+            inactive-color="#999999"
+            @change="swich2">
+          </el-switch>
+          <div v-if="fufei" style="margin-top: 15px">
+            <el-input  style="width: 50%" v-model="fufeiInput" placeholder="请输入内容"></el-input><span style="font-size: 16px;">元/次</span>
+          </div>
+        </div>
+
+      </div>
+        <div class="supplementThird2">
+          <p>openinstall</p>
           <div style="margin-top: 10px">
             <el-switch
-              v-model="switchValue2"
+              v-model="appkeyValue2"
               active-color="#2F82FF"
               inactive-color="#999999"
-              @change="swich2">
+              @change="appkeyswich2">
             </el-switch>
-            <div v-if="fufei" style="margin-top: 15px">
-              <el-input  style="width: 50%" v-model="fufeiInput" placeholder="请输入内容"></el-input><span style="font-size: 16px;">元/次</span>
+            <div v-if="appkey" style="margin-top: 15px">
+              <el-input  style="width: 50%" v-model="appkeyInput" placeholder="请输入appkey值"></el-input>
             </div>
           </div>
 
@@ -181,13 +196,14 @@
           <p>应用截图</p>
           <div class="thirdInput imgl" style="margin-top: 10px">
             <el-upload
+              :before-upload="beforeAvatarUpload"
               class="ss"
               :limit='limitCount'
-              :on-success="success2"
               :class="{hide:hideUpload}"
               :headers="headers"
               :file-list="imgList"
-              :action="newdeUrl"
+              action="string"
+              :http-request="newuploadimg"
               list-type="picture-card"
               :on-preview="handlePictureCardPreview"
               :on-remove="handleRemove"
@@ -287,6 +303,8 @@
         name: "updateApplication",
       data(){
           return{
+            ipaParsing:"",
+            is_overseas:'10',
             newbaseurl:'',
             newappchoose1:false,
             newappchoose2:false,
@@ -306,6 +324,7 @@
             choose:false,
             choose1:false,
             fufei:false,
+            appkey:false,
             newdeUrl:'',
             xianzhiInput:'',
             beizhuInput:'',
@@ -313,6 +332,7 @@
             thirdInput1:'',
             thirdInput2:'',
             fufeiInput:'',
+            appkeyInput:'',
             textarea:'',
             textarea1:'',
             limitCount:4,
@@ -326,6 +346,7 @@
             switchValue: true,
             switchValue1: false,
             switchValue2:false,
+            appkeyValue2:false,
             current: 0,
             active: 2,
             isSuper: false,
@@ -358,6 +379,180 @@
           }
       },
       methods:{
+        /*上传ipa包*/
+        newuploadipa(item){
+          let formData = new FormData()
+          console.log('上传ipa包接口-参数', item.file)
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.get(BASE_URL+'/api/app/init',config).then(res => {
+            console.log(res.data.data)
+            this.ipaParsing=res.data.data.ipaParsing
+            alert(res.data.data.is_overseas)
+            this.is_overseas=res.data.data.is_overseas
+            if(res.data.data.is_overseas=='10'){
+              let config1 = {
+                headers:{'token':localStorage.getItem('Authorization')}
+              };
+              axios.get(BASE_URL+'/api/common/ossToken',config1).then(res => {
+                this.dir=res.data.data.dir
+                formData.append('policy', res.data.data.policy)
+                formData.append('success_action_status', 200)
+                formData.append('signature', res.data.data.signature)
+                formData.append('OSSAccessKeyId', res.data.data.accessid)
+                formData.append('name',this.$md5(item.file.name.split(".ipa")[0])+'.ipa')
+                formData.append('key', res.data.data.dir+this.$md5(item.file.name.split(".ipa")[0])+'.ipa')
+                formData.append('file', item.file)
+                axios.post(res.data.data.host,formData,config1).then(res => {
+                  if(res.data.code==0){
+                    this.$message.error(res.data.msg);
+                  }else{
+                    let newData={
+                      path:this.dir+this.$md5(item.file.name.split(".ipa")[0])+'.ipa'
+                    }
+                    let config2 = {
+                      headers:{'token':localStorage.getItem('Authorization')}
+                    };
+                    axios.post(this.ipaParsing,newData,config2).then(res => {
+                      if(res.data.code==0){
+                        this.$message.error(res.data.msg);
+                      }else{
+                        // console.log(res.data)
+                        this.display_name=res.data.data.display_name
+                        this.path=res.data.data.url
+                        this.icon=res.data.data.domain+res.data.data.icon
+                        this.ipa_data_bak=res.data.data.ipa_data_bak
+                        this.package_name=res.data.data.package_name
+                        this.version_code=res.data.data.version_code
+                        this.version_name=res.data.data.version_name
+                        this.bundle_name=res.data.data.bundle_name
+                        this.filesize=res.data.data.filesize
+                        this.thirdInput=this.package_name
+                        this.thirdInput1=this.display_name
+                        this.thirdInput2=this.version_code
+                        this.icon1=res.data.data.icon
+                        this.active = 2
+                        this.isSuper = false
+                        this.isUpload = false
+                        this.isSupplement=true
+                      }
+                    }, err => {
+                      this.$message.error('上传ipa包失败');
+                    })
+                  }
+                }, err => {
+                  this.$message.error('上传ipa包失败');
+                })
+              }, err => {
+                // console.log(err)
+              })
+            }else{ //直传
+              formData.append('file', item.file)
+              let config2 = {
+                headers:{'token':localStorage.getItem('Authorization')}
+              };
+              axios.post(res.data.data.upload,formData,config2).then(res => {
+                if(res.data.code==0){
+                  this.$message.error(res.data.msg);
+                }else{
+                  console.log(res.data)
+                  this.display_name=res.data.data.app.display_name
+                  this.path=res.data.data.url
+                  this.icon=res.data.data.domain+res.data.data.app.icon
+                  this.ipa_data_bak=res.data.data.app.ipa_data_bak
+                  this.package_name=res.data.data.app.package_name
+                  this.version_code=res.data.data.app.version_code
+                  this.version_name=res.data.data.app.version_name
+                  this.bundle_name=res.data.data.app.bundle_name
+                  this.filesize=res.data.data.app.filesize
+                  this.thirdInput=this.package_name
+                  this.thirdInput1=this.display_name
+                  this.thirdInput2=this.version_code
+                  this.icon1=res.data.data.app.icon
+                  this.istuisong=true
+                  if(this.push_type==0){
+                    this.newchoose=true
+                    this.choose=false
+                    this.choose1=false
+                  }else if(this.push_type==1){
+                    this.newchoose=false
+                    this.choose=true
+                    this.choose1=false
+                  }else{
+                    this.newchoose=false
+                    this.choose=false
+                    this.choose1=true
+                  }
+                }
+              }, err => {
+                this.$message.error('上传ipa包失败');
+              })
+            }
+          }, err => {
+            this.$message.error('上传ipa包失败');
+          })
+        },
+        /*上传图片*/
+        newuploadimg(item){
+          let formData = new FormData()
+          console.log('上传图片接口-参数', item.file)
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.get(BASE_URL+'/api/common/ossToken',config).then(res => {
+            formData.append('policy', res.data.data.policy)
+            formData.append('success_action_status', 200)
+            formData.append('signature', res.data.data.signature)
+            formData.append('OSSAccessKeyId', res.data.data.accessid)
+            formData.append('name', item.file.name)
+            formData.append('key', res.data.data.dir+item.file.name)
+            formData.append('file', item.file)
+            this.img.push(res.data.data.dir+item.file.name)
+            console.log(this.img)
+            axios.post(res.data.data.host,formData,config).then(res => {
+
+            }, err => {
+              this.$message.error('上传图片失败');
+            })
+          }, err => {
+            // console.log(err)
+          })
+        },
+        /*删除图片*/
+        handleRemove(file, fileList) {
+          console.log(fileList)
+          this.img=[]
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.get(BASE_URL+'/api/common/ossToken',config).then(res => {
+            fileList.forEach((item)=>{
+              this.img.push(item.url)
+            })
+          }, err => {
+            // console.log(err)
+          })
+          this.hideUpload = file.length >= this.limitCount;
+        },
+
+        beforeAvatarUpload(file) {
+          const isJPG = (file.type === 'image/png'||file.type === 'image/jpg');
+
+          const isLt2M = file.size / 1024 / 1024 < 2;
+
+          if (!isJPG && isLt2M) {
+            this.$message.error('上传图标图片只能是PNG或者JPG格式!');
+          }
+
+          if (!isLt2M && isJPG) {
+            this.$message.error('上传图标图片大小不能超过 2MB!');
+          }
+          if (!isLt2M && !isJPG) {
+            this.$message.error('上传图标图片大小不能超过 2MB且格式只能是png或者jpg!');
+          }
+          return isJPG && isLt2M;
+        },
         /*app守护*/
         newapp1(){
           this.newappchoose1=true
@@ -435,56 +630,56 @@
           this.hideUpload = file.length >= this.limitCount;
         },
         /*上传图片成功*/
-        success2(response, file){
-          var img=file.response.data.url
-          this.img.push(img)
-        },
-        handleRemove(file, fileList) {
-          var newImg=[];
-          for(var i=0;i<fileList.length;i++){
-            newImg.push(fileList[i].url)
-            this.img=newImg
-          }
-          this.hideUpload = file.length >= this.limitCount;
-        },
+        // success2(response, file){
+        //   var img=file.response.data.url
+        //   this.img.push(img)
+        // },
+        // handleRemove(file, fileList) {
+        //   var newImg=[];
+        //   for(var i=0;i<fileList.length;i++){
+        //     newImg.push(fileList[i].url)
+        //     this.img=newImg
+        //   }
+        //   this.hideUpload = file.length >= this.limitCount;
+        // },
         handlePictureCardPreview(file) {
           this.dialogImageUrl = file.url;
           this.dialogVisible = true;
         },
-        success(response, file, fileList) {
-          this.disInput=false
-          // console.log(file)
-          this.display_name=file.response.data.app.display_name
-          this.path=file.response.data.url
-          this.icon=file.response.data.domain+file.response.data.app.icon
-          this.ipa_data_bak=file.response.data.app.ipa_data_bak
-          this.package_name=file.response.data.app.package_name
-          this.version_code=file.response.data.app.version_code
-          this.version_name=file.response.data.app.version_name
-          this.bundle_name=file.response.data.app.bundle_name
-          this.filesize=file.response.data.app.filesize
-          this.thirdInput=this.package_name
-          this.thirdInput1=this.display_name
-          this.thirdInput2=this.version_code
-          this.icon1=file.response.data.app.icon
-          this.img.push(file.response.data.app.img)
-          this.istuisong=true
-          if(this.push_type==0){
-            this.newchoose=true
-            this.choose=false
-            this.choose1=false
-          }else if(this.push_type==1){
-            this.newchoose=false
-            this.choose=true
-            this.choose1=false
-          }else{
-            this.newchoose=false
-            this.choose=false
-            this.choose1=true
-          }
-          // console.log(this.img)
-          // console.log('图片上传成功的时候的img集合',file.response.data.app.img)
-        },
+        // success(response, file, fileList) {
+        //   this.disInput=false
+        //   // console.log(file)
+        //   this.display_name=file.response.data.app.display_name
+        //   this.path=file.response.data.url
+        //   this.icon=file.response.data.domain+file.response.data.app.icon
+        //   this.ipa_data_bak=file.response.data.app.ipa_data_bak
+        //   this.package_name=file.response.data.app.package_name
+        //   this.version_code=file.response.data.app.version_code
+        //   this.version_name=file.response.data.app.version_name
+        //   this.bundle_name=file.response.data.app.bundle_name
+        //   this.filesize=file.response.data.app.filesize
+        //   this.thirdInput=this.package_name
+        //   this.thirdInput1=this.display_name
+        //   this.thirdInput2=this.version_code
+        //   this.icon1=file.response.data.app.icon
+        //   this.img.push(file.response.data.app.img)
+        //   this.istuisong=true
+        //   if(this.push_type==0){
+        //     this.newchoose=true
+        //     this.choose=false
+        //     this.choose1=false
+        //   }else if(this.push_type==1){
+        //     this.newchoose=false
+        //     this.choose=true
+        //     this.choose1=false
+        //   }else{
+        //     this.newchoose=false
+        //     this.choose=false
+        //     this.choose1=true
+        //   }
+        //   // console.log(this.img)
+        //   // console.log('图片上传成功的时候的img集合',file.response.data.app.img)
+        // },
         /*开关*/
         swich(){
           if(this.switchValue==false){
@@ -511,6 +706,14 @@
             this.fufeiInput=0
           }
           // console.log(this.fufeiInput)
+        },
+        appkeyswich2(){
+          if(this.appkeyValue2==true){
+            this.appkey=true
+          }else{
+            this.appkey=false
+            this.appkeyInput=''
+          }
         },
         newswich2(){
           if(this.newswitchValue==true){
@@ -553,11 +756,12 @@
             is_vaptcha:this.newswitchNum,
             // sub_domain:this.homevalue,
             is_flashback:this.shouhuApp,
+            is_overseas:this.is_overseas,
           }
           let config = {
             headers:{'token':localStorage.getItem('Authorization')}
           };
-          axios.post(this.newbaseurl,qs.stringify(data),config).then(res => {
+          axios.post(BASE_URL+'/api/app/update',qs.stringify(data),config).then(res => {
             // console.log(res.data.data)
             loading.close();
             if(res.data.code==0){
@@ -576,17 +780,6 @@
       },
       mounted(){
           this.ss=BASE_URL
-        let config88 = {
-          headers:{'token':localStorage.getItem('Authorization')}
-        };
-        axios.get(BASE_URL+'/api/app/init',config88).then(res => {
-          console.log(res.data.data)
-          this.upload_url=res.data.data.upload
-          this.newdeUrl=res.data.data.upload
-          this.newbaseurl=res.data.data.update
-        }, err => {
-          // console.log(err)
-        })
         // this.newdeUrl=BASE_URL+'/api/common/upload'
         // this.upload_url=UPLOAD_BASE_URL
         let data={
@@ -620,6 +813,15 @@
             this.switchValue2=false
             this.fufei=false
             this.fufeiInput=''
+          }
+          if(res.data.data.appkey!=''){
+            this.appkeyValue2=true
+            this.appkey=true
+            this.appkeyInput=res.data.data.appkey
+          }else{
+            this.appkeyValue2=false
+            this.appkey=false
+            this.appkeyInput=''
           }
           if(res.data.data.is_vaptcha==1){
             this.newswitchValue=true

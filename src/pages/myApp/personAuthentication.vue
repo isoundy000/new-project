@@ -110,7 +110,7 @@
           return{
             action: `${REN_BASE_URL}`,
             active: 1,
-            text: '应监管部门要求，网上发布APP必须进行实名登记， 我们采用了高于行业标准的要求来保障您的信息安全，为了进一步的保护您的个人信息，建议您在上传的实名信息中添加水印文字-仅供木木云实名认证使用。',
+            text: '应监管部门要求，网上发布APP必须进行实名登记， 我们采用了高于行业标准的要求来保障您的信息安全，为了进一步的保护您的个人信息，建议您在上传的实名信息中添加水印文字-仅供实名认证使用。',
             // msg: '请使用与账号信息中的手机号码一致的身份证信息提交认证。',
             form: {
               // email: '',
@@ -197,6 +197,7 @@
                   type: 'warning',
                   duration: 1500
                 });
+                loading.close();
                 return false;
               }
              json = {
@@ -215,16 +216,18 @@
                     type: 'warning',
                     duration: 1500
                   });
-                  return;
+                  loading.close();
+                }else{
+                  this.$message({
+                    message: '提交成功',
+                    type: 'success',
+                    duration: 1500
+                  });
+                  loading.close();
+                  this.$router.push('/examine');
+                  console.log(res.data)
                 }
-                this.$message({
-                  message: '提交成功',
-                  type: 'success',
-                  duration: 1500
-                });
-                loading.close();
-                this.$router.push('/examine');
-                console.log(res.data)
+
               }, err => {
                 console.log(err)
               })

@@ -10,6 +10,9 @@ import 'iview/dist/styles/iview.css';
 import $ from 'jquery'
 // 引入echarts
 import echarts from 'echarts'
+
+import md5 from 'js-md5';
+Vue.prototype.$md5 = md5;
 // 引入axios
 import axios from 'axios'
 // 挂载到vue原型链上

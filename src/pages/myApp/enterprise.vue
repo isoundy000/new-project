@@ -225,40 +225,40 @@
         confirmPass:'',
         userName:'',
         money:'',
-        title: [
-          // {
-          //   msg: '首页',
-          //   isclass: false
-          // },
-          {
-            msg: '超级签名',
-            isclass: false
-          },
-          // {
-          //   msg: '私有池',
-          //   isclass: false
-          // },
-          {
-            msg: '专属签名',
-            isclass: false
-          },
-          {
-            msg: '企业签名',
-            isclass: true
-          },
-          {
-            msg: '网页封装',
-            isclass: false
-          },
-          {
-            msg: '购买服务',
-            isclass: false
-          },
-          {
-            msg: '发布应用',
-            isclass: false
-          }
-        ],
+        // title: [
+        //   // {
+        //   //   msg: '首页',
+        //   //   isclass: false
+        //   // },
+        //   {
+        //     msg: '超级签名',
+        //     isclass: false
+        //   },
+        //   // {
+        //   //   msg: '私有池',
+        //   //   isclass: false
+        //   // },
+        //   {
+        //     msg: '专属签名',
+        //     isclass: false
+        //   },
+        //   {
+        //     msg: '企业签名',
+        //     isclass: true
+        //   },
+        //   {
+        //     msg: '网页封装',
+        //     isclass: false
+        //   },
+        //   {
+        //     msg: '购买服务',
+        //     isclass: false
+        //   },
+        //   {
+        //     msg: '发布应用',
+        //     isclass: false
+        //   }
+        // ],
         value: '',
         size: 150,
         input: '',

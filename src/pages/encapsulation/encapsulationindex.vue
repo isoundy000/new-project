@@ -141,40 +141,40 @@
             newPass:'',
             confirmPass:'',
             modal1:false,
-            title: [
-              // {
-              //   msg: '首页',
-              //   isclass: false
-              // },
-              {
-                msg: '超级签名',
-                isclass: false
-              },
-              {
-                msg: '私有池',
-                isclass: false
-              },
-              {
-                msg: '专属签名',
-                isclass: false
-              },
-              {
-                msg: '企业签名',
-                isclass: false
-              },
-              {
-                msg: '网页封装',
-                isclass: true
-              },
-              {
-                msg: '购买服务',
-                isclass: false
-              },
-              {
-                msg: '发布应用',
-                isclass: false
-              }
-            ],
+            // title: [
+            //   // {
+            //   //   msg: '首页',
+            //   //   isclass: false
+            //   // },
+            //   {
+            //     msg: '超级签名',
+            //     isclass: false
+            //   },
+            //   {
+            //     msg: '私有池',
+            //     isclass: false
+            //   },
+            //   {
+            //     msg: '专属签名',
+            //     isclass: false
+            //   },
+            //   {
+            //     msg: '企业签名',
+            //     isclass: false
+            //   },
+            //   {
+            //     msg: '网页封装',
+            //     isclass: true
+            //   },
+            //   {
+            //     msg: '购买服务',
+            //     isclass: false
+            //   },
+            //   {
+            //     msg: '发布应用',
+            //     isclass: false
+            //   }
+            // ],
             money:'',
             userName:''
           }

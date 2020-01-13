@@ -161,12 +161,16 @@
 
           const isLt2M = file.size / 1024 / 1024 < 2;
 
-          if (!isJPG) {
+
+          if (!isJPG && isLt2M) {
             this.$message.error('上传图标图片只能是PNG格式!');
           }
 
-          if (!isLt2M) {
+          if (!isLt2M && isJPG) {
             this.$message.error('上传图标图片大小不能超过 2MB!');
+          }
+          if (!isLt2M && !isJPG) {
+            this.$message.error('上传图标图片大小不能超过 2MB且格式只能是png!');
           }
           return isJPG && isLt2M;
         },
