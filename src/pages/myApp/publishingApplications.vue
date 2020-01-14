@@ -53,7 +53,9 @@
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
           </el-upload>
+
         </div>
+        <el-progress v-if="progressFlag == true" :percentage="progressPercent"></el-progress>
 
       </div>
       <div v-else-if="isSupplement" class="supplement">
@@ -355,6 +357,8 @@
     name: "publishingApplications",
     data() {
       return {
+        progressFlag:false, //进度条布尔值
+        progressPercent:0, //进度条默认值
         zhanghchoose1:true,
         zhanghchoose2:false,
         newappchoose1:false,
@@ -443,6 +447,7 @@
 
     },
     methods: {
+
       /*上传图片*/
       newuploadimg(item){
         let formData = new FormData()
@@ -518,6 +523,7 @@
       /*上传ipa包*/
       newuploadipa(item){
         let formData = new FormData()
+        var timeStamp=Math.round(new Date()/1000)
         console.log('上传ipa包接口-参数', item.file)
         let config = {
           headers:{'token':localStorage.getItem('Authorization')}
@@ -525,7 +531,7 @@
         axios.get(BASE_URL+'/api/app/init',config).then(res => {
           console.log(res.data.data)
           this.ipaParsing=res.data.data.ipaParsing
-          alert(res.data.data.is_overseas)
+        //  alert(res.data.data.is_overseas)
           this.is_overseas=res.data.data.is_overseas
           if(res.data.data.is_overseas=='10'){
             let config1 = {
@@ -537,15 +543,24 @@
               formData.append('success_action_status', 200)
               formData.append('signature', res.data.data.signature)
               formData.append('OSSAccessKeyId', res.data.data.accessid)
-              formData.append('name',this.$md5(item.file.name.split(".ipa")[0])+Math.round(new Date()/1000)+'.ipa')
-              formData.append('key', res.data.data.dir+this.$md5(item.file.name.split(".ipa")[0])+Math.round(new Date()/1000)+'.ipa')
+              formData.append('name',this.$md5(item.file.name.split(".ipa")[0])+timeStamp+'.ipa')
+              formData.append('key', res.data.data.dir+this.$md5(item.file.name.split(".ipa")[0])+timeStamp+'.ipa')
               formData.append('file', item.file)
-              axios.post(res.data.data.host,formData,config1).then(res => {
+              this.progressFlag=true
+              let config3 = {
+                headers:{'token':localStorage.getItem('Authorization')},
+                onUploadProgress: progressEvent => {
+                  // progressEvent.loaded:已上传文件大小
+                  // progressEvent.total:被上传文件的总大小
+                  this.progressPercent = Number((progressEvent.loaded / progressEvent.total * 100).toFixed(2))
+                }
+              };
+              axios.post(res.data.data.host,formData,config3).then(res => {
                 if(res.data.code==0){
                   this.$message.error(res.data.msg);
                 }else{
                   let newData={
-                    path:this.dir+this.$md5(item.file.name.split(".ipa")[0])+Math.round(new Date()/1000)+'.ipa'
+                    path:this.dir+this.$md5(item.file.name.split(".ipa")[0])+timeStamp+'.ipa'
                   }
                   let config2 = {
                     headers:{'token':localStorage.getItem('Authorization')}
@@ -1249,5 +1264,15 @@
   /*.is-process .el-step__line{*/
   /*border-color: #06B2B6;*/
   /*}*/
-
+.upload .el-progress{
+  width: 360px !important;
+  margin: 0 auto;
+}
+  .upload .el-progress-bar{
+    padding-right: 0!important;
+    margin-right: 0!important;
+  }
+  .upload .el-progress__text{
+    position: absolute !important;
+  }
 </style>

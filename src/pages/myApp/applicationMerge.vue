@@ -24,10 +24,11 @@
           class="upload-demo"
           drag
           :limit='limitCount'
-          :on-success="success"
+
           accept=".apk"
-          :action="upload_url"
-          :on-change="handleChange"
+          action="string"
+          :http-request="newuploadapk"
+
           multiple>
           <i class="el-icon-upload"></i>
           <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -51,24 +52,65 @@
         limitCount:1,
         downInput: '',
         tishi:false,
-        newdeUrl:''
+        newdeUrl:'',
+        apkvalue:'',
       }
     },
     methods:{
+      newuploadapk(item){
+        let formData = new FormData()
+        console.log('上传apk包接口-参数', item.file)
+        let config1 = {
+          headers:{'token':localStorage.getItem('Authorization')}
+        };
+        axios.get(BASE_URL+'/api/common/ossToken',config1).then(res => {
+          if(res.data.code==0){
+            this.$message.error(res.data.msg);
+          }else{
+            formData.append('policy', res.data.data.policy)
+            formData.append('success_action_status', 200)
+            formData.append('signature', res.data.data.signature)
+            formData.append('OSSAccessKeyId', res.data.data.accessid)
+            formData.append('name',this.$md5(item.file.name.split(".apk")[0])+Math.round(new Date()/1000)+'.apk')
+            formData.append('key', res.data.data.dir+this.$md5(item.file.name.split(".apk")[0])+Math.round(new Date()/1000)+'.apk')
+            formData.append('file', item.file)
+            this.apkvalue=res.data.data.dir+this.$md5(item.file.name.split(".apk")[0])+Math.round(new Date()/1000)+'.apk'
+            let config2 = {
+              headers:{'token':localStorage.getItem('Authorization')}
+            };
+            axios.post(res.data.data.host,formData,config2).then(res => {
+              if(res.data.code==0){
+                this.$message.error(res.data.msg);
+              }else{
+                this.downInput=this.apkvalue
+              }
+            }, err => {
+              this.$message.error('上传apk包失败');
+            })
+
+
+
+          }
+        }, err => {
+          this.$message.error('上传apk包失败');
+        })
+
+
+      },
       bangzhu(){
         this.tishi=!this.tishi
       },
       helpleave(){
         this.tishi=false
       },
-      /*上传文件*/
-      handleChange(file, fileList) {
-        this.fileList = fileList.slice(-3);
-      },
-      success(response, file, fileList) {
-        // console.log(response.data)
-        this.downInput=response.data.url
-      },
+      // /*上传文件*/
+      // handleChange(file, fileList) {
+      //   this.fileList = fileList.slice(-3);
+      // },
+      // success(response, file, fileList) {
+      //   // console.log(response.data)
+      //   this.downInput=response.data.url
+      // },
       preservation(){
         let data={
           app_id:this.$route.query.id,

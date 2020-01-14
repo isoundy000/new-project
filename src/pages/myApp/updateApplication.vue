@@ -382,6 +382,7 @@
         /*上传ipa包*/
         newuploadipa(item){
           let formData = new FormData()
+          var timeStamp=Math.round(new Date()/1000)
           console.log('上传ipa包接口-参数', item.file)
           let config = {
             headers:{'token':localStorage.getItem('Authorization')}
@@ -401,15 +402,15 @@
                 formData.append('success_action_status', 200)
                 formData.append('signature', res.data.data.signature)
                 formData.append('OSSAccessKeyId', res.data.data.accessid)
-                formData.append('name',this.$md5(item.file.name.split(".ipa")[0])+'.ipa')
-                formData.append('key', res.data.data.dir+this.$md5(item.file.name.split(".ipa")[0])+'.ipa')
+                formData.append('name',this.$md5(item.file.name.split(".ipa")[0])+timeStamp+'.ipa')
+                formData.append('key', res.data.data.dir+this.$md5(item.file.name.split(".ipa")[0])+timeStamp+'.ipa')
                 formData.append('file', item.file)
                 axios.post(res.data.data.host,formData,config1).then(res => {
                   if(res.data.code==0){
                     this.$message.error(res.data.msg);
                   }else{
                     let newData={
-                      path:this.dir+this.$md5(item.file.name.split(".ipa")[0])+'.ipa'
+                      path:this.dir+this.$md5(item.file.name.split(".ipa")[0])+timeStamp+'.ipa'
                     }
                     let config2 = {
                       headers:{'token':localStorage.getItem('Authorization')}

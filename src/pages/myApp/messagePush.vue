@@ -144,11 +144,11 @@
               <p class="mask4text">证书配置</p>
               <el-upload
                 :limit='limitCount'
-                :on-success="success"
                 class="upload-demo"
                 accept=".p12"
                 :on-remove="handleRemove"
-                :action="newdeUrl"
+                action="string"
+                :http-request="newuploadp12"
                 :on-change="handleChange"
               >
                 <div  class="uploadBtn">
@@ -297,6 +297,47 @@
           }
       },
       methods:{
+        newuploadp12(item){
+          let formData = new FormData()
+          console.log('上传p12包接口-参数', item.file)
+          let config1 = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.get(BASE_URL+'/api/common/ossToken',config1).then(res => {
+            if(res.data.code==0){
+              this.$message.error(res.data.msg);
+            }else{
+              formData.append('policy', res.data.data.policy)
+              formData.append('success_action_status', 200)
+              formData.append('signature', res.data.data.signature)
+              formData.append('OSSAccessKeyId', res.data.data.accessid)
+              formData.append('name',this.$md5(item.file.name.split(".p12")[0])+Math.round(new Date()/1000)+'.p12')
+              formData.append('key', res.data.data.dir+this.$md5(item.file.name.split(".p12")[0])+Math.round(new Date()/1000)+'.p12')
+              formData.append('file', item.file)
+              this.cert_url=res.data.data.dir+this.$md5(item.file.name.split(".p12")[0])+Math.round(new Date()/1000)+'.p12'
+              let config2 = {
+                headers:{'token':localStorage.getItem('Authorization')}
+              };
+              axios.post(res.data.data.host,formData,config2).then(res => {
+                if(res.data.code==0){
+                  this.$message.error(res.data.msg);
+                }else{
+                  console.log(res.data)
+                  //this.downInput=this.apkvalue
+                }
+              }, err => {
+                this.$message.error('上传p12包失败');
+              })
+
+
+
+            }
+          }, err => {
+            this.$message.error('上传p12包失败');
+          })
+
+
+        },
           /*密码验证按钮*/
         yanBtn(){
           this.mask4=false
@@ -606,29 +647,7 @@
           // console.log(file, fileList);
           this.cert_url=''
         },
-        /*上传p12文件成功返回的参数*/
-        success(response, file, fileList) {
-          // console.log(response.data.url)
-          this.cert_url=response.data.url
-          // this.disInput=false
-          // console.log(file)
-          // this.display_name=file.response.data.app.display_name
-          // this.path=file.response.data.url
-          // this.icon=file.response.data.domain+file.response.data.app.icon
-          // this.ipa_data_bak=file.response.data.app.ipa_data_bak
-          // this.package_name=file.response.data.app.package_name
-          // this.version_code=file.response.data.app.version_code
-          // this.version_name=file.response.data.app.version_name
-          // this.bundle_name=file.response.data.app.bundle_name
-          // this.filesize=file.response.data.app.filesize
-          // this.thirdInput=this.package_name
-          // this.thirdInput1=this.display_name
-          // this.thirdInput2=this.version_code
-          // this.icon1=file.response.data.app.icon
-          // this.img.push(file.response.data.app.img)
-          // console.log(this.img)
-          // console.log('图片上传成功的时候的img集合',file.response.data.app.img)
-        },
+
         /*上传文件*/
         handleChange(file, fileList) {
           this.fileList = fileList.slice(-3);

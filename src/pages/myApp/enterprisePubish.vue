@@ -24,15 +24,16 @@
         <div class="uploadDiv">
           <el-upload
             class="upload-demo"
-            :on-success="success"
             drag
             accept=".ipa"
-            :action="upload_url"
+            action="string"
+            :http-request="newuploadipa"
             multiple>
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
           </el-upload>
         </div>
+        <el-progress v-if="progressFlag == true" :percentage="progressPercent"></el-progress>
 
       </div>
       <div v-else-if="isSupplement" class="supplement">
@@ -90,10 +91,10 @@
             <el-upload
               class="ss"
               :limit='limitCount'
-              :on-success="success2"
               :class="{hide:hideUpload}"
               :headers="headers"
-              :action="newdeUrl"
+              action="string"
+              :http-request="newuploadimg"
               list-type="picture-card"
               :on-preview="handlePictureCardPreview"
               :on-remove="handleRemove"
@@ -148,6 +149,8 @@
     name: "publishingApplications",
     data() {
       return {
+        progressFlag:false, //进度条布尔值
+        progressPercent:0, //进度条默认值
         upload_url:'',
         tishi:false,
         tishi1:false,
@@ -202,13 +205,144 @@
         judgeMoney:'',
         gengxing:1,
         newState:1,
-        type:1
+        type:1,
+        dir:'',
+        ipaParsing:'',
       }
     },
     computed: {
 
     },
     methods: {
+      /*上传ipa包*/
+      newuploadipa(item){
+        let formData = new FormData()
+        var timeStamp=Math.round(new Date()/1000)
+        console.log('上传ipa包接口-参数', item.file)
+        let config = {
+          headers:{'token':localStorage.getItem('Authorization')}
+        };
+        axios.get(BASE_URL+'/api/common/ossToken',config).then(res => {
+          this.dir=res.data.data.dir
+          formData.append('policy', res.data.data.policy)
+          formData.append('success_action_status', 200)
+          formData.append('signature', res.data.data.signature)
+          formData.append('OSSAccessKeyId', res.data.data.accessid)
+          formData.append('name',this.$md5(item.file.name.split(".ipa")[0])+timeStamp+'.ipa')
+          formData.append('key', res.data.data.dir+this.$md5(item.file.name.split(".ipa")[0])+timeStamp+'.ipa')
+          formData.append('file', item.file)
+          this.progressFlag=true
+          let config1 = {
+            headers:{'token':localStorage.getItem('Authorization')},
+            onUploadProgress: progressEvent => {
+              // progressEvent.loaded:已上传文件大小
+              // progressEvent.total:被上传文件的总大小
+              this.progressPercent = Number((progressEvent.loaded / progressEvent.total * 100).toFixed(2))
+            }
+          };
+          axios.post(res.data.data.host,formData,config1).then(res => {
+            console.log(res.data)
+            if(res.data.code==0){
+              this.$message.error(res.data.msg);
+            }else{
+              let newData={
+                path:this.dir+this.$md5(item.file.name.split(".ipa")[0])+timeStamp+'.ipa'
+              }
+              let config2 = {
+                headers:{'token':localStorage.getItem('Authorization')}
+              };
+              axios.post(BASE_URL+'/api/common/ipaParsing',newData,config2).then(res => {
+                if(res.data.code==0){
+                  this.$message.error(res.data.msg);
+                }else{
+                  console.log(res.data.data)
+                  this.display_name=res.data.data.display_name
+                  this.path=res.data.data.url
+                  this.icon=res.data.data.domain+res.data.data.icon
+                  this.ipa_data_bak=res.data.data.ipa_data_bak
+                  this.package_name=res.data.data.package_name
+                  this.version_code=res.data.data.version_code
+                  this.version_name=res.data.data.version_name
+                  this.bundle_name=res.data.data.bundle_name
+                  this.filesize=res.data.data.filesize
+                  this.thirdInput=this.package_name
+                  this.thirdInput1=this.display_name
+                  this.thirdInput2=this.version_code
+                  this.icon1=res.data.data.icon
+                  this.active = 1
+                  this.isSuper = false
+                  this.isUpload = false
+                  this.isSupplement=true
+                }
+              }, err => {
+                this.$message.error('上传ipa包失败');
+              })
+            }
+          }, err => {
+            this.$message.error('上传ipa包失败');
+          })
+        }, err => {
+          // console.log(err)
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      },
+      /*上传图片*/
+      newuploadimg(item){
+        let formData = new FormData()
+        console.log('上传图片接口-参数', item.file)
+        let config = {
+          headers:{'token':localStorage.getItem('Authorization')}
+        };
+        axios.get(BASE_URL+'/api/common/ossToken',config).then(res => {
+          console.log(item.file.name)
+          formData.append('policy', res.data.data.policy)
+          formData.append('success_action_status', 200)
+          formData.append('signature', res.data.data.signature)
+          formData.append('OSSAccessKeyId', res.data.data.accessid)
+          formData.append('name', item.file.name)
+          formData.append('key', res.data.data.dir+item.file.name)
+          formData.append('file', item.file)
+          this.img.push(res.data.data.dir+item.file.name)
+          console.log(this.img)
+          axios.post(res.data.data.host,formData,config).then(res => {
+
+          }, err => {
+            this.$message.error('上传图片失败');
+          })
+        }, err => {
+          // console.log(err)
+        })
+      },
+      /*删除图片*/
+      handleRemove(file, fileList) {
+        this.img=[]
+        let config = {
+          headers:{'token':localStorage.getItem('Authorization')}
+        };
+        axios.get(BASE_URL+'/api/common/ossToken',config).then(res => {
+          fileList.forEach((item)=>{
+            this.img.push(res.data.data.dir+item.name)
+          })
+        }, err => {
+          // console.log(err)
+        })
+        this.hideUpload = file.length >= this.limitCount;
+      },
+
+
       upload(){
         let config = {
           headers:{'token':localStorage.getItem('Authorization')}
@@ -244,41 +378,8 @@
       next() {
         if (this.active++ > 2) this.active = 0;
       },
-      /*上传图片成功*/
-      success2(response, file){
-        var img=file.response.data.url
-        this.img.push(img)
-      },
-      success(response, file, fileList) {
-        // console.log(file.response)
-        // console.log(file.response.msg)
-        if(file.response.code==1){
-          this.display_name=file.response.data.app.display_name
-          this.path=file.response.data.url
-          this.icon=file.response.data.domain+file.response.data.app.icon
-          this.ipa_data_bak=file.response.data.app.ipa_data_bak
-          this.package_name=file.response.data.app.package_name
-          this.version_code=file.response.data.app.version_code
-          this.version_name=file.response.data.app.version_name
-          this.bundle_name=file.response.data.app.bundle_name
-          this.filesize=file.response.data.app.filesize
-          this.thirdInput=this.package_name
-          this.thirdInput1=this.display_name
-          this.thirdInput2=this.version_code
-          this.icon1=file.response.data.app.icon
-          this.active = 1
-          this.isSuper = false
-          this.isUpload = false
-          this.isSupplement=true
-        }else{
-          this.$message.error(file.response.msg);
-        }
-      },
-      handleRemove(file, fileList) {
-        // console.log(file, fileList);
-        this.hideUpload = file.length >= this.limitCount;
 
-      },
+
       handlePictureCardPreview(file) {
         // console.log(file)
         this.dialogImageUrl = file.url;
@@ -722,7 +823,17 @@
   .is-wait div:nth-child(2) {
     background-color: white !important;
   }
-
+  .upload .el-progress{
+    width: 360px !important;
+    margin: 0 auto;
+  }
+  .upload .el-progress-bar{
+    padding-right: 0!important;
+    margin-right: 0!important;
+  }
+  .upload .el-progress__text{
+    position: absolute !important;
+  }
   /*.is-process .el-step__line{*/
   /*border-color: #06B2B6;*/
   /*}*/

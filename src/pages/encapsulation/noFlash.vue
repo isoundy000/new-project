@@ -67,7 +67,8 @@
                 :on-success="success2"
                 :class="{hide:hideUpload}"
                 :headers="headers"
-                :action="newdeUrl"
+                action="string"
+                :http-request="newuploadimg"
                 list-type="picture-card"
                 :file-list="imgList"
                 :on-preview="handlePictureCardPreview"
@@ -267,6 +268,54 @@ border-radius:4px;">iOS无闪退版</p>
           }
       },
       methods:{
+        /*上传logo图片*/
+        newuploadimg(item){
+          let formData = new FormData()
+          console.log('上传图片接口-参数', item.file)
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.get(BASE_URL+'/api/common/ossToken',config).then(res => {
+            console.log(item.file.name)
+            formData.append('policy', res.data.data.policy)
+            formData.append('success_action_status', 200)
+            formData.append('signature', res.data.data.signature)
+            formData.append('OSSAccessKeyId', res.data.data.accessid)
+            formData.append('name', item.file.name)
+            formData.append('key', res.data.data.dir+item.file.name)
+            formData.append('file', item.file)
+            this.img=res.data.data.dir+item.file.name
+            this.storageImg=res.data.data.dir+item.file.name
+            console.log(this.img)
+            this.verification()
+            axios.post(res.data.data.host,formData,config).then(res => {
+
+            }, err => {
+              this.$message.error('上传图片失败');
+            })
+          }, err => {
+            // console.log(err)
+          })
+
+        },
+        /*删除logo图片*/
+        handleRemove(file, fileList) {
+          this.img=''
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.get(BASE_URL+'/api/common/ossToken',config).then(res => {
+            fileList.forEach((item)=>{
+              this.img=res.data.data.dir+item.name
+            })
+          }, err => {
+            // console.log(err)
+          })
+          this.hideUpload = file.length >= this.limitCount;
+          this.verification()
+        },
+
+
           /*应用名称输入事件*/
         appnameInputEvent(){
           this.verification()

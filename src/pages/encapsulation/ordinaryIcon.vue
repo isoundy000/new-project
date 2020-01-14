@@ -7,13 +7,12 @@
         class="ss"
         :before-upload="beforeAvatarUpload"
         :limit='limitCount'
-        :on-success="success"
         :class="{hide:hideUpload}"
         :headers="headers"
-        :action="newdeUrl"
+        action="string"
+        :http-request="newuploadimg"
         list-type="picture-card"
         :file-list="imgList"
-        :on-preview="handlePictureCardPreview"
         :on-remove="handleRemove"
         :on-change="deleteL">
         <i class="el-icon-plus"></i>
@@ -34,10 +33,10 @@
         class="ss"
         :before-upload="beforeAvatarUpload"
         :limit='limitCount'
-        :on-success="success1"
         :class="{hide:hideUpload1}"
         :headers="headers"
-        :action="newdeUrl"
+        action="string"
+        :http-request="newuploadimg1"
         list-type="picture-card"
         :file-list="imgList1"
         :on-preview="handlePictureCardPreview1"
@@ -58,10 +57,10 @@
         class="ss"
         :before-upload="beforeAvatarUpload"
         :limit='limitCount'
-        :on-success="success1"
         :class="{hide:hideUpload1}"
         :headers="headers"
-        :action="newdeUrl"
+        action="string"
+        :http-request="newuploadimg1"
         list-type="picture-card"
         :file-list="imgList1"
         :on-preview="handlePictureCardPreview1"
@@ -156,6 +155,97 @@
         }
       },
       methods:{
+        /*上传logo图片*/
+        newuploadimg(item){
+          let formData = new FormData()
+          console.log('上传图片接口-参数', item.file)
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.get(BASE_URL+'/api/common/ossToken',config).then(res => {
+            console.log(item.file.name)
+            formData.append('policy', res.data.data.policy)
+            formData.append('success_action_status', 200)
+            formData.append('signature', res.data.data.signature)
+            formData.append('OSSAccessKeyId', res.data.data.accessid)
+            formData.append('name', item.file.name)
+            formData.append('key', res.data.data.dir+item.file.name)
+            formData.append('file', item.file)
+            this.ordinaryIconLogoimg=res.data.data.dir+item.file.name
+            console.log(this.ordinaryIconLogoimg)
+            this.verification()
+            axios.post(res.data.data.host,formData,config).then(res => {
+
+            }, err => {
+              this.$message.error('上传图片失败');
+            })
+          }, err => {
+            // console.log(err)
+          })
+
+        },
+        /*删除logo图片*/
+        handleRemove(file, fileList) {
+          this.ordinaryIconLogoimg=''
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.get(BASE_URL+'/api/common/ossToken',config).then(res => {
+            fileList.forEach((item)=>{
+              this.ordinaryIconLogoimg=res.data.data.dir+item.name
+            })
+          }, err => {
+            // console.log(err)
+          })
+          this.hideUpload = file.length >= this.limitCount;
+          this.verification()
+        },
+
+        /*上传启动图图片*/
+        newuploadimg1(item){
+          let formData = new FormData()
+          console.log('上传图片接口-参数', item.file)
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.get(BASE_URL+'/api/common/ossToken',config).then(res => {
+            console.log(item.file.name)
+            formData.append('policy', res.data.data.policy)
+            formData.append('success_action_status', 200)
+            formData.append('signature', res.data.data.signature)
+            formData.append('OSSAccessKeyId', res.data.data.accessid)
+            formData.append('name', item.file.name)
+            formData.append('key', res.data.data.dir+item.file.name)
+            formData.append('file', item.file)
+            this.ordinaryIconStartgoimg=res.data.data.dir+item.file.name
+            this.verification()
+            console.log(this.ordinaryIconStartgoimg)
+            axios.post(res.data.data.host,formData,config).then(res => {
+
+            }, err => {
+              this.$message.error('上传图片失败');
+            })
+          }, err => {
+            // console.log(err)
+          })
+
+        },
+        /*删除启动图图片*/
+        handleRemove1(file, fileList) {
+          this.ordinaryIconStartgoimg=''
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.get(BASE_URL+'/api/common/ossToken',config).then(res => {
+            fileList.forEach((item)=>{
+              this.ordinaryIconStartgoimg=res.data.data.dir+item.name
+            })
+          }, err => {
+            // console.log(err)
+          })
+          this.hideUpload1 = file.length >= this.limitCount;
+          this.verification()
+        },
         beforeAvatarUpload(file) {
           const isJPG = (file.type === 'image/png');
 
@@ -174,52 +264,27 @@
           }
           return isJPG && isLt2M;
         },
-        /*上传图片成功*/
-        success(response, file){
-          // console.log(response.data.domain+response.data.url)
-          this.ordinaryIconLogoimg=file.response.data.url
-          // console.log(this.ordinaryIconLogoimg)
-          this.verification()
-          //this.img.push(img)
-        },
+
         /*上传图片触发的方法*/
         deleteL(response, file, fileList){
           this.hideUpload = file.length >= this.limitCount;
           this.verification()
         },
-        handleRemove(file, fileList) {
-          // console.log(file, fileList);
-          this.ordinaryIconLogoimg=''
-          this.hideUpload = file.length >= this.limitCount;
-          this.verification()
-        },
-        handlePictureCardPreview(file) {
-          // console.log(file)
-          this.dialogImageUrl = file.url;
-          // console.log(this.dialogImageUrl)
-          this.ordinaryIconLogoimg=file.url
-          this.dialogVisible = true;
-        },
-        /*启动页*/
-        /*上传图片成功*/
-        success1(response, file){
-          // console.log(response.data.domain+response.data.url)
-          this.ordinaryIconStartgoimg=file.response.data.url
-          // console.log(this.ordinaryIconStartgoimg)
-          this.verification()
-          //this.img.push(img)
-        },
+
+        // handlePictureCardPreview(file) {
+        //    console.log(file)
+        //   this.dialogImageUrl = file.url;
+        //   // console.log(this.dialogImageUrl)
+        //   this.ordinaryIconLogoimg=file.url
+        //   this.dialogVisible = true;
+        // },
+
         /*上传图片触发的方法*/
         deleteL1(response, file, fileList){
           this.hideUpload1 = file.length >= 1;
           this.verification()
         },
-        handleRemove1(file, fileList) {
-          // console.log(file, fileList);
-          this.ordinaryIconStartgoimg=''
-          this.hideUpload1 = file.length >= 1;
-          this.verification()
-        },
+
         handlePictureCardPreview1(file) {
           // console.log(file)
           this.dialogImageUrl1 = file.url;

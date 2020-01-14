@@ -42,45 +42,39 @@
         <div class="contact-hold">
           <el-upload
             class="avatar-uploader"
-            :action="action"
             accept='.jpg,.png'
+            action="string"
+            :http-request="newuploadfrontimg"
             :show-file-list="false"
-            :on-success="handleIdentityholdSuccess"
             :before-upload="beforeIdentityholdUpload">
             <img v-if="identityfront" :src="identityfront" class="contact-avatar">
-            <div v-else class="avatar-uploader-icon">
-              <i class="el-icon-circle-plus"></i>
-            </div>
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
           <p>上传身份证正面照片</p>
         </div>
         <div class="contact-hold">
           <el-upload
             class="avatar-uploader"
-            :action="action"
             accept='.jpg,.png'
+            action="string"
+            :http-request="newuploadbackimg"
             :show-file-list="false"
-            :on-success="handleIdentitybackSuccess"
             :before-upload="beforeIdentitybackUpload">
             <img v-if="identityback" :src="identityback" class="contact-avatar">
-            <div v-else class="avatar-uploader-icon">
-              <i class="el-icon-circle-plus"></i>
-            </div>
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
           <p>上传身份证反面照片</p>
         </div>
         <div class="contact-hold">
           <el-upload
             class="avatar-uploader"
-            :action="action"
             accept='.jpg,.png'
+            action="string"
+            :http-request="newuploadholdimg"
             :show-file-list="false"
-            :on-success="handleidentityholdSuccess"
             :before-upload="beforeidentityholdUpload">
-            <img v-if="identityhold" :src="identityhold" class="contact-avatar">
-            <div v-else class="avatar-uploader-icon">
-              <i class="el-icon-circle-plus"></i>
-            </div>
+            <img v-if="identityhold  " :src="identityhold  " class="contact-avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
           <p>上传手持身份证照片</p>
         </div>
@@ -108,6 +102,15 @@
         name: "personAuthentication",
       data(){
           return{
+            imageUrl:'',
+            limitCount:1,
+            hideUpload: false,
+            dialogImageUrl: '',
+            dialogVisible: false,
+            headers:{
+              "token":localStorage.getItem('Authorization') // 直接从本地获取token就行
+
+            },
             action: `${REN_BASE_URL}`,
             active: 1,
             text: '应监管部门要求，网上发布APP必须进行实名登记， 我们采用了高于行业标准的要求来保障您的信息安全，为了进一步的保护您的个人信息，建议您在上传的实名信息中添加水印文字-仅供实名认证使用。',
@@ -141,6 +144,78 @@
           // this.phone = localStorage.getItem('newmobile');
       },
       methods:{
+        /*上传图片*/
+        newuploadfrontimg(item){
+          let formData = new FormData()
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.get(BASE_URL+'/api/common/ossToken',config).then(res => {
+            formData.append('policy', res.data.data.policy)
+            formData.append('success_action_status', 200)
+            formData.append('signature', res.data.data.signature)
+            formData.append('OSSAccessKeyId', res.data.data.accessid)
+            formData.append('name', item.file.name)
+            formData.append('key', res.data.data.dir+item.file.name)
+            formData.append('file', item.file)
+            this.identityfront = URL.createObjectURL(item.file);
+            this.form.identityfront = res.data.data.dir+item.file.name
+            axios.post(res.data.data.host,formData,config).then(res => {
+            }, err => {
+              this.$message.error('上传图片失败');
+            })
+          }, err => {
+            // console.log(err)
+          })
+        },
+        newuploadbackimg(item){
+          let formData = new FormData()
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.get(BASE_URL+'/api/common/ossToken',config).then(res => {
+            formData.append('policy', res.data.data.policy)
+            formData.append('success_action_status', 200)
+            formData.append('signature', res.data.data.signature)
+            formData.append('OSSAccessKeyId', res.data.data.accessid)
+            formData.append('name', item.file.name)
+            formData.append('key', res.data.data.dir+item.file.name)
+            formData.append('file', item.file)
+            this.identityback = URL.createObjectURL(item.file);
+            this.form.identityback = res.data.data.dir+item.file.name
+            axios.post(res.data.data.host,formData,config).then(res => {
+            }, err => {
+              this.$message.error('上传图片失败');
+            })
+          }, err => {
+            // console.log(err)
+          })
+        },
+        newuploadholdimg(item){
+          let formData = new FormData()
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.get(BASE_URL+'/api/common/ossToken',config).then(res => {
+            console.log(item.file.name)
+            formData.append('policy', res.data.data.policy)
+            formData.append('success_action_status', 200)
+            formData.append('signature', res.data.data.signature)
+            formData.append('OSSAccessKeyId', res.data.data.accessid)
+            formData.append('name', item.file.name)
+            formData.append('key', res.data.data.dir+item.file.name)
+            formData.append('file', item.file)
+            this.identityhold = URL.createObjectURL(item.file);
+            this.form.identityhold = res.data.data.dir+item.file.name
+            axios.post(res.data.data.host,formData,config).then(res => {
+            }, err => {
+              this.$message.error('上传图片失败');
+            })
+          }, err => {
+            // console.log(err)
+          })
+        },
+
         //验证码定时器
         timesOut() {
           let i = 60;
@@ -247,10 +322,10 @@
          * @param res
          * @param file
          */
-        handleIdentityholdSuccess(res, file) {
-          this.form.identityfront = file.response.data.url;
-          this.identityfront = URL.createObjectURL(file.raw);
-        },
+        // handleIdentityholdSuccess(res, file) {
+        //   this.form.identityfront = file.response.data.url;
+        //   this.identityfront = URL.createObjectURL(file.raw);
+        // },
         beforeIdentityholdUpload(file) {
           const isLt2M = file.size / 1024 / 1024 < 5;
           if (!isLt2M) {
@@ -270,6 +345,9 @@
         handleIdentitybackSuccess(res, file) {
           this.form.identityback = file.response.data.url;
           this.identityback = URL.createObjectURL(file.raw);
+          console.log(this.form.identityback)
+          console.log(this.identityback)
+          console.log(file.raw)
         },
         beforeIdentitybackUpload(file) {
           const isLt2M = file.size / 1024 / 1024 < 5;
@@ -288,8 +366,8 @@
          * @param file
          */
         handleidentityholdSuccess(res, file) {
-          this.form.identityhold = file.response.data.url;
-          this.identityhold = URL.createObjectURL(file.raw);
+          // this.form.identityhold = file.response.data.url;
+          // this.identityhold = URL.createObjectURL(file.raw);
         },
         beforeidentityholdUpload(file) {
           const isLt2M = file.size / 1024 / 1024 < 5;
