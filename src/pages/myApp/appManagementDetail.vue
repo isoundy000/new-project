@@ -227,11 +227,13 @@
   }
   .header_title{
     width: 100%;
+    max-width: 1482px;
     background-color: #F7F7F7;
     display: flex;
   }
   .header_title p{
-    width: 115px;
+    width: 100%;
+    max-width: 115px;
     height: 50px;
     text-align: center;
     font-family:Microsoft YaHei;

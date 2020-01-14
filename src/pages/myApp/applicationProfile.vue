@@ -5,7 +5,7 @@
       <div class="firstDivOne">
         <img :src="list.icon" alt="">
         <div>
-          <p>{{list.name}} <span style="font-weight: bold">{{state}}</span></p>
+          <p style="overflow:hidden;text-overflow:ellipsis;white-space: nowrap;width: 250px">{{list.name}} <span style="font-weight: bold">{{state}}</span></p>
           <p>{{list.version_code}}</p>
         </div>
       </div>
@@ -125,7 +125,8 @@
     position: relative;
   }
   .applicationProfileDiv{
-    width: 93%;
+    width: 100%;
+    max-width: 1400px;
     height: auto;
     margin: 30px auto 0 auto;
   }
@@ -151,7 +152,8 @@
    margin-left: 30px;
   }
   .firstDivOne{
-    width: 350px;
+    width:100%;
+    max-width: 350px;
     display: flex;
     align-items: center;
   }
@@ -164,12 +166,18 @@
     margin-left: 10px;
   }
   .firstDivTwo{
+    width: 100%;
+    max-width: 600px;
     display: flex;
     align-items: center;
     margin-left: 60px;
   }
+  .firstDivTwo p{
+    width: 100%;
+    max-width: 60px;
+  }
   .firstDivTwo div{
-    width: 600px;
+    width: 90%;
     height: 45px;
     line-height: 45px;
     padding-left: 10px;

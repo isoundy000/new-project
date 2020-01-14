@@ -59,6 +59,7 @@
     methods:{
       newuploadapk(item){
         let formData = new FormData()
+        var timeStamp=Math.round(new Date()/1000)
         console.log('上传apk包接口-参数', item.file)
         let config1 = {
           headers:{'token':localStorage.getItem('Authorization')}
@@ -71,10 +72,10 @@
             formData.append('success_action_status', 200)
             formData.append('signature', res.data.data.signature)
             formData.append('OSSAccessKeyId', res.data.data.accessid)
-            formData.append('name',this.$md5(item.file.name.split(".apk")[0])+Math.round(new Date()/1000)+'.apk')
-            formData.append('key', res.data.data.dir+this.$md5(item.file.name.split(".apk")[0])+Math.round(new Date()/1000)+'.apk')
+            formData.append('name',this.$md5(item.file.name.split(".apk")[0])+timeStamp+'.apk')
+            formData.append('key', res.data.data.dir+this.$md5(item.file.name.split(".apk")[0])+timeStamp+'.apk')
             formData.append('file', item.file)
-            this.apkvalue=res.data.data.dir+this.$md5(item.file.name.split(".apk")[0])+Math.round(new Date()/1000)+'.apk'
+            this.apkvalue=res.data.data.dir+this.$md5(item.file.name.split(".apk")[0])+timeStamp+'.apk'
             let config2 = {
               headers:{'token':localStorage.getItem('Authorization')}
             };

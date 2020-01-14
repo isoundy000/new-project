@@ -303,6 +303,7 @@
         name: "updateApplication",
       data(){
           return{
+            newnewIMG:[],
             ipaParsing:"",
             is_overseas:'10',
             newbaseurl:'',
@@ -522,18 +523,80 @@
         },
         /*删除图片*/
         handleRemove(file, fileList) {
-          console.log(fileList)
-          this.img=[]
-          let config = {
-            headers:{'token':localStorage.getItem('Authorization')}
-          };
-          axios.get(BASE_URL+'/api/common/ossToken',config).then(res => {
-            fileList.forEach((item)=>{
-              this.img.push(item.url)
-            })
-          }, err => {
-            // console.log(err)
-          })
+          console.log(fileList.length)
+          // console.log(fileList)
+          //
+          // console.log(file)
+
+
+          // if(fileList.length!=0){
+          //
+          //
+          //
+          //   this.img=[]
+          //   // for(var i=0;i<fileList.length;i++){
+          //   //   var newobj={}
+          //   //   newobj.name=i+''
+          //   //   newobj.url=fileList[i].url
+          //   //   var iimmg=[]
+          //   //   iimmg.push(newobj.url)
+          //   //   console.log(iimmg)
+          //   //
+          //   //   console.log(this.img)
+          //   // }
+          //   var iimmg=[]
+          //   fileList.forEach((item)=>{
+          //     iimmg.push(item.url)
+          //   })
+          //   console.log(iimmg)
+          //   console.log(this.newnewIMG)
+          //   if(iimmg.toString()==this.newnewIMG.toString()){
+          //     alert("有相等")
+          //     for(var i=0;i<fileList.length;i++){
+          //       var newobj={}
+          //       newobj.name=i+''
+          //       newobj.url=fileList[i].url
+          //     }
+          //     this.img.push(newobj)
+          //   }else{
+          //     alert('没有相等')
+          //     let config = {
+          //       headers:{'token':localStorage.getItem('Authorization')}
+          //     };
+          //     axios.get(BASE_URL+'/api/common/ossToken',config).then(res => {
+          //       for(var i=0;i<fileList.length;i++){
+          //         this.img.push(res.data.data.dir+fileList[i].name)
+          //       }
+          //     }, err => {
+          //       // console.log(err)
+          //     })
+          //   }
+          //
+          // }else{
+          //   this.img=[]
+          // }
+
+
+
+
+
+          if(fileList.length!=0){
+            var newImg=[];
+            for(var i=0;i<fileList.length;i++){
+              newImg.push(fileList[i].url)
+              this.img=newImg
+            }
+          }else{
+            this.img=[]
+          }
+          // console.log(file)
+          // console.log(fileList)
+          // console.log(this.newnewIMG)
+          // var newImg=[];
+          // for(var i=0;i<fileList.length;i++){
+          //   newImg.push(fileList[i].url)
+          //   this.img=newImg
+          // }
           this.hideUpload = file.length >= this.limitCount;
         },
 
@@ -851,8 +914,9 @@
             newobj.url=this.list.imgs[i]
             this.imgList.push(newobj)
             this.img.push(this.list.imgs[i])
+            this.newnewIMG=this.img
           }
-          // console.log( this.imgList)
+           console.log(this.img)
 
         }, err => {
           // console.log(err)
