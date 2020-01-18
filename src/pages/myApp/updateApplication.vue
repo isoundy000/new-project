@@ -25,12 +25,15 @@
             :http-request="newuploadipa"
             :on-change="handleChange"
             >
+            <el-progress v-if="progressFlag == true" :percentage="progressPercent"></el-progress>
+
             <div @click="upload" class="uploadBtn">
               <img src="../../../static/image/survey/shangchuanicon.png" alt="">
               <p>立即上传</p>
             </div>
             <div slot="tip" class="el-upload__tip">只能上传ipa文件</div>
           </el-upload>
+
         </div>
 
         <div class="supplementThird1">
@@ -125,21 +128,21 @@
         </div>
 
       </div>
-        <div class="supplementThird2">
-          <p>openinstall</p>
-          <div style="margin-top: 10px">
-            <el-switch
-              v-model="appkeyValue2"
-              active-color="#2F82FF"
-              inactive-color="#999999"
-              @change="appkeyswich2">
-            </el-switch>
-            <div v-if="appkey" style="margin-top: 15px">
-              <el-input  style="width: 50%" v-model="appkeyInput" placeholder="请输入appkey值"></el-input>
-            </div>
-          </div>
+        <!--<div class="supplementThird2">-->
+          <!--<p>openinstall</p>-->
+          <!--<div style="margin-top: 10px">-->
+            <!--<el-switch-->
+              <!--v-model="appkeyValue2"-->
+              <!--active-color="#2F82FF"-->
+              <!--inactive-color="#999999"-->
+              <!--@change="appkeyswich2">-->
+            <!--</el-switch>-->
+            <!--<div v-if="appkey" style="margin-top: 15px">-->
+              <!--<el-input  style="width: 50%" v-model="appkeyInput" placeholder="请输入appkey值"></el-input>-->
+            <!--</div>-->
+          <!--</div>-->
 
-        </div>
+        <!--</div>-->
         <div class="supplementThird2">
           <p>防盗刷</p>
           <div style="margin-top: 10px">
@@ -303,6 +306,8 @@
         name: "updateApplication",
       data(){
           return{
+            progressFlag:false, //进度条布尔值
+            progressPercent:0, //进度条默认值
             newnewIMG:[],
             ipaParsing:"",
             is_overseas:'10',
@@ -391,7 +396,7 @@
           axios.get(BASE_URL+'/api/app/init',config).then(res => {
             console.log(res.data.data)
             this.ipaParsing=res.data.data.ipaParsing
-            alert(res.data.data.is_overseas)
+          //  alert(res.data.data.is_overseas)
             this.is_overseas=res.data.data.is_overseas
             if(res.data.data.is_overseas=='10'){
               let config1 = {
@@ -406,7 +411,18 @@
                 formData.append('name',this.$md5(item.file.name.split(".ipa")[0])+timeStamp+'.ipa')
                 formData.append('key', res.data.data.dir+this.$md5(item.file.name.split(".ipa")[0])+timeStamp+'.ipa')
                 formData.append('file', item.file)
-                axios.post(res.data.data.host,formData,config1).then(res => {
+                this.progressFlag=true
+                this.progressPercent=0
+                let config3 = {
+                  headers:{'token':localStorage.getItem('Authorization')},
+                  onUploadProgress: progressEvent => {
+                    // progressEvent.loaded:已上传文件大小
+                    // progressEvent.total:被上传文件的总大小
+                    this.progressPercent = Number((progressEvent.loaded / progressEvent.total * 100).toFixed(2))
+                  }
+                };
+                axios.post(res.data.data.host,formData,config3).then(res => {
+                  this.progressFlag=false
                   if(res.data.code==0){
                     this.$message.error(res.data.msg);
                   }else{
@@ -450,11 +466,20 @@
                 // console.log(err)
               })
             }else{ //直传
+              this.progressFlag=true
+              this.progressPercent=0
               formData.append('file', item.file)
+              // formData.append('is_overseas', this.is_overseas)
               let config2 = {
-                headers:{'token':localStorage.getItem('Authorization')}
+                headers:{'token':localStorage.getItem('Authorization')},
+                onUploadProgress: progressEvent => {
+                  // progressEvent.loaded:已上传文件大小
+                  // progressEvent.total:被上传文件的总大小
+                  this.progressPercent = Number((progressEvent.loaded / progressEvent.total * 100).toFixed(2))
+                }
               };
               axios.post(res.data.data.upload,formData,config2).then(res => {
+                this.progressFlag=false
                 if(res.data.code==0){
                   this.$message.error(res.data.msg);
                 }else{
@@ -523,80 +548,23 @@
         },
         /*删除图片*/
         handleRemove(file, fileList) {
-          console.log(fileList.length)
-          // console.log(fileList)
-          //
-          // console.log(file)
-
-
-          // if(fileList.length!=0){
-          //
-          //
-          //
-          //   this.img=[]
-          //   // for(var i=0;i<fileList.length;i++){
-          //   //   var newobj={}
-          //   //   newobj.name=i+''
-          //   //   newobj.url=fileList[i].url
-          //   //   var iimmg=[]
-          //   //   iimmg.push(newobj.url)
-          //   //   console.log(iimmg)
-          //   //
-          //   //   console.log(this.img)
-          //   // }
-          //   var iimmg=[]
-          //   fileList.forEach((item)=>{
-          //     iimmg.push(item.url)
-          //   })
-          //   console.log(iimmg)
-          //   console.log(this.newnewIMG)
-          //   if(iimmg.toString()==this.newnewIMG.toString()){
-          //     alert("有相等")
-          //     for(var i=0;i<fileList.length;i++){
-          //       var newobj={}
-          //       newobj.name=i+''
-          //       newobj.url=fileList[i].url
-          //     }
-          //     this.img.push(newobj)
-          //   }else{
-          //     alert('没有相等')
-          //     let config = {
-          //       headers:{'token':localStorage.getItem('Authorization')}
-          //     };
-          //     axios.get(BASE_URL+'/api/common/ossToken',config).then(res => {
-          //       for(var i=0;i<fileList.length;i++){
-          //         this.img.push(res.data.data.dir+fileList[i].name)
-          //       }
-          //     }, err => {
-          //       // console.log(err)
-          //     })
-          //   }
-          //
-          // }else{
-          //   this.img=[]
-          // }
-
-
-
-
-
-          if(fileList.length!=0){
-            var newImg=[];
-            for(var i=0;i<fileList.length;i++){
-              newImg.push(fileList[i].url)
-              this.img=newImg
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.get(BASE_URL+'/api/common/ossToken',config).then(res => {
+            if(fileList.length!=0){
+              var newImg=[];
+              for(var i=0;i<fileList.length;i++){
+                newImg.push(res.data.data.dir+fileList[i].name)
+                this.img=newImg
+              }
+            }else{
+              this.img=[]
             }
-          }else{
-            this.img=[]
-          }
-          // console.log(file)
-          // console.log(fileList)
-          // console.log(this.newnewIMG)
-          // var newImg=[];
-          // for(var i=0;i<fileList.length;i++){
-          //   newImg.push(fileList[i].url)
-          //   this.img=newImg
-          // }
+            console.log(this.img)
+          }, err => {
+            // console.log(err)
+          })
           this.hideUpload = file.length >= this.limitCount;
         },
 
@@ -819,6 +787,7 @@
             push_type:this.push_type,
             is_vaptcha:this.newswitchNum,
             // sub_domain:this.homevalue,
+            // appkey:this.appkeyInput,
             is_flashback:this.shouhuApp,
             is_overseas:this.is_overseas,
           }
@@ -910,7 +879,7 @@
           }
           for(var i=0;i<this.list.imgs.length;i++){
             var newobj={}
-            newobj.name=i+''
+            newobj.name=this.list.imgs[i]
             newobj.url=this.list.imgs[i]
             this.imgList.push(newobj)
             this.img.push(this.list.imgs[i])
@@ -1267,5 +1236,17 @@
   }
   .el-upload__tip{
     font-size: 15px;
+  }
+
+  .supplementThird13 .el-progress{
+    width: 360px !important;
+    margin: 0 auto;
+  }
+  .supplementThird13 .el-progress-bar{
+    padding-right: 0!important;
+    margin-right: 0!important;
+  }
+  .supplementThird13 .el-progress__text{
+    position: absolute !important;
   }
 </style>

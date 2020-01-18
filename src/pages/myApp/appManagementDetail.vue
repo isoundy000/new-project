@@ -55,11 +55,11 @@
                 isclass: false,
                 isHide:false
               },
-              {
-                msg: '补签收费记录',
-                isclass: false,
-                isHide:false
-              },
+              // {
+              //   msg: '补签收费记录',
+              //   isclass: false,
+              //   isHide:false
+              // },
               {
                 msg: '统计',
                 isclass: false,
@@ -124,14 +124,14 @@
                 id:this.$route.query.id
               }
             })
-          }else if(index==4){
+          }else if(index==444444){
             this.$router.push({
               path:'/buqianRecord',
               query:{
                 id:this.$route.query.id
               }
             })
-          } else if(index==5){
+          } else if(index==4){
             this.$router.push({
               path:'/statistics',
               query:{
@@ -139,7 +139,7 @@
                 name:this.$route.query.name
               }
             })
-          }else if(index==6){
+          }else if(index==5){
             this.$router.push({
               path:'/abnormal',
               query:{
@@ -147,7 +147,7 @@
                 // name:this.$route.query.name
               }
             })
-          }else if(index==7){
+          }else if(index==6){
             this.$router.push({
               path:'/applicationMerge',
               query:{
@@ -155,14 +155,14 @@
                 apk_url:this.$route.query.apk_url
               }
             })
-          }else if(index==8){
+          }else if(index==7){
             this.$router.push({
               path:'/downloadCode',
               query:{
                 id:this.$route.query.id
               }
             })
-          }else if(index==9){
+          }else if(index==8){
             this.$router.push({
               path:'/messagePush',
               query:{
@@ -178,9 +178,9 @@
       mounted(){
         // alert(this.$route.query.cert_path)
         if(this.$route.query.push_type==0){
-          this.title[9].isHide=true
+          this.title[8].isHide=true
         }else{
-          this.title[9].isHide=false
+          this.title[8].isHide=false
         }
 
 

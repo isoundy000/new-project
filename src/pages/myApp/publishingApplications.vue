@@ -192,23 +192,23 @@
 
 
         </div>
-        <div class="supplementThird2">
-          <p>openinstall</p>
-          <div style="margin-top: 10px">
-            <el-switch
-              v-model="appkeyValue2"
-              active-color="#2F82FF"
-              inactive-color="#999999"
-              @change="appkeyswich2">
-            </el-switch>
-            <div  v-if="appkey" >
-              <el-input style="width: 50%" class="thirdInput fufei" v-model="appkeyInput" placeholder="请输入appkey值"></el-input>
+        <!--<div class="supplementThird2">-->
+          <!--<p>openinstall</p>-->
+          <!--<div style="margin-top: 10px">-->
+            <!--<el-switch-->
+              <!--v-model="appkeyValue2"-->
+              <!--active-color="#2F82FF"-->
+              <!--inactive-color="#999999"-->
+              <!--@change="appkeyswich2">-->
+            <!--</el-switch>-->
+            <!--<div  v-if="appkey" >-->
+              <!--<el-input style="width: 50%" class="thirdInput fufei" v-model="appkeyInput" placeholder="请输入appkey值"></el-input>-->
 
-            </div>
-          </div>
+            <!--</div>-->
+          <!--</div>-->
 
 
-        </div>
+        <!--</div>-->
         <div class="supplementThird2">
           <p>防盗刷</p>
           <div style="margin-top: 10px">
@@ -600,10 +600,19 @@
             })
           }else{ //直传
             formData.append('file', item.file)
+            this.progressFlag=true
+            this.progressPercent=0
+            // formData.append('is_overseas', this.is_overseas)
             let config2 = {
-              headers:{'token':localStorage.getItem('Authorization')}
+              headers:{'token':localStorage.getItem('Authorization')},
+              onUploadProgress: progressEvent => {
+                // progressEvent.loaded:已上传文件大小
+                // progressEvent.total:被上传文件的总大小
+                this.progressPercent = Number((progressEvent.loaded / progressEvent.total * 100).toFixed(2))
+              }
             };
             axios.post(res.data.data.upload,formData,config2).then(res => {
+              this.progressFlag=false
               if(res.data.code==0){
                 this.$message.error(res.data.msg);
               }else{
@@ -825,7 +834,7 @@
             is_update:this.gengxing,
             status:this.newState,
             download_money:this.fufeiInput,
-            appkey:this.appkeyInput,
+            // appkey:this.appkeyInput,
             push_type:this.push_type,
             type:1,
             is_vaptcha:this.newswitchNum,

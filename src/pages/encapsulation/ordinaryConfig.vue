@@ -2257,6 +2257,7 @@
                 bottom_nav_name:this.bottom_nav_name,//	底部导航名称
                 bottom_nav_icon:this.bottom_nav_icon,//	底部导航图标地址
                 icon:this.icon,
+                host:this.iconData.host,
                 start_img:this.start_img,
                 start_time:this.start_time,
                 app_name:this.app_name,

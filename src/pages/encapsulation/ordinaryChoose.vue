@@ -70,7 +70,8 @@
         timeSelect:[],
         money:'',
         selectId:'',
-        countDown:80
+        countDown:80,
+        iconData:'',
       }
     },
     methods: {
@@ -231,7 +232,9 @@
       }
     },
     mounted() {
-      this.logoImg = BASE_URL + this.$route.params.icon
+      console.log(this.$route.params.icon)
+      this.iconData=JSON.parse(localStorage.getItem('iconData'));
+      this.logoImg = this.iconData.host+this.$route.params.icon
       let data={
         type:1,
         cate:'ordinary'
@@ -252,6 +255,14 @@
         this.$message.error('系统报错');
         // console.log(err)
       })
+    },
+    watch:{
+      '$route': function (to, from) {
+        console.log(this.$route.params.icon)
+        this.iconData=JSON.parse(localStorage.getItem('iconData'));
+        this.logoImg = this.iconData.host+this.$route.params.icon
+      }
+
     }
   }
 </script>

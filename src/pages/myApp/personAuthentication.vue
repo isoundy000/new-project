@@ -305,6 +305,12 @@
 
               }, err => {
                 console.log(err)
+                this.$message({
+                  message: '上传失败',
+                  type: 'warning',
+                  duration: 1500
+                });
+                loading.close();
               })
             } else {
               return false;

@@ -150,7 +150,8 @@
           ordinaryFour:false,//显示时间-4秒
           ordinaryNum:0,
           isNext:true,
-          isNext1:false
+          isNext1:false,
+          host:'',
 
         }
       },
@@ -164,6 +165,7 @@
           };
           axios.get(BASE_URL+'/api/common/ossToken',config).then(res => {
             console.log(item.file.name)
+            this.host=res.data.data.host
             formData.append('policy', res.data.data.policy)
             formData.append('success_action_status', 200)
             formData.append('signature', res.data.data.signature)
@@ -352,12 +354,13 @@
             icon:this.ordinaryIconLogoimg,
             start_img:this.ordinaryIconStartgoimg,
             start_time:this.ordinaryNum,
+            host:this.host
           }
           localStorage.setItem('iconData', JSON.stringify(data));
           this.$router.push({
             name:'ordinaryConfig',
             params:{
-              active:2,
+              active:2
             }
           })
         },

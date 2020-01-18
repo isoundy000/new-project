@@ -31,9 +31,12 @@
 
           multiple>
           <i class="el-icon-upload"></i>
+
           <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
           <div class="el-upload__tip" slot="tip">只能上传apk文件，且不超过2G</div>
         </el-upload>
+        <el-progress v-if="progressFlag == true" :percentage="progressPercent"></el-progress>
+
       </div>
     </div>
     <div class="preservation" @click="preservation"><p>保存</p></div>
@@ -48,6 +51,8 @@
     name: "applicationMerge",
     data() {
       return {
+        progressFlag:false, //进度条布尔值
+        progressPercent:0, //进度条默认值
         upload_url:'',
         limitCount:1,
         downInput: '',
@@ -76,10 +81,17 @@
             formData.append('key', res.data.data.dir+this.$md5(item.file.name.split(".apk")[0])+timeStamp+'.apk')
             formData.append('file', item.file)
             this.apkvalue=res.data.data.dir+this.$md5(item.file.name.split(".apk")[0])+timeStamp+'.apk'
+            this.progressFlag=true
             let config2 = {
-              headers:{'token':localStorage.getItem('Authorization')}
+              headers:{'token':localStorage.getItem('Authorization')},
+              onUploadProgress: progressEvent => {
+                // progressEvent.loaded:已上传文件大小
+                // progressEvent.total:被上传文件的总大小
+                this.progressPercent = Number((progressEvent.loaded / progressEvent.total * 100).toFixed(2))
+              }
             };
             axios.post(res.data.data.host,formData,config2).then(res => {
+              this.progressFlag=false
               if(res.data.code==0){
                 this.$message.error(res.data.msg);
               }else{
@@ -224,5 +236,18 @@
     margin-left: 45px;
     margin-top: 50px;
     cursor: pointer;
+  }
+</style>
+<style>
+  .applicationMergeTwoSmall .el-progress{
+    width: 360px !important;
+    margin: 0 auto;
+  }
+  .applicationMergeTwoSmall .el-progress-bar{
+    padding-right: 0!important;
+    margin-right: 0!important;
+  }
+  .applicationMergeTwoSmall .el-progress__text{
+    position: absolute !important;
   }
 </style>
