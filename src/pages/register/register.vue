@@ -362,7 +362,10 @@
           path: '/login'
         })
       }
-    }
+    },
+    mounted(){
+      this.wangzhi=window.location.hostname
+    },
   }
 </script>
 
