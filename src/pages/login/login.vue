@@ -79,9 +79,11 @@
               <img v-else src="../../../static/image/register/mima_n.png" alt="">
               <input v-on:input="passwordInput" type="password" placeholder="请输入密码" v-model="password">
             </div>
-            <div class="math_div" :class="{'borderColor':mathInputIcon}">
-              <input v-on:input="mathInput" type="text" placeholder="请输入验证码" v-model="mathvalue">
-              <img @click="mathImg" :src="src" alt="">
+            <div class="math_div" :class="{'borderColor':mathInputIcon}" v-show="isSuccess==false">
+
+            </div>
+            <div class="math_div2" :class="{'borderColor':mathInputIcon}" v-show="isSuccess==true">
+              <p>验证成功</p>
             </div>
           </div>
           <div class="login_state">
@@ -122,6 +124,8 @@
     name: "login",
     data() {
       return {
+        validate:'',
+        isSuccess:false,
         phonenumber: '',//电话
         verificationCode: '',//验证码
         account:'',//账户、手机、邮箱
@@ -173,6 +177,8 @@
       },
       /*账号登录title*/
       accountLogin(){
+        /*网易易盾验证码*/
+        this.yanFunction()
         /*清空输入框数据*/
         // this.phonenumber=''
         this.verificationCode=''
@@ -354,7 +360,7 @@
         let data={
           account:this.account,
           password:this.password,
-          captcha:this.mathvalue,
+          captcha:this.validate,
           code:this.codeId
         }
         axios.post(BASE_URL+'/api/user/login',qs.stringify(data))
@@ -363,6 +369,8 @@
           if(res.data.code==0){
             this.isTishi1=true
             this.tishi1=res.data.msg
+            this.yanFunction()
+            this.isSuccess=false
           }else{
             this.userToken =  res.data.data.token;
             var balance= res.data.data.money
@@ -404,6 +412,41 @@
       }
     },
     mounted(){
+      /*网易易盾验证码*/
+      this.yanFunction=function () {
+        var captchaIns;
+        var that=this
+        initNECaptcha({
+          captchaId: '665868c3e1e54613a9ff988ede99d581',
+          element: '.math_div',
+          mode: 'float',
+          width: 340,
+          // feedbackEnable: false, // 业务方关闭反馈入口
+          onReady: function (instance) {
+            // 验证码一切准备就绪，此时可正常使用验证码的相关功能
+          },
+          onVerify: function (err, data) {
+            /**
+             * 第一个参数是err（Error的实例），验证失败才有err对象
+             * 第二个参数是data对象，验证成功后的相关信息，data数据结构为key-value，如下：
+             * {
+         *   validate: 'xxxxx' // 二次验证信息
+         * }
+             **/
+            if (err) return  // 当验证失败时，内部会自动refresh方法，无需手动再调用一次
+            // 点击登录按钮后可调用服务端接口，以下为伪代码，仅作示例用
+            that.validate=data.validate
+            that.isSuccess=true
+            that.isTishi1=false
+          }
+        }, function onload (instance) {
+          // 初始化成功
+          captchaIns = instance
+        }, function onerror (err) {
+          // 验证码初始化失败处理逻辑，例如：提示用户点击按钮重新初始化
+        })
+      }
+      this.yanFunction()
       /*获取验证码图片*/
       axios.get(BASE_URL+'/api/index/verify').then(res => {
         // console.log(res.data.data.id)
@@ -656,7 +699,6 @@
   display: flex;
   align-items: center;
   margin: 15px auto 0 auto;
-  border: 1px solid #DCDCDC;
   border-radius: 8px;
   box-sizing: content-box;
 }
@@ -772,6 +814,18 @@
   .borderColor{
     border: 1px solid #2F82FF;
   }
-
+  .math_div2{
+    width: 302px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    margin: 15px auto 0 auto;
+    background-color: #2F82FF;
+    border-radius: 8px;
+    box-sizing: content-box;
+    justify-content: center;
+    color: white;
+    font-size: 15px;
+  }
 </style>
 

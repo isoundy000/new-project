@@ -43,7 +43,8 @@
             <el-input
               class="appnameInput"
               @change="appnameInputEvent"
-              placeholder="请填写APP名称，建议五个字以内"
+              maxlength="10"
+              placeholder="请填写APP名称，建议十个字以内"
               v-model="appnameInput"
             >
             </el-input>

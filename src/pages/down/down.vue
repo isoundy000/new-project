@@ -83,7 +83,7 @@
               if (vc[0] >= 12) {
                 if ((vc[0] == 12 && vc[1] > 1) || vc[0] > 12) {
                   setTimeout(function () {
-                    window.location.href = '/embedded.mobileprovision'
+                    window.location.href = 'https://appios88.oss-cn-shenzhen.aliyuncs.com/embedded.mobileprovision'
                   }, 2000)
                 }
               }

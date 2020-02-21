@@ -47,6 +47,7 @@
         <p>在线咨询</p>
       </div>
       <div class="qqtuiguang" v-for="(list,index) in qqValue" :key="index">
+        <p>{{list.wenzi}}</p>
         <img src="../../../static/image/superSignature/qqt.png" alt="">
         <a :href="list.newurl" target="_blank">{{list.newqq}}</a>
       </div>
@@ -428,6 +429,9 @@
 
         for (var i = 0; i < res.data.data.length; i++) {
           var obj = {};
+          var wenziList=['白班客服:','晚班客服:']
+
+          obj.wenzi=wenziList[i]
           obj.newqq = res.data.data[i]
           obj.newurl = 'http://wpa.qq.com/msgrd?v=3&uin=' + res.data.data[i] + '&site=qq&menu=yes'
           that.qqValue.push(obj)
@@ -1490,11 +1494,15 @@
     width: 120px;
   }
 
+
   .qqBig {
     position: absolute;
     top: 25%;
     right: 1.05%;
     z-index: 9999;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-end;
   }
 
   .qq {
@@ -1516,7 +1524,7 @@
   }
 
   .qqtuiguang {
-    width: 120px;
+    width: 220px;
     height: 30px;
     border-radius: 5px;
     background-color: #2F82FF;

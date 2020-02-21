@@ -6,8 +6,8 @@
        <p class="ordinaryInformationMainDivTitle"><span>* </span>应用名称</p>
        <el-input
          class="ordinaryInformationMainDivRight"
-         maxlength="5"
-         placeholder="请填写APP名称，建议五个字以内"
+         maxlength="10"
+         placeholder="请填写APP名称，建议十个字以内"
          v-model="informationNameInput"
          v-on:input="informationNameInputChange"
          >

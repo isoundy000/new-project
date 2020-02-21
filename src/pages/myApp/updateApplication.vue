@@ -454,6 +454,20 @@
                         this.isSuper = false
                         this.isUpload = false
                         this.isSupplement=true
+                        this.istuisong=true
+                        if(this.push_type==0){
+                          this.newchoose=true
+                          this.choose=false
+                          this.choose1=false
+                        }else if(this.push_type==1){
+                          this.newchoose=false
+                          this.choose=true
+                          this.choose1=false
+                        }else{
+                          this.newchoose=false
+                          this.choose=false
+                          this.choose1=true
+                        }
                       }
                     }, err => {
                       this.$message.error('上传ipa包失败');
@@ -555,7 +569,7 @@
             if(fileList.length!=0){
               var newImg=[];
               for(var i=0;i<fileList.length;i++){
-                newImg.push(res.data.data.dir+fileList[i].name)
+                newImg.push(fileList[i].name)
                 this.img=newImg
               }
             }else{
