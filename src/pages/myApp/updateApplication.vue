@@ -437,6 +437,7 @@
                         this.$message.error(res.data.msg);
                       }else{
                         // console.log(res.data)
+                        this.disInput=false
                         this.display_name=res.data.data.display_name
                         this.path=res.data.data.url
                         this.icon=res.data.data.domain+res.data.data.icon
@@ -498,6 +499,7 @@
                   this.$message.error(res.data.msg);
                 }else{
                   console.log(res.data)
+                  this.disInput=false
                   this.display_name=res.data.data.app.display_name
                   this.path=res.data.data.url
                   this.icon=res.data.data.domain+res.data.data.app.icon
