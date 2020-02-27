@@ -879,6 +879,22 @@
             this.newswitchValue=false
             this.newswitchNum=0
           }
+          /*强制更新*/
+          if(res.data.data.is_force==1){
+            this.switchValue1=true
+            this.newState=1
+          }else{
+            this.switchValue1=false
+            this.newState=0
+          }
+          /*更新功能*/
+          if(res.data.data.is_update==1){
+            this.switchValue=true
+            this.gengxing=1
+          }else{
+            this.switchValue=false
+            this.gengxing=0
+          }
           if(res.data.data.is_flashback==1){
             this.newappchoose1=true
             this.newappchoose2=false
