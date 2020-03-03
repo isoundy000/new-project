@@ -180,23 +180,23 @@
             data: [
               {
                 name: '总消费金额',
-                icon: '//appios88.oss-cn-shenzhen.aliyuncs.com/web/static/image/survey/yingyong_jie@2x.png'
+                icon: '//glstatic.iosapp88.com/web/static/image/survey/yingyong_jie@2x.png'
               },
               {
                 name: '页面总浏览量',
-                icon: '//appios88.oss-cn-shenzhen.aliyuncs.com/web/static/image/survey/yingyong_liulan@2x.png'//格式为'image://+icon文件地址'，其中image::后的//不能省略
+                icon: '//glstatic.iosapp88.com/web/static/image/survey/yingyong_liulan@2x.png'//格式为'image://+icon文件地址'，其中image::后的//不能省略
               },
               {
                 name: '总下载量',
-                icon: '//appios88.oss-cn-shenzhen.aliyuncs.com/web/static/image/survey/yingyong_xiazhai@2x.png'
+                icon: '//glstatic.iosapp88.com/web/static/image/survey/yingyong_xiazhai@2x.png'
               },
               {
                 name: '下载设备总数',
-                icon: '//appios88.oss-cn-shenzhen.aliyuncs.com/web/static/image/survey/yingyong_xiazai@2x.png'
+                icon: '//glstatic.iosapp88.com/web/static/image/survey/yingyong_xiazai@2x.png'
               },
               {
                 name: '新增人数',
-                icon: '//appios88.oss-cn-shenzhen.aliyuncs.com/web/static/image/survey/yingyong_xinzeng@2x (1).png'
+                icon: '//glstatic.iosapp88.com/web/static/image/survey/yingyong_xinzeng@2x (1).png'
               }
             ]
           },
@@ -437,23 +437,23 @@
                 data: [
                   {
                     name: '总消费金额',
-                    icon: '//appios88.oss-cn-shenzhen.aliyuncs.com/web/static/image/survey/yingyong_jie@2x.png'
+                    icon: '//glstatic.iosapp88.com/web/static/image/survey/yingyong_jie@2x.png'
                   },
                   {
                     name: '页面总浏览量',
-                    icon: '//appios88.oss-cn-shenzhen.aliyuncs.com/web/static/image/survey/yingyong_liulan@2x.png'//格式为'image://+icon文件地址'，其中image::后的//不能省略
+                    icon: '//glstatic.iosapp88.com/web/static/image/survey/yingyong_liulan@2x.png'//格式为'image://+icon文件地址'，其中image::后的//不能省略
                   },
                   {
                     name: '总下载量',
-                    icon: '//appios88.oss-cn-shenzhen.aliyuncs.com/web/static/image/survey/yingyong_xiazhai@2x.png'
+                    icon: '//glstatic.iosapp88.com/web/static/image/survey/yingyong_xiazhai@2x.png'
                   },
                   {
                     name: '下载设备总数',
-                    icon: '//appios88.oss-cn-shenzhen.aliyuncs.com/web/static/image/survey/yingyong_xiazai@2x.png'
+                    icon: '//glstatic.iosapp88.com/web/static/image/survey/yingyong_xiazai@2x.png'
                   },
                   {
                     name: '新增人数',
-                    icon: '//appios88.oss-cn-shenzhen.aliyuncs.com/web/static/image/survey/yingyong_xinzeng@2x (1).png'
+                    icon: '//glstatic.iosapp88.com/web/static/image/survey/yingyong_xinzeng@2x (1).png'
                   }
                 ]
               },
@@ -579,23 +579,23 @@
               data: [
                 {
                   name: '总消费金额',
-                  icon: '//appios88.oss-cn-shenzhen.aliyuncs.com/web/static/image/survey/yingyong_jie@2x.png'
+                  icon: '//glstatic.iosapp88.com/web/static/image/survey/yingyong_jie@2x.png'
                 },
                 {
                   name: '页面总浏览量',
-                  icon: '//appios88.oss-cn-shenzhen.aliyuncs.com/web/static/image/survey/yingyong_liulan@2x.png'//格式为'image://+icon文件地址'，其中image::后的//不能省略
+                  icon: '//glstatic.iosapp88.com/web/static/image/survey/yingyong_liulan@2x.png'//格式为'image://+icon文件地址'，其中image::后的//不能省略
                 },
                 {
                   name: '总下载量',
-                  icon: '//appios88.oss-cn-shenzhen.aliyuncs.com/web/static/image/survey/yingyong_xiazhai@2x.png'
+                  icon: '//glstatic.iosapp88.com/web/static/image/survey/yingyong_xiazhai@2x.png'
                 },
                 {
                   name: '下载设备总数',
-                  icon: '//appios88.oss-cn-shenzhen.aliyuncs.com/web/static/image/survey/yingyong_xiazai@2x.png'
+                  icon: '//glstatic.iosapp88.com/web/static/image/survey/yingyong_xiazai@2x.png'
                 },
                 {
                   name: '新增人数',
-                  icon: '//appios88.oss-cn-shenzhen.aliyuncs.com/web/static/image/survey/yingyong_xinzeng@2x (1).png'
+                  icon: '//glstatic.iosapp88.com/web/static/image/survey/yingyong_xinzeng@2x (1).png'
                 }
               ]
             },

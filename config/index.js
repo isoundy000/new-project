@@ -51,7 +51,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: './static',
-    assetsPublicPath: '//appios88.oss-cn-shenzhen.aliyuncs.com/web/',
+    assetsPublicPath: '//glstatic.iosapp88.com/web/',
 
     /**
      * Source Maps

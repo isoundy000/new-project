@@ -76,6 +76,9 @@
          <div class="end" @click="end">
            <p>批量禁用</p>
          </div>
+         <div class="end" @click="del">
+           <p>批量删除</p>
+         </div>
          <div class="export" @click="exportBtn">
            <p>一键导出</p>
          </div>
@@ -428,6 +431,34 @@
             // console.log(err)
           })
         },
+        del(){
+          let data={
+            ids:this.newArry.toString()
+          }
+          let config = {
+            headers:{'token':localStorage.getItem('Authorization')}
+          };
+          axios.post(BASE_URL+'/api/app/downloadCodeDel',qs.stringify(data),config).then(res => {
+            let data={
+              app_id:this.$route.query.id,
+              page:1,
+              page_size:10,
+            }
+            let config = {
+              headers:{'token':localStorage.getItem('Authorization')}
+            };
+            axios.post(BASE_URL+'/api/app/downloadCodeList',qs.stringify(data),config).then(res => {
+              this.tableData=res.data.data.list
+              this.total=res.data.data.total
+              this.pageNumber=parseInt(Math.ceil(Number(this.total)/10))
+              this.current=1
+            }, err => {
+              // console.log(err)
+            })
+          }, err => {
+            // console.log(err)
+          })
+        },
         swich(row){
           if(row.status==1){
             let data={
@@ -586,7 +617,7 @@
     cursor: pointer;
   }
   .downloadCodeMainSmall{
-    width: 600px;
+    width: 730px;
     display: flex;
     align-items: center;
     justify-content: space-between;
